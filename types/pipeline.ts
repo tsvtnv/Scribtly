@@ -25,6 +25,8 @@ export interface ContentItem {
   script?: {
     id: string
     title: string
+    wordCount?: number | null
+    duration?: string | null
   } | null
 }
 

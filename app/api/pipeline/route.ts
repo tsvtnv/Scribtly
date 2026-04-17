@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
       },
       include: {
         client: { select: { id: true, name: true, avatarColor: true } },
-        script: { select: { id: true, title: true } },
+        script: { select: { id: true, title: true, wordCount: true, duration: true } },
       },
       orderBy: [{ stage: 'asc' }, { position: 'asc' }],
     })
@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
       },
       include: {
         client: { select: { id: true, name: true, avatarColor: true } },
-        script: { select: { id: true, title: true } },
+        script: { select: { id: true, title: true, wordCount: true, duration: true } },
       },
     })
 
