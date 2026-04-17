@@ -1,160 +1,134 @@
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
-import type { Prisma, Platform, ScriptStatus } from "@prisma/client";
 import { ensureUser } from "@/lib/ensureUser";
 import { prisma } from "@/lib/prisma";
-import { ScriptsGrid } from "@/components/script/ScriptsGrid";
-import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
-
-const PLATFORMS: Platform[] = ["YOUTUBE", "TIKTOK", "REELS", "LINKEDIN", "PODCAST"];
-const STATUSES: ScriptStatus[] = ["DRAFT", "FINAL", "SENT"];
+import { initials } from "@/lib/utils";
+import { KanbanBoard } from "@/components/pipeline/KanbanBoard";
+import type { ContentItem } from "@/types/pipeline";
+import type { ScriptForPipeline } from "@/app/(app)/pipeline/page";
 
 interface Search {
-  q?: string;
   clientId?: string;
-  platform?: string;
-  status?: string;
-  page?: string;
 }
 
 export default async function ScriptsPage({ searchParams }: { searchParams: Search }) {
   const { workspace } = await ensureUser();
-  const page = Math.max(1, parseInt(searchParams.page || "1", 10));
-  const limit = 20;
 
-  const where: Prisma.ScriptWhereInput = { workspaceId: workspace.id };
-  if (searchParams.clientId) where.clientId = searchParams.clientId;
-  if (searchParams.platform && PLATFORMS.includes(searchParams.platform as Platform)) {
-    where.platform = searchParams.platform as Platform;
-  }
-  if (searchParams.status && STATUSES.includes(searchParams.status as ScriptStatus)) {
-    where.status = searchParams.status as ScriptStatus;
-  }
-  if (searchParams.q) {
-    where.OR = [
-      { title: { contains: searchParams.q, mode: "insensitive" } },
-      { topic: { contains: searchParams.q, mode: "insensitive" } },
-    ];
+  const clients = await prisma.client.findMany({
+    where: { workspaceId: workspace.id },
+    select: { id: true, name: true, avatarColor: true },
+    orderBy: { name: "asc" },
+  });
+
+  const selectedClient = clients.find(c => c.id === searchParams.clientId) ?? null;
+
+  if (!selectedClient) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full min-h-[60vh] p-6">
+        <div className="max-w-lg w-full text-center">
+          <h1 className="text-2xl font-semibold tracking-tight mb-2">Script library</h1>
+          <p className="text-sm text-text-secondary dark:text-dark-muted mb-8">
+            Select a client to view and manage their scripts.
+          </p>
+
+          {clients.length === 0 ? (
+            <div className="border border-dashed border-[var(--color-border)] rounded-xl p-10 text-center">
+              <p className="text-sm text-text-secondary dark:text-dark-muted mb-4">No clients yet.</p>
+              <Link href="/clients">
+                <Button variant="secondary">Add a client</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {clients.map(c => (
+                <Link
+                  key={c.id}
+                  href={`/scripts?clientId=${c.id}`}
+                  className="flex flex-col items-center gap-2 p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)] hover:bg-[var(--color-primary-tint)] transition-all group"
+                >
+                  <span
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm"
+                    style={{ backgroundColor: c.avatarColor }}
+                  >
+                    {initials(c.name)}
+                  </span>
+                  <span className="text-sm font-medium text-text-primary dark:text-dark-text group-hover:text-[var(--color-primary)] transition-colors text-center leading-tight">
+                    {c.name}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
   }
 
-  const [total, scripts, clients] = await Promise.all([
-    prisma.script.count({ where }),
-    prisma.script.findMany({
-      where,
+  const [rawItems, rawScripts] = await Promise.all([
+    prisma.contentItem.findMany({
+      where: { workspaceId: workspace.id, clientId: selectedClient.id },
       include: {
-        client: true,
-        contentItem: { select: { id: true, stage: true } },
+        client: { select: { id: true, name: true, avatarColor: true } },
+        script: { select: { id: true, title: true, wordCount: true, duration: true } },
       },
-      orderBy: { createdAt: "desc" },
-      take: limit * page,
+      orderBy: [{ stage: "asc" }, { position: "asc" }],
     }),
-    prisma.client.findMany({ where: { workspaceId: workspace.id }, orderBy: { name: "asc" } }),
+    prisma.script.findMany({
+      where: { workspaceId: workspace.id, clientId: selectedClient.id, contentItem: null },
+      include: { client: { select: { id: true, name: true, avatarColor: true } } },
+      orderBy: { createdAt: "desc" },
+    }),
   ]);
 
-  const makeHref = (patch: Partial<Search>) => {
-    const params = new URLSearchParams();
-    const merged = { ...searchParams, ...patch } as Record<string, string | undefined>;
-    Object.entries(merged).forEach(([k, v]) => {
-      if (v && v !== "all") params.set(k, v);
-    });
-    const qs = params.toString();
-    return qs ? `/scripts?${qs}` : "/scripts";
-  };
+  const items: ContentItem[] = rawItems.map(item => ({
+    ...item,
+    scheduledDate: item.scheduledDate?.toISOString() ?? null,
+    publishedAt:   item.publishedAt?.toISOString()   ?? null,
+    createdAt:     item.createdAt.toISOString(),
+    updatedAt:     item.updatedAt.toISOString(),
+  }));
+
+  const scripts: ScriptForPipeline[] = rawScripts.map(s => ({
+    ...s,
+    contentItem: null,
+  }));
 
   return (
-    <div className="p-6 md:p-10 max-w-6xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Script library</h1>
-          <p className="text-sm text-text-secondary dark:text-dark-muted mt-1">
-            {total} {total === 1 ? "script" : "scripts"}
-          </p>
+    <div className="flex flex-col h-full min-h-screen">
+      <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--color-border)]">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/scripts"
+            className="text-sm text-text-secondary dark:text-dark-muted hover:text-[var(--color-primary)] transition-colors"
+          >
+            ← All clients
+          </Link>
+          <span className="text-[var(--color-border)]">/</span>
+          <div className="flex items-center gap-2">
+            <span
+              className="w-6 h-6 rounded-full flex items-center justify-center text-white flex-shrink-0"
+              style={{ backgroundColor: selectedClient.avatarColor, fontSize: "10px", fontWeight: 500 }}
+            >
+              {initials(selectedClient.name)}
+            </span>
+            <h1 className="text-base font-semibold text-text-primary dark:text-dark-text">
+              {selectedClient.name}
+            </h1>
+          </div>
         </div>
         <Link href="/generate">
-          <Button>
-            <Sparkles size={16} /> New script
+          <Button size="sm">
+            <Sparkles size={14} /> New script
           </Button>
         </Link>
       </div>
 
-      <form className="mb-4" action="/scripts" method="GET">
-        <Input name="q" defaultValue={searchParams.q || ""} placeholder="Search by title or topic…" />
-        {searchParams.clientId ? <input type="hidden" name="clientId" value={searchParams.clientId} /> : null}
-        {searchParams.platform ? <input type="hidden" name="platform" value={searchParams.platform} /> : null}
-        {searchParams.status ? <input type="hidden" name="status" value={searchParams.status} /> : null}
-      </form>
-
-      <div className="flex flex-wrap gap-2 mb-5 text-xs">
-        <Link
-          href={makeHref({ platform: undefined })}
-          className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.platform ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
-        >
-          All platforms
-        </Link>
-        {PLATFORMS.map((p) => (
-          <Link
-            key={p}
-            href={makeHref({ platform: p })}
-            className={cn("px-2.5 py-1 rounded-full border-hair", searchParams.platform === p ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
-          >
-            {p[0] + p.slice(1).toLowerCase()}
-          </Link>
-        ))}
-        <span className="text-text-secondary mx-1">·</span>
-        <Link
-          href={makeHref({ status: undefined })}
-          className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.status ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
-        >
-          Any status
-        </Link>
-        {STATUSES.map((s) => (
-          <Link
-            key={s}
-            href={makeHref({ status: s })}
-            className={cn("px-2.5 py-1 rounded-full border-hair uppercase", searchParams.status === s ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
-          >
-            {s}
-          </Link>
-        ))}
-      </div>
-
-      {clients.length > 0 ? (
-        <div className="flex flex-wrap gap-2 mb-5 text-xs">
-          <Link
-            href={makeHref({ clientId: undefined })}
-            className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.clientId ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
-          >
-            All clients
-          </Link>
-          {clients.map((c) => (
-            <Link
-              key={c.id}
-              href={makeHref({ clientId: c.id })}
-              className={cn("px-2.5 py-1 rounded-full border-hair", searchParams.clientId === c.id ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
-            >
-              {c.name}
-            </Link>
-          ))}
-        </div>
-      ) : null}
-
-      {scripts.length === 0 ? (
-        <div className="text-center py-20 border-hair border-dashed border-[var(--color-border)] rounded-lg">
-          <p className="text-text-secondary dark:text-dark-muted">No scripts match. Try clearing filters.</p>
-        </div>
-      ) : (
-        <ScriptsGrid scripts={scripts} clients={clients} />
-      )}
-
-      {total > scripts.length ? (
-        <div className="flex justify-center mt-6">
-          <Link href={makeHref({ page: String(page + 1) })}>
-            <Button variant="secondary">Load more</Button>
-          </Link>
-        </div>
-      ) : null}
+      <KanbanBoard
+        initialItems={items}
+        clients={[selectedClient]}
+        initialScripts={scripts}
+      />
     </div>
   );
 }
