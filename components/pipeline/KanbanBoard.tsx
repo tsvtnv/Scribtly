@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import {
   DndContext,
   DragOverlay,
@@ -51,6 +51,13 @@ export function KanbanBoard({ initialItems, clients, initialScripts }: KanbanBoa
   const [importedScriptIds, setImportedScriptIds] = useState<Set<string>>(new Set())
   const [addModalScript, setAddModalScript] = useState<ScriptForPipeline | null>(null)
   const [drawerScripts] = useState(initialScripts)
+
+  const [showPipelineTooltip, setShowPipelineTooltip] = useState(false)
+  useEffect(() => {
+    if (!localStorage.getItem("sf_tooltip_pipeline_seen")) {
+      setShowPipelineTooltip(true)
+    }
+  }, [])
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
@@ -218,14 +225,19 @@ export function KanbanBoard({ initialItems, clients, initialScripts }: KanbanBoa
       <div className="flex flex-1 overflow-hidden">
         <div className="flex-1 overflow-hidden">
           {totalItems === 0 ? (
-            <div className="flex-1 flex flex-col items-center justify-center gap-3 text-text-secondary dark:text-dark-muted h-full">
-              <p className="text-base font-medium">No content yet</p>
-              <button
-                onClick={() => setAddStage('IDEA')}
-                className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
-              >
-                Add your first piece
-              </button>
+            <div className="flex-1 flex flex-col items-center justify-center h-full">
+              <div className="text-center py-16 space-y-3">
+                <h2 className="text-lg font-semibold">Nothing in your pipeline yet</h2>
+                <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
+                  Add a content idea to start tracking it from concept to published.
+                </p>
+                <button
+                  onClick={() => setAddStage('IDEA')}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                >
+                  Add first piece
+                </button>
+              </div>
             </div>
           ) : (
             <DndContext
@@ -239,13 +251,31 @@ export function KanbanBoard({ initialItems, clients, initialScripts }: KanbanBoa
                 className="flex flex-row gap-3 overflow-x-auto pb-4 pt-2 px-4 min-h-[600px] items-start w-full"
                 style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--color-border) transparent' } as React.CSSProperties}
               >
-                {STAGE_ORDER.map(stage => (
+                {STAGE_ORDER.map((stage, columnIndex) => (
                   <KanbanColumn
                     key={stage}
                     stage={stage}
                     items={display[stage]}
                     onAddItem={(s) => setAddStage(s)}
                     onEditItem={(item) => setEditItem(item)}
+                    tooltip={
+                      showPipelineTooltip && columnIndex === 0 ? (
+                        <div className="mx-2 mb-2 p-2 rounded bg-[var(--color-primary-tint)] text-xs text-text-secondary dark:text-dark-muted flex items-start justify-between gap-2">
+                          <span>Drag cards between columns as your content moves through production.</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              localStorage.setItem("sf_tooltip_pipeline_seen", "1")
+                              setShowPipelineTooltip(false)
+                            }}
+                            aria-label="Dismiss tooltip"
+                            className="flex-shrink-0"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ) : undefined
+                    }
                   />
                 ))}
               </div>

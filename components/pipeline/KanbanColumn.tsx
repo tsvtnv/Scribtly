@@ -6,15 +6,17 @@ import { ContentItem, PipelineStage } from '@/types/pipeline'
 import { STAGE_CONFIG } from '@/lib/pipeline'
 import { KanbanCard } from './KanbanCard'
 import { cn } from '@/lib/utils'
+import type { ReactNode } from 'react'
 
 interface KanbanColumnProps {
   stage: PipelineStage
   items: ContentItem[]
   onAddItem: (stage: PipelineStage) => void
   onEditItem: (item: ContentItem) => void
+  tooltip?: ReactNode
 }
 
-export function KanbanColumn({ stage, items, onAddItem, onEditItem }: KanbanColumnProps) {
+export function KanbanColumn({ stage, items, onAddItem, onEditItem, tooltip }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id: stage })
   const config = STAGE_CONFIG[stage]
 
@@ -50,6 +52,9 @@ export function KanbanColumn({ stage, items, onAddItem, onEditItem }: KanbanColu
           +
         </button>
       </div>
+
+      {/* First-column tooltip */}
+      {tooltip}
 
       {/* Cards area */}
       <SortableContext items={items.map(i => i.id)} strategy={verticalListSortingStrategy}>
