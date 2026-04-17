@@ -81,12 +81,12 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
     });
     setBusy(null);
     if (!res.ok) { toast.push("Failed to create share link", "error"); return; }
-    const data = await res.json();
+    const data = await res.json() as { shareToken: string; shareEnabled: boolean };
     setShareEnabled(true);
     setShareToken(data.shareToken);
     const url = `${window.location.origin}/review/${data.shareToken}`;
-    await navigator.clipboard.writeText(url).catch(() => {});
-    toast.push("Link copied!", "success");
+    const copied = await navigator.clipboard.writeText(url).then(() => true).catch(() => false);
+    toast.push(copied ? "Link copied!" : "Share enabled — copy the link below", "success");
   }
 
   async function disableShare() {
@@ -106,8 +106,8 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
   async function copyLink() {
     if (!shareToken) return;
     const url = `${window.location.origin}/review/${shareToken}`;
-    await navigator.clipboard.writeText(url).catch(() => {});
-    toast.push("Link copied!", "success");
+    const copied = await navigator.clipboard.writeText(url).then(() => true).catch(() => false);
+    toast.push(copied ? "Link copied!" : "Could not copy — link shown above", "success");
   }
 
   const shareUrl = shareToken ? `${typeof window !== 'undefined' ? window.location.origin : ''}/review/${shareToken}` : '';
