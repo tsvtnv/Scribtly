@@ -1,6 +1,6 @@
 // components/onboarding/OnboardingBanner.tsx
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -17,7 +17,11 @@ export function OnboardingBanner({ onboardingStep }: { onboardingStep: number })
     }
   }, [onboardingStep]);
 
+  const dismissing = useRef(false);
+
   async function dismiss() {
+    if (dismissing.current) return;
+    dismissing.current = true;
     localStorage.setItem(LS_KEY, "1");
     setVisible(false);
     try {
@@ -36,6 +40,7 @@ export function OnboardingBanner({ onboardingStep }: { onboardingStep: number })
   return (
     <Card className="relative border-[var(--color-primary)] bg-[var(--color-primary-tint)]">
       <button
+        type="button"
         onClick={dismiss}
         className="absolute top-3 right-3 text-text-secondary hover:text-text-primary"
         aria-label="Dismiss"
@@ -67,7 +72,7 @@ export function OnboardingBanner({ onboardingStep }: { onboardingStep: number })
           <Link href="/clients/new">
             <Button size="sm" onClick={dismiss}>Add your first client</Button>
           </Link>
-          <button onClick={dismiss} className="text-sm text-text-secondary hover:underline">
+          <button type="button" onClick={dismiss} className="text-sm text-text-secondary hover:underline">
             Dismiss
           </button>
         </div>
