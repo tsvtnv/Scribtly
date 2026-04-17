@@ -36,7 +36,14 @@ export async function GET(req: NextRequest) {
       orderBy: [{ stage: 'asc' }, { position: 'asc' }],
     })
 
-    return NextResponse.json({ items: groupByStage(items as any) })
+    const serialized = items.map(item => ({
+      ...item,
+      scheduledDate: item.scheduledDate?.toISOString() ?? null,
+      publishedAt:   item.publishedAt?.toISOString()   ?? null,
+      createdAt:     item.createdAt.toISOString(),
+      updatedAt:     item.updatedAt.toISOString(),
+    }))
+    return NextResponse.json({ items: groupByStage(serialized) })
   } catch (err) {
     return errorResponse(err)
   }

@@ -17,6 +17,7 @@ const updateSchema = z.object({
   views:         z.number().int().min(0).nullable().optional(),
   position:      z.number().int().min(0).optional(),
   scriptId:      z.string().nullable().optional(),
+  clientId:      z.string().optional(),
 })
 
 async function getOwnedItem(id: string, workspaceId: string) {
@@ -36,9 +37,17 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     if (!parsed.success) throw new ValidationError('Invalid update data', { issues: parsed.error.issues })
 
     const data = parsed.data
+
+    // Verify new clientId belongs to this workspace
+    if (data.clientId) {
+      const client = await prisma.client.findFirst({ where: { id: data.clientId, workspaceId: workspace.id } })
+      if (!client) throw new ValidationError('Client not found', {})
+    }
+
     const updated = await prisma.contentItem.update({
       where: { id: params.id },
       data: {
+        ...(data.clientId      !== undefined ? { clientId: data.clientId }                                   : {}),
         ...(data.title         !== undefined ? { title: data.title }                                        : {}),
         ...(data.platform      !== undefined ? { platform: data.platform }                                  : {}),
         ...(data.stage         !== undefined ? { stage: data.stage }                                        : {}),

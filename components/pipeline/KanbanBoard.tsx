@@ -137,7 +137,13 @@ export function KanbanBoard({ initialItems, clients }: KanbanBoardProps) {
     columnsSnapshot.current = null
 
     try {
-      await moveItem(event.active.id as string, over.id as PipelineStage, columns, snapshot)
+      // Determine final stage from updated columns state (over.id may be an item id, not a stage)
+      const activeId = event.active.id as string
+      let finalStage: PipelineStage = 'IDEA'
+      for (const s of STAGE_ORDER) {
+        if (columns[s].some(i => i.id === activeId)) { finalStage = s; break }
+      }
+      await moveItem(activeId, finalStage, columns, snapshot)
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to save position. Please try again.'
       setDragError(message)
