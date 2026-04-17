@@ -113,6 +113,29 @@ export async function POST(req: NextRequest) {
             }
           }
           succeeded = true;
+
+          // Onboarding: track first script generated
+          if (!workspace.firstScriptGeneratedAt) {
+            void (async () => {
+              try {
+                await prisma.workspace.update({
+                  where: { id: workspaceId! },
+                  data: {
+                    firstScriptGeneratedAt: new Date(),
+                    onboardingStep: Math.max(workspace.onboardingStep, 2),
+                  },
+                });
+                const { getRemainingScripts } = await import("@/lib/planLimits");
+                const remaining = getRemainingScripts({ ...workspace, scriptCount: updated.scriptCount });
+                const { sendFirstScriptEmail } = await import("@/lib/emails/onboarding");
+                const { user } = await ensureUser();
+                const fName = user.name?.split(" ")[0] || user.email.split("@")[0];
+                await sendFirstScriptEmail(workspace.id, user.email, fName, remaining);
+              } catch (err) {
+                console.error("First script onboarding failed", err);
+              }
+            })();
+          }
         } catch (err: any) {
           console.error("Anthropic stream error", err);
           controller.enqueue(encoder.encode(`\n[[ERROR:${err.message || "stream failed"}]]`));
