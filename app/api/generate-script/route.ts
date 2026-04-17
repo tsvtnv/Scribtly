@@ -1,0 +1,132 @@
+import { NextRequest } from "next/server";
+import { z } from "zod";
+import { prisma } from "@/lib/prisma";
+import { anthropic } from "@/lib/anthropic";
+import { ensureUser } from "@/lib/ensureUser";
+import {
+  canGenerateScript,
+  canUsePlatform,
+  canUseExtras,
+} from "@/lib/planLimits";
+import {
+  UpgradeRequiredError,
+  NotFoundError,
+  ValidationError,
+  errorResponse,
+} from "@/lib/errors";
+import { buildPrompt } from "@/lib/buildPrompt";
+
+export const runtime = "nodejs";
+export const maxDuration = 60;
+
+const PLATFORMS = ["YOUTUBE", "TIKTOK", "REELS", "LINKEDIN", "PODCAST"] as const;
+
+const bodySchema = z.object({
+  clientId: z.string().min(1),
+  platform: z.enum(PLATFORMS),
+  topic: z.string().trim().min(1).max(600),
+  duration: z.string().min(1).max(40),
+  hookStyle: z.string().nullable().optional(),
+  extraOutputs: z.array(z.string()).optional(),
+});
+
+export async function POST(req: NextRequest) {
+  let workspaceId: string | null = null;
+  try {
+    const { workspace } = await ensureUser();
+    workspaceId = workspace.id;
+
+    const raw = await req.json();
+    const parsed = bodySchema.safeParse(raw);
+    if (!parsed.success) throw new ValidationError("Invalid request", { issues: parsed.error.issues });
+    const input = parsed.data;
+
+    if (!canGenerateScript(workspace)) {
+      throw new UpgradeRequiredError("free_limit", "Script limit reached on your plan");
+    }
+    if (!canUsePlatform(workspace, input.platform)) {
+      throw new UpgradeRequiredError("platform_locked", `${input.platform} is not available on your plan`);
+    }
+    if (input.extraOutputs && input.extraOutputs.length > 0 && !canUseExtras(workspace)) {
+      throw new UpgradeRequiredError("extras_locked", "Extras are a Pro feature");
+    }
+
+    const client = await prisma.client.findUnique({ where: { id: input.clientId } });
+    if (!client || client.workspaceId !== workspace.id) throw new NotFoundError("Client not found");
+
+    // Atomic increment before starting the stream
+    const updated = await prisma.workspace.update({
+      where: { id: workspace.id },
+      data: { scriptCount: { increment: 1 } },
+    });
+
+    // Free-limit-reached email on the transition to 3
+    if (updated.scriptCount === 3 && updated.plan === "FREE") {
+      void (async () => {
+        try {
+          const { sendFreeLimitReached } = await import("@/lib/sendEmail");
+          const { user } = await ensureUser();
+          await sendFreeLimitReached({ to: user.email });
+        } catch (err) {
+          console.error("FreeLimit email failed", err);
+        }
+      })();
+    }
+
+    const { system, userMessage, model, max_tokens } = buildPrompt({
+      client,
+      platform: input.platform,
+      topic: input.topic,
+      duration: input.duration,
+      hookStyle: input.hookStyle,
+      extraOutputs: input.extraOutputs,
+    });
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        let succeeded = false;
+        try {
+          const anthStream = anthropic.messages.stream({
+            model,
+            max_tokens,
+            system,
+            messages: [{ role: "user", content: userMessage }],
+          });
+
+          for await (const event of anthStream) {
+            if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+              controller.enqueue(encoder.encode(event.delta.text));
+            }
+          }
+          succeeded = true;
+        } catch (err: any) {
+          console.error("Anthropic stream error", err);
+          controller.enqueue(encoder.encode(`\n[[ERROR:${err.message || "stream failed"}]]`));
+          // Decrement scriptCount since the generation failed
+          try {
+            await prisma.workspace.update({
+              where: { id: workspaceId! },
+              data: { scriptCount: { decrement: 1 } },
+            });
+          } catch (e) {
+            console.error("Failed to decrement scriptCount", e);
+          }
+        } finally {
+          controller.close();
+        }
+        void succeeded;
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache, no-transform",
+        "X-Accel-Buffering": "no",
+      },
+    });
+  } catch (err) {
+    return errorResponse(err);
+  }
+}

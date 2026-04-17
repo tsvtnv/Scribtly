@@ -1,0 +1,76 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "max_tokens": 2000,
+  "stream": true,
+  "system_base": "You are an expert video script writer with 10 years of experience writing scripts for YouTube, TikTok and Instagram creators. You write scripts that feel completely natural when spoken aloud, hold attention throughout, and match each creator's unique voice exactly. You understand platform algorithms and what makes viewers watch to the end. Never use filler openings like 'In this video' or 'Hey guys welcome back'. Never end with 'Don't forget to like and subscribe'. Always write as if the creator is speaking directly to one person, not a crowd.",
+  "client_voice_template": "CLIENT PROFILE — write everything in this client's voice:\n- Client name: {{client_name}}\n- Niche: {{client_niche}}\n- Target audience: {{client_audience}}\n- Tone of voice: {{client_tone}}\n- Example phrases they commonly use: {{client_phrases}}\n- Topics to always avoid: {{client_avoid}}\n\nMatch their tone exactly. If their tone is casual, be casual. If authoritative, be authoritative. The viewer should not be able to tell AI wrote this.",
+  "platforms": {
+    "YOUTUBE": {
+      "label": "YouTube",
+      "durations": ["3-5 min", "8-10 min", "15-20 min"],
+      "structure_prompt": "Write a YouTube script for the topic: {{topic}}\n\nStructure EXACTLY as follows:\n\n[HOOK] (first 30 seconds — must stop someone from clicking away. Make a bold claim, ask a provocative question, or start mid-story.)\n\n[INTRO] (briefly tell them what they'll learn and why it matters. Build credibility in 2-3 sentences max.)\n\n[SECTION 1: heading]\n(First main point — detailed, specific, valuable)\n\n[SECTION 2: heading]\n(Second main point)\n\n[SECTION 3: heading]\n(Third main point)\n\n[CTA]\n(One clear, specific action. No begging. Make it feel natural.)\n\nTarget length: {{duration}}. Add [B-ROLL: brief description] notes where visual cuts would help. Write numbers as words. Mark emphasis in CAPS.",
+      "hook_styles": ["bold_claim", "question", "story", "controversy", "surprising_stat"],
+      "extra_outputs": ["title_options", "description", "tags", "chapters"]
+    },
+    "TIKTOK": {
+      "label": "TikTok",
+      "durations": ["15 sec", "30 sec", "60 sec"],
+      "structure_prompt": "Write a TikTok script for the topic: {{topic}}\n\nStructure EXACTLY as follows:\n\n[HOOK] (first 1-3 seconds — one punchy line that is impossible to scroll past. This is everything.)\n\n[BODY]\n(Deliver the value fast. Short punchy sentences. No padding. Every line earns its place.)\n\n[PAYOFF]\n(The satisfying conclusion, twist, or result that makes them feel it was worth watching.)\n\n[LOOP HOOK] (optional)\n(A final line that makes them want to rewatch — connects back to the hook.)\n\nTarget length: {{duration}}. Mark visual actions as [ACTION: description]. Write for spoken delivery — short, punchy, rhythmic.",
+      "hook_styles": ["hot_take", "reveal", "relatable_problem", "surprising_fact", "challenge"],
+      "extra_outputs": ["caption", "hashtags", "hook_variations"]
+    },
+    "REELS": {
+      "label": "Instagram Reels",
+      "durations": ["15 sec", "30 sec", "60 sec", "90 sec"],
+      "structure_prompt": "Write an Instagram Reels script for the topic: {{topic}}\n\nStructure EXACTLY as follows:\n\n[HOOK] (first 1-2 seconds — both spoken AND as text overlay. Make them stop mid-scroll.)\n\n[VALUE]\n(Deliver quickly. Visually driven. Keep sentences short. Optimise for watch time, not word count.)\n\n[CTA]\n(Pick ONE: save this / follow for more / link in bio. Never stack CTAs.)\n\nTarget length: {{duration}}. Mark text overlays as [TEXT: content]. Mark transitions as [CUT]. Mark music suggestions as [MUSIC: mood/genre].",
+      "hook_styles": ["tutorial_tease", "before_after", "mistake_reveal", "quick_tip", "story"],
+      "extra_outputs": ["caption", "hashtags", "cover_text"]
+    },
+    "LINKEDIN": {
+      "label": "LinkedIn Post",
+      "durations": ["short 150w", "medium 300w", "long 500w"],
+      "structure_prompt": "Write a LinkedIn post for the topic: {{topic}}\n\nStructure EXACTLY as follows:\n\n[HOOK LINE]\n(The first line is everything — it shows before 'see more'. Make it impossible to ignore. Bold claim, surprising statement, or strong opinion.)\n\n[STORY OR INSIGHT]\n(Personal angle or professional insight. Be specific. Vague posts get ignored.)\n\n[TAKEAWAY]\n(One clear lesson or actionable point.)\n\n[CTA]\n(End with a question to drive comments. Or a soft call to follow/save. Never both.)\n\nTarget length: {{duration}}. Use single-line paragraphs for readability. No hashtags in the body — add at the very end only.",
+      "hook_styles": ["personal_story", "hot_take", "lesson_learned", "surprising_stat", "unpopular_opinion"],
+      "extra_outputs": ["hook_variations", "hashtags"]
+    },
+    "PODCAST": {
+      "label": "Podcast intro",
+      "durations": ["2-3 min", "5 min"],
+      "structure_prompt": "Write a podcast episode intro script for the topic: {{topic}}\n\nStructure EXACTLY as follows:\n\n[COLD OPEN]\n(Start mid-thought or with a provocative line. Do NOT start with 'Welcome to the show'.)\n\n[EPISODE HOOK]\n(What will listeners learn? Why does it matter to them today, not in general?)\n\n[HOST INTRO] (if needed)\n(Brief, confident, specific to this episode)\n\n[TRANSITION]\n(Natural bridge into the main content or guest conversation)\n\nTarget length: {{duration}}. Conversational and warm. No corporate speak. Write as if talking to one person over coffee.",
+      "hook_styles": ["story_open", "stat_open", "question_open", "bold_claim"],
+      "extra_outputs": ["show_notes", "title_options", "social_clip_prompt"]
+    }
+  },
+  "extras_prompts": {
+    "title_options": "Based on the script above, generate 5 YouTube title options. Use these styles in your 5 options: curiosity gap, how-to, listicle, bold claim, question. Each title must be under 60 characters. No clickbait or misleading titles. Return as a numbered list.",
+    "description": "Write a YouTube video description for this script. The first 2 lines MUST work as a standalone hook — they show before the 'show more' button. Include a [TIMESTAMPS] placeholder section. End with a single soft CTA. Under 300 words total. No keyword stuffing.",
+    "tags": "Generate 15 YouTube tags relevant to this script. Mix 5 broad tags, 5 mid-range tags, and 5 niche-specific tags. Return as a comma-separated list, no # symbols.",
+    "chapters": "Based on the section headings in the script, write YouTube chapter timestamps. Assume the video starts at 00:00 and the creator speaks at approximately 130 words per minute. Format each chapter on its own line as: 00:00 - Chapter name",
+    "caption": "Write a short-form social media caption for this content. Maximum 3 lines. Hook first. End with either a question to drive comments or a CTA. Do not include hashtags in the caption body.",
+    "hashtags": "Generate 10 relevant hashtags for this content. Mix 3 niche hashtags (under 500k posts), 4 mid-range hashtags (500k-5m posts), and 3 broad hashtags (5m+ posts). Return as space-separated #tags.",
+    "hook_variations": "Write 3 alternative hook versions for this script using completely different angles. Label each clearly:\n[CURIOSITY]: builds intrigue\n[BOLD CLAIM]: states something controversial or surprising\n[RELATABLE PROBLEM]: opens with a pain point the viewer recognises",
+    "cover_text": "Suggest 3 options for text overlay on the first frame of this Reel. Each option must be under 6 words. Should make someone stop mid-scroll. Return as a numbered list.",
+    "show_notes": "Write podcast show notes for this episode intro. Include: episode summary (2-3 sentences), 3-5 key takeaways as bullet points, and a resources/links section placeholder. Under 200 words.",
+    "social_clip_prompt": "Identify the single most shareable 30-60 second clip from this script. Describe which section it is and why it would perform well as a standalone social clip."
+  },
+  "quality_rules": [
+    "Never open with: Hey guys, Welcome back, In this video, Today we're going to",
+    "Never close with: Don't forget to like and subscribe, Smash that like button",
+    "Never use filler phrases: basically, literally, actually, you know what I mean",
+    "Always write numbers as words when spoken aloud (twenty-three not 23)",
+    "Mark natural pause points with [PAUSE] for the creator when reading aloud",
+    "Mark words to emphasise with CAPS when reading aloud",
+    "Every sentence must earn its place — cut anything that doesn't add value",
+    "Write for the ear, not the eye — read every line aloud mentally before including it",
+    "Hooks must create a pattern interrupt — the viewer should feel compelled to continue",
+    "The CTA must feel like a natural conclusion, not an afterthought"
+  ],
+  "tone_presets": [
+    { "id": "educational", "label": "Educational", "description": "Clear, structured, builds understanding step by step. Like a great teacher." },
+    { "id": "entertaining", "label": "Entertaining", "description": "High energy, light, keeps it fun. Edutainment style." },
+    { "id": "motivational", "label": "Motivational", "description": "Inspiring, emotionally driven, pushes the viewer to take action." },
+    { "id": "conversational", "label": "Conversational", "description": "Relaxed, like talking to a trusted friend. No performance." },
+    { "id": "authoritative", "label": "Authoritative", "description": "Expert-level, confident, data-driven. Commands respect." },
+    { "id": "storytelling", "label": "Storytelling", "description": "Narrative-driven with emotional arc. Personal and immersive." }
+  ]
+}

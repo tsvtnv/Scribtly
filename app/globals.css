@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #F1EFE8;
+  --color-surface: #FFFFFF;
+  --color-border: rgba(44, 44, 42, 0.12);
+  --color-text: #2C2C2A;
+  --color-text-muted: #5F5E5A;
+  --color-primary: #7F77DD;
+  --color-primary-tint: rgba(127, 119, 221, 0.12);
+}
+
+.dark {
+  --color-bg: #1A1A1A;
+  --color-surface: #252523;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text: #F1EFE8;
+  --color-text-muted: #A3A19C;
+  --color-primary: #9D96E8;
+  --color-primary-tint: rgba(157, 150, 232, 0.16);
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+*, *::before, *::after {
+  border-color: var(--color-border);
+}
+
+button {
+  cursor: pointer;
+}
+
+input, textarea, select {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+::selection {
+  background: var(--color-primary-tint);
+  color: var(--color-text);
+}
