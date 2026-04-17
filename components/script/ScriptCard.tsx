@@ -61,7 +61,7 @@ export function ScriptCard({
 
       {/* Meta row: word count + duration */}
       <p className="text-[11px] text-[var(--color-text-tertiary)] mb-1.5">
-        {script.wordCount ?? 0} words · {script.duration}
+        {script.wordCount ?? 0} words{script.duration ? ` · ${script.duration}` : ''}
       </p>
 
       {/* Client row */}
