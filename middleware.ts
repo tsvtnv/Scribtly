@@ -14,6 +14,8 @@ const isPublic = createRouteMatcher([
   "/api/review/(.*)",
   "/unsubscribed",
   "/api/user/unsubscribe",
+  "/admin(.*)",
+  "/api/admin/(.*)",
 ]);
 
 export default clerkMiddleware((auth, req) => {
