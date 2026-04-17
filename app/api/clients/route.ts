@@ -76,6 +76,18 @@ export async function POST(req: NextRequest) {
         contentPillars: data.contentPillars || null,
       },
     });
+
+    // Onboarding: track first client added
+    if (!workspace.firstClientAddedAt) {
+      void prisma.workspace.update({
+        where: { id: workspace.id },
+        data: {
+          firstClientAddedAt: new Date(),
+          onboardingStep: Math.max(workspace.onboardingStep, 1),
+        },
+      });
+    }
+
     return NextResponse.json({ client }, { status: 201 });
   } catch (err) {
     return errorResponse(err);
