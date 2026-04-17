@@ -11,30 +11,36 @@ const schema = z.object({
 })
 
 export async function POST(req: NextRequest, { params }: { params: { token: string } }) {
-  const script = await prisma.script.findFirst({
-    where: { shareToken: params.token, shareEnabled: true },
-    select: { id: true },
-  })
-  if (!script) {
-    return NextResponse.json({ error: 'Script not found' }, { status: 404 })
+  try {
+    const script = await prisma.script.findFirst({
+      where: { shareToken: params.token, shareEnabled: true },
+      select: { id: true },
+    })
+    if (!script) {
+      return NextResponse.json({ error: 'Script not found' }, { status: 404 })
+    }
+
+    const body = await req.json()
+    const parsed = schema.safeParse(body)
+    if (!parsed.success) {
+      return NextResponse.json({ error: 'Invalid input', issues: parsed.error.issues }, { status: 400 })
+    }
+
+    const { authorName, body: commentBody, verdict } = parsed.data
+
+    const comment = await prisma.scriptComment.create({
+      data: {
+        scriptId:   script.id,
+        authorName,
+        body:       commentBody,
+        verdict:    verdict ?? null,
+      },
+      select: { id: true, authorName: true, body: true, verdict: true, createdAt: true },
+    })
+
+    return NextResponse.json({ ...comment, createdAt: comment.createdAt.toISOString() }, { status: 201 })
+  } catch (err) {
+    console.error('[review/comment/POST]', err)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
-
-  const body = await req.json()
-  const parsed = schema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: 'Invalid input', issues: parsed.error.issues }, { status: 400 })
-  }
-
-  const { authorName, body: commentBody, verdict } = parsed.data
-
-  const comment = await prisma.scriptComment.create({
-    data: {
-      scriptId:   script.id,
-      authorName,
-      body:       commentBody,
-      verdict:    verdict ?? null,
-    },
-  })
-
-  return NextResponse.json({ ...comment, createdAt: comment.createdAt.toISOString() }, { status: 201 })
 }
