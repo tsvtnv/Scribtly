@@ -18,7 +18,7 @@ export function InviteEmailTemplate({
             {inviterName} invited you to {workspaceName}
           </Heading>
           <Text style={{ color: "#5F5E5A", lineHeight: 1.6 }}>
-            Join the workspace on ScriptFast to collaborate on client scripts.
+            Join the workspace on Scribtly to collaborate on client scripts.
           </Text>
           <Button
             href={acceptUrl}

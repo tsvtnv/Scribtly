@@ -99,7 +99,7 @@ export function Sidebar() {
       >
         <div className="px-5 pt-6 pb-4 flex items-center justify-between">
           <Link href="/dashboard" className="text-lg font-semibold tracking-tight">
-            ScriptFast
+            Scribtly
           </Link>
           <button onClick={() => setMobileOpen(false)} className="p-1 rounded hover:bg-[var(--color-primary-tint)]" aria-label="Close menu">
             <X size={16} />
@@ -126,7 +126,7 @@ export function Sidebar() {
         <div className={cn("pt-6 pb-4 flex items-center", collapsed ? "justify-center px-2" : "px-5 justify-between")}>
           {!collapsed && (
             <Link href="/dashboard" className="text-lg font-semibold tracking-tight truncate">
-              ScriptFast
+              Scribtly
             </Link>
           )}
           <button

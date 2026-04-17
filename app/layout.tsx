@@ -7,10 +7,10 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "ScriptFast — AI video scripts for freelancers",
+  title: "Scribtly — AI video scripts for freelancers",
   description:
     "Generate YouTube, TikTok, and Reels scripts in your client's exact voice — in under 60 seconds.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://scriptfast.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com"),
 };
 
 const themeScript = `

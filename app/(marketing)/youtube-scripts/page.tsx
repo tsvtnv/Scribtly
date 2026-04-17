@@ -4,9 +4,9 @@ import { Card } from "@/components/ui/Card";
 import { Check } from "lucide-react";
 
 export const metadata = {
-  title: "YouTube script writer for freelancers — ScriptFast",
+  title: "YouTube script writer for freelancers — Scribtly",
   description:
-    "Write YouTube scripts that keep viewers watching. ScriptFast generates long-form YouTube scripts in your client's exact voice, with hooks, sections, and CTAs built for the algorithm.",
+    "Write YouTube scripts that keep viewers watching. Scribtly generates long-form YouTube scripts in your client's exact voice, with hooks, sections, and CTAs built for the algorithm.",
 };
 
 const steps = [
@@ -31,7 +31,7 @@ export default function YouTubePage() {
           YouTube scripts that keep viewers watching
         </h1>
         <p className="text-base text-text-secondary dark:text-dark-muted mt-5 max-w-2xl mx-auto">
-          Stop writing from a blank page. ScriptFast generates a full YouTube script — hook, intro, sections, CTA — in your client's voice, in under 60 seconds.
+          Stop writing from a blank page. Scribtly generates a full YouTube script — hook, intro, sections, CTA — in your client's voice, in under 60 seconds.
         </p>
         <Link href="/signup" className="inline-block mt-7">
           <Button size="lg">Start free — 3 scripts</Button>

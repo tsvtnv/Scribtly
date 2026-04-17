@@ -38,7 +38,7 @@ export default function AdminLoginPage() {
       <Card className="w-full max-w-sm space-y-4">
         <div>
           <h1 className="text-lg font-semibold">Admin access</h1>
-          <p className="text-sm text-text-secondary mt-0.5">ScriptFast internal dashboard</p>
+          <p className="text-sm text-text-secondary mt-0.5">Scribtly internal dashboard</p>
         </div>
         <form onSubmit={onSubmit} className="space-y-3">
           <Input

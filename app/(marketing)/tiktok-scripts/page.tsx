@@ -4,9 +4,9 @@ import { Card } from "@/components/ui/Card";
 import { Check } from "lucide-react";
 
 export const metadata = {
-  title: "TikTok script writer for freelancers — ScriptFast",
+  title: "TikTok script writer for freelancers — Scribtly",
   description:
-    "Write TikTok scripts that hook viewers in the first second. ScriptFast generates short-form scripts in your client's exact voice — 15, 30, or 60 seconds.",
+    "Write TikTok scripts that hook viewers in the first second. Scribtly generates short-form scripts in your client's exact voice — 15, 30, or 60 seconds.",
 };
 
 const steps = [

@@ -5,7 +5,7 @@ import { FreeLimitReachedEmail } from "@/lib/emails/FreeLimitReached";
 import { UpgradeConfirmationEmail } from "@/lib/emails/UpgradeConfirmation";
 import { InviteEmailTemplate } from "@/lib/emails/InviteEmail";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scriptfast.app";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
 
 async function send(params: Parameters<typeof resend.emails.send>[0]) {
   if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === "re_placeholder") {
@@ -43,7 +43,7 @@ export async function sendUpgradeConfirmation({ to, plan }: { to: string; plan: 
   return send({
     from: EMAIL_FROM,
     to,
-    subject: `You're now on ScriptFast ${plan === "AGENCY" ? "Agency" : "Pro"}`,
+    subject: `You're now on Scribtly ${plan === "AGENCY" ? "Agency" : "Pro"}`,
     react: UpgradeConfirmationEmail({ plan, appUrl: APP_URL }),
   });
 }
@@ -62,7 +62,7 @@ export async function sendInvite({
   return send({
     from: EMAIL_FROM,
     to,
-    subject: `${inviterName} invited you to ${workspaceName} on ScriptFast`,
+    subject: `${inviterName} invited you to ${workspaceName} on Scribtly`,
     react: InviteEmailTemplate({ inviterName, workspaceName, acceptUrl }),
   });
 }

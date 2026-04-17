@@ -21,9 +21,9 @@ try {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-12-18.acacia" as Stripe.LatestApiVersion });
 
 const PRODUCTS = [
-  { key: "BASIC", name: "ScriptFast Basic", amount_gbp: 500, envVar: "STRIPE_BASIC_PRICE_ID" },
-  { key: "PRO", name: "ScriptFast Pro", amount_gbp: 1900, envVar: "STRIPE_PRO_PRICE_ID" },
-  { key: "AGENCY", name: "ScriptFast Agency", amount_gbp: 4900, envVar: "STRIPE_AGENCY_PRICE_ID" },
+  { key: "BASIC", name: "Scribtly Basic", amount_gbp: 500, envVar: "STRIPE_BASIC_PRICE_ID" },
+  { key: "PRO", name: "Scribtly Pro", amount_gbp: 1900, envVar: "STRIPE_PRO_PRICE_ID" },
+  { key: "AGENCY", name: "Scribtly Agency", amount_gbp: 4900, envVar: "STRIPE_AGENCY_PRICE_ID" },
 ];
 
 async function main() {

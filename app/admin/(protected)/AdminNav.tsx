@@ -23,7 +23,7 @@ export function AdminNav() {
   return (
     <aside className="hidden md:flex flex-col w-52 min-h-screen border-r border-[var(--color-border)] bg-[var(--color-surface)] shrink-0">
       <div className="px-5 pt-6 pb-4">
-        <div className="text-lg font-semibold tracking-tight">ScriptFast</div>
+        <div className="text-lg font-semibold tracking-tight">Scribtly</div>
         <div className="text-xs text-danger font-medium mt-0.5">Admin</div>
       </div>
       <nav className="flex-1 px-2 space-y-0.5">

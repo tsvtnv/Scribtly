@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     }
     const data = parsed.data;
 
-    const to = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@scriptfast.app";
+    const to = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@scribtly.com";
     const subject = `New Enterprise enquiry from ${data.name} — ${data.scripts_needed} scripts/month`;
 
     const text = [

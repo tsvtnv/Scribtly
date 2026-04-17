@@ -6,7 +6,7 @@ export function MarketingNav() {
     <nav className="sticky top-0 z-40 w-full bg-[var(--color-bg)]/80 backdrop-blur border-b-hair border-[var(--color-border)]">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
         <Link href="/" className="text-lg font-semibold tracking-tight">
-          ScriptFast
+          Scribtly
         </Link>
         <div className="flex items-center gap-5 text-sm">
           <Link href="/pricing" className="hover:text-primary">Pricing</Link>

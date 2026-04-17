@@ -50,7 +50,7 @@ export function ScriptPdfDocument({
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.headerRow} fixed>
-          <Text style={styles.wordmark}>ScriptFast</Text>
+          <Text style={styles.wordmark}>Scribtly</Text>
           <Text style={styles.wsName}>{workspace.name}</Text>
         </View>
 
@@ -87,7 +87,7 @@ export function ScriptPdfDocument({
         </View>
 
         <View style={styles.footer} fixed>
-          <Text>ScriptFast · {client?.name || "Unassigned"}</Text>
+          <Text>Scribtly · {client?.name || "Unassigned"}</Text>
           <Text render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} />
         </View>
       </Page>

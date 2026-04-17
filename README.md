@@ -1,9 +1,9 @@
-# ScriptFast
+# Scribtly
 
 AI video script generator for freelancers. Generate YouTube, TikTok, Reels, LinkedIn, and Podcast scripts in your client's exact voice — in under 60 seconds.
 
-- **Design spec:** [`docs/superpowers/specs/2026-04-17-scriptfast-design.md`](docs/superpowers/specs/2026-04-17-scriptfast-design.md)
-- **Implementation plan:** [`docs/superpowers/plans/2026-04-17-scriptfast-implementation.md`](docs/superpowers/plans/2026-04-17-scriptfast-implementation.md)
+- **Design spec:** [`docs/superpowers/specs/2026-04-17-scribtly-design.md`](docs/superpowers/specs/2026-04-17-scribtly-design.md)
+- **Implementation plan:** [`docs/superpowers/plans/2026-04-17-scribtly-implementation.md`](docs/superpowers/plans/2026-04-17-scribtly-implementation.md)
 
 ## Tech stack
 
@@ -40,7 +40,7 @@ Get a key from [console.anthropic.com](https://console.anthropic.com/) and set `
 
 ### 5. Stripe
 
-1. Create subscription products in [dashboard.stripe.com](https://dashboard.stripe.com): "ScriptFast Basic" (£5/mo), "ScriptFast Pro" (£19/mo), and "ScriptFast Agency" (£49/mo). Copy the price IDs into the matching `STRIPE_*_PRICE_ID` env vars.
+1. Create subscription products in [dashboard.stripe.com](https://dashboard.stripe.com): "Scribtly Basic" (£5/mo), "Scribtly Pro" (£19/mo), and "Scribtly Agency" (£49/mo). Copy the price IDs into the matching `STRIPE_*_PRICE_ID` env vars.
 2. Set `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`.
 3. Create a webhook endpoint pointing to `https://YOUR_DOMAIN/api/stripe/webhook`. Subscribe to:
    - `checkout.session.completed`
@@ -51,7 +51,7 @@ Get a key from [console.anthropic.com](https://console.anthropic.com/) and set `
 ### 6. Resend
 
 1. Sign up at [resend.com](https://resend.com).
-2. Add and verify `scriptfast.app` (or your own domain) so `hello@scriptfast.app` can send.
+2. Add and verify `scribtly.com` (or your own domain) so `hello@scribtly.com` can send.
 3. Copy the API key into `RESEND_API_KEY`.
 
 ### 7. Run

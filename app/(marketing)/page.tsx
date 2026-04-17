@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 
 export const metadata = {
-  title: "ScriptFast — AI video scripts for freelancers in your client's voice",
+  title: "Scribtly — AI video scripts for freelancers in your client's voice",
   description:
     "Generate YouTube, TikTok, and Reels scripts for your clients in under 60 seconds. Save each client's voice once, generate forever.",
 };
 
 const features = [
   { icon: Sparkles, title: "Save client profiles once", desc: "Name, niche, tone, audience — stored forever. Every script auto-written in their voice." },
-  { icon: FileText, title: "Platform-specific structure", desc: "YouTube hooks are different to TikTok. ScriptFast knows. You don't have to explain it." },
+  { icon: FileText, title: "Platform-specific structure", desc: "YouTube hooks are different to TikTok. Scribtly knows. You don't have to explain it." },
   { icon: Library, title: "Script library per client", desc: "All scripts organised by client. Find, reuse, export any script in seconds." },
   { icon: Download, title: "One-click export", desc: "Download as PDF or copy to clipboard. Ready to send to your client instantly." },
 ];
@@ -33,7 +33,7 @@ export default function HomePage() {
           <span className="text-primary">in your client's exact voice</span>
         </h1>
         <p className="text-base md:text-lg text-text-secondary dark:text-dark-muted mt-6 max-w-2xl mx-auto">
-          ScriptFast generates YouTube, TikTok and Reels scripts for your clients in under 60 seconds. Save their brand voice once. Generate forever.
+          Scribtly generates YouTube, TikTok and Reels scripts for your clients in under 60 seconds. Save their brand voice once. Generate forever.
         </p>
         <div className="mt-8 flex flex-wrap gap-3 items-center justify-center">
           <Link href="/signup">
@@ -64,7 +64,7 @@ export default function HomePage() {
 
       <section className="max-w-5xl mx-auto px-5 py-16">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-3">
-          ScriptFast remembers your clients so you don't have to
+          Scribtly remembers your clients so you don't have to
         </h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-10 max-w-2xl mx-auto">
           Four things we do that generic AI chatbots can't.

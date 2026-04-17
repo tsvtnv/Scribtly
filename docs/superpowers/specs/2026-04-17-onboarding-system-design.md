@@ -1,6 +1,6 @@
 # Onboarding System Design
 **Date:** 2026-04-17  
-**App:** ScriptFast  
+**App:** Scribtly  
 **Goal:** Get every new user to generate their first script within 10 minutes of signup, then convert free users to paid within 7 days.
 
 ---
@@ -134,7 +134,7 @@ Side effect: updates `onboardingStep` to 3 if conditions met (scripts page visit
 ### `GET /api/user/unsubscribe?token={workspaceId}`
 **Auth:** none (public link from email)  
 Sets `workspace.emailOptOut = true` where `workspace.id === token`.  
-Redirects to `/unsubscribed` (simple static page: "You've been unsubscribed from ScriptFast emails.").
+Redirects to `/unsubscribed` (simple static page: "You've been unsubscribed from Scribtly emails.").
 
 ---
 
@@ -144,14 +144,14 @@ Redirects to `/unsubscribed` (simple static page: "You've been unsubscribed from
 **Existing** `lib/sendEmail.ts` is untouched — new file is purely additive.
 
 **All emails:**
-- From: `Deyan from ScriptFast <deyan@scriptfast.app>`
-- Reply-to: `deyan@scriptfast.app`
+- From: `Deyan from Scribtly <deyan@scribtly.com>`
+- Reply-to: `deyan@scribtly.com`
 - Format: plain text (no HTML, no React Email)
 - Footer on every email:
   ```
   ---
   To stop receiving these emails: {appUrl}/unsubscribe?token={workspaceId}
-  ScriptFast · hello@scriptfast.app
+  Scribtly · hello@scribtly.com
   ```
 
 ### Exported functions
@@ -171,7 +171,7 @@ Each function checks `workspace.emailOptOut` before sending and returns early if
 ### Email content
 
 **Email 1 — Welcome** (immediate on signup)  
-Subject: `Your ScriptFast account is ready`  
+Subject: `Your Scribtly account is ready`  
 Plain text per spec. CTA: `/clients/new`
 
 **Email 2 — Day-2 no script** (48h, firstScriptGeneratedAt null)  
@@ -207,7 +207,7 @@ All new components in `components/onboarding/`.
 ### `OnboardingBanner.tsx`
 - Shown on dashboard when `onboardingStep === 0`
 - Inline card (not modal) above the stats row
-- Headline: "Welcome to ScriptFast"
+- Headline: "Welcome to Scribtly"
 - 3-step visual: Add client → Generate script → Ship content
 - Primary CTA: "Add your first client" → `/clients/new`
 - Dismiss: calls `PATCH /api/user/onboarding` with `{ onboardingStep: 1 }`, sets `localStorage.sf_banner_dismissed = true`

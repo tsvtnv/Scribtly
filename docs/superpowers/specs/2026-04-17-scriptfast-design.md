@@ -1,4 +1,4 @@
-# ScriptFast — Design Spec
+# Scribtly — Design Spec
 
 **Date:** 2026-04-17
 **Status:** Approved for implementation
@@ -8,7 +8,7 @@
 
 ## 1. Goals & Scope
 
-ScriptFast is a freemium SaaS that generates video scripts (YouTube, TikTok, Reels, LinkedIn, Podcast) for freelancers in their clients' exact voice. Users save client profiles once and generate platform-aware scripts that stream in real-time, with optional extras (titles, hashtags, descriptions, etc.) and PDF export.
+Scribtly is a freemium SaaS that generates video scripts (YouTube, TikTok, Reels, LinkedIn, Podcast) for freelancers in their clients' exact voice. Users save client profiles once and generate platform-aware scripts that stream in real-time, with optional extras (titles, hashtags, descriptions, etc.) and PDF export.
 
 **In scope:** Everything in `build_order` steps 1–11 of the source JSON, plus:
 - Workspace model with Agency team invites (5-seat cap)
@@ -292,7 +292,7 @@ Verifies signature with `STRIPE_WEBHOOK_SECRET`. Handlers (all idempotent):
 Member access (script.workspaceId === workspace.id). Plan gate: `canExportPDF` (PRO/AGENCY).
 
 `@react-pdf/renderer` document:
-- Header: ScriptFast logo + workspace name
+- Header: Scribtly logo + workspace name
 - Subheader: client name + platform badge + date
 - Body: parsed script (section headers as h2, inline tags subtle, CAPS preserved)
 - Footer: word count + duration
@@ -311,7 +311,7 @@ Three templates in `lib/emails/` as React components:
 
 All sends fire-and-forget: `void resend.emails.send(...).catch(logError)`. Email failure never blocks user action.
 
-`from`: `hello@scriptfast.app` (per spec; user must verify domain in Resend dashboard).
+`from`: `hello@scribtly.com` (per spec; user must verify domain in Resend dashboard).
 
 ---
 

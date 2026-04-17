@@ -48,7 +48,7 @@ export function OnboardingBanner({ onboardingStep }: { onboardingStep: number })
         <X size={16} />
       </button>
       <div className="pr-6">
-        <h2 className="font-semibold text-base mb-1">Welcome to ScriptFast</h2>
+        <h2 className="font-semibold text-base mb-1">Welcome to Scribtly</h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted mb-4">
           You're 3 steps away from your first AI-generated script.
         </p>
