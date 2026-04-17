@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
           firstClientAddedAt: new Date(),
           onboardingStep: Math.max(workspace.onboardingStep, 1),
         },
-      });
+      }).catch((err) => console.error("Onboarding step update failed:", err));
     }
 
     return NextResponse.json({ client }, { status: 201 });

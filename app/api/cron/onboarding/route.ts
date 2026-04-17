@@ -27,18 +27,24 @@ export async function POST(req: NextRequest) {
   const d7 = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
   const d14 = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
 
-  const workspaces = await prisma.workspace.findMany({
-    where: { emailOptOut: false },
-    include: { owner: true },
-  });
-
   let welcomed = 0;
   let day2Sent = 0;
   let day7Sent = 0;
   let day14Sent = 0;
   const errors: string[] = [];
 
-  for (const ws of workspaces) {
+  let cursor: string | undefined;
+  do {
+    const batch = await prisma.workspace.findMany({
+      where: { emailOptOut: false },
+      include: { owner: true },
+      take: 200,
+      ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}),
+      orderBy: { id: "asc" },
+    });
+    if (batch.length === 0) break;
+
+    for (const ws of batch) {
     try {
       const email = ws.owner.email;
       const name = firstName(ws.owner.name, email);
