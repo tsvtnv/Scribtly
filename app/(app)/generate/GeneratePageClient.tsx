@@ -44,7 +44,7 @@ export function GeneratePageClient({
   // Show pre-emptive upgrade warning at 2/3 used
   useEffect(() => {
     if (plan === "FREE" && scriptCount === 2 && !upgradeOpen) {
-      toast.push("You've used 2 of 3 free scripts. Upgrade for unlimited.", "info");
+      toast.push("You've used 2 of 3 free scripts. Upgrade for more.", "info");
     }
   }, [plan, scriptCount, upgradeOpen, toast]);
 

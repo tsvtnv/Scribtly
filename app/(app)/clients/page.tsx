@@ -37,7 +37,7 @@ export default async function ClientsPage() {
               <Plus size={16} /> New client
             </Button>
             <div className="absolute right-0 top-full mt-1 w-64 text-xs bg-[var(--color-surface)] border-hair border-[var(--color-border)] rounded-md p-2 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
-              You're on the Free plan (1 client max). Upgrade to Pro for unlimited clients.
+              You're on the Free plan (1 client max). Upgrade to Pro for more clients.
             </div>
           </div>
         )}

@@ -10,7 +10,7 @@ export function UpgradeConfirmationEmail({ plan, appUrl }: { plan: Plan; appUrl:
         <Container style={{ background: "#FFFFFF", borderRadius: 12, padding: 32, maxWidth: 520, margin: "0 auto" }}>
           <Heading style={{ fontSize: 22, margin: "0 0 12px" }}>You're now on ScriptFast {label}</Heading>
           <Text style={{ color: "#5F5E5A", lineHeight: 1.6 }}>
-            Your {label} plan is active. Unlimited scripts, every platform, and PDF export are now yours.
+            Your {label} plan is active. More scripts, every platform, and PDF export are now yours.
           </Text>
           <Button
             href={`${appUrl}/generate`}

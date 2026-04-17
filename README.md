@@ -7,7 +7,7 @@ AI video script generator for freelancers. Generate YouTube, TikTok, Reels, Link
 
 ## Tech stack
 
-Next.js 14 (App Router) · TypeScript · Tailwind · Clerk · Supabase Postgres via Prisma · Anthropic (claude-sonnet-4) · Stripe · Resend · `@react-pdf/renderer` · Vercel.
+Next.js 14 (App Router) · TypeScript · Tailwind · Clerk · Supabase Postgres via Prisma · Anthropic · Stripe · Resend · `@react-pdf/renderer` · Vercel.
 
 ## Setup
 
@@ -40,7 +40,7 @@ Get a key from [console.anthropic.com](https://console.anthropic.com/) and set `
 
 ### 5. Stripe
 
-1. Create two subscription products in [dashboard.stripe.com](https://dashboard.stripe.com): "ScriptFast Pro" (£29/mo) and "ScriptFast Agency" (£79/mo). Copy the price IDs into `STRIPE_PRO_PRICE_ID` and `STRIPE_AGENCY_PRICE_ID`.
+1. Create subscription products in [dashboard.stripe.com](https://dashboard.stripe.com): "ScriptFast Basic" (£5/mo), "ScriptFast Pro" (£19/mo), and "ScriptFast Agency" (£49/mo). Copy the price IDs into the matching `STRIPE_*_PRICE_ID` env vars.
 2. Set `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`.
 3. Create a webhook endpoint pointing to `https://YOUR_DOMAIN/api/stripe/webhook`. Subscribe to:
    - `checkout.session.completed`
@@ -73,9 +73,11 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Plan | Price | Scripts | Clients | Platforms | Extras | PDF | Team |
 |------|-------|---------|---------|-----------|--------|-----|------|
-| Free | £0 | 3/mo | 1 | YouTube only | — | — | — |
-| Pro | £29/mo | ∞ | ∞ | All 5 | ✓ | ✓ | 1 |
-| Agency | £79/mo | ∞ | ∞ | All 5 | ✓ | ✓ | 5 + bulk |
+| Free | £0 | 5/mo | 1 | YouTube only | — | — | — |
+| Basic | £5/mo | 25/mo | 3 | All 5 | — | — | — |
+| Pro | £19/mo | 100/mo | 10 | All 5 | ✓ | ✓ | 1 |
+| Agency | £49/mo | 350/mo | ∞ | All 5 | ✓ | ✓ | 3 + bulk |
+| Enterprise | Custom | Custom | ∞ | All 5 | ✓ | ✓ | ∞ |
 
 ## Scripts
 

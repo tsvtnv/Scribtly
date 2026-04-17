@@ -59,7 +59,7 @@ export default async function DashboardPage() {
             <div>
               <div className="font-medium text-sm">You've used {workspace.scriptCount} of 3 free scripts.</div>
               <div className="text-xs text-text-secondary dark:text-dark-muted">
-                Upgrade to Pro for unlimited scripts and all platforms.
+                Upgrade to Pro for more scripts and all platforms.
               </div>
             </div>
             <Link href="/settings/billing"><Button size="sm">Upgrade</Button></Link>
@@ -83,7 +83,7 @@ export default async function DashboardPage() {
           </div>
           <div className="text-3xl font-semibold">{totalClients}</div>
           <div className="text-xs text-text-secondary dark:text-dark-muted mt-1">
-            {workspace.plan === "FREE" ? `of 1 on Free plan` : `Unlimited on ${workspace.plan}`}
+            {workspace.plan === "FREE" ? `of 1 on Free plan` : `On ${workspace.plan}`}
           </div>
         </Card>
         <Card>

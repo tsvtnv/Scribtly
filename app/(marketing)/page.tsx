@@ -85,7 +85,7 @@ export default function HomePage() {
           Start free. Upgrade when you're ready.
         </h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted mb-6">
-          3 free scripts. No credit card. Upgrade for unlimited anytime.
+          5 free scripts. No credit card. Upgrade anytime.
         </p>
         <Link href="/signup">
           <Button size="lg">Start generating free</Button>
