@@ -124,17 +124,6 @@ export function GenerateForm({
     });
   }
 
-  if (clients.length === 0) {
-    return (
-      <Card className="text-center">
-        <p className="text-sm mb-4">Add a client profile to start generating scripts.</p>
-        <Link href="/clients/new">
-          <Button>Add your first client</Button>
-        </Link>
-      </Card>
-    );
-  }
-
   const platformCfg = cfg[platform];
 
   return (

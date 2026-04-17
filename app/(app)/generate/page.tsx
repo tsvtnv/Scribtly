@@ -8,9 +8,13 @@ import { Button } from "@/components/ui/Button";
 
 export default async function GeneratePage() {
   const { workspace } = await ensureUser();
-  const clientCount = await prisma.client.count({ where: { workspaceId: workspace.id } });
 
-  if (clientCount === 0) {
+  const clients = await prisma.client.findMany({
+    where: { workspaceId: workspace.id },
+    orderBy: { createdAt: "desc" },
+  });
+
+  if (clients.length === 0) {
     return (
       <div className="p-6 md:p-10 max-w-2xl mx-auto">
         <div className="text-center py-16 space-y-3">
@@ -26,13 +30,8 @@ export default async function GeneratePage() {
     );
   }
 
-  const clients = await prisma.client.findMany({
-    where: { workspaceId: workspace.id },
-    orderBy: { createdAt: "desc" },
-  });
-
   const limit = getScriptLimit(workspace.plan);
-  const usagePct = limit === Infinity ? 0 : workspace.scriptCount / limit;
+  const isUnlimited = limit >= 999999;
   const resetDate = workspace.scriptCountResetAt.toLocaleDateString("en-GB", { day: "numeric", month: "long" });
 
   return (
@@ -43,7 +42,7 @@ export default async function GeneratePage() {
           Pick a client, pick a platform, and your script will stream in.
         </p>
       </div>
-      {usagePct >= 0.8 && limit !== Infinity && (
+      {!isUnlimited && workspace.scriptCount / limit >= 0.8 && (
         <div className="rounded-md border border-amber-300 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-800 px-4 py-3 flex items-center justify-between gap-4 flex-wrap mb-4">
           <span className="text-sm text-amber-800 dark:text-amber-300">
             You've used <strong>{workspace.scriptCount}</strong> of <strong>{limit}</strong> scripts this month — resets {resetDate}.
