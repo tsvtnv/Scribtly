@@ -7,6 +7,7 @@ import {
   hasReachedScriptLimit,
   canUsePlatform,
   canUseExtras,
+  getRemainingScripts,
 } from "@/lib/planLimits";
 import {
   canUseClaudeModel,
@@ -20,6 +21,8 @@ import {
   errorResponse,
 } from "@/lib/errors";
 import { buildPrompt } from "@/lib/buildPrompt";
+import { sendFirstScriptEmail } from "@/lib/emails/onboarding";
+import { sendFreeLimitReached } from "@/lib/sendEmail";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -39,7 +42,7 @@ const bodySchema = z.object({
 export async function POST(req: NextRequest) {
   let workspaceId: string | null = null;
   try {
-    const { workspace } = await ensureUser();
+    const { workspace, user } = await ensureUser();
     workspaceId = workspace.id;
 
     const raw = await req.json();
@@ -76,8 +79,6 @@ export async function POST(req: NextRequest) {
     if (updated.scriptCount === 3 && updated.plan === "FREE") {
       void (async () => {
         try {
-          const { sendFreeLimitReached } = await import("@/lib/sendEmail");
-          const { user } = await ensureUser();
           await sendFreeLimitReached({ to: user.email });
         } catch (err) {
           console.error("FreeLimit email failed", err);
@@ -125,10 +126,7 @@ export async function POST(req: NextRequest) {
                     onboardingStep: Math.max(workspace.onboardingStep, 2),
                   },
                 });
-                const { getRemainingScripts } = await import("@/lib/planLimits");
                 const remaining = getRemainingScripts({ ...workspace, scriptCount: updated.scriptCount });
-                const { sendFirstScriptEmail } = await import("@/lib/emails/onboarding");
-                const { user } = await ensureUser();
                 const fName = user.name?.split(" ")[0] || user.email.split("@")[0];
                 await sendFirstScriptEmail(workspace.id, user.email, fName, remaining);
               } catch (err) {
