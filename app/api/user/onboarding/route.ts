@@ -11,22 +11,24 @@ export async function GET() {
     const { workspace } = await ensureUser();
 
     // Side effect: advance to step 3 if scripts page visited and step 2 already done
-    if (workspace.onboardingStep < 3 && workspace.firstScriptGeneratedAt !== null) {
+    let currentStep = workspace.onboardingStep;
+    if (currentStep < 3 && workspace.firstScriptGeneratedAt !== null) {
       await prisma.workspace.update({
         where: { id: workspace.id },
-        data: { onboardingStep: Math.max(workspace.onboardingStep, 3) },
+        data: { onboardingStep: Math.max(currentStep, 3) },
       });
+      currentStep = 3;
     }
 
     const checklist = [
       { id: 1, key: "add_client", completed: workspace.firstClientAddedAt !== null },
       { id: 2, key: "generate_script", completed: workspace.firstScriptGeneratedAt !== null },
-      { id: 3, key: "explore_library", completed: workspace.onboardingStep >= 3 },
+      { id: 3, key: "explore_library", completed: currentStep >= 3 },
       { id: 4, key: "invite_or_upgrade", completed: workspace.plan !== "FREE" },
     ];
 
     return NextResponse.json({
-      onboardingStep: workspace.onboardingStep,
+      onboardingStep: currentStep,
       onboardingCompleted: workspace.onboardingCompleted,
       firstScriptGeneratedAt: workspace.firstScriptGeneratedAt,
       firstClientAddedAt: workspace.firstClientAddedAt,
@@ -40,23 +42,47 @@ export async function GET() {
 export async function PATCH(req: NextRequest) {
   try {
     const { workspace } = await ensureUser();
-    const body = await req.json();
 
-    const allowed = [
-      "onboardingStep",
-      "onboardingCompleted",
-      "firstClientAddedAt",
-      "firstScriptGeneratedAt",
-    ] as const;
-
-    const data: Record<string, unknown> = {};
-    for (const key of allowed) {
-      if (key in body) data[key] = body[key];
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
-    // onboardingStep: only allow advancing, never going back
-    if ("onboardingStep" in data && typeof data.onboardingStep === "number") {
-      data.onboardingStep = Math.max(workspace.onboardingStep, data.onboardingStep as number);
+    if (typeof body !== "object" || body === null) {
+      return NextResponse.json({ error: "Invalid body" }, { status: 400 });
+    }
+
+    const b = body as Record<string, unknown>;
+    const data: {
+      onboardingStep?: number;
+      onboardingCompleted?: boolean;
+      firstClientAddedAt?: Date | null;
+      firstScriptGeneratedAt?: Date | null;
+    } = {};
+
+    if ("onboardingStep" in b) {
+      if (typeof b.onboardingStep !== "number") {
+        return NextResponse.json({ error: "onboardingStep must be a number" }, { status: 400 });
+      }
+      data.onboardingStep = Math.max(workspace.onboardingStep, b.onboardingStep);
+    }
+    if ("onboardingCompleted" in b) {
+      if (typeof b.onboardingCompleted !== "boolean") {
+        return NextResponse.json({ error: "onboardingCompleted must be a boolean" }, { status: 400 });
+      }
+      data.onboardingCompleted = b.onboardingCompleted;
+    }
+    if ("firstClientAddedAt" in b) {
+      data.firstClientAddedAt = b.firstClientAddedAt ? new Date(b.firstClientAddedAt as string) : null;
+    }
+    if ("firstScriptGeneratedAt" in b) {
+      data.firstScriptGeneratedAt = b.firstScriptGeneratedAt ? new Date(b.firstScriptGeneratedAt as string) : null;
+    }
+
+    if (Object.keys(data).length === 0) {
+      return NextResponse.json({ ok: true });
     }
 
     await prisma.workspace.update({ where: { id: workspace.id }, data });
