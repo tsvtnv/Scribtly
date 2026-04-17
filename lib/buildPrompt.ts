@@ -30,6 +30,7 @@ export interface BuildPromptInput {
   duration: string;
   hookStyle?: string | null;
   extraOutputs?: string[];
+  model?: string;
 }
 
 export interface BuiltPrompt {
@@ -79,7 +80,7 @@ export function buildPrompt(input: BuildPromptInput): BuiltPrompt {
   return {
     system,
     userMessage,
-    model: config.model,
+    model: input.model || config.model,
     max_tokens: config.max_tokens,
   };
 }

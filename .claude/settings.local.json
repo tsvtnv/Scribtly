@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p ~/.claude/skills/humanizer)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/blader/humanizer/refs/heads/main/SKILL.md\")"
+    ]
+  }
+}

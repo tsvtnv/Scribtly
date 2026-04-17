@@ -10,6 +10,7 @@ const REASON_HEADLINES: Record<string, string> = {
   free_limit: "You've used all 3 free scripts",
   platform_locked: "This platform is a Pro feature",
   extras_locked: "Extras are a Pro feature",
+  model_locked: "Sonnet and Opus are Pro features",
   pdf_locked: "PDF export is a Pro feature",
   client_limit: "Free plan is limited to 1 client",
   default: "Upgrade to unlock this feature",
@@ -20,6 +21,7 @@ const PRO_FEATURES = [
   "All 5 platforms (YouTube, TikTok, Reels, LinkedIn, Podcast)",
   "Unlimited clients",
   "All extras (titles, hashtags, chapters, etc.)",
+  "Claude Sonnet and Opus generation",
   "PDF export",
 ];
 

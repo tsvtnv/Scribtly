@@ -9,6 +9,7 @@ export interface StreamPayload {
   duration: string;
   hookStyle?: string | null;
   extraOutputs?: string[];
+  model?: string;
 }
 
 export interface StreamError {

@@ -16,11 +16,12 @@ export interface PlanCardProps {
   highlight?: boolean;
 }
 
-const LABEL: Record<Plan, string> = { FREE: "Free", PRO: "Pro", AGENCY: "Agency" };
+const LABEL: Record<Plan, string> = { FREE: "Free", BASIC: "Basic", PRO: "Pro", AGENCY: "Agency", ENTERPRISE: "Enterprise" };
+const RANK: Record<Plan, number> = { FREE: 0, BASIC: 1, PRO: 2, AGENCY: 3, ENTERPRISE: 4 };
 
 export function PlanCard({ plan, price, features, currentPlan, onUpgrade, busy, highlight }: PlanCardProps) {
   const isCurrent = currentPlan === plan;
-  const isUpgrade = (currentPlan === "FREE" && (plan === "PRO" || plan === "AGENCY")) || (currentPlan === "PRO" && plan === "AGENCY");
+  const isUpgrade = RANK[plan] > RANK[currentPlan];
 
   return (
     <Card className={cn("flex flex-col", highlight && "border-primary/40 bg-primary/5")}>

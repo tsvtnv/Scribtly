@@ -10,6 +10,7 @@ import { Select } from "@/components/ui/Select";
 import { Card } from "@/components/ui/Card";
 import { ClientAvatar } from "@/components/client/ClientAvatar";
 import { allowedPlatforms, canUseExtras } from "@/lib/planLimits";
+import { CLAUDE_MODELS, DEFAULT_CLAUDE_MODEL, canUseClaudeModel, type ClaudeModelKey } from "@/lib/modelAccess";
 import promptsConfig from "@/config/prompts.config.json";
 import { cn } from "@/lib/utils";
 import { Sparkles, Lock } from "lucide-react";
@@ -28,6 +29,7 @@ export interface GeneratePayload {
   duration: string;
   hookStyle?: string | null;
   extraOutputs?: string[];
+  model?: ClaudeModelKey;
 }
 
 export function GenerateForm({
@@ -54,12 +56,19 @@ export function GenerateForm({
   const [duration, setDuration] = useState<string>(cfg.YOUTUBE.durations[0]);
   const [hookStyle, setHookStyle] = useState<string>("");
   const [extraOutputs, setExtraOutputs] = useState<string[]>([]);
+  const [model, setModel] = useState<ClaudeModelKey>(DEFAULT_CLAUDE_MODEL);
 
   useEffect(() => {
     setDuration(cfg[platform].durations[0]);
     setHookStyle("");
     setExtraOutputs([]);
   }, [platform]);
+
+  useEffect(() => {
+    if (!canUseClaudeModel(workspacePlan, model)) {
+      setModel(DEFAULT_CLAUDE_MODEL);
+    }
+  }, [workspacePlan, model]);
 
   const selectedClient = clients.find((c) => c.id === clientId);
 
@@ -81,6 +90,7 @@ export function GenerateForm({
       duration,
       hookStyle: hookStyle || null,
       extraOutputs: extraOutputs.length ? extraOutputs : undefined,
+      model,
     });
   }
 
@@ -160,6 +170,20 @@ export function GenerateForm({
               ))}
             </Select>
           </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1.5">Claude model</label>
+          <Select value={model} onChange={(e) => setModel(e.target.value as ClaudeModelKey)}>
+            {(Object.keys(CLAUDE_MODELS) as ClaudeModelKey[]).map((key) => {
+              const allowed = canUseClaudeModel(workspacePlan, key);
+              return (
+                <option key={key} value={key} disabled={!allowed}>
+                  {CLAUDE_MODELS[key].label}{allowed ? "" : " - Pro"}
+                </option>
+              );
+            })}
+          </Select>
         </div>
 
         <div>

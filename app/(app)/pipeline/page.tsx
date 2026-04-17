@@ -48,8 +48,8 @@ export default async function PipelinePage() {
 
   return (
     <div className="flex flex-col h-full min-h-screen">
-      <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--color-border)]">
-        <div>
+      <div className="px-4 py-4 border-b border-[var(--color-border)]">
+        <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-lg font-semibold text-text-primary dark:text-dark-text">Content pipeline</h1>
           <p className="text-xs text-text-secondary dark:text-dark-muted mt-0.5">
             {items.length} item{items.length !== 1 ? 's' : ''} across all stages

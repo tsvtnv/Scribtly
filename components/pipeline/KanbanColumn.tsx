@@ -23,8 +23,8 @@ export function KanbanColumn({ stage, items, onAddItem, onEditItem }: KanbanColu
       className="flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] transition-colors duration-150"
       style={{
         minWidth: 220,
-        width: 220,
-        flexShrink: 0,
+        flex: '1 1 220px',
+        maxWidth: 360,
         ...(isOver ? { borderColor: config.text } : {}),
       }}
       aria-label={`${config.label} stage, ${items.length} item${items.length !== 1 ? 's' : ''}`}

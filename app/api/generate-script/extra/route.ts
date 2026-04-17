@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { anthropic } from "@/lib/anthropic";
 import { ensureUser } from "@/lib/ensureUser";
 import { canUseExtras } from "@/lib/planLimits";
 import { buildPrompt, getExtrasPrompt } from "@/lib/buildPrompt";
+import { getClaudeModelId, DEFAULT_CLAUDE_MODEL } from "@/lib/modelAccess";
 import {
   NotFoundError,
   ValidationError,
@@ -45,6 +47,7 @@ export async function POST(req: NextRequest) {
       platform: script.platform,
       topic: script.topic,
       duration: script.duration,
+      model: getClaudeModelId(DEFAULT_CLAUDE_MODEL),
     });
 
     const userMessage = `${extraPrompt}\n\nUse this script as context:\n\n${script.content}`;
@@ -65,7 +68,7 @@ export async function POST(req: NextRequest) {
     const currentExtras = (script.extras as Record<string, unknown> | null) || {};
     const updated = await prisma.script.update({
       where: { id: script.id },
-      data: { extras: { ...currentExtras, [parsed.data.extraType]: text } },
+      data: { extras: { ...currentExtras, [parsed.data.extraType]: text } as Prisma.InputJsonValue },
     });
 
     return NextResponse.json({ text, extras: updated.extras });

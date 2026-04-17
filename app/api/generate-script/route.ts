@@ -9,6 +9,11 @@ import {
   canUseExtras,
 } from "@/lib/planLimits";
 import {
+  canUseClaudeModel,
+  getClaudeModelId,
+  normalizeClaudeModelKey,
+} from "@/lib/modelAccess";
+import {
   UpgradeRequiredError,
   NotFoundError,
   ValidationError,
@@ -28,6 +33,7 @@ const bodySchema = z.object({
   duration: z.string().min(1).max(40),
   hookStyle: z.string().nullable().optional(),
   extraOutputs: z.array(z.string()).optional(),
+  model: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -49,6 +55,11 @@ export async function POST(req: NextRequest) {
     }
     if (input.extraOutputs && input.extraOutputs.length > 0 && !canUseExtras(workspace)) {
       throw new UpgradeRequiredError("extras_locked", "Extras are a Pro feature");
+    }
+    const modelKey = normalizeClaudeModelKey(input.model);
+    if (!modelKey) throw new ValidationError("Unknown Claude model");
+    if (!canUseClaudeModel(workspace.plan, modelKey)) {
+      throw new UpgradeRequiredError("model_locked", "Sonnet and Opus are Pro features");
     }
 
     const client = await prisma.client.findUnique({ where: { id: input.clientId } });
@@ -80,6 +91,7 @@ export async function POST(req: NextRequest) {
       duration: input.duration,
       hookStyle: input.hookStyle,
       extraOutputs: input.extraOutputs,
+      model: getClaudeModelId(modelKey),
     });
 
     const encoder = new TextEncoder();

@@ -6,6 +6,9 @@ import { cn } from "@/lib/utils";
 const SECTION_RE = /^\[([A-Z][A-Z0-9 :.\-]*)\]\s*$/;
 const INLINE_TAG_RE = /(\[(?:B-ROLL|ACTION|TEXT|CUT|MUSIC|PAUSE)(?::[^\]]*)?\])/g;
 const EXTRA_DIVIDER_RE = /^\[([A-Z_]+)\](?:\s|$)/;
+const H1_RE = /^#\s+(.+)$/;
+const H2_RE = /^##\s+(.+)$/;
+const H3_RE = /^###\s+(.+)$/;
 
 function renderInline(text: string, keyBase: string) {
   const parts = text.split(INLINE_TAG_RE);
@@ -79,6 +82,32 @@ export function ScriptOutput({
       className={cn("font-serif leading-relaxed text-[15px] overflow-y-auto", className)}
     >
       {lines.map((line, i) => {
+        // Markdown headings
+        const h1Match = line.match(H1_RE);
+        if (h1Match) {
+          return (
+            <h1 key={i} className="font-sans font-bold text-xl text-text-primary dark:text-dark-text mt-6 mb-3 first:mt-0 tracking-tight">
+              {h1Match[1]}
+            </h1>
+          );
+        }
+        const h2Match = line.match(H2_RE);
+        if (h2Match) {
+          return (
+            <h2 key={i} className="font-sans font-semibold text-base text-text-primary dark:text-dark-text mt-5 mb-2 first:mt-0 tracking-tight">
+              {h2Match[1]}
+            </h2>
+          );
+        }
+        const h3Match = line.match(H3_RE);
+        if (h3Match) {
+          return (
+            <h3 key={i} className="font-sans font-semibold text-sm text-text-secondary dark:text-dark-muted mt-4 mb-1 first:mt-0 uppercase tracking-wider">
+              {h3Match[1]}
+            </h3>
+          );
+        }
+
         const sectionMatch = line.match(SECTION_RE);
         if (sectionMatch) {
           return (

@@ -236,7 +236,7 @@ export function KanbanBoard({ initialItems, clients, initialScripts }: KanbanBoa
               onDragEnd={handleDragEnd}
             >
               <div
-                className="flex flex-row gap-3 overflow-x-auto pb-4 pt-2 px-4 min-h-[600px] items-start"
+                className="flex flex-row gap-3 overflow-x-auto pb-4 pt-2 px-4 min-h-[600px] items-start justify-center mx-auto w-full max-w-[2400px]"
                 style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--color-border) transparent' } as React.CSSProperties}
               >
                 {STAGE_ORDER.map(stage => (

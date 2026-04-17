@@ -16,6 +16,7 @@ interface Job {
   duration: string;
   hookStyle?: string;
   extraOutputs?: string[];
+  model?: string;
 }
 
 interface JobState {

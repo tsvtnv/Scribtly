@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
 import { Card } from "@/components/ui/Card";
 import { allowedPlatforms, canUseExtras } from "@/lib/planLimits";
+import { CLAUDE_MODELS, DEFAULT_CLAUDE_MODEL, canUseClaudeModel, type ClaudeModelKey } from "@/lib/modelAccess";
 import promptsConfig from "@/config/prompts.config.json";
 import { Plus, X, Sparkles, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ export interface BulkRow {
   platform: Platform;
   topic: string;
   duration: string;
+  model?: ClaudeModelKey;
 }
 
 const MAX_ROWS = 10;
@@ -41,6 +43,7 @@ export function GenerateBulkForm({
   const [rows, setRows] = useState<BulkRow[]>([newRow()]);
   const [hookStyle, setHookStyle] = useState("");
   const [extras, setExtras] = useState<string[]>([]);
+  const [model, setModel] = useState<ClaudeModelKey>(DEFAULT_CLAUDE_MODEL);
   const planAllowed = allowedPlatforms(workspacePlan);
   const extrasAllowed = canUseExtras({ plan: workspacePlan });
 
@@ -50,6 +53,12 @@ export function GenerateBulkForm({
     setHookStyle("");
     setExtras([]);
   }, [sharedPlatform]);
+
+  useEffect(() => {
+    if (!canUseClaudeModel(workspacePlan, model)) {
+      setModel(DEFAULT_CLAUDE_MODEL);
+    }
+  }, [workspacePlan, model]);
 
   function updateRow(i: number, patch: Partial<BulkRow>) {
     setRows((prev) => prev.map((r, idx) => (idx === i ? { ...r, ...patch, ...(patch.platform ? { duration: cfg[patch.platform].durations[0] } : {}) } : r)));
@@ -74,7 +83,11 @@ export function GenerateBulkForm({
     if (!clientId) return;
     const valid = rows.filter((r) => r.topic.trim() && planAllowed.includes(r.platform));
     if (!valid.length) return;
-    onSubmit(clientId, valid, { hookStyle: hookStyle || undefined, extras: extras.length ? extras : undefined });
+    onSubmit(
+      clientId,
+      valid.map((r) => ({ ...r, model })),
+      { hookStyle: hookStyle || undefined, extras: extras.length ? extras : undefined }
+    );
   }
 
   // Extras options based on first row's platform
@@ -142,6 +155,21 @@ export function GenerateBulkForm({
             </Select>
           </div>
           <div>
+            <label className="block text-sm font-medium mb-1.5">Claude model</label>
+            <Select value={model} onChange={(e) => setModel(e.target.value as ClaudeModelKey)}>
+              {(Object.keys(CLAUDE_MODELS) as ClaudeModelKey[]).map((key) => {
+                const allowed = canUseClaudeModel(workspacePlan, key);
+                return (
+                  <option key={key} value={key} disabled={!allowed}>
+                    {CLAUDE_MODELS[key].label}{allowed ? "" : " - Pro"}
+                  </option>
+                );
+              })}
+            </Select>
+          </div>
+        </div>
+
+        <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="block text-sm font-medium">Also generate</label>
               {!extrasAllowed ? (
@@ -170,7 +198,6 @@ export function GenerateBulkForm({
                 );
               })}
             </div>
-          </div>
         </div>
       </Card>
 

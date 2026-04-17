@@ -11,26 +11,39 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 
 const FEATURES: Record<Plan, string[]> = {
-  FREE: ["3 scripts per month", "1 client profile", "YouTube only", "Script library"],
+  FREE: ["5 scripts per month", "1 client", "Standard quality model", "Script library"],
+  BASIC: ["25 scripts per month", "3 clients", "All quality models", "All platforms"],
   PRO: [
-    "Unlimited scripts",
-    "Unlimited clients",
-    "All 5 platforms",
-    "All extras (titles, hashtags, etc.)",
+    "100 scripts per month",
+    "10 clients",
+    "Content pipeline",
+    "Calendar view",
     "PDF export",
+    "Title and hashtag extras",
   ],
   AGENCY: [
+    "350 scripts per month",
+    "Unlimited clients",
     "Everything in Pro",
-    "5 team members",
+    "3 team members",
     "Bulk generation",
     "Priority support",
+  ],
+  ENTERPRISE: [
+    "Custom script volume",
+    "Unlimited clients",
+    "Unlimited team members",
+    "Dedicated account manager",
+    "SLA + custom onboarding",
   ],
 };
 
 const PRICE: Record<Plan, string> = {
   FREE: "£0",
-  PRO: "£29/mo",
-  AGENCY: "£79/mo",
+  BASIC: "£5/mo",
+  PRO: "£19/mo",
+  AGENCY: "£49/mo",
+  ENTERPRISE: "Custom",
 };
 
 export function BillingPageClient({
@@ -116,8 +129,16 @@ export function BillingPageClient({
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <PlanCard plan="FREE" price={PRICE.FREE} features={FEATURES.FREE} currentPlan={plan} />
+        <PlanCard
+          plan="BASIC"
+          price={PRICE.BASIC}
+          features={FEATURES.BASIC}
+          currentPlan={plan}
+          onUpgrade={() => upgrade("BASIC")}
+          busy={busy === "BASIC"}
+        />
         <PlanCard
           plan="PRO"
           price={PRICE.PRO}
@@ -125,7 +146,7 @@ export function BillingPageClient({
           currentPlan={plan}
           onUpgrade={() => upgrade("PRO")}
           busy={busy === "PRO"}
-          highlight={plan === "FREE"}
+          highlight={plan === "FREE" || plan === "BASIC"}
         />
         <PlanCard
           plan="AGENCY"

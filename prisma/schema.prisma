@@ -10,8 +10,10 @@ datasource db {
 
 enum Plan {
   FREE
+  BASIC
   PRO
   AGENCY
+  ENTERPRISE
 }
 
 enum Platform {

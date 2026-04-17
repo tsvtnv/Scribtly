@@ -27,7 +27,7 @@ export function PipelineFilters({
   onImportScripts, showImport,
 }: PipelineFiltersProps) {
   return (
-    <div className="flex items-center gap-2 px-4 py-3 flex-wrap border-b border-[var(--color-border)]">
+    <div className="flex items-center justify-center gap-2 px-4 py-3 flex-wrap border-b border-[var(--color-border)]">
       <span className="text-xs text-text-secondary dark:text-dark-muted mr-1">
         {totalItems} item{totalItems !== 1 ? 's' : ''}
       </span>
@@ -89,7 +89,7 @@ export function PipelineFilters({
         <button
           type="button"
           onClick={onImportScripts}
-          className="ml-auto text-xs px-3 py-1.5 border border-[var(--color-border)] rounded-lg text-text-secondary hover:bg-[var(--color-bg)] transition-colors"
+          className="text-xs px-3 py-1.5 border border-[var(--color-border)] rounded-lg text-text-secondary hover:bg-[var(--color-bg)] transition-colors"
         >
           Import scripts
         </button>
