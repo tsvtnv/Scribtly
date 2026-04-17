@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
-import { LayoutDashboard, Sparkles, FileText, Users, Settings, UsersRound } from "lucide-react";
+import { LayoutDashboard, Sparkles, FileText, Users, Settings, UsersRound, LayoutGrid } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { PlanBadge } from "@/components/billing/PlanBadge";
@@ -19,6 +19,7 @@ export function Sidebar() {
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/generate", label: "Generate", icon: Sparkles },
     { href: "/scripts", label: "Scripts", icon: FileText },
+    { href: "/pipeline",  label: "Pipeline",  icon: LayoutGrid },
     { href: "/clients", label: "Clients", icon: Users },
     ...(isAgencyOwner ? [{ href: "/settings/team", label: "Team", icon: UsersRound }] : []),
     { href: "/settings", label: "Settings", icon: Settings },
