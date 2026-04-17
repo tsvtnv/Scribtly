@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { anthropic } from "@/lib/anthropic";
 import { ensureUser } from "@/lib/ensureUser";
 import {
-  canGenerateScript,
+  hasReachedScriptLimit,
   canUsePlatform,
   canUseExtras,
 } from "@/lib/planLimits";
@@ -47,19 +47,20 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) throw new ValidationError("Invalid request", { issues: parsed.error.issues });
     const input = parsed.data;
 
-    if (!canGenerateScript(workspace)) {
-      throw new UpgradeRequiredError("free_limit", "Script limit reached on your plan");
+    if (hasReachedScriptLimit(workspace)) {
+      throw new UpgradeRequiredError("script_limit_reached", "You've used all your scripts this month");
     }
     if (!canUsePlatform(workspace, input.platform)) {
       throw new UpgradeRequiredError("platform_locked", `${input.platform} is not available on your plan`);
     }
     if (input.extraOutputs && input.extraOutputs.length > 0 && !canUseExtras(workspace)) {
-      throw new UpgradeRequiredError("extras_locked", "Extras are a Pro feature");
+      // Silently strip extras rather than erroring
+      input.extraOutputs = undefined;
     }
     const modelKey = normalizeClaudeModelKey(input.model);
     if (!modelKey) throw new ValidationError("Unknown Claude model");
     if (!canUseClaudeModel(workspace.plan, modelKey)) {
-      throw new UpgradeRequiredError("model_locked", "Sonnet and Opus are Pro features");
+      throw new UpgradeRequiredError("model_not_available", "This quality level requires a paid plan");
     }
 
     const client = await prisma.client.findUnique({ where: { id: input.clientId } });

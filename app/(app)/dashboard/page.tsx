@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ClientCard } from "@/components/client/ClientCard";
 import { UsageMeter } from "@/components/billing/UsageMeter";
+import { ScriptUsageCard } from "@/components/dashboard/ScriptUsageCard";
 import { PlatformBadge, StatusBadge } from "@/components/ui/Badge";
 import { ClientAvatar } from "@/components/client/ClientAvatar";
 import { relativeDate } from "@/lib/utils";
@@ -35,6 +36,11 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-6">
+      <ScriptUsageCard
+        plan={workspace.plan}
+        scriptCount={workspace.scriptCount}
+        scriptCountResetAt={workspace.scriptCountResetAt}
+      />
       <div>
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="text-2xl font-semibold tracking-tight">Welcome back, {firstName}</h1>

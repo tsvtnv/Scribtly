@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
     const count = await prisma.client.count({ where: { workspaceId: workspace.id } });
     if (!canAddClient(workspace, count)) {
-      throw new UpgradeRequiredError("client_limit", "Client limit reached on your plan");
+      throw new UpgradeRequiredError("client_limit_reached", "You've reached your client limit");
     }
 
     const data = parsed.data;

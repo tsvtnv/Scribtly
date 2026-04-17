@@ -49,16 +49,22 @@ const PRICE: Record<Plan, string> = {
 export function BillingPageClient({
   plan,
   scriptCount,
+  scriptCountResetAt,
   hasSubscription,
   success,
   canceled,
 }: {
   plan: Plan;
   scriptCount: number;
+  scriptCountResetAt: Date | string;
   hasSubscription: boolean;
   success: boolean;
   canceled: boolean;
 }) {
+  const resetDate = new Date(scriptCountResetAt).toLocaleDateString("en-GB", {
+    month: "short",
+    day: "numeric",
+  });
   const toast = useToast();
   const [busy, setBusy] = useState<Plan | "portal" | null>(null);
 
@@ -119,6 +125,9 @@ export function BillingPageClient({
             <div className="text-2xl font-semibold mt-1">{plan}</div>
             <div className="mt-3 w-64">
               <UsageMeter plan={plan} scriptCount={scriptCount} />
+              <div className="text-xs text-text-secondary dark:text-dark-muted mt-1">
+                Resets {resetDate}
+              </div>
             </div>
           </div>
           {hasSubscription ? (

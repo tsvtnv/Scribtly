@@ -10,6 +10,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
     <BillingPageClient
       plan={workspace.plan}
       scriptCount={workspace.scriptCount}
+      scriptCountResetAt={workspace.scriptCountResetAt}
       hasSubscription={!!workspace.stripeSubscriptionId}
       success={searchParams.success === "1"}
       canceled={searchParams.canceled === "1"}
