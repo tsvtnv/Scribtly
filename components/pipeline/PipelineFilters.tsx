@@ -17,11 +17,14 @@ interface PipelineFiltersProps {
   onClientChange: (id: string | null) => void
   onPlatformChange: (p: Platform | null) => void
   totalItems: number
+  onImportScripts?: () => void
+  showImport?: boolean
 }
 
 export function PipelineFilters({
   clients, selectedClient, selectedPlatform,
-  onClientChange, onPlatformChange, totalItems
+  onClientChange, onPlatformChange, totalItems,
+  onImportScripts, showImport,
 }: PipelineFiltersProps) {
   return (
     <div className="flex items-center gap-2 px-4 py-3 flex-wrap border-b border-[var(--color-border)]">
@@ -81,6 +84,16 @@ export function PipelineFilters({
           {PLATFORM_CONFIG[p as Platform].label}
         </button>
       ))}
+
+      {showImport && onImportScripts && (
+        <button
+          type="button"
+          onClick={onImportScripts}
+          className="ml-auto text-xs px-3 py-1.5 border border-[var(--color-border)] rounded-lg text-text-secondary hover:bg-[var(--color-bg)] transition-colors"
+        >
+          Import scripts
+        </button>
+      )}
     </div>
   )
 }
