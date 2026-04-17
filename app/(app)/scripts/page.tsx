@@ -43,7 +43,10 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
     prisma.script.count({ where }),
     prisma.script.findMany({
       where,
-      include: { client: true },
+      include: {
+        client: true,
+        contentItem: { select: { id: true, stage: true } },
+      },
       orderBy: { createdAt: "desc" },
       take: limit * page,
     }),

@@ -13,7 +13,15 @@ const stripe: Record<Platform, string> = {
   PODCAST: "bg-platform-podcast-border",
 };
 
-export function ScriptCard({ script }: { script: Script & { client: Client | null } }) {
+export interface ScriptWithPipeline extends Script {
+  client: Client | null
+  contentItem?: { id: string; stage: string } | null
+}
+
+export function ScriptCard({ script, onAddToPipeline }: {
+  script: ScriptWithPipeline
+  onAddToPipeline?: (script: ScriptWithPipeline) => void
+}) {
   return (
     <Link href={`/scripts/${script.id}`} className="block group relative">
       <div className="h-full rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)] overflow-hidden hover:border-primary/40 transition-colors">
