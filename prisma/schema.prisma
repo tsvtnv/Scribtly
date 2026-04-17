@@ -33,6 +33,15 @@ enum MemberRole {
   MEMBER
 }
 
+enum PipelineStage {
+  IDEA
+  SCRIPTING
+  REVIEW
+  APPROVED
+  SCHEDULED
+  PUBLISHED
+}
+
 model User {
   id                  String            @id @default(cuid())
   clerkId             String            @unique
@@ -62,6 +71,7 @@ model Workspace {
   clients              Client[]
   scripts              Script[]
   invites              Invite[]
+  contentItems         ContentItem[]
 
   @@index([ownerId])
   @@index([stripeSubscriptionId])
@@ -111,6 +121,7 @@ model Client {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   scripts         Script[]
+  contentItems    ContentItem[]
 
   @@index([workspaceId])
 }
@@ -134,7 +145,32 @@ model Script {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 
+  contentItems  ContentItem[]
+
   @@index([workspaceId])
   @@index([workspaceId, clientId])
   @@index([workspaceId, createdAt])
+}
+
+model ContentItem {
+  id            String        @id @default(cuid())
+  workspaceId   String
+  workspace     Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  clientId      String
+  client        Client        @relation(fields: [clientId], references: [id])
+  scriptId      String?
+  script        Script?       @relation(fields: [scriptId], references: [id])
+  title         String
+  platform      Platform
+  stage         PipelineStage @default(IDEA)
+  scheduledDate DateTime?
+  publishedAt   DateTime?
+  notes         String?
+  views         Int?
+  position      Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([workspaceId])
+  @@index([workspaceId, stage])
 }
