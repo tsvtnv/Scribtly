@@ -7,6 +7,7 @@ import { ScriptTitleEditor } from "@/components/script/ScriptTitleEditor";
 import { ScriptEditor } from "@/components/script/ScriptEditor";
 import { ExtrasPanel } from "@/components/script/ExtrasPanel";
 import { ScriptActions } from "@/components/script/ScriptActions";
+import { ScriptReviewPanel } from "@/components/script/ScriptReviewPanel";
 import { PlatformBadge, StatusBadge } from "@/components/ui/Badge";
 import { ClientAvatar } from "@/components/client/ClientAvatar";
 import { relativeDate } from "@/lib/utils";
@@ -15,11 +16,23 @@ export default async function ScriptViewPage({ params }: { params: { id: string 
   const { workspace } = await ensureUser();
   const script = await prisma.script.findUnique({
     where: { id: params.id },
-    include: { client: true },
+    include: {
+      client: true,
+      comments: {
+        orderBy: { createdAt: 'asc' },
+        select: { id: true, authorName: true, body: true, verdict: true, createdAt: true },
+      },
+    },
   });
   if (!script || script.workspaceId !== workspace.id) notFound();
 
   const extras = (script.extras as Record<string, string> | null) || {};
+
+  const comments = script.comments.map(c => ({
+    ...c,
+    createdAt: c.createdAt.toISOString(),
+    verdict: c.verdict as 'APPROVED' | 'REJECTED' | null,
+  }));
 
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto pb-20">
@@ -47,6 +60,8 @@ export default async function ScriptViewPage({ params }: { params: { id: string 
           <StatusBadge status={script.status} />
         </div>
       </div>
+
+      <ScriptReviewPanel comments={comments} />
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
         <div>
