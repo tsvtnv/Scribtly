@@ -1,13 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import type { Platform } from '@prisma/client'
 import { ReviewForm } from '@/components/review/ReviewForm'
 import { FeedbackHistory, type CommentEntry } from '@/components/review/FeedbackHistory'
 
-interface ReviewScript {
+export interface ReviewScript {
   id: string
   title: string
-  platform: string
+  platform: Platform
   content: string
   extras: Record<string, string> | null
   wordCount: number | null

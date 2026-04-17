@@ -1,29 +1,52 @@
+import { prisma } from '@/lib/prisma'
+import type { Platform } from '@prisma/client'
 import { PlatformBadge } from '@/components/ui/Badge'
 import { ReviewPageClient } from './ReviewPageClient'
+import type { ReviewScript } from './ReviewPageClient'
 
-interface ReviewScript {
-  id: string
-  title: string
-  platform: string
-  content: string
-  extras: Record<string, string> | null
-  wordCount: number | null
-  createdAt: string
-  client: { name: string } | null
-  comments: Array<{
-    id: string
-    authorName: string
-    body: string
-    verdict: 'APPROVED' | 'REJECTED' | null
-    createdAt: string
-  }>
+export async function generateMetadata({ params }: { params: { token: string } }) {
+  const script = await prisma.script.findFirst({
+    where: { shareToken: params.token, shareEnabled: true },
+    select: { title: true, client: { select: { name: true } } },
+  })
+  if (!script) return { title: 'Review' }
+  return {
+    title: `Review: ${script.title}`,
+    description: script.client ? `Script review for ${script.client.name}` : 'Script review',
+  }
 }
 
 async function fetchScript(token: string): Promise<ReviewScript | null> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
-  const res = await fetch(`${baseUrl}/api/review/${token}`, { cache: 'no-store' })
-  if (!res.ok) return null
-  return res.json()
+  const script = await prisma.script.findFirst({
+    where: { shareToken: token, shareEnabled: true },
+    select: {
+      id: true,
+      title: true,
+      platform: true,
+      content: true,
+      extras: true,
+      wordCount: true,
+      createdAt: true,
+      client: { select: { name: true } },
+      comments: {
+        orderBy: { createdAt: 'asc' },
+        select: { id: true, authorName: true, body: true, verdict: true, createdAt: true },
+      },
+    },
+  })
+
+  if (!script) return null
+
+  return {
+    ...script,
+    platform: script.platform as Platform,
+    createdAt: script.createdAt.toISOString(),
+    comments: script.comments.map(c => ({
+      ...c,
+      createdAt: c.createdAt.toISOString(),
+      verdict: c.verdict as 'APPROVED' | 'REJECTED' | null,
+    })),
+  }
 }
 
 export default async function ReviewPage({ params }: { params: { token: string } }) {
@@ -45,7 +68,7 @@ export default async function ReviewPage({ params }: { params: { token: string }
         <h1 className="text-2xl font-bold text-text-primary dark:text-dark-text mb-2">{script.title}</h1>
         <div className="flex flex-wrap items-center gap-3 text-xs text-text-secondary dark:text-dark-muted">
           {script.client && <span>{script.client.name}</span>}
-          <PlatformBadge platform={script.platform as never} />
+          <PlatformBadge platform={script.platform} />
           {script.wordCount != null && <span>{script.wordCount} words</span>}
         </div>
       </div>

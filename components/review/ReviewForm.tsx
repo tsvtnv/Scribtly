@@ -79,10 +79,7 @@ export function ReviewForm({ token, onCommentAdded }: ReviewFormProps) {
             type="submit"
             disabled={loading || !authorName.trim() || !body.trim()}
             onClick={e => handleSubmit(e, 'APPROVED')}
-            className="px-4 py-2 text-sm font-medium rounded-lg bg-[#1D9E75] text-white hover:bg-[#17876300] disabled:opacity-50 transition-colors"
-            style={{ backgroundColor: '#1D9E75' }}
-            onMouseEnter={e => { if (!loading) (e.target as HTMLButtonElement).style.backgroundColor = '#178763' }}
-            onMouseLeave={e => { (e.target as HTMLButtonElement).style.backgroundColor = '#1D9E75' }}
+            className="px-4 py-2 text-sm font-medium rounded-lg bg-[#1D9E75] text-white hover:bg-[#178763] disabled:opacity-50 transition-colors"
           >
             {loading ? '…' : 'Approve'}
           </button>
