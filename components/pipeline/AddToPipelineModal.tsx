@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useEffect, FormEvent } from 'react'
-import type { Script } from '@prisma/client'
+import type { Script, Client } from '@prisma/client'
 import type { ContentItem, PipelineStage } from '@/types/pipeline'
 import { STAGE_CONFIG, STAGE_ORDER } from '@/lib/pipeline'
 import { useToast } from '@/components/ui/Toast'
 
 interface ScriptWithPipeline extends Script {
-  client: { id: string; name: string; avatarColor: string } | null
+  client: Client | null
   contentItem?: { id: string; stage: string } | null
 }
 
