@@ -43,6 +43,16 @@ export default async function GeneratePage() {
           Pick a client, pick a platform, and your script will stream in.
         </p>
       </div>
+      {usagePct >= 0.8 && limit !== Infinity && (
+        <div className="rounded-md border border-amber-300 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-800 px-4 py-3 flex items-center justify-between gap-4 flex-wrap mb-4">
+          <span className="text-sm text-amber-800 dark:text-amber-300">
+            You've used <strong>{workspace.scriptCount}</strong> of <strong>{limit}</strong> scripts this month — resets {resetDate}.
+          </span>
+          <Link href="/pricing" className="text-xs font-medium text-amber-800 dark:text-amber-300 hover:underline flex-shrink-0">
+            Upgrade for more →
+          </Link>
+        </div>
+      )}
       <GeneratePageClient
         clients={clients}
         plan={workspace.plan}
