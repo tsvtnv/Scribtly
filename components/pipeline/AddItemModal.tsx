@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { ContentItem, PipelineStage, Platform } from '@/types/pipeline'
 import { STAGE_CONFIG, STAGE_ORDER, PLATFORM_CONFIG, PLATFORMS_TUPLE } from '@/lib/pipeline'
 
@@ -27,6 +27,18 @@ export function AddItemModal({ isOpen, onClose, onAdd, clients, defaultStage = '
   const [notes,         setNotes]         = useState('')
   const [loading,       setLoading]       = useState(false)
   const [error,         setError]         = useState<string | null>(null)
+
+  useEffect(() => {
+    if (isOpen) {
+      setTitle('')
+      setClientId(clients[0]?.id ?? '')
+      setPlatform('YOUTUBE')
+      setStage(defaultStage)
+      setScheduledDate('')
+      setNotes('')
+      setError(null)
+    }
+  }, [isOpen])
 
   if (!isOpen) return null
 
