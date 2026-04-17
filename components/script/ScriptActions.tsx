@@ -116,7 +116,8 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
   }
 
   return (
-    <div className="sticky bottom-0 bg-[var(--color-surface)] border-t-hair border-[var(--color-border)] -mx-6 md:-mx-10 px-6 md:px-10 py-3 flex flex-wrap items-center gap-2">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-[var(--color-surface)] border-t border-[var(--color-border)]">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-2">
       <Button variant="secondary" size="sm" onClick={copy}>
         <Copy size={14} /> Copy
       </Button>
@@ -197,6 +198,7 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
             <Trash2 size={14} /> Delete
           </Button>
         )}
+      </div>
       </div>
     </div>
   );
