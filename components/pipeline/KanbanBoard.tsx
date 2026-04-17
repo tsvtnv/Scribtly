@@ -146,7 +146,7 @@ export function KanbanBoard({ initialItems, clients }: KanbanBoardProps) {
   }, [columns, moveItem, setColumns])
 
   const display = getFilteredColumns()
-  const totalItems = initialItems.length
+  const totalItems = STAGE_ORDER.reduce((sum, s) => sum + columns[s].length, 0)
 
   return (
     <div className="flex flex-col h-full">
