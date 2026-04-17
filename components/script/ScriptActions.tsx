@@ -3,9 +3,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { Script, ScriptStatus, Plan } from "@prisma/client";
-import { Copy, FileDown, CheckCircle, Send, Trash2, Share2, Link, X } from "lucide-react";
+import { Copy, FileDown, CheckCircle, Send, Trash2, Share2, Link as LinkIcon, X } from "lucide-react";
+import NextLink from "next/link";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
+import { canExportPDF } from "@/lib/planLimits";
 
 interface ScriptActionsProps {
   script: Script & { shareToken?: string | null; shareEnabled?: boolean }
@@ -27,7 +29,6 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
     if (shareToken) setShareUrl(`${window.location.origin}/review/${shareToken}`)
   }, [shareToken])
 
-  const canPdf = plan === "PRO" || plan === "AGENCY";
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -121,13 +122,21 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
       <Button variant="secondary" size="sm" onClick={copy}>
         <Copy size={14} /> Copy
       </Button>
-      {canPdf ? (
+      {canExportPDF({ plan }) ? (
         <a href={`/api/export/pdf/${script.id}`} target="_blank" rel="noreferrer">
           <Button variant="secondary" size="sm">
             <FileDown size={14} /> PDF
           </Button>
         </a>
-      ) : null}
+      ) : (
+        <div className="text-xs text-text-secondary dark:text-dark-muted p-2 rounded border border-[var(--color-border)] bg-[var(--color-surface)]">
+          PDF export is available on Pro.{" "}
+          <NextLink href="/pricing" className="text-primary hover:underline">
+            Upgrade to Pro
+          </NextLink>{" "}
+          to send polished reports to clients.
+        </div>
+      )}
       {script.status !== "FINAL" ? (
         <Button variant="secondary" size="sm" loading={busy === "FINAL"} onClick={() => setStatus("FINAL")}>
           <CheckCircle size={14} /> Mark final

@@ -18,8 +18,8 @@ const BENEFITS = [
 export function PipelineUpgradePrompt({ plan }: PipelineUpgradePromptProps) {
   const subtext =
     plan === "BASIC"
-      ? "You're on Basic. Unlock the pipeline, calendar, PDF export and more for just £14 more per month."
-      : "The content pipeline is available on Pro and above. Upgrade to organize your content workflow.";
+      ? "You're on Basic (£5/month). Upgrade to Pro (£19/month) to unlock the pipeline, calendar, PDF export and more."
+      : "The content pipeline is available on Pro and above. Upgrade to Pro (£19/month) to organize your content workflow.";
 
   return (
     <div className="max-w-2xl mx-auto py-24 px-6 text-center">
