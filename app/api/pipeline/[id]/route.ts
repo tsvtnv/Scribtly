@@ -3,16 +3,14 @@ import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { ensureUser } from '@/lib/ensureUser'
 import { NotFoundError, ForbiddenError, ValidationError, errorResponse } from '@/lib/errors'
+import { STAGES_TUPLE, PLATFORMS_TUPLE } from '@/lib/pipeline'
 
 export const runtime = 'nodejs'
 
-const PLATFORMS = ['YOUTUBE', 'TIKTOK', 'REELS', 'LINKEDIN', 'PODCAST'] as const
-const STAGES    = ['IDEA', 'SCRIPTING', 'REVIEW', 'APPROVED', 'SCHEDULED', 'PUBLISHED'] as const
-
 const updateSchema = z.object({
   title:         z.string().trim().min(1).max(300).optional(),
-  platform:      z.enum(PLATFORMS).optional(),
-  stage:         z.enum(STAGES).optional(),
+  platform:      z.enum(PLATFORMS_TUPLE).optional(),
+  stage:         z.enum(STAGES_TUPLE).optional(),
   scheduledDate: z.string().nullable().optional(),
   publishedAt:   z.string().nullable().optional(),
   notes:         z.string().trim().max(2000).nullable().optional(),

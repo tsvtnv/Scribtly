@@ -3,18 +3,15 @@ import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { ensureUser } from '@/lib/ensureUser'
 import { ValidationError, errorResponse } from '@/lib/errors'
-import { groupByStage } from '@/lib/pipeline'
+import { groupByStage, STAGES_TUPLE, PLATFORMS_TUPLE } from '@/lib/pipeline'
 
 export const runtime = 'nodejs'
-
-const PLATFORMS = ['YOUTUBE', 'TIKTOK', 'REELS', 'LINKEDIN', 'PODCAST'] as const
-const STAGES = ['IDEA', 'SCRIPTING', 'REVIEW', 'APPROVED', 'SCHEDULED', 'PUBLISHED'] as const
 
 const createSchema = z.object({
   title:         z.string().trim().min(1).max(300),
   clientId:      z.string().min(1),
-  platform:      z.enum(PLATFORMS),
-  stage:         z.enum(STAGES).default('IDEA'),
+  platform:      z.enum(PLATFORMS_TUPLE),
+  stage:         z.enum(STAGES_TUPLE).default('IDEA'),
   scheduledDate: z.string().optional().nullable(),
   notes:         z.string().trim().max(2000).optional().nullable(),
 })
@@ -30,7 +27,7 @@ export async function GET(req: NextRequest) {
       where: {
         workspaceId: workspace.id,
         ...(clientId ? { clientId } : {}),
-        ...(platform ? { platform: platform as typeof PLATFORMS[number] } : {}),
+        ...(platform && (PLATFORMS_TUPLE as readonly string[]).includes(platform) ? { platform: platform as typeof PLATFORMS_TUPLE[number] } : {}),
       },
       include: {
         client: { select: { id: true, name: true, avatarColor: true } },

@@ -3,15 +3,14 @@ import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { ensureUser } from '@/lib/ensureUser'
 import { ValidationError, errorResponse } from '@/lib/errors'
+import { STAGES_TUPLE } from '@/lib/pipeline'
 
 export const runtime = 'nodejs'
-
-const STAGES = ['IDEA', 'SCRIPTING', 'REVIEW', 'APPROVED', 'SCHEDULED', 'PUBLISHED'] as const
 
 const reorderSchema = z.object({
   updates: z.array(z.object({
     id:       z.string(),
-    stage:    z.enum(STAGES),
+    stage:    z.enum(STAGES_TUPLE),
     position: z.number().int().min(0),
   })).min(1),
 })

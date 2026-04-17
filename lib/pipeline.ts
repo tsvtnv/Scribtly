@@ -1,5 +1,8 @@
 import { PipelineStage, Platform, ContentItem } from '@/types/pipeline'
 
+export const STAGES_TUPLE = ['IDEA', 'SCRIPTING', 'REVIEW', 'APPROVED', 'SCHEDULED', 'PUBLISHED'] as const
+export const PLATFORMS_TUPLE = ['YOUTUBE', 'TIKTOK', 'REELS', 'LINKEDIN', 'PODCAST'] as const
+
 export const STAGE_CONFIG: Record<PipelineStage, {
   label: string
   bg: string
