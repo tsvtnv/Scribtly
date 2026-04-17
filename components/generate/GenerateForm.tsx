@@ -9,11 +9,18 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
 import { Card } from "@/components/ui/Card";
 import { ClientAvatar } from "@/components/client/ClientAvatar";
-import { allowedPlatforms, canUseExtras } from "@/lib/planLimits";
+import {
+  allowedPlatforms,
+  canUseAllModels,
+  canUseExtras,
+  getScriptLimit,
+  hasReachedScriptLimit,
+  isNearScriptLimit,
+} from "@/lib/planLimits";
 import { CLAUDE_MODELS, DEFAULT_CLAUDE_MODEL, canUseClaudeModel, type ClaudeModelKey } from "@/lib/modelAccess";
 import promptsConfig from "@/config/prompts.config.json";
 import { cn } from "@/lib/utils";
-import { Sparkles, Lock } from "lucide-react";
+import { Sparkles, Lock, AlertTriangle } from "lucide-react";
 
 type PlatformCfg = {
   durations: string[];
@@ -35,6 +42,8 @@ export interface GeneratePayload {
 export function GenerateForm({
   clients,
   workspacePlan,
+  scriptCount,
+  scriptCountResetAt,
   onSubmit,
   isStreaming,
   onLockedPlatform,
@@ -42,6 +51,8 @@ export function GenerateForm({
 }: {
   clients: Client[];
   workspacePlan: Plan;
+  scriptCount: number;
+  scriptCountResetAt: string;
   onSubmit: (p: GeneratePayload) => void;
   isStreaming: boolean;
   onLockedPlatform: (p: Platform) => void;
@@ -49,6 +60,18 @@ export function GenerateForm({
 }) {
   const planAllowed = useMemo(() => allowedPlatforms(workspacePlan), [workspacePlan]);
   const extrasAllowed = canUseExtras({ plan: workspacePlan });
+  const allModelsAllowed = canUseAllModels(workspacePlan);
+  const scriptLimit = getScriptLimit(workspacePlan);
+  const workspaceLike = { plan: workspacePlan, scriptCount };
+  const limitReached = hasReachedScriptLimit(workspaceLike);
+  const nearLimit = isNearScriptLimit(workspaceLike) && !limitReached;
+  const resetLabel = (() => {
+    try {
+      return new Date(scriptCountResetAt).toLocaleDateString("en-GB", { month: "short", day: "numeric" });
+    } catch {
+      return "";
+    }
+  })();
 
   const [clientId, setClientId] = useState<string>(clients[0]?.id || "");
   const [platform, setPlatform] = useState<Platform>("YOUTUBE");
@@ -173,17 +196,39 @@ export function GenerateForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5">Claude model</label>
-          <Select value={model} onChange={(e) => setModel(e.target.value as ClaudeModelKey)}>
+          <label className="block text-sm font-medium mb-1.5">Quality</label>
+          <div className="grid grid-cols-3 gap-2">
             {(Object.keys(CLAUDE_MODELS) as ClaudeModelKey[]).map((key) => {
-              const allowed = canUseClaudeModel(workspacePlan, key);
+              const locked = !allModelsAllowed && key !== "STANDARD";
+              const active = model === key;
+              const info = CLAUDE_MODELS[key];
               return (
-                <option key={key} value={key} disabled={!allowed}>
-                  {CLAUDE_MODELS[key].label}{allowed ? "" : " - Pro"}
-                </option>
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => { if (!locked) setModel(key); }}
+                  disabled={locked}
+                  title={locked ? "Upgrade to Basic (£5/mo) to unlock Quality and Premium" : info.description}
+                  aria-pressed={active}
+                  className={cn(
+                    "text-left rounded-md border-hair p-3 transition-colors",
+                    active
+                      ? "bg-primary text-white border-primary dark:bg-primary-onDark dark:text-dark-base"
+                      : "bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary/40",
+                    locked && "opacity-50 cursor-not-allowed hover:border-[var(--color-border)]"
+                  )}
+                >
+                  <div className="flex items-center gap-1.5 text-sm font-medium">
+                    {info.label}
+                    {locked ? <Lock size={12} /> : null}
+                  </div>
+                  <div className={cn("text-[11px] mt-0.5", active ? "text-white/80" : "text-text-secondary dark:text-dark-muted")}>
+                    {info.description}
+                  </div>
+                </button>
               );
             })}
-          </Select>
+          </div>
         </div>
 
         <div>
@@ -195,32 +240,74 @@ export function GenerateForm({
               </span>
             ) : null}
           </div>
-          <div className={cn("grid grid-cols-2 gap-1.5", !extrasAllowed && "opacity-60")}>
+          <div className="grid grid-cols-2 gap-1.5">
             {platformCfg.extra_outputs.map((key) => {
               const active = extraOutputs.includes(key);
+              const locked = !extrasAllowed;
               return (
                 <button
                   key={key}
                   type="button"
                   onClick={() => toggleExtra(key)}
+                  disabled={locked}
+                  title={locked ? "Extras are available on Pro — upgrade for £19/month" : undefined}
                   className={cn(
-                    "text-xs px-2.5 py-2 rounded-md border-hair text-left capitalize",
+                    "text-xs px-2.5 py-2 rounded-md border-hair text-left capitalize inline-flex items-center justify-between gap-2",
                     active
                       ? "bg-primary text-white border-primary dark:bg-primary-onDark dark:text-dark-base"
-                      : "bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary/40"
+                      : "bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary/40",
+                    locked && "opacity-50 cursor-not-allowed hover:border-[var(--color-border)]"
                   )}
                 >
-                  {key.replace(/_/g, " ")}
+                  <span>{key.replace(/_/g, " ")}</span>
+                  {locked ? (
+                    <span className="text-[9px] uppercase tracking-wider px-1 py-0.5 rounded-sm bg-primary/10 text-primary inline-flex items-center gap-0.5 normal-case">
+                      <Lock size={9} /> Pro
+                    </span>
+                  ) : null}
                 </button>
               );
             })}
           </div>
+          {!extrasAllowed ? (
+            <p className="text-[11px] text-text-secondary dark:text-dark-muted mt-1.5">
+              Extras are available on Pro — upgrade for £19/month.
+            </p>
+          ) : null}
         </div>
       </Card>
 
-      <Button type="submit" size="lg" fullWidth loading={isStreaming}>
-        <Sparkles size={16} /> Generate script
-      </Button>
+      {limitReached ? (
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button type="button" size="lg" fullWidth disabled>
+            Script limit reached — upgrade to keep generating
+          </Button>
+          <Link href="/settings/billing" className="sm:w-auto">
+            <Button type="button" size="lg" fullWidth>
+              Upgrade plan
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <Button type="submit" size="lg" fullWidth loading={isStreaming}>
+          <Sparkles size={16} /> Generate script
+        </Button>
+      )}
+
+      <div
+        className={cn(
+          "text-xs mt-2 inline-flex items-center gap-1.5",
+          nearLimit
+            ? "text-amber-600 dark:text-amber-400"
+            : "text-text-secondary dark:text-dark-muted"
+        )}
+      >
+        {nearLimit ? <AlertTriangle size={12} /> : null}
+        <span>
+          {scriptCount} of {scriptLimit} scripts used this month
+          {resetLabel ? <> — resets {resetLabel}</> : null}
+        </span>
+      </div>
     </form>
   );
 }

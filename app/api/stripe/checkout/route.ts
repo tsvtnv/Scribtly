@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { stripe } from "@/lib/stripe";
+import { stripe, planToPriceId } from "@/lib/stripe";
 import { ensureUser, requireOwner } from "@/lib/ensureUser";
 import { ValidationError, errorResponse } from "@/lib/errors";
 
 export const runtime = "nodejs";
 
 const bodySchema = z.object({
-  plan: z.enum(["PRO", "AGENCY"]),
+  plan: z.enum(["BASIC", "PRO", "AGENCY"]),
 });
 
 export async function POST(req: NextRequest) {
@@ -20,10 +20,7 @@ export async function POST(req: NextRequest) {
     const parsed = bodySchema.safeParse(raw);
     if (!parsed.success) throw new ValidationError("Invalid plan");
 
-    const priceId =
-      parsed.data.plan === "PRO"
-        ? process.env.STRIPE_PRO_PRICE_ID
-        : process.env.STRIPE_AGENCY_PRICE_ID;
+    const priceId = planToPriceId(parsed.data.plan);
 
     if (!priceId) throw new ValidationError("Stripe price not configured");
 

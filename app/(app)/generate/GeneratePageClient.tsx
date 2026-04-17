@@ -21,10 +21,12 @@ export function GeneratePageClient({
   clients,
   plan,
   scriptCount,
+  scriptCountResetAt,
 }: {
   clients: Client[];
   plan: Plan;
   scriptCount: number;
+  scriptCountResetAt: string;
 }) {
   const router = useRouter();
   const toast = useToast();
@@ -46,13 +48,17 @@ export function GeneratePageClient({
     }
   }, [plan, scriptCount, upgradeOpen, toast]);
 
-  // Handle stream errors → upgrade modal
+  // Handle stream errors → upgrade modal / toast
   useEffect(() => {
     if (stream.error?.code === "upgrade_required") {
-      setUpgradeReason(stream.error.reason || "default");
+      const reason = stream.error.reason || "default";
+      if (reason === "model_not_available") {
+        toast.push("This quality level requires a paid plan", "error");
+      }
+      setUpgradeReason(reason);
       setUpgradeOpen(true);
     }
-  }, [stream.error]);
+  }, [stream.error, toast]);
 
   // Auto-save when stream completes
   useEffect(() => {
@@ -154,6 +160,8 @@ export function GeneratePageClient({
             <GenerateForm
               clients={clients}
               workspacePlan={plan}
+              scriptCount={scriptCount}
+              scriptCountResetAt={scriptCountResetAt}
               onSubmit={handleSubmit}
               isStreaming={stream.isStreaming}
               onLockedPlatform={onLockedPlatform}

@@ -8,6 +8,8 @@ import { useToast } from "@/components/ui/Toast";
 
 const REASON_HEADLINES: Record<string, string> = {
   free_limit: "You've used all 3 free scripts",
+  script_limit_reached: "You've hit your monthly script limit",
+  model_not_available: "This quality level requires a paid plan",
   platform_locked: "This platform is a Pro feature",
   extras_locked: "Extras are a Pro feature",
   model_locked: "Sonnet and Opus are Pro features",

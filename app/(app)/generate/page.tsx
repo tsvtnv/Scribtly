@@ -21,6 +21,7 @@ export default async function GeneratePage() {
         clients={clients}
         plan={workspace.plan}
         scriptCount={workspace.scriptCount}
+        scriptCountResetAt={workspace.scriptCountResetAt.toISOString()}
       />
     </div>
   );
