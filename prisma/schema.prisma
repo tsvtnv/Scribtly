@@ -42,6 +42,11 @@ enum PipelineStage {
   PUBLISHED
 }
 
+enum ReviewVerdict {
+  APPROVED
+  REJECTED
+}
+
 model User {
   id                  String            @id @default(cuid())
   clerkId             String            @unique
@@ -144,12 +149,28 @@ model Script {
   pdfUrl      String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  shareToken   String?  @unique
+  shareEnabled Boolean  @default(false)
+  comments     ScriptComment[]
 
   contentItems  ContentItem[]
 
   @@index([workspaceId])
   @@index([workspaceId, clientId])
   @@index([workspaceId, createdAt])
+}
+
+model ScriptComment {
+  id          String         @id @default(cuid())
+  scriptId    String
+  script      Script         @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+  authorName  String
+  body        String
+  verdict     ReviewVerdict?
+  createdAt   DateTime       @default(now())
+
+  @@index([scriptId])
+  @@index([scriptId, createdAt])
 }
 
 model ContentItem {
