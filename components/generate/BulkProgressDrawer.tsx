@@ -46,29 +46,30 @@ export function BulkProgressDrawer({
     jobs.map((j, i) => ({ id: `${Date.now()}-${i}`, job: j, status: "queued", text: "", expanded: false }))
   );
   const startedRef = useRef(false);
+  const jobsRef = useRef(jobs);
 
   useEffect(() => {
-    setStates(jobs.map((j, i) => ({ id: `${Date.now()}-${i}`, job: j, status: "queued", text: "", expanded: false })));
+    const initial = jobs.map((j, i) => ({ id: `${Date.now()}-${i}`, job: j, status: "queued" as const, text: "", expanded: false }));
+    setStates(initial);
+    jobsRef.current = jobs;
     startedRef.current = false;
   }, [jobs]);
 
   useEffect(() => {
-    if (!open || startedRef.current || states.length === 0) return;
+    if (!open || startedRef.current || jobsRef.current.length === 0) return;
     startedRef.current = true;
-    void runAll();
-
+    const initial = jobsRef.current.map((j, i) => ({ id: `${Date.now()}-${i}`, job: j, status: "queued" as const, text: "", expanded: false }));
+    void runAll(initial);
   }, [open]);
 
-  async function runOne(idx: number) {
-    const s = states[idx];
-    if (!s) return;
+  async function runOne(idx: number, job: Job) {
     setStates((prev) => prev.map((x, i) => (i === idx ? { ...x, status: "streaming" } : x)));
 
     try {
       const res = await fetch("/api/generate-script", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(s.job),
+        body: JSON.stringify(job),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -94,12 +95,12 @@ export function BulkProgressDrawer({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          clientId: s.job.clientId,
-          title: s.job.topic.slice(0, 60),
-          topic: s.job.topic,
-          platform: s.job.platform,
-          duration: s.job.duration,
-          hookStyle: s.job.hookStyle,
+          clientId: job.clientId,
+          title: job.topic.slice(0, 60),
+          topic: job.topic,
+          platform: job.platform,
+          duration: job.duration,
+          hookStyle: job.hookStyle,
           content: buf,
           wordCount: wordCount(buf),
         }),
@@ -113,14 +114,13 @@ export function BulkProgressDrawer({
     }
   }
 
-  async function runAll() {
-    const indices = states.map((_, i) => i);
-    const queue = [...indices];
+  async function runAll(initialStates: JobState[]) {
+    const queue = initialStates.map((s, i) => ({ idx: i, job: s.job }));
     async function worker() {
       while (queue.length > 0) {
         const next = queue.shift();
-        if (next === undefined) break;
-        await runOne(next);
+        if (!next) break;
+        await runOne(next.idx, next.job);
       }
     }
     const workers = Array.from({ length: Math.min(MAX_CONCURRENCY, queue.length) }, () => worker());

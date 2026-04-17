@@ -138,7 +138,7 @@ export function GeneratePageClient({
   return (
     <>
       {bulkAllowed ? (
-        <div className="inline-flex items-center gap-1 mb-4 p-1 rounded-md bg-[var(--color-surface)] border-hair border-[var(--color-border)]">
+        <div className="flex justify-center mb-4"><div className="inline-flex items-center gap-1 p-1 rounded-md bg-[var(--color-surface)] border-hair border-[var(--color-border)]">
           <button
             onClick={() => setMode("single")}
             className={`px-3 py-1 text-xs rounded-sm ${mode === "single" ? "bg-primary text-white" : "text-text-secondary"}`}
@@ -151,7 +151,7 @@ export function GeneratePageClient({
           >
             Bulk
           </button>
-        </div>
+        </div></div>
       ) : null}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

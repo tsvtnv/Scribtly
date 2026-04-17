@@ -79,6 +79,7 @@ model Workspace {
   scripts              Script[]
   invites              Invite[]
   contentItems         ContentItem[]
+  cronSchedules        CronSchedule[]
 
   @@index([ownerId])
   @@index([stripeSubscriptionId])
@@ -129,6 +130,7 @@ model Client {
   updatedAt       DateTime  @updatedAt
   scripts         Script[]
   contentItems    ContentItem[]
+  cronSchedules   CronSchedule[]
 
   @@index([workspaceId])
 }
@@ -197,4 +199,22 @@ model ContentItem {
   @@index([workspaceId])
   @@index([workspaceId, stage])
   @@index([workspaceId, clientId])
+}
+
+model CronSchedule {
+  id            String    @id @default(cuid())
+  workspaceId   String
+  workspace     Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  clientId      String
+  client        Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  platform      Platform
+  topicTemplate String
+  frequency     String
+  active        Boolean   @default(true)
+  lastRunAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([workspaceId])
+  @@index([active])
 }

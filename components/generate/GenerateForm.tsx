@@ -187,9 +187,9 @@ export function GenerateForm({
           <div>
             <label className="block text-sm font-medium mb-1.5">Hook style (optional)</label>
             <Select value={hookStyle} onChange={(e) => setHookStyle(e.target.value)}>
-              <option value="">Let Claude decide</option>
+              <option value="">AI picks best fit</option>
               {platformCfg.hook_styles.map((h) => (
-                <option key={h} value={h}>{h.replace(/_/g, " ")}</option>
+                <option key={h} value={h}>{h.split("_").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}</option>
               ))}
             </Select>
           </div>

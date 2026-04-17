@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
-import { LayoutDashboard, Sparkles, FileText, Users, Settings, UsersRound, LayoutGrid } from "lucide-react";
+import { LayoutDashboard, Sparkles, FileText, Users, Settings, UsersRound, LayoutGrid, Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { PlanBadge } from "@/components/billing/PlanBadge";
@@ -14,6 +14,7 @@ export function Sidebar() {
   const { workspace, role } = useWorkspace();
   const isOwner = role === "OWNER";
   const isAgencyOwner = workspace.plan === "AGENCY" && isOwner;
+  const canUseCron = ["PRO", "AGENCY", "ENTERPRISE"].includes(workspace.plan);
 
   const links = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -21,6 +22,7 @@ export function Sidebar() {
     { href: "/scripts", label: "Scripts", icon: FileText },
     { href: "/pipeline",  label: "Pipeline",  icon: LayoutGrid },
     { href: "/clients", label: "Clients", icon: Users },
+    ...(canUseCron ? [{ href: "/settings/cron", label: "Auto-generate", icon: Timer }] : []),
     ...(isAgencyOwner ? [{ href: "/settings/team", label: "Team", icon: UsersRound }] : []),
     { href: "/settings", label: "Settings", icon: Settings },
   ];

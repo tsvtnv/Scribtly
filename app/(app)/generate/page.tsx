@@ -10,7 +10,7 @@ export default async function GeneratePage() {
   });
 
   return (
-    <div className="p-6 md:p-10 max-w-7xl mx-auto">
+    <div className="p-6 md:p-10 max-w-5xl mx-auto">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold tracking-tight">Generate a script</h1>
         <p className="text-sm text-text-secondary dark:text-dark-muted mt-1">
