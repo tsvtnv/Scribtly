@@ -1,0 +1,46 @@
+import { prisma } from '@/lib/prisma'
+import { ensureUser } from '@/lib/ensureUser'
+import { KanbanBoard } from '@/components/pipeline/KanbanBoard'
+import { ContentItem } from '@/types/pipeline'
+
+export default async function PipelinePage() {
+  const { workspace } = await ensureUser()
+
+  const [rawItems, clients] = await Promise.all([
+    prisma.contentItem.findMany({
+      where: { workspaceId: workspace.id },
+      include: {
+        client: { select: { id: true, name: true, avatarColor: true } },
+        script:  { select: { id: true, title: true } },
+      },
+      orderBy: [{ stage: 'asc' }, { position: 'asc' }],
+    }),
+    prisma.client.findMany({
+      where: { workspaceId: workspace.id },
+      select: { id: true, name: true, avatarColor: true },
+      orderBy: { name: 'asc' },
+    }),
+  ])
+
+  const items: ContentItem[] = rawItems.map(item => ({
+    ...item,
+    scheduledDate: item.scheduledDate?.toISOString() ?? null,
+    publishedAt:   item.publishedAt?.toISOString()   ?? null,
+    createdAt:     item.createdAt.toISOString(),
+    updatedAt:     item.updatedAt.toISOString(),
+  }))
+
+  return (
+    <div className="flex flex-col h-full min-h-screen">
+      <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--color-border)]">
+        <div>
+          <h1 className="text-lg font-semibold text-text-primary dark:text-dark-text">Content pipeline</h1>
+          <p className="text-xs text-text-secondary dark:text-dark-muted mt-0.5">
+            {items.length} item{items.length !== 1 ? 's' : ''} across all stages
+          </p>
+        </div>
+      </div>
+      <KanbanBoard initialItems={items} clients={clients} />
+    </div>
+  )
+}
