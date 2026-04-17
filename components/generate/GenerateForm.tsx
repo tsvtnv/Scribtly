@@ -80,6 +80,13 @@ export function GenerateForm({
   const [hookStyle, setHookStyle] = useState<string>("");
   const [extraOutputs, setExtraOutputs] = useState<string[]>([]);
   const [model, setModel] = useState<ClaudeModelKey>(DEFAULT_CLAUDE_MODEL);
+  const [showModelTooltip, setShowModelTooltip] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem("sf_tooltip_model_seen")) {
+      setShowModelTooltip(true);
+    }
+  }, []);
 
   useEffect(() => {
     setDuration(cfg[platform].durations[0]);
@@ -229,6 +236,22 @@ export function GenerateForm({
               );
             })}
           </div>
+          {showModelTooltip && (
+            <div className="mt-1 p-3 rounded-md bg-[var(--color-primary-tint)] border border-[var(--color-primary)]/20 text-xs text-text-secondary dark:text-dark-muted flex items-start justify-between gap-2">
+              <span>Standard is great for TikTok and short clips. Quality works for most scripts. Premium is best for long YouTube videos.</span>
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.setItem("sf_tooltip_model_seen", "1");
+                  setShowModelTooltip(false);
+                }}
+                className="flex-shrink-0 text-text-secondary hover:text-text-primary"
+                aria-label="Dismiss tooltip"
+              >
+                ✕
+              </button>
+            </div>
+          )}
         </div>
 
         <div>
