@@ -111,27 +111,24 @@ export async function POST(req: NextRequest) {
         const scriptCount = await prisma.script.count({
           where: { workspaceId: ws.id },
         });
-        if (scriptCount < 3) {
+        const shouldSend = scriptCount < 3;
+        if (shouldSend) {
           await sendDay14ReengagementEmail(ws.id, email, name);
-          await prisma.workspace.update({
-            where: { id: ws.id },
-            data: { day14EmailSentAt: now },
-          });
           day14Sent++;
-        } else {
-          // Engaged user — mark as sent so we skip next time
-          await prisma.workspace.update({
-            where: { id: ws.id },
-            data: { day14EmailSentAt: now },
-          });
         }
+        await prisma.workspace.update({
+          where: { id: ws.id },
+          data: { day14EmailSentAt: now },
+        });
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error(`Onboarding cron failed for workspace ${ws.id}:`, msg);
       errors.push(`workspace:${ws.id} — ${msg}`);
     }
-  }
+    } // end for (ws of batch)
+    cursor = batch.at(-1)?.id;
+  } while (true);
 
   return NextResponse.json({ welcomed, day2Sent, day7Sent, day14Sent, errors });
 }
