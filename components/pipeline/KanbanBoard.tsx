@@ -203,6 +203,23 @@ export function KanbanBoard({ initialItems, clients, initialScripts }: KanbanBoa
   const display = getFilteredColumns()
   const totalItems = STAGE_ORDER.reduce((sum, s) => sum + columns[s].length, 0)
 
+  const firstColumnTooltip = showPipelineTooltip ? (
+    <div className="mx-2 mb-2 p-2 rounded bg-[var(--color-primary-tint)] text-xs text-text-secondary dark:text-dark-muted flex items-start justify-between gap-2">
+      <span>Drag cards between columns as your content moves through production.</span>
+      <button
+        type="button"
+        onClick={() => {
+          localStorage.setItem("sf_tooltip_pipeline_seen", "1");
+          setShowPipelineTooltip(false);
+        }}
+        aria-label="Dismiss tooltip"
+        className="flex-shrink-0 text-text-secondary dark:text-dark-muted hover:text-text-primary"
+      >
+        ✕
+      </button>
+    </div>
+  ) : undefined;
+
   return (
     <div className="flex flex-col h-full">
       <PipelineFilters
@@ -258,24 +275,7 @@ export function KanbanBoard({ initialItems, clients, initialScripts }: KanbanBoa
                     items={display[stage]}
                     onAddItem={(s) => setAddStage(s)}
                     onEditItem={(item) => setEditItem(item)}
-                    tooltip={
-                      showPipelineTooltip && columnIndex === 0 ? (
-                        <div className="mx-2 mb-2 p-2 rounded bg-[var(--color-primary-tint)] text-xs text-text-secondary dark:text-dark-muted flex items-start justify-between gap-2">
-                          <span>Drag cards between columns as your content moves through production.</span>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              localStorage.setItem("sf_tooltip_pipeline_seen", "1")
-                              setShowPipelineTooltip(false)
-                            }}
-                            aria-label="Dismiss tooltip"
-                            className="flex-shrink-0"
-                          >
-                            ✕
-                          </button>
-                        </div>
-                      ) : undefined
-                    }
+                    tooltip={columnIndex === 0 ? firstColumnTooltip : undefined}
                   />
                 ))}
               </div>
