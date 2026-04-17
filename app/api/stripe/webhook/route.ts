@@ -38,16 +38,30 @@ export async function POST(req: NextRequest) {
 
         const workspace = await prisma.workspace.update({
           where: { id: workspaceId },
-          data: { plan, stripeSubscriptionId: subscription.id, stripeCustomerId: typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id },
+          data: {
+            plan,
+            stripeSubscriptionId: subscription.id,
+            stripeCustomerId: typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id,
+            onboardingStep: 4,
+            onboardingCompleted: true,
+          },
           include: { owner: true },
         });
 
         void (async () => {
           try {
-            const { sendUpgradeConfirmation } = await import("@/lib/sendEmail");
-            await sendUpgradeConfirmation({ to: workspace.owner.email, plan });
+            const { sendUpgradeConfirmationEmail } = await import("@/lib/emails/onboarding");
+            const firstName = workspace.owner.name?.split(" ")[0] || workspace.owner.email.split("@")[0];
+            const billingDate = new Date().getDate().toString();
+            await sendUpgradeConfirmationEmail(
+              workspace.id,
+              workspace.owner.email,
+              firstName,
+              plan,
+              billingDate
+            );
           } catch (err) {
-            console.error("Upgrade email failed", err);
+            console.error("Upgrade onboarding email failed", err);
           }
         })();
         break;
