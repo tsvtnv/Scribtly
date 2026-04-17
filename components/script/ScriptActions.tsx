@@ -22,6 +22,11 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
   const [shareOpen, setShareOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const [shareUrl, setShareUrl] = useState('')
+  useEffect(() => {
+    if (shareToken) setShareUrl(`${window.location.origin}/review/${shareToken}`)
+  }, [shareToken])
+
   const canPdf = plan === "PRO" || plan === "AGENCY";
 
   // Close dropdown on outside click
@@ -109,8 +114,6 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
     const copied = await navigator.clipboard.writeText(url).then(() => true).catch(() => false);
     toast.push(copied ? "Link copied!" : "Could not copy — link shown above", "success");
   }
-
-  const shareUrl = shareToken ? `${typeof window !== 'undefined' ? window.location.origin : ''}/review/${shareToken}` : '';
 
   return (
     <div className="sticky bottom-0 bg-[var(--color-surface)] border-t-hair border-[var(--color-border)] -mx-6 md:-mx-10 px-6 md:px-10 py-3 flex flex-wrap items-center gap-2">

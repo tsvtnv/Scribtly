@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { prisma } from '@/lib/prisma'
 import type { Platform } from '@prisma/client'
 import { PlatformBadge } from '@/components/ui/Badge'
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: { params: { token: string } }
   }
 }
 
-async function fetchScript(token: string): Promise<ReviewScript | null> {
+const fetchScript = cache(async (token: string): Promise<ReviewScript | null> => {
   const script = await prisma.script.findFirst({
     where: { shareToken: token, shareEnabled: true },
     select: {
@@ -39,6 +40,7 @@ async function fetchScript(token: string): Promise<ReviewScript | null> {
 
   return {
     ...script,
+    extras: (script.extras ?? null) as Record<string, string> | null,
     platform: script.platform as Platform,
     createdAt: script.createdAt.toISOString(),
     comments: script.comments.map(c => ({
@@ -47,7 +49,7 @@ async function fetchScript(token: string): Promise<ReviewScript | null> {
       verdict: c.verdict as 'APPROVED' | 'REJECTED' | null,
     })),
   }
-}
+})
 
 export default async function ReviewPage({ params }: { params: { token: string } }) {
   const script = await fetchScript(params.token)
