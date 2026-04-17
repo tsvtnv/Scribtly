@@ -77,11 +77,19 @@ export const KanbanCard = memo(function KanbanCard({ item, onEdit, isDragOverlay
 
       {/* Indicators */}
       <div className="flex items-center gap-2 mt-1">
-        {item.scriptId && (
+        {item.script ? (
+          <a
+            href={`/scripts/${item.script.id}`}
+            onClick={e => e.stopPropagation()}
+            className="text-[10px] text-teal-600 dark:text-teal-400 font-medium hover:underline"
+          >
+            Script ready{item.script.wordCount ? ` · ${item.script.wordCount} words` : ''}{item.script.duration ? ` · ${item.script.duration}` : ''}
+          </a>
+        ) : item.scriptId ? (
           <span className="text-[10px] text-teal-600 dark:text-teal-400 font-medium">
             Script ready
           </span>
-        )}
+        ) : null}
         {item.notes && (
           <span className="text-[10px] text-text-secondary dark:text-dark-muted" title="Has notes">
             📝
