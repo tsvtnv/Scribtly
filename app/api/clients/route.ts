@@ -18,6 +18,14 @@ const clientSchema = z.object({
   avoidTopics: z.string().trim().max(1000).optional().or(z.literal("")),
   primaryPlatform: z.enum(PLATFORMS).default("YOUTUBE"),
   avatarColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/).default("#7F77DD"),
+  contentGoal: z.string().trim().max(200).optional().or(z.literal("")),
+  videoPace: z.string().trim().max(50).optional().or(z.literal("")),
+  languageStyle: z.string().trim().max(50).optional().or(z.literal("")),
+  ctaStyle: z.string().trim().max(50).optional().or(z.literal("")),
+  brandKeywords: z.string().trim().max(500).optional().or(z.literal("")),
+  competitorNames: z.string().trim().max(500).optional().or(z.literal("")),
+  postingFrequency: z.string().trim().max(100).optional().or(z.literal("")),
+  contentPillars: z.string().trim().max(600).optional().or(z.literal("")),
 });
 
 export async function GET() {
@@ -58,6 +66,14 @@ export async function POST(req: NextRequest) {
         avoidTopics: data.avoidTopics || null,
         primaryPlatform: data.primaryPlatform,
         avatarColor: data.avatarColor,
+        contentGoal: data.contentGoal || null,
+        videoPace: data.videoPace || null,
+        languageStyle: data.languageStyle || null,
+        ctaStyle: data.ctaStyle || null,
+        brandKeywords: data.brandKeywords || null,
+        competitorNames: data.competitorNames || null,
+        postingFrequency: data.postingFrequency || null,
+        contentPillars: data.contentPillars || null,
       },
     });
     return NextResponse.json({ client }, { status: 201 });

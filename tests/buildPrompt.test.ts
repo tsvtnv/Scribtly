@@ -8,6 +8,14 @@ const client = {
   toneOfVoice: "motivational, no-fluff, real talk",
   examplePhrases: "no excuses, let's go, real talk",
   avoidTopics: "extreme diets",
+  contentGoal: null,
+  videoPace: null,
+  languageStyle: null,
+  ctaStyle: null,
+  brandKeywords: null,
+  competitorNames: null,
+  postingFrequency: null,
+  contentPillars: null,
 };
 
 describe("buildPrompt", () => {

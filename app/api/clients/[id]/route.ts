@@ -17,6 +17,14 @@ const patchSchema = z.object({
   avoidTopics: z.string().trim().max(1000).nullable().optional(),
   primaryPlatform: z.enum(PLATFORMS).optional(),
   avatarColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/).optional(),
+  contentGoal: z.string().trim().max(200).nullable().optional(),
+  videoPace: z.string().trim().max(50).nullable().optional(),
+  languageStyle: z.string().trim().max(50).nullable().optional(),
+  ctaStyle: z.string().trim().max(50).nullable().optional(),
+  brandKeywords: z.string().trim().max(500).nullable().optional(),
+  competitorNames: z.string().trim().max(500).nullable().optional(),
+  postingFrequency: z.string().trim().max(100).nullable().optional(),
+  contentPillars: z.string().trim().max(600).nullable().optional(),
 });
 
 async function loadClient(id: string, workspaceId: string) {

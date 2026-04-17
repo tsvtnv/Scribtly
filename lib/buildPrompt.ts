@@ -24,7 +24,23 @@ interface PromptsConfig {
 const config = promptsConfig as unknown as PromptsConfig;
 
 export interface BuildPromptInput {
-  client: Pick<Client, "name" | "niche" | "targetAudience" | "toneOfVoice" | "examplePhrases" | "avoidTopics">;
+  client: Pick<
+    Client,
+    | "name"
+    | "niche"
+    | "targetAudience"
+    | "toneOfVoice"
+    | "examplePhrases"
+    | "avoidTopics"
+    | "contentGoal"
+    | "videoPace"
+    | "languageStyle"
+    | "ctaStyle"
+    | "brandKeywords"
+    | "competitorNames"
+    | "postingFrequency"
+    | "contentPillars"
+  >;
   platform: Platform;
   topic: string;
   duration: string;
@@ -41,13 +57,26 @@ export interface BuiltPrompt {
 }
 
 function fillClientVoice(template: string, client: BuildPromptInput["client"]): string {
-  return template
+  const base = template
     .replace("{{client_name}}", client.name)
     .replace("{{client_niche}}", client.niche)
     .replace("{{client_audience}}", client.targetAudience)
     .replace("{{client_tone}}", client.toneOfVoice)
     .replace("{{client_phrases}}", client.examplePhrases?.trim() || "(none specified)")
     .replace("{{client_avoid}}", client.avoidTopics?.trim() || "(none specified)");
+
+  const extras: string[] = [];
+  if (client.contentGoal) extras.push(`- Content goal: ${client.contentGoal}`);
+  if (client.videoPace) extras.push(`- Video/content pace: ${client.videoPace}`);
+  if (client.languageStyle) extras.push(`- Language style: ${client.languageStyle}`);
+  if (client.ctaStyle) extras.push(`- CTA style: ${client.ctaStyle}`);
+  if (client.brandKeywords) extras.push(`- Brand keywords to use naturally: ${client.brandKeywords}`);
+  if (client.competitorNames) extras.push(`- Competitor names to never mention: ${client.competitorNames}`);
+  if (client.postingFrequency) extras.push(`- Posting frequency: ${client.postingFrequency}`);
+  if (client.contentPillars) extras.push(`- Content pillars / themes: ${client.contentPillars}`);
+
+  if (extras.length === 0) return base;
+  return base + "\n\nEXTENDED CLIENT CONTEXT — apply these throughout:\n" + extras.join("\n");
 }
 
 export function buildPrompt(input: BuildPromptInput): BuiltPrompt {

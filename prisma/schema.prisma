@@ -126,6 +126,15 @@ model Client {
   avoidTopics     String?
   primaryPlatform Platform  @default(YOUTUBE)
   avatarColor     String    @default("#7F77DD")
+  // Extended profile fields
+  contentGoal     String?
+  videoPace       String?
+  languageStyle   String?
+  ctaStyle        String?
+  brandKeywords   String?
+  competitorNames String?
+  postingFrequency String?
+  contentPillars  String?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   scripts         Script[]
