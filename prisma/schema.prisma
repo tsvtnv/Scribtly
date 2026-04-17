@@ -74,15 +74,15 @@ model Workspace {
   scriptCountResetAt   DateTime
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
-  onboardingStep          Int       @default(0)
-  onboardingCompleted     Boolean   @default(false)
-  firstScriptGeneratedAt  DateTime?
-  firstClientAddedAt      DateTime?
-  welcomeEmailSentAt      DateTime?
-  day2EmailSentAt         DateTime?
-  day7EmailSentAt         DateTime?
-  day14EmailSentAt        DateTime?
-  emailOptOut             Boolean   @default(false)
+  onboardingStep       Int               @default(0)
+  onboardingCompleted  Boolean           @default(false)
+  firstScriptGeneratedAt DateTime?
+  firstClientAddedAt   DateTime?
+  welcomeEmailSentAt   DateTime?
+  day2EmailSentAt      DateTime?
+  day7EmailSentAt      DateTime?
+  day14EmailSentAt     DateTime?
+  emailOptOut          Boolean           @default(false)
   members              WorkspaceMember[]
   clients              Client[]
   scripts              Script[]
@@ -92,6 +92,7 @@ model Workspace {
 
   @@index([ownerId])
   @@index([stripeSubscriptionId])
+  @@index([emailOptOut, onboardingCompleted])
 }
 
 model WorkspaceMember {
