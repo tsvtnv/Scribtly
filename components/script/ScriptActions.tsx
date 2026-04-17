@@ -171,7 +171,7 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
             {shareOpen && (
               <div className="absolute bottom-full mb-2 right-0 w-72 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-lg p-3 flex flex-col gap-2 z-50">
                 <div className="flex items-center gap-2">
-                  <Link size={12} className="text-text-secondary dark:text-dark-muted flex-shrink-0" />
+                  <LinkIcon size={12} className="text-text-secondary dark:text-dark-muted flex-shrink-0" />
                   <span className="text-xs text-text-secondary dark:text-dark-muted truncate flex-1">{shareUrl}</span>
                 </div>
                 <Button variant="secondary" size="sm" onClick={copyLink}>
