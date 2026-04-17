@@ -1,0 +1,12 @@
+import { requireAdmin } from "@/lib/adminAuth";
+import { AdminNav } from "./AdminNav";
+
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  await requireAdmin();
+  return (
+    <div className="min-h-screen flex bg-[var(--color-bg)]">
+      <AdminNav />
+      <main className="flex-1 min-w-0">{children}</main>
+    </div>
+  );
+}
