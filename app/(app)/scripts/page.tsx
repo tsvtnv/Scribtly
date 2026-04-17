@@ -3,7 +3,7 @@ import { Sparkles } from "lucide-react";
 import type { Prisma, Platform, ScriptStatus } from "@prisma/client";
 import { ensureUser } from "@/lib/ensureUser";
 import { prisma } from "@/lib/prisma";
-import { ScriptCard } from "@/components/script/ScriptCard";
+import { ScriptsGrid } from "@/components/script/ScriptsGrid";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -145,9 +145,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
           <p className="text-text-secondary dark:text-dark-muted">No scripts match. Try clearing filters.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {scripts.map((s) => <ScriptCard key={s.id} script={s} />)}
-        </div>
+        <ScriptsGrid scripts={scripts} clients={clients} />
       )}
 
       {total > scripts.length ? (
