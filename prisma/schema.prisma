@@ -157,9 +157,9 @@ model ContentItem {
   workspaceId   String
   workspace     Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   clientId      String
-  client        Client        @relation(fields: [clientId], references: [id])
+  client        Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
   scriptId      String?
-  script        Script?       @relation(fields: [scriptId], references: [id])
+  script        Script?       @relation(fields: [scriptId], references: [id], onDelete: SetNull)
   title         String
   platform      Platform
   stage         PipelineStage @default(IDEA)
@@ -173,4 +173,5 @@ model ContentItem {
 
   @@index([workspaceId])
   @@index([workspaceId, stage])
+  @@index([workspaceId, clientId])
 }
