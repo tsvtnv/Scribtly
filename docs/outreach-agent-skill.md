@@ -332,37 +332,42 @@ Before writing, answer these from what you saw on the site:
 Your message must contain at least one thing that proves you visited their actual site — a specific client name, a quote from their page, a result they published, a service only they offer.
 
 **Tone & Voice:**
-- **Write like a person, not a company.** Short sentences. "Hey" is better than "Hello." No em dashes, no corporate phrasing.
-- **Be honest about what we want:** We're in beta, we're looking for a few test cases, we want to see if it actually helps you.
-- **Acknowledge what they already do well.** Don't pretend you're solving problems they don't have.
-- **Make it easy to say yes:** Free 3-month trial. No commitment. If it doesn't work, no hard feelings.
-- **Sign as Kris** (person, not "the Scribtly team")
+- **Write like a founder reaching out, not a sales rep pitching.** You're Kris, you built this, you want to know if it's useful to them. That's it.
+- **Ask one genuine question** based on something real you saw on their site. Does scripting slow them down? Do they do it in-house? Are they scaling? Let them answer.
+- **One sentence on what Scribtly does.** Maximum. Don't explain the workflow, the features, or the benefits list.
+- **Be honest:** We're in beta, we're looking for a few agencies to test it. Not a big pitch.
+- **Make it easy to say yes:** Free. No commitment. Drop the link and let them click if curious.
+- **Short messages get replies.** 4–6 sentences total is better than 4 paragraphs. If it takes more than 20 seconds to read, cut it.
+- **Sign as Kris** — first name only, no title, no "the Scribtly team"
 
-**Example — GOOD (conversational, genuine):**
+**Example — GOOD (short, human, invites reply):**
 ```
-Hey, I know you script everything in-house — that's clearly part of your process. 
-The thing is, when you're doing 10-20 videos a month per client, scripting is usually 
-the slowest part. We built Scribtly to handle the first draft so your team can focus 
-on what actually makes your work special: the shoot and the edit.
+Hey, saw you do full-service production for Shopify brands — scripts included. 
+Curious if scripting is ever the bottleneck when you're spinning up content for 
+a new client. We built Scribtly to handle first drafts for exactly that kind of volume.
 
-We're in beta right now and looking for a few agencies to test it out. Free 3-month 
-trial if you're interested. Figured with clients like Cirque and Four Seasons, you'd 
-know right away if it's worth using or not.
-
-Worth a shot? https://scribtly.com/ref/dreww
+In beta, looking for a couple of agencies to test it. Free for 3 months.
+https://scribtly.com/ref/dreww
 
 Kris
 ```
 
-**Example — AVOID (corporate, pushy, fake):**
+**Example — AVOID (pitchy, explains too much, assumes problems):**
 ```
-Your workflow explicitly includes "creation of a brief, script, shot list, and 
-production schedule" — scripting is foundational to what you do. But for clients 
-producing 10-20 videos monthly, script turnaround is often the limiting factor. 
-Scribtly accelerates that: AI-drafted scripts matched to your "Special Sauce" 
-methodology, your team refines and shoots. Your Cirque du Soleil and Four Seasons 
-clients get faster iterations. Free beta: https://scribtly.com/ref/dreww
+You offer free scripts to first-time clients — you know scripting matters. But most 
+of your clients probably wish they could get scripts faster and iterate without delays. 
+Scribtly automates that: clients request 5-10 script variations, pick their favorite, 
+brief your team on production. Your 50-person team focuses on what you do best 
+(filming, editing, motion design). Your 1.5B+ portfolio clients get faster turnaround.
+Free beta: https://scribtly.com/ref/vidico
 ```
+
+Why that's bad:
+- Explains the entire product workflow ("clients request 5-10 script variations, pick their favorite") — reads like a pitch deck, not a human
+- Assumes they have a problem ("probably wish they could get scripts faster") — patronising
+- Lists benefits at them instead of asking a question
+- No genuine human hook or invitation to reply
+- Sounds like ChatGPT wrote a cold email template
 
 **Required:**
 - Something specific and real from their website (client name, quote, stat)
@@ -374,13 +379,17 @@ clients get faster iterations. Free beta: https://scribtly.com/ref/dreww
 **Forbidden:**
 - Writing the message before visiting the site
 - Using web search snippets to write the message
+- Explaining how Scribtly works step-by-step ("clients request variations, pick their favorite, brief your team") — never explain the product workflow
+- Assuming they have a problem ("probably wish they could", "most agencies struggle with") — ask, don't assume
+- Listing benefits or features ("your team focuses on X, your clients get Y, your Z improves") — this is a pitch deck, not a message
 - Corporate openers: "I came across your agency", "I hope this finds you well", "Your workflow explicitly includes"
-- Promotional language: "accelerates", "foundational", "seamless", "transforms"
-- Em dashes, run-on sentences, fragmented structure
+- Promotional language: "accelerates", "foundational", "seamless", "transforms", "automates", "streamlines"
+- Em dashes (—), parenthetical lists, run-on sentences
 - Reusing any sentence or phrase from a message sent earlier in this session
 - Bullet points, numbered lists, emojis, bold headers
-- **UTM parameter links like `https://scribtly.com?utm_source=outreach&utm_medium=email...`** — WRONG, leads to homepage
-- **Bare `https://scribtly.com` link without `/ref/{leadId}`** — WRONG, no personalisation or tracking
+- Subject lines that sound like ad copy ("Free scripts for agencies", "Grow your TikTok clients faster")
+- **UTM parameter links like `https://scribtly.com?utm_source=outreach...`** — leads to homepage, breaks tracking
+- **Bare `https://scribtly.com`** — no personalisation
 
 **CRITICAL ENFORCEMENT:**
 Before sending ANY message:
