@@ -43,7 +43,7 @@ export default async function CronSettingsPage() {
       </div>
 
       <p className="text-sm text-text-secondary dark:text-dark-muted">
-        Cron schedules automatically generate scripts for your clients. Each auto-generated script costs 2 credits.
+        Cron schedules automatically generate scripts for your clients. Each auto-generated script uses 1 of your monthly scripts.
       </p>
 
       {schedules.length === 0 ? (

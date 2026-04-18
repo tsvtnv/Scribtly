@@ -16,6 +16,7 @@ const isPublic = createRouteMatcher([
   "/api/user/unsubscribe",
   "/admin(.*)",
   "/api/admin/(.*)",
+  "/onboarding",
 ]);
 
 export default clerkMiddleware((auth, req) => {

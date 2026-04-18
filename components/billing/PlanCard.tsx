@@ -46,8 +46,8 @@ export function PlanCard({ plan, price, features, currentPlan, onUpgrade, busy, 
           Upgrade to {LABEL[plan]}
         </Button>
       ) : (
-        <Button variant="secondary" fullWidth disabled>
-          Manage in portal
+        <Button variant="secondary" fullWidth onClick={onUpgrade} loading={busy}>
+          Downgrade to {LABEL[plan]}
         </Button>
       )}
     </Card>

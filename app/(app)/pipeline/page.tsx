@@ -16,7 +16,7 @@ export default async function PipelinePage() {
 
   if (!canAccessPipeline(workspace.plan)) {
     return (
-      <div className="flex flex-col h-full min-h-screen">
+      <div className="flex flex-col h-full">
         <div className="px-4 py-4 border-b border-[var(--color-border)]">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-lg font-semibold text-text-primary dark:text-dark-text">Content pipeline</h1>
@@ -65,7 +65,7 @@ export default async function PipelinePage() {
   }))
 
   return (
-    <div className="flex flex-col h-full min-h-screen">
+    <div className="flex flex-col h-full">
       <div className="px-4 py-4 border-b border-[var(--color-border)]">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-lg font-semibold text-text-primary dark:text-dark-text">Content pipeline</h1>

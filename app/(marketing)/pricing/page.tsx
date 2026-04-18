@@ -91,7 +91,7 @@ export default function PricingPage() {
           Simple pricing that scales with you
         </h1>
         <p className="text-sm md:text-base text-text-secondary dark:text-dark-muted mt-3 max-w-2xl mx-auto">
-          Choose the plan that matches your script volume — upgrade anytime.
+          Choose the plan that matches your script volume. Upgrade anytime.
         </p>
       </section>
 
@@ -183,7 +183,7 @@ export default function PricingPage() {
               Need more than 350 scripts a month?
             </h2>
             <p className="text-sm md:text-base text-text-secondary dark:text-dark-muted mt-2">
-              We offer custom Enterprise plans for larger agencies and teams —
+              We offer custom Enterprise plans for larger agencies and teams
               with higher volume, extra team seats, and dedicated support. Tell
               us what you need and we&apos;ll get back to you within one business
               day.

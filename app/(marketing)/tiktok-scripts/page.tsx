@@ -4,15 +4,15 @@ import { Card } from "@/components/ui/Card";
 import { Check } from "lucide-react";
 
 export const metadata = {
-  title: "TikTok script writer for freelancers — Scribtly",
+  title: "TikTok script writer for freelancers · Scribtly",
   description:
-    "Write TikTok scripts that hook viewers in the first second. Scribtly generates short-form scripts in your client's exact voice — 15, 30, or 60 seconds.",
+    "Write TikTok scripts that hook viewers in the first second. Scribtly generates short-form scripts in your client's exact voice: 15, 30, or 60 seconds.",
 };
 
 const steps = [
-  { n: "1", title: "Save the client", desc: "Tone, niche, audience — once. Every script you generate sounds like them." },
+  { n: "1", title: "Save the client", desc: "Tone, niche, audience, saved once. Every script you generate sounds like them." },
   { n: "2", title: "Drop the topic", desc: "Paste the idea. Pick 15, 30, or 60 seconds." },
-  { n: "3", title: "Ship the script", desc: "Hook, body, payoff, optional loop hook — streamed in seconds." },
+  { n: "3", title: "Ship the script", desc: "Hook, body, payoff, optional loop hook, streamed in seconds." },
 ];
 
 const wins = [
@@ -31,10 +31,10 @@ export default function TikTokPage() {
           TikTok scripts that hook viewers in the first second
         </h1>
         <p className="text-base text-text-secondary dark:text-dark-muted mt-5 max-w-2xl mx-auto">
-          Short-form TikTok scripts — hook, body, payoff — written in your client's voice. No padding, no filler, no "Hey guys".
+          Short-form TikTok scripts (hook, body, payoff) written in your client's voice. No padding, no filler, no "Hey guys".
         </p>
         <Link href="/signup" className="inline-block mt-7">
-          <Button size="lg">Start free — 3 scripts</Button>
+          <Button size="lg">Start free · 3 scripts</Button>
         </Link>
       </section>
 
