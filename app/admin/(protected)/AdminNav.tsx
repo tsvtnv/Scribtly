@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, Share2, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, Share2, LogOut, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 const links = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
@@ -14,6 +15,7 @@ const links = [
 export function AdminNav() {
   const pathname = usePathname();
   const router = useRouter();
+  const { theme, toggle } = useTheme();
 
   async function logout() {
     await fetch("/api/admin/auth", { method: "DELETE" });
@@ -47,7 +49,14 @@ export function AdminNav() {
           );
         })}
       </nav>
-      <div className="px-3 py-3 border-t border-[var(--color-border)]">
+      <div className="px-3 py-3 border-t border-[var(--color-border)] space-y-1">
+        <button
+          onClick={toggle}
+          className="flex items-center gap-2 px-3 py-2 w-full rounded-md text-sm text-text-secondary hover:text-text-primary hover:bg-[var(--color-primary-tint)] transition-colors"
+        >
+          {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          {theme === "dark" ? "Light mode" : "Dark mode"}
+        </button>
         <button
           onClick={logout}
           className="flex items-center gap-2 px-3 py-2 w-full rounded-md text-sm text-text-secondary hover:text-danger hover:bg-danger/10 transition-colors"
