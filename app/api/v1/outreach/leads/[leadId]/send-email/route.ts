@@ -61,11 +61,11 @@ export async function POST(
     );
   }
 
-  // Per-lead tracked URL so Resend click tracking + UTM attribution both work
+  // Per-lead tracked ref URL — personalised landing page with UTM params for attribution
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL?.replace("localhost:3000", "scribtly.com") ?? "https://scribtly.com";
-  const trackedUrl = `${baseUrl}?utm_source=outreach&utm_medium=email&utm_campaign=beta&utm_content=${encodeURIComponent(params.leadId)}`;
+  const trackedUrl = `${baseUrl}/ref/${params.leadId}?utm_source=outreach&utm_medium=email&utm_campaign=beta`;
 
-  // Replace any bare scribtly.com links in the body with the tracked URL
+  // Replace any scribtly.com links in the body with the personalised ref URL
   const trackedBody = emailBody.replace(/https?:\/\/scribtly\.com[^\s]*/g, trackedUrl).replace(/\bscribtly\.com\b(?![^\s<])/g, trackedUrl);
 
   // HTML version — required for Resend open/click tracking
