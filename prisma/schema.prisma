@@ -50,16 +50,43 @@ enum ReviewVerdict {
 }
 
 model User {
-  id                  String            @id @default(cuid())
-  clerkId             String            @unique
-  email               String            @unique
-  name                String?
-  defaultWorkspaceId  String?
-  createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
-  ownedWorkspaces     Workspace[]       @relation("WorkspaceOwner")
-  memberships         WorkspaceMember[]
-  sentInvites         Invite[]          @relation("InviteSender")
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  name               String?
+  passwordHash       String?
+  googleId           String?   @unique
+  avatarUrl          String?
+  emailVerified      Boolean   @default(false)
+  defaultWorkspaceId String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  sessions              Session[]
+  ownedWorkspaces       Workspace[]       @relation("WorkspaceOwner")
+  memberships           WorkspaceMember[]
+  sentInvites           Invite[]          @relation("InviteSender")
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
 }
 
 model Workspace {
