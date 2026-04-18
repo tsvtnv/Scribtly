@@ -39,6 +39,16 @@ def extract_emails_from_html(html: str, domain: str) -> set[str]:
     return result
 
 
+_PREFERRED_PREFIXES = ["contact", "hello", "info", "hi", "team", "media", "press"]
+
+def pick_best_email(emails: set[str]) -> str:
+    for prefix in _PREFERRED_PREFIXES:
+        for e in emails:
+            if e.split("@")[0] == prefix:
+                return e
+    return sorted(emails)[0]
+
+
 def build_lead_payload(domain: str, email: str | None, query: str) -> dict | None:
     if not email:
         return None
@@ -59,7 +69,7 @@ async def fetch_page(session: aiohttp.ClientSession, url: str) -> str:
         async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=10), allow_redirects=True) as resp:
             if resp.status >= 400:
                 return ""
-            return await resp.text(errors="ignore")
+            return await resp.text(encoding="utf-8", errors="ignore")
     except Exception:
         return ""
 
@@ -70,7 +80,7 @@ async def extract_email_for_domain(session: aiohttp.ClientSession, domain: str) 
     for html in pages:
         emails = extract_emails_from_html(html, domain)
         if emails:
-            return domain, sorted(emails)[0]
+            return domain, pick_best_email(emails)
     return domain, None
 
 
@@ -115,14 +125,14 @@ async def main():
 
     _log(f"[Extract] Processing {len(domains)} domains with concurrency={CONCURRENCY}")
 
-    connector = aiohttp.TCPConnector(limit=CONCURRENCY, ssl=False)
+    connector = aiohttp.TCPConnector(limit=CONCURRENCY)
     async with aiohttp.ClientSession(connector=connector) as session:
         batch: list[dict] = []
         processed = 0
         emails_found = 0
         failed_domains: list[str] = []
 
-        chunk_size = 500
+        chunk_size = 20
         for i in range(0, len(domains), chunk_size):
             chunk = domains[i:i + chunk_size]
             results = await asyncio.gather(*[extract_email_for_domain(session, d) for d in chunk])

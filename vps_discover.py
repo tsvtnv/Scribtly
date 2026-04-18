@@ -22,7 +22,8 @@ def _log(msg: str):
 def _domain_from_url(url: str) -> str | None:
     try:
         parsed = urlparse(url)
-        domain = parsed.netloc.lower().lstrip("www.")
+        netloc = parsed.netloc.lower()
+        domain = netloc[4:] if netloc.startswith("www.") else netloc
         if not domain or "." not in domain:
             return None
         return domain
@@ -104,6 +105,7 @@ async def fetch_commoncrawl(session: aiohttp.ClientSession, pattern: str) -> set
     try:
         async with session.get(url, timeout=aiohttp.ClientTimeout(total=60)) as resp:
             if resp.status != 200:
+                _log(f"[CommonCrawl] '{pattern}' -> HTTP {resp.status}")
                 return set()
             text = await resp.text()
             domains = set()
@@ -138,7 +140,7 @@ async def main():
     except FileNotFoundError:
         pass
 
-    connector = aiohttp.TCPConnector(limit=CONCURRENCY, ssl=False)
+    connector = aiohttp.TCPConnector(limit=CONCURRENCY)
     async with aiohttp.ClientSession(connector=connector) as session:
         _log(f"[Discovery] Starting Google+Bing scrape for {len(SEARCH_QUERIES)} queries...")
         for query in SEARCH_QUERIES:

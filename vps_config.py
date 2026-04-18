@@ -1,14 +1,18 @@
 # vps_config.py
 import hashlib
+import os
+from pathlib import Path
+
+_BASE = Path(__file__).parent
 
 API_URL = "https://scribtly.com/api/v1/outreach/leads/bulk"
-API_KEY = "ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055"
-CONCURRENCY = 200          # simultaneous aiohttp connections
-BATCH_SIZE = 50            # leads per API push
-QUEUE_FILE = "queue.txt"
-FAILED_FILE = "failed.txt"
-DISCOVERY_LOG = "discovery.log"
-EXTRACTION_LOG = "extraction.log"
+API_KEY = os.environ.get("SCRIBTLY_API_KEY", "ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055")
+CONCURRENCY = 200
+BATCH_SIZE = 50
+QUEUE_FILE = str(_BASE / "queue.txt")
+FAILED_FILE = str(_BASE / "failed.txt")
+DISCOVERY_LOG = str(_BASE / "discovery.log")
+EXTRACTION_LOG = str(_BASE / "extraction.log")
 
 SEARCH_QUERIES = [
     # General digital marketing
