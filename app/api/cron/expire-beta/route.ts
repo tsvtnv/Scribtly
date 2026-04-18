@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   const in7Days = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
   const in8Days = new Date(now.getTime() + 8 * 24 * 60 * 60 * 1000);
 
-  // Warning: expiring in 6–7 days and warning not yet sent
+  // Warning: expiring in 7–8 days and warning not yet sent
   const toWarn = await prisma.user.findMany({
     where: {
       isBetaTester: true,
@@ -29,42 +29,35 @@ export async function POST(req: NextRequest) {
   let warned = 0;
   for (const u of toWarn) {
     if (!u.betaExpiresAt) continue;
+    await prisma.user.update({
+      where: { id: u.id },
+      data: { betaWarningEmailSentAt: now },
+    });
     await sendBetaExpiring({
       to: u.email,
       name: u.name ?? undefined,
       betaExpiresAt: u.betaExpiresAt,
     }).catch(console.error);
-    await prisma.user.update({
-      where: { id: u.id },
-      data: { betaWarningEmailSentAt: now },
-    });
     warned++;
   }
 
   // Expire: betaExpiresAt in the past and workspace still on BASIC
-  const expired = await prisma.user.findMany({
+  const expiredUsers = await prisma.user.findMany({
     where: {
       isBetaTester: true,
       betaExpiresAt: { lte: now },
     },
-    select: { id: true, defaultWorkspaceId: true },
+    select: { defaultWorkspaceId: true },
   });
 
-  let downgraded = 0;
-  for (const u of expired) {
-    if (!u.defaultWorkspaceId) continue;
-    const ws = await prisma.workspace.findUnique({
-      where: { id: u.defaultWorkspaceId },
-      select: { plan: true },
-    });
-    if (ws?.plan === "BASIC") {
-      await prisma.workspace.update({
-        where: { id: u.defaultWorkspaceId },
-        data: { plan: "FREE" },
-      });
-      downgraded++;
-    }
-  }
+  const workspaceIds = expiredUsers
+    .map((u) => u.defaultWorkspaceId)
+    .filter((id): id is string => id !== null);
+
+  const { count: downgraded } = await prisma.workspace.updateMany({
+    where: { id: { in: workspaceIds }, plan: "BASIC" },
+    data: { plan: "FREE" },
+  });
 
   return NextResponse.json({ ok: true, warned, downgraded });
 }

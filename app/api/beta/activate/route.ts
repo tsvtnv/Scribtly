@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   // Get user + their default workspace
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
-    select: { id: true, email: true, name: true, isBetaTester: true, defaultWorkspaceId: true },
+    select: { id: true, email: true, name: true, isBetaTester: true, betaExpiresAt: true, defaultWorkspaceId: true },
   });
   if (!dbUser) return NextResponse.json({ error: "User not found" }, { status: 404 });
   if (!dbUser.defaultWorkspaceId) {
@@ -34,11 +34,7 @@ export async function POST(req: NextRequest) {
 
   // Idempotent — if already beta tester, return current expiry
   if (dbUser.isBetaTester) {
-    const current = await prisma.user.findUnique({
-      where: { id: dbUser.id },
-      select: { betaExpiresAt: true },
-    });
-    return NextResponse.json({ ok: true, betaExpiresAt: current?.betaExpiresAt });
+    return NextResponse.json({ ok: true, betaExpiresAt: dbUser.betaExpiresAt?.toISOString() ?? null });
   }
 
   const betaExpiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);
