@@ -6,6 +6,11 @@
         "serve"
       ],
       "type": "stdio"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
+      "type": "stdio"
     }
   }
 }
