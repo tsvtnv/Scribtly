@@ -96,7 +96,7 @@ export async function GET(req: NextRequest) {
     cookies().delete("google_oauth_state");
     cookies().delete("google_code_verifier");
 
-    const redirectTo = isNewUser ? "/team-onboarding" : "/dashboard";
+    const redirectTo = isNewUser ? "/onboarding" : "/dashboard";
     return NextResponse.redirect(new URL(redirectTo, process.env.NEXT_PUBLIC_APP_URL!));
   } catch (err) {
     console.error("Google OAuth callback error", err);
