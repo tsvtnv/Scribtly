@@ -146,7 +146,7 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
         </select>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+      <div className="w-full rounded-xl border border-gray-200 dark:border-gray-700">
         <table className="w-full text-xs">
           <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 uppercase tracking-wider">
             <tr>

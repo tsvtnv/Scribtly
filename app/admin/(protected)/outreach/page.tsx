@@ -53,11 +53,11 @@ export default async function AdminOutreachPage() {
   const serializedLeads = leads.map(serializeLead);
 
   return (
-    <div className="p-6 md:p-10 max-w-7xl mx-auto">
+    <div className="p-6 md:p-10 w-full">
       <h1 className="text-2xl font-semibold tracking-tight mb-1">Outreach</h1>
       <p className="text-sm text-text-secondary mb-8">{leads.length} total leads</p>
 
-      <div className="grid grid-cols-3 md:grid-cols-7 gap-4 mb-8">
+      <div className="grid grid-cols-3 md:grid-cols-7 gap-4 mb-8 w-full">
         {[
           { label: "Total Leads", value: String(leads.length) },
           { label: "Contacted", value: String(contacted) },
