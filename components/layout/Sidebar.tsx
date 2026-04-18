@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
+import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard, Sparkles, FileText, Users, Settings, UsersRound, LayoutGrid, Timer, Menu, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
@@ -111,7 +110,7 @@ export function Sidebar() {
           <PlanBadge plan={workspace.plan} />
           <div className="flex items-center gap-1">
             <ThemeToggle />
-            <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "w-7 h-7" } }} />
+            <UserAvatar />
           </div>
         </div>
       </aside>
@@ -153,10 +152,30 @@ export function Sidebar() {
           {!collapsed && <PlanBadge plan={workspace.plan} />}
           <div className={cn("flex items-center gap-1", collapsed && "flex-col")}>
             <ThemeToggle />
-            <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "w-7 h-7" } }} />
+            <UserAvatar />
           </div>
         </div>
       </aside>
     </>
+  );
+}
+
+function UserAvatar() {
+  const router = useRouter();
+
+  async function handleSignOut() {
+    await fetch("/api/auth/signout", { method: "POST" });
+    router.push("/");
+    router.refresh();
+  }
+
+  return (
+    <button
+      onClick={handleSignOut}
+      className="w-7 h-7 rounded-full bg-muted flex items-center justify-center text-xs font-medium hover:opacity-80 transition-opacity"
+      title="Sign out"
+    >
+      <span>↪</span>
+    </button>
   );
 }
