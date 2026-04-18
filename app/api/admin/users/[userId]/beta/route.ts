@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { Plan } from "@prisma/client";
 import { verifyAdminToken, COOKIE } from "@/lib/adminAuth";
 import { prisma } from "@/lib/prisma";
 
@@ -32,31 +33,33 @@ export async function POST(
   const now = new Date();
 
   if (action === "grant") {
+    if (!user.defaultWorkspaceId) {
+      return NextResponse.json({ error: "No workspace" }, { status: 400 });
+    }
     const betaExpiresAt = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
     await prisma.user.update({
       where: { id: userId },
       data: { isBetaTester: true, betaExpiresAt, betaWarningEmailSentAt: null },
     });
-    if (user.defaultWorkspaceId) {
-      await prisma.workspace.update({
-        where: { id: user.defaultWorkspaceId },
-        data: { plan: "BASIC" },
-      });
-    }
+    await prisma.workspace.update({
+      where: { id: user.defaultWorkspaceId },
+      data: { plan: Plan.BASIC },
+    });
     return NextResponse.json({ ok: true, betaExpiresAt: betaExpiresAt.toISOString() });
   }
 
   if (action === "revoke") {
+    if (!user.defaultWorkspaceId) {
+      return NextResponse.json({ error: "No workspace" }, { status: 400 });
+    }
     await prisma.user.update({
       where: { id: userId },
       data: { betaExpiresAt: now }, // mark expired immediately
     });
-    if (user.defaultWorkspaceId) {
-      await prisma.workspace.update({
-        where: { id: user.defaultWorkspaceId },
-        data: { plan: "FREE" },
-      });
-    }
+    await prisma.workspace.update({
+      where: { id: user.defaultWorkspaceId },
+      data: { plan: Plan.FREE },
+    });
     return NextResponse.json({ ok: true });
   }
 
