@@ -61,6 +61,7 @@ const COPY: Record<string, AgencyCopy> = {
 
 export function getCopyForServices(services: string): AgencyCopy {
   const s = services.toLowerCase();
+  // Priority: short-form/TikTok > long-form/YouTube > social > default
   if (s.includes("tiktok") || s.includes("short-form") || s.includes("reels")) {
     return COPY.tiktok;
   }
