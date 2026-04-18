@@ -234,7 +234,8 @@ async def push_single(session, lead):
             ) as r:
                 if r.status in (200, 201):
                     data = await r.json()
-                    log(f"[API] -> {lead['agencyName']} created:{data.get('created',0)}")
+                    d = data.get("data", data)
+                    log(f"[API] -> {lead['agencyName']} upserted:{d.get('upserted', d.get('created',0))}")
                     return True
                 elif r.status == 409:
                     return True
