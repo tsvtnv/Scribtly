@@ -1,4 +1,4 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { UnauthorizedError, ForbiddenError } from "@/lib/errors";
 import { addDays } from "@/lib/utils";
@@ -11,14 +11,11 @@ export interface AuthContext {
 }
 
 export async function ensureUser(): Promise<AuthContext> {
-  const { userId: clerkId } = auth();
-  if (!clerkId) throw new UnauthorizedError();
+  const { user: sessionUser, session } = await getSession();
+  if (!session || !sessionUser) throw new UnauthorizedError();
 
-  let user = await prisma.user.findUnique({ where: { clerkId } });
-
-  if (!user) {
-    user = await upsertUserByClerk(clerkId);
-  }
+  const user = await prisma.user.findUnique({ where: { id: session.userId } });
+  if (!user) throw new UnauthorizedError();
 
   let workspace: Workspace | null = null;
   let role: MemberRole = "OWNER";
@@ -35,7 +32,6 @@ export async function ensureUser(): Promise<AuthContext> {
   }
 
   if (!workspace) {
-    // Orphaned or no default — bootstrap a fresh personal workspace
     const bootstrap = await bootstrapPersonalWorkspace(user);
     workspace = bootstrap.workspace;
     role = bootstrap.role;
@@ -55,86 +51,11 @@ export async function ensureUser(): Promise<AuthContext> {
   return { user, workspace, role };
 }
 
-export async function upsertUserByClerk(clerkId: string): Promise<User> {
-  // Idempotent — webhook may call this after lazy sync already ran
-  const existing = await prisma.user.findUnique({ where: { clerkId } });
-  if (existing) return existing;
-
-  const clerkUser = await currentUser();
-  if (!clerkUser) throw new UnauthorizedError("Clerk user not found");
-
-  const email =
-    clerkUser.emailAddresses.find((e) => e.id === clerkUser.primaryEmailAddressId)?.emailAddress ||
-    clerkUser.emailAddresses[0]?.emailAddress;
-  if (!email) throw new UnauthorizedError("Clerk user missing email");
-
-  const name = [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(" ") || null;
-
-  const user = await prisma.$transaction(async (tx) => {
-    // Check for pending invite
-    const invite = await tx.invite.findFirst({
-      where: {
-        email,
-        acceptedAt: null,
-        expiresAt: { gt: new Date() },
-      },
-      orderBy: { createdAt: "desc" },
-    });
-
-    const newUser = await tx.user.create({
-      data: { clerkId, email, name },
-    });
-
-    if (invite) {
-      await tx.workspaceMember.create({
-        data: { workspaceId: invite.workspaceId, userId: newUser.id, role: "MEMBER" },
-      });
-      await tx.invite.update({
-        where: { id: invite.id },
-        data: { acceptedAt: new Date() },
-      });
-      await tx.user.update({
-        where: { id: newUser.id },
-        data: { defaultWorkspaceId: invite.workspaceId },
-      });
-      return { ...newUser, defaultWorkspaceId: invite.workspaceId };
-    }
-
-    const wsName = `${clerkUser.firstName || email.split("@")[0]}'s workspace`;
-    const workspace = await tx.workspace.create({
-      data: {
-        name: wsName,
-        ownerId: newUser.id,
-        scriptCountResetAt: addDays(new Date(), 30),
-      },
-    });
-    await tx.workspaceMember.create({
-      data: { workspaceId: workspace.id, userId: newUser.id, role: "OWNER" },
-    });
-    await tx.user.update({
-      where: { id: newUser.id },
-      data: { defaultWorkspaceId: workspace.id },
-    });
-    return { ...newUser, defaultWorkspaceId: workspace.id };
-  });
-
-  // Fire-and-forget welcome email
-  void (async () => {
-    try {
-      const { sendWelcome } = await import("@/lib/sendEmail");
-      await sendWelcome({ to: email, name: name || undefined });
-    } catch (err) {
-      console.error("Welcome email failed", err);
-    }
-  })();
-
-  return user;
-}
-
-async function bootstrapPersonalWorkspace(user: User): Promise<{ workspace: Workspace; role: MemberRole }> {
-  const email = user.email;
+export async function bootstrapPersonalWorkspace(
+  user: User
+): Promise<{ workspace: Workspace; role: MemberRole }> {
   const firstName = user.name?.split(" ")[0];
-  const wsName = `${firstName || email.split("@")[0]}'s workspace`;
+  const wsName = `${firstName || user.email.split("@")[0]}'s workspace`;
 
   const result = await prisma.$transaction(async (tx) => {
     const workspace = await tx.workspace.create({

@@ -1,49 +1,51 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { lucia } from "@/lib/auth";
 
-const isPublic = createRouteMatcher([
+const publicPaths = [
   "/",
   "/pricing",
   "/youtube-scripts",
   "/tiktok-scripts",
-  "/login(.*)",
-  "/signup(.*)",
+  "/login",
+  "/signup",
+  "/forgot-password",
+  "/reset-password",
+  "/verify-email",
+  "/api/auth",
   "/api/stripe/webhook",
-  "/api/webhooks/clerk",
-  "/invite/(.*)",
-  "/review/(.*)",
-  "/api/review/(.*)",
+  "/invite",
+  "/review",
+  "/api/review",
   "/unsubscribed",
   "/api/user/unsubscribe",
-  "/admin(.*)",
-  "/api/admin/(.*)",
+  "/admin",
+  "/api/admin",
   "/onboarding",
-  "/ref/(.*)",
-  "/api/track",
-  "/api/ref/(.*)",
-  "/api/webhooks/resend-outreach",
-]);
+];
 
-const REF_PATTERN = /^\/ref\/([^/]+)/;
+function isPublic(pathname: string): boolean {
+  return publicPaths.some(
+    (p) => pathname === p || pathname.startsWith(p + "/") || pathname.startsWith(p + "?")
+  );
+}
 
-export default clerkMiddleware((auth, req) => {
-  const { pathname } = req.nextUrl;
-  const refMatch = pathname.match(REF_PATTERN);
+export async function middleware(req: NextRequest) {
+  if (isPublic(req.nextUrl.pathname)) return NextResponse.next();
 
-  if (refMatch) {
-    const leadId = refMatch[1];
-    const res = NextResponse.next();
-    res.cookies.set("ref_lead_id", leadId, {
-      httpOnly: false,
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-      path: "/",
-    });
-    return res;
+  const sessionId = req.cookies.get(lucia.sessionCookieName)?.value ?? null;
+  if (!sessionId) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  if (!isPublic(req)) auth().protect();
-});
+  const { session } = await lucia.validateSession(sessionId);
+  if (!session) {
+    const response = NextResponse.redirect(new URL("/login", req.url));
+    response.cookies.delete(lucia.sessionCookieName);
+    return response;
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/((?!_next|.*\\..*).*)", "/(api|trpc)(.*)"],
