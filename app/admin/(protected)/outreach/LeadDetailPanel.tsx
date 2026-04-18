@@ -1,10 +1,8 @@
 "use client";
 
-import type { ReferralLead, ReferralEvent } from "@prisma/client";
+import type { SerializedLead } from "./page";
 
-type LeadWithEvents = ReferralLead & { events: ReferralEvent[] };
-
-export function LeadDetailPanel({ lead }: { lead: LeadWithEvents }) {
+export function LeadDetailPanel({ lead }: { lead: SerializedLead }) {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 text-sm space-y-4 border border-gray-200 dark:border-gray-700 mt-2">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -26,12 +24,12 @@ export function LeadDetailPanel({ lead }: { lead: LeadWithEvents }) {
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <Detail label="Contact Method" value={lead.contactMethod} />
-        <Detail label="Contacted At" value={lead.contactedAt?.toLocaleString() ?? null} />
+        <Detail label="Contacted At" value={lead.contactedAt ? new Date(lead.contactedAt).toLocaleString() : null} />
         <Detail label="Resend ID" value={lead.resendMessageId} mono />
         <Detail label="Email Delivered" value={lead.emailDelivered ? "Yes" : "No"} />
         <Detail label="Email Bounced" value={lead.emailBounced ? "Yes" : "No"} />
-        <Detail label="Email Opened" value={lead.emailOpenedAt?.toLocaleString() ?? "No"} />
-        <Detail label="Email Clicked" value={lead.emailClickedAt?.toLocaleString() ?? "No"} />
+        <Detail label="Email Opened" value={lead.emailOpenedAt ? new Date(lead.emailOpenedAt).toLocaleString() : "No"} />
+        <Detail label="Email Clicked" value={lead.emailClickedAt ? new Date(lead.emailClickedAt).toLocaleString() : "No"} />
         <Detail label="Form URL" value={lead.contactFormUrl} link />
         <Detail label="Form Confirmation" value={lead.contactFormConfirmation} />
       </div>
@@ -52,12 +50,12 @@ export function LeadDetailPanel({ lead }: { lead: LeadWithEvents }) {
       <hr className="border-gray-200 dark:border-gray-700" />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Detail label="First Visit" value={lead.firstVisitAt?.toLocaleString() ?? null} />
-        <Detail label="Last Visit" value={lead.lastVisitAt?.toLocaleString() ?? null} />
+        <Detail label="First Visit" value={lead.firstVisitAt ? new Date(lead.firstVisitAt).toLocaleString() : null} />
+        <Detail label="Last Visit" value={lead.lastVisitAt ? new Date(lead.lastVisitAt).toLocaleString() : null} />
         <Detail label="Total Visits" value={String(lead.totalVisits)} />
         <Detail label="Time on Site" value={`${lead.totalTimeOnSiteSeconds}s`} />
-        <Detail label="Form Started" value={lead.signupFormStartedAt?.toLocaleString() ?? null} />
-        <Detail label="Form Abandoned" value={lead.signupFormAbandonedAt?.toLocaleString() ?? null} />
+        <Detail label="Form Started" value={lead.signupFormStartedAt ? new Date(lead.signupFormStartedAt).toLocaleString() : null} />
+        <Detail label="Form Abandoned" value={lead.signupFormAbandonedAt ? new Date(lead.signupFormAbandonedAt).toLocaleString() : null} />
         <Detail label="Last Field" value={lead.signupFormLastField} />
         <Detail label="Form Time" value={lead.signupFormTimeSeconds ? `${lead.signupFormTimeSeconds}s` : null} />
       </div>
@@ -66,17 +64,20 @@ export function LeadDetailPanel({ lead }: { lead: LeadWithEvents }) {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Detail label="Signed Up" value={lead.signedUp ? "Yes" : "No"} />
-        <Detail label="Signed Up At" value={lead.signedUpAt?.toLocaleString() ?? null} />
+        <Detail label="Signed Up At" value={lead.signedUpAt ? new Date(lead.signedUpAt).toLocaleString() : null} />
         <Detail label="Clerk User ID" value={lead.clerkUserId} mono />
-        <Detail label="Onboarding Started" value={lead.onboardingStartedAt?.toLocaleString() ?? null} />
-        <Detail label="Onboarding Completed" value={lead.onboardingCompletedAt?.toLocaleString() ?? null} />
+        <Detail label="Onboarding Started" value={lead.onboardingStartedAt ? new Date(lead.onboardingStartedAt).toLocaleString() : null} />
+        <Detail label="Onboarding Completed" value={lead.onboardingCompletedAt ? new Date(lead.onboardingCompletedAt).toLocaleString() : null} />
       </div>
 
       {lead.onboardingStepsJson && (
         <div>
           <p className="text-xs uppercase tracking-wider text-gray-400 mb-2">Onboarding Steps</p>
           <div className="flex gap-3 flex-wrap">
-            {(lead.onboardingStepsJson as Array<{ step: number; timeSeconds: number }>).map((s) => (
+            {(Array.isArray(lead.onboardingStepsJson)
+              ? (lead.onboardingStepsJson as Array<{ step: number; timeSeconds: number }>)
+              : []
+            ).map((s) => (
               <span key={s.step} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg text-xs">
                 Step {s.step}: {s.timeSeconds}s
               </span>

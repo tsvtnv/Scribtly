@@ -3,13 +3,43 @@ import { requireAdmin } from "@/lib/adminAuth";
 import { Card } from "@/components/ui/Card";
 import { OutreachTable } from "./OutreachTable";
 
+function serializeLead(lead: Awaited<ReturnType<typeof fetchLeads>>[number]) {
+  return {
+    ...lead,
+    createdAt: lead.createdAt.toISOString(),
+    updatedAt: lead.updatedAt.toISOString(),
+    contactedAt: lead.contactedAt?.toISOString() ?? null,
+    emailOpenedAt: lead.emailOpenedAt?.toISOString() ?? null,
+    emailClickedAt: lead.emailClickedAt?.toISOString() ?? null,
+    firstVisitAt: lead.firstVisitAt?.toISOString() ?? null,
+    lastVisitAt: lead.lastVisitAt?.toISOString() ?? null,
+    signupFormStartedAt: lead.signupFormStartedAt?.toISOString() ?? null,
+    signupFormAbandonedAt: lead.signupFormAbandonedAt?.toISOString() ?? null,
+    signedUpAt: lead.signedUpAt?.toISOString() ?? null,
+    onboardingStartedAt: lead.onboardingStartedAt?.toISOString() ?? null,
+    onboardingCompletedAt: lead.onboardingCompletedAt?.toISOString() ?? null,
+    optedOutAt: lead.optedOutAt?.toISOString() ?? null,
+    events: lead.events.map((e) => ({
+      ...e,
+      createdAt: e.createdAt.toISOString(),
+    })),
+  };
+}
+
+async function fetchLeads() {
+  return prisma.referralLead.findMany({
+    orderBy: { createdAt: "desc" },
+    include: { events: { orderBy: { createdAt: "asc" } } },
+    take: 500,
+  });
+}
+
+export type SerializedLead = ReturnType<typeof serializeLead>;
+
 export default async function AdminOutreachPage() {
   await requireAdmin();
 
-  const leads = await prisma.referralLead.findMany({
-    orderBy: { createdAt: "desc" },
-    include: { events: { orderBy: { createdAt: "asc" } } },
-  });
+  const leads = await fetchLeads();
 
   const contacted = leads.filter((l) =>
     ["CONTACTED_VIA_FORM", "CONTACTED_VIA_EMAIL"].includes(l.outreachStatus)
@@ -19,6 +49,8 @@ export default async function AdminOutreachPage() {
   const visited = leads.filter((l) => l.totalVisits > 0).length;
   const signedUp = leads.filter((l) => l.signedUp).length;
   const convRate = contacted > 0 ? ((signedUp / contacted) * 100).toFixed(1) : "0";
+
+  const serializedLeads = leads.map(serializeLead);
 
   return (
     <div className="p-6 md:p-10 max-w-7xl mx-auto">
@@ -42,7 +74,7 @@ export default async function AdminOutreachPage() {
         ))}
       </div>
 
-      <OutreachTable leads={leads} />
+      <OutreachTable leads={serializedLeads} />
     </div>
   );
 }

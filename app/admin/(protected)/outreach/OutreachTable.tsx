@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import type { ReferralLead, ReferralEvent } from "@prisma/client";
+import React, { useState, useMemo } from "react";
+import type { SerializedLead } from "./page";
 import { LeadDetailPanel } from "./LeadDetailPanel";
-
-type LeadWithEvents = ReferralLead & { events: ReferralEvent[] };
 
 const STATUS_COLORS: Record<string, string> = {
   NOT_CONTACTED: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400",
@@ -45,7 +43,7 @@ function SortIndicator({ active, dir }: { active: boolean; dir: SortDir }) {
   return <span className="ml-1">{dir === "asc" ? "↑" : "↓"}</span>;
 }
 
-export function OutreachTable({ leads }: { leads: LeadWithEvents[] }) {
+export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [nameFilter, setNameFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -56,9 +54,11 @@ export function OutreachTable({ leads }: { leads: LeadWithEvents[] }) {
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
-  const uniqueCountries = Array.from(
-    new Set(leads.map((l) => l.country).filter(Boolean))
-  ).sort() as string[];
+  const uniqueCountries = useMemo(
+    () =>
+      Array.from(new Set(leads.map((l) => l.country).filter(Boolean))).sort() as string[],
+    [leads]
+  );
 
   function handleSort(key: SortKey) {
     if (sortKey === key) {
@@ -69,33 +69,37 @@ export function OutreachTable({ leads }: { leads: LeadWithEvents[] }) {
     }
   }
 
-  const filtered = leads
-    .filter((l) => {
-      if (nameFilter && !l.agencyName.toLowerCase().includes(nameFilter.toLowerCase())) return false;
-      if (statusFilter && l.outreachStatus !== statusFilter) return false;
-      if (contactMethodFilter && l.contactMethod !== contactMethodFilter) return false;
-      if (signedUpFilter === "yes" && !l.signedUp) return false;
-      if (signedUpFilter === "no" && l.signedUp) return false;
-      if (countryFilter && l.country !== countryFilter) return false;
-      if (fitScoreFilter && String(l.fitScore ?? "") !== fitScoreFilter) return false;
-      return true;
-    })
-    .sort((a, b) => {
-      if (!sortKey) return 0;
-      let av: number | string | null = null;
-      let bv: number | string | null = null;
-      if (sortKey === "agencyName") { av = a.agencyName; bv = b.agencyName; }
-      else if (sortKey === "fitScore") { av = a.fitScore ?? -1; bv = b.fitScore ?? -1; }
-      else if (sortKey === "totalVisits") { av = a.totalVisits; bv = b.totalVisits; }
-      else if (sortKey === "totalTimeOnSiteSeconds") { av = a.totalTimeOnSiteSeconds; bv = b.totalTimeOnSiteSeconds; }
-      else if (sortKey === "signedUpAt") { av = a.signedUpAt ? new Date(a.signedUpAt).getTime() : -1; bv = b.signedUpAt ? new Date(b.signedUpAt).getTime() : -1; }
-      else if (sortKey === "lastVisitAt") { av = a.lastVisitAt ? new Date(a.lastVisitAt).getTime() : -1; bv = b.lastVisitAt ? new Date(b.lastVisitAt).getTime() : -1; }
-      if (av === null || bv === null) return 0;
-      if (typeof av === "string" && typeof bv === "string") {
-        return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
-      }
-      return sortDir === "asc" ? (av as number) - (bv as number) : (bv as number) - (av as number);
-    });
+  const filtered = useMemo(
+    () =>
+      leads
+        .filter((l) => {
+          if (nameFilter && !l.agencyName.toLowerCase().includes(nameFilter.toLowerCase())) return false;
+          if (statusFilter && l.outreachStatus !== statusFilter) return false;
+          if (contactMethodFilter && l.contactMethod !== contactMethodFilter) return false;
+          if (signedUpFilter === "yes" && !l.signedUp) return false;
+          if (signedUpFilter === "no" && l.signedUp) return false;
+          if (countryFilter && l.country !== countryFilter) return false;
+          if (fitScoreFilter && String(l.fitScore ?? "") !== fitScoreFilter) return false;
+          return true;
+        })
+        .sort((a, b) => {
+          if (!sortKey) return 0;
+          let av: number | string | null = null;
+          let bv: number | string | null = null;
+          if (sortKey === "agencyName") { av = a.agencyName; bv = b.agencyName; }
+          else if (sortKey === "fitScore") { av = a.fitScore ?? -1; bv = b.fitScore ?? -1; }
+          else if (sortKey === "totalVisits") { av = a.totalVisits; bv = b.totalVisits; }
+          else if (sortKey === "totalTimeOnSiteSeconds") { av = a.totalTimeOnSiteSeconds; bv = b.totalTimeOnSiteSeconds; }
+          else if (sortKey === "signedUpAt") { av = a.signedUpAt ? new Date(a.signedUpAt).getTime() : -1; bv = b.signedUpAt ? new Date(b.signedUpAt).getTime() : -1; }
+          else if (sortKey === "lastVisitAt") { av = a.lastVisitAt ? new Date(a.lastVisitAt).getTime() : -1; bv = b.lastVisitAt ? new Date(b.lastVisitAt).getTime() : -1; }
+          if (av === null || bv === null) return 0;
+          if (typeof av === "string" && typeof bv === "string") {
+            return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
+          }
+          return sortDir === "asc" ? (av as number) - (bv as number) : (bv as number) - (av as number);
+        }),
+    [leads, nameFilter, statusFilter, contactMethodFilter, signedUpFilter, countryFilter, fitScoreFilter, sortKey, sortDir]
+  );
 
   const selectClass =
     "px-2 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary";
