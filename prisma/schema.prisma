@@ -237,3 +237,94 @@ model CronSchedule {
   @@index([workspaceId])
   @@index([active])
 }
+
+enum ContactMethod {
+  RESEND_EMAIL
+  WEBSITE_FORM
+  MANUAL
+}
+
+enum OutreachStatus {
+  NOT_CONTACTED
+  CONTACTED_VIA_FORM
+  CONTACTED_VIA_EMAIL
+  SKIPPED_DUPLICATE
+  SKIPPED_NO_CONTACT_METHOD
+  SKIPPED_NOT_RELEVANT
+  SKIPPED_POLICY_BLOCKS_OUTREACH
+  NEEDS_MANUAL_REVIEW
+  FAILED
+}
+
+model ReferralLead {
+  id        String   @id @default(cuid())
+  leadId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agencyName     String
+  agencyWebsite  String?
+  agencyLocation String?
+  agencyServices String?
+  fitScore       Int?
+
+  contactedAt             DateTime?
+  contactMethod           ContactMethod?
+  contactFormUrl          String?
+  contactFormConfirmation String?
+  resendMessageId         String?
+  messageSubject          String?
+  messageBody             String?
+  sourceSearchQuery       String?
+  sourceResultUrl         String?
+
+  emailDelivered Boolean   @default(false)
+  emailBounced   Boolean   @default(false)
+  emailOpenedAt  DateTime?
+  emailClickedAt DateTime?
+
+  firstVisitAt           DateTime?
+  lastVisitAt            DateTime?
+  totalVisits            Int       @default(0)
+  totalTimeOnSiteSeconds Int       @default(0)
+
+  ipAddress  String?
+  country    String?
+  city       String?
+  region     String?
+  userAgent  String?
+  browser    String?
+  os         String?
+  deviceType String?
+
+  signupFormStartedAt   DateTime?
+  signupFormAbandonedAt DateTime?
+  signupFormLastField   String?
+  signupFormTimeSeconds Int?
+
+  signedUp              Boolean   @default(false)
+  signedUpAt            DateTime?
+  clerkUserId           String?
+  workspaceId           String?
+  onboardingStartedAt   DateTime?
+  onboardingCompletedAt DateTime?
+  onboardingStepsJson   String?
+
+  outreachStatus OutreachStatus @default(NOT_CONTACTED)
+  optedOut       Boolean        @default(false)
+  optedOutAt     DateTime?
+  notes          String?
+
+  events ReferralEvent[]
+}
+
+model ReferralEvent {
+  id        String       @id @default(cuid())
+  leadId    String
+  lead      ReferralLead @relation(fields: [leadId], references: [leadId])
+  createdAt DateTime     @default(now())
+
+  eventType String
+  page      String?
+  metadata  String?
+}
