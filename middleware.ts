@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { lucia } from "@/lib/auth";
+
+const SESSION_COOKIE = "auth_session";
 
 const publicPaths = [
   "/",
@@ -54,16 +55,10 @@ export async function middleware(req: NextRequest) {
 
   if (isPublic(pathname)) return NextResponse.next();
 
-  const sessionId = req.cookies.get(lucia.sessionCookieName)?.value ?? null;
+  // Only check cookie presence — full session validation happens in ensureUser() (Node.js runtime)
+  const sessionId = req.cookies.get(SESSION_COOKIE)?.value ?? null;
   if (!sessionId) {
     return NextResponse.redirect(new URL("/login", req.url));
-  }
-
-  const { session } = await lucia.validateSession(sessionId);
-  if (!session) {
-    const response = NextResponse.redirect(new URL("/login", req.url));
-    response.cookies.delete(lucia.sessionCookieName);
-    return response;
   }
 
   return NextResponse.next();
