@@ -102,3 +102,45 @@ export async function sendPasswordResetEmail({
     react: ResetPassword({ resetUrl, name }),
   });
 }
+
+export async function sendBetaWelcome({
+  to,
+  name,
+  betaExpiresAt,
+}: {
+  to: string;
+  name?: string;
+  betaExpiresAt: Date;
+}) {
+  const { BetaWelcomeEmail } = await import("@/lib/emails/BetaWelcome");
+  const formatted = betaExpiresAt.toLocaleDateString("en-GB", {
+    day: "numeric", month: "short", year: "numeric",
+  });
+  return send({
+    from: EMAIL_FROM,
+    to,
+    subject: "You're in — your beta access is live",
+    react: BetaWelcomeEmail({ name, betaExpiresAt: formatted, appUrl: APP_URL }),
+  });
+}
+
+export async function sendBetaExpiring({
+  to,
+  name,
+  betaExpiresAt,
+}: {
+  to: string;
+  name?: string;
+  betaExpiresAt: Date;
+}) {
+  const { BetaExpiringEmail } = await import("@/lib/emails/BetaExpiring");
+  const formatted = betaExpiresAt.toLocaleDateString("en-GB", {
+    day: "numeric", month: "short", year: "numeric",
+  });
+  return send({
+    from: EMAIL_FROM,
+    to,
+    subject: "Your Scribtly beta access expires in 7 days",
+    react: BetaExpiringEmail({ name, betaExpiresAt: formatted, appUrl: APP_URL }),
+  });
+}
