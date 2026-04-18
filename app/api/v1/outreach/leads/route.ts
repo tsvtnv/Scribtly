@@ -4,22 +4,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { ContactMethod, OutreachStatus } from "@prisma/client";
 import { verifyOutreachApiKey } from "@/lib/outreachApiAuth";
-
-// ── Shared Zod schema for creating a lead ──────────────────────────────────
-
-export const createLeadSchema = z.object({
-  leadId: z.string().min(1).max(64),
-  agencyName: z.string().min(1),
-  agencyWebsite: z.string().optional(),
-  agencyLocation: z.string().optional(),
-  agencyServices: z.string().optional(),
-  fitScore: z.number().int().min(1).max(5).optional(),
-  sourceSearchQuery: z.string().optional(),
-  sourceResultUrl: z.string().optional(),
-  notes: z.string().optional(),
-  isBetaOffer: z.boolean().optional(),
-  outreachStatus: z.nativeEnum(OutreachStatus).optional(),
-});
+import { createLeadSchema } from "@/lib/outreachSchemas";
 
 // ── GET /api/v1/outreach/leads ─────────────────────────────────────────────
 

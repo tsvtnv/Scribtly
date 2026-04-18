@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { verifyOutreachApiKey } from "@/lib/outreachApiAuth";
-import { createLeadSchema } from "@/app/api/v1/outreach/leads/route";
+import { createLeadSchema } from "@/lib/outreachSchemas";
 
 const bulkBodySchema = z.object({
   leads: z.array(createLeadSchema).min(1).max(50),
