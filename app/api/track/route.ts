@@ -71,8 +71,10 @@ export async function POST(req: NextRequest) {
   }
 
   if (eventType === "page_exit" && metadata?.timeOnPageSeconds) {
-    updates.totalTimeOnSiteSeconds =
-      (lead.totalTimeOnSiteSeconds ?? 0) + Number(metadata.timeOnPageSeconds);
+    const t = Number(metadata.timeOnPageSeconds);
+    if (Number.isFinite(t) && t >= 0) {
+      updates.totalTimeOnSiteSeconds = (lead.totalTimeOnSiteSeconds ?? 0) + t;
+    }
   }
 
   if (eventType === "form_start" && !lead.signupFormStartedAt) {
@@ -86,15 +88,15 @@ export async function POST(req: NextRequest) {
   if (eventType === "form_abandon") {
     updates.signupFormAbandonedAt = now;
     if (metadata?.timeOnPageSeconds) {
-      updates.signupFormTimeSeconds = Number(metadata.timeOnPageSeconds);
+      const t = Number(metadata.timeOnPageSeconds);
+      if (Number.isFinite(t) && t >= 0) {
+        updates.signupFormTimeSeconds = t;
+      }
     }
   }
 
-  if (eventType === "signup_complete" && metadata?.clerkUserId) {
-    updates.signedUp = true;
-    updates.signedUpAt = now;
-    updates.clerkUserId = String(metadata.clerkUserId);
-  }
+  // signup_complete: signedUp/userId fields are set server-side via /api/admin/leads
+  // when user completes registration — not from client to prevent unauthenticated writes
 
   if (eventType === "onboarding_step") {
     if (metadata?.action === "enter" && !lead.onboardingStartedAt) {

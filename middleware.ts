@@ -21,6 +21,10 @@ const publicPaths = [
   "/admin",
   "/api/admin",
   "/onboarding",
+  "/ref",
+  "/api/track",
+  "/api/ref",
+  "/api/webhooks/resend-outreach",
 ];
 
 function isPublic(pathname: string): boolean {
@@ -29,8 +33,26 @@ function isPublic(pathname: string): boolean {
   );
 }
 
+const REF_PATTERN = /^\/ref\/([a-zA-Z0-9_-]{1,64})$/;
+
 export async function middleware(req: NextRequest) {
-  if (isPublic(req.nextUrl.pathname)) return NextResponse.next();
+  const { pathname } = req.nextUrl;
+
+  // Set ref_lead_id cookie when visiting /ref/[leadId]
+  const refMatch = pathname.match(REF_PATTERN);
+  if (refMatch) {
+    const leadId = refMatch[1];
+    const res = NextResponse.next();
+    res.cookies.set("ref_lead_id", leadId, {
+      httpOnly: false,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 30,
+      path: "/",
+    });
+    return res;
+  }
+
+  if (isPublic(pathname)) return NextResponse.next();
 
   const sessionId = req.cookies.get(lucia.sessionCookieName)?.value ?? null;
   if (!sessionId) {
