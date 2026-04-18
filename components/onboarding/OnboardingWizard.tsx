@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ProgressIndicator } from "@/components/onboarding/ProgressIndicator";
 import { StepWorkspace } from "@/components/onboarding/StepWorkspace";
 import { StepClient } from "@/components/onboarding/StepClient";
 import { StepGenerate } from "@/components/onboarding/StepGenerate";
 import { StepSuccess } from "@/components/onboarding/StepSuccess";
+import { trackOnboardingStep, trackOnboardingComplete } from "@/lib/referral-tracker";
 
 interface OnboardingWizardProps {
   initialStep: number;
@@ -22,16 +23,38 @@ export function OnboardingWizard({ initialStep, workspaceName, userName }: Onboa
   const [scriptText, setScriptText] = useState<string>("");
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const stepStartTime = useRef(Date.now());
+  const stepTimes = useRef<Array<{ step: number; timeSeconds: number }>>([]);
+
+  useEffect(() => {
+    stepStartTime.current = Date.now();
+    trackOnboardingStep("enter", step);
+
+    return () => {
+      const seconds = Math.round((Date.now() - stepStartTime.current) / 1000);
+      stepTimes.current.push({ step, timeSeconds: seconds });
+      trackOnboardingStep("exit", step, seconds);
+    };
+  }, [step]);
+
+  function advanceStep(nextStep: number) {
+    const seconds = Math.round((Date.now() - stepStartTime.current) / 1000);
+    stepTimes.current.push({ step, timeSeconds: seconds });
+    setStep(nextStep);
+  }
+
   async function handleSkipToEnd() {
     await fetch("/api/user/onboarding", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ onboardingCompleted: true }),
     });
+    trackOnboardingComplete(stepTimes.current);
     window.location.href = "/dashboard";
   }
 
   if (showSuccess) {
+    trackOnboardingComplete(stepTimes.current);
     return (
       <div className="w-full max-w-lg">
         <StepSuccess scriptText={scriptText} />
@@ -44,7 +67,7 @@ export function OnboardingWizard({ initialStep, workspaceName, userName }: Onboa
       <ProgressIndicator currentStep={step} />
       <div key={step} style={{ animation: "onboardingFadeSlide 0.25s ease forwards" }}>
         {step === 1 && (
-          <StepWorkspace initialName={defaultName} onNext={() => setStep(2)} />
+          <StepWorkspace initialName={defaultName} onNext={() => advanceStep(2)} />
         )}
         {step === 2 && (
           <StepClient
@@ -52,9 +75,9 @@ export function OnboardingWizard({ initialStep, workspaceName, userName }: Onboa
               setCreatedClientId(clientId);
               setClientNiche(niche);
               setClientPlatform(platform);
-              setStep(3);
+              advanceStep(3);
             }}
-            onSkip={() => setStep(3)}
+            onSkip={() => advanceStep(3)}
           />
         )}
         {step === 3 && (
