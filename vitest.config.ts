@@ -8,8 +8,9 @@ export default defineConfig({
     },
   },
   test: {
+    globals: true,
     environment: "node",
-    include: ["tests/**/*.test.ts"],
+    include: ["tests/**/*.test.ts", "lib/__tests__/**/*.test.ts"],
     setupFiles: ["tests/setup.ts"],
   },
 });
