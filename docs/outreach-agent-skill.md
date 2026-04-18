@@ -46,7 +46,7 @@ The page tracks visits, scroll depth, CTA clicks, signup form behaviour, and con
 
 ## Step-by-Step Workflow
 
-### Step 1 — Find agencies
+### Step 1 — Find agencies (then immediately check for duplicates)
 
 Use web search to find social media marketing agencies. Good queries:
 - `"social media marketing agency" "reels" OR "tiktok" OR "short form video" contact`
@@ -58,6 +58,31 @@ Use web search to find social media marketing agencies. Good queries:
 - `"youtube shorts agency" "content strategy"`
 
 For each result collect: agency name, website URL, what they do.
+
+**Immediately after finding an agency — check the datasheet for duplicates BEFORE doing anything else:**
+
+```
+GET https://scribtly.com/api/v1/outreach/leads?limit=100
+Authorization: Bearer ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055
+```
+
+Scan the returned `data` array for any lead where `agencyWebsite` or `agencyName` matches the agency you just found. Also try fetching by the leadId you would assign:
+
+```
+GET https://scribtly.com/api/v1/outreach/leads/{leadId-you-would-assign}
+Authorization: Bearer ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055
+```
+
+- **404 response** = not in system, safe to proceed
+- **200 response** = already exists. Check `outreachStatus`:
+  - `NOT_CONTACTED` → safe to contact, continue workflow
+  - `CONTACTED_VIA_EMAIL` or `CONTACTED_VIA_FORM` → **STOP. Already contacted. Skip this agency entirely.**
+  - Any `SKIPPED_*` status → already reviewed and skipped for a reason. Skip again.
+  - `FAILED` or `NEEDS_MANUAL_REVIEW` → flag it, do not re-contact automatically
+
+If the datasheet has more than 100 leads, paginate: add `&page=2`, `&page=3` etc. until you've checked all pages.
+
+**Never contact the same business twice.** If there is any doubt, skip and move on.
 
 ---
 
@@ -133,29 +158,16 @@ Content-Type: application/json
 
 Use Playwright to find their contact form. Look for: "Contact", "Get in touch", "Work with us", "Start a project". Common URLs: `/contact`, `/contact-us`, `/get-in-touch`.
 
-**Always include their personalised landing page URL in the message.**
+**Write a completely original message for this specific agency.** Read their website first. The message must:
 
-```
-Name: Kris from Scribtly
-Email: hello@scribtly.com
+- Open by referencing something real and specific you saw on their site (a client name, a service they offer, a piece of content, their niche, their team size — something that proves you actually visited)
+- Explain what Scribtly does in one sentence in the context of their specific work
+- Include their personalised landing page URL: `https://scribtly.com/ref/{leadId}`
+- Be short (4–6 sentences max for a form, 6–8 for email)
+- Sound human — not templated, not salesy, not generic
+- Sign off as "Kris" with `scribtly.com`
 
-Message:
-Hi [Agency Name] team,
-
-I love your [specific thing — e.g. "Reels work for e-commerce brands" / "TikTok content strategy"].
-
-I built Scribtly — AI script writing for social media agencies. If your team is writing scripts or captions at scale for clients, it cuts that time dramatically.
-
-We've put together a personalised page for you:
-https://scribtly.com/ref/[leadId]
-
-Free beta access — no credit card.
-
-Kris
-scribtly.com
-```
-
-Personalise `[Agency Name]` and the specific detail every time. Never copy-paste the same message.
+**Do NOT use pre-written templates.** Every message must be written fresh based on what you read on that agency's actual website. If two messages sound similar, rewrite one.
 
 After submitting, record the contact:
 
@@ -185,6 +197,17 @@ The API automatically:
 - Sends an HTML email (required for Resend open + click tracking)
 - Records open rates, clicks, and bounces against this lead
 
+Write a completely original email for this specific agency based on what you read on their website. The email must:
+
+- Have a subject line that references something specific to them (not a generic "free beta" subject)
+- Open with a specific observation about their work — a client, a campaign, their niche, something real
+- Explain Scribtly in one sentence relevant to what they actually do
+- Include their personalised URL: `https://scribtly.com/ref/{leadId}`
+- Be concise — 5–8 sentences, no bullet points, no corporate tone
+- Sign off as "Kris" with `scribtly.com`
+
+**Do NOT reuse phrasing from other emails you've sent in this session.** Every email must be written from scratch.
+
 ```
 POST https://scribtly.com/api/v1/outreach/leads/{leadId}/send-email
 Authorization: Bearer ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055
@@ -192,8 +215,8 @@ Content-Type: application/json
 
 {
   "to": "hello@loopable.agency",
-  "subject": "Scribtly — free beta for social media agencies",
-  "body": "Hi Loopable team,\n\nLove your Reels work for e-commerce brands.\n\nI built Scribtly — AI script writing for social media agencies. If your team is writing scripts or captions at scale, it cuts that time dramatically.\n\nI've set up a personalised page for you:\nhttps://scribtly.com/ref/loopable-agency\n\nFree beta, no credit card.\n\nKris\nscribtly.com",
+  "subject": "<original subject you wrote — specific to this agency>",
+  "body": "<original email body you wrote — specific to this agency, includes https://scribtly.com/ref/loopable-agency>",
   "isBetaOffer": true
 }
 ```
@@ -253,41 +276,29 @@ Max 50 per request. Safe to re-run (upserts).
 
 ---
 
-## Message Templates
+## Writing Messages — No Templates
 
-### Contact form (short)
-```
-Hi [Agency Name],
+**There are no templates. Every message must be written from scratch.**
 
-Love your [specific — e.g. "TikTok content for fashion brands"].
+Before writing any message, re-read the agency's website and answer these questions:
+- What specific type of content do they produce? (TikTok, Reels, YouTube Shorts, captions, all of the above?)
+- Who are their clients? (e-commerce, fashion, fitness, B2B, etc.)
+- Do they mention scripting or content writing as part of their process?
+- Is there anything notable — a client logo, a case study, a specific service that stands out?
 
-I built Scribtly — AI script writing for social media agencies. Cuts scripting time dramatically for teams producing content at scale.
+Use those answers to write a message that could only have been sent to this specific agency. If someone could receive your message and think "this might have been sent to someone else too" — rewrite it.
 
-Personalised page for you: https://scribtly.com/ref/[leadId]
+**Required in every message:**
+- Something specific you observed on their actual website
+- `https://scribtly.com/ref/{leadId}` — their personalised page link
+- Signed as "Kris" / `scribtly.com`
+- Short: 4–6 sentences for forms, 6–8 for emails
 
-Free beta, no credit card.
-
-Kris
-```
-
-### Email (longer)
-```
-Subject: Scribtly — free beta for social media agencies
-
-Hi [Name/Team],
-
-Came across [Agency Name] while looking at [their niche] agencies — really liked [specific work or client type].
-
-I built Scribtly (scribtly.com) — it helps social media agencies write scripts and captions faster with AI. If you're producing Reels, TikToks, or Shorts for clients, it takes the scripting grunt work off your team.
-
-Set up a page specifically for you:
-https://scribtly.com/ref/[leadId]
-
-Free beta access while we're pre-launch. No pitch, no sales call.
-
-Kris
-Scribtly
-```
+**Forbidden:**
+- Generic openers ("I hope this finds you well", "I came across your agency")
+- Bullet points or numbered lists
+- Phrases like "cutting-edge", "innovative", "game-changing"
+- Copying any phrasing from a previous message in this session
 
 ---
 
@@ -311,14 +322,15 @@ Set via PATCH when skipping: `{ "outreachStatus": "SKIPPED_NOT_RELEVANT" }`
 
 ## Rules
 
-1. **Always create the lead before contacting** — portal record first, outreach second
-2. **Always verify email deliverability before sending** — no exceptions
-3. **Always use the personalised URL** `scribtly.com/ref/{leadId}` — never a bare `scribtly.com` link
-4. **Personalise every message** — reference something specific from their site
-5. **Prefer contact forms over email** — less likely to be filtered as spam
-6. **Never contact opted-out leads** — the API rejects with 409 anyway
-7. **Log the exact message sent** — copy it verbatim into messageBody
-8. **One contact per lead** — don't re-contact unless `force: true` is explicitly instructed
+1. **Check the datasheet first** — query the portal before every agency. If they already exist with a contacted status, skip immediately. No exceptions.
+2. **Always create the lead before contacting** — portal record first, outreach second
+3. **Always verify email deliverability before sending** — no exceptions
+4. **Always use the personalised URL** `scribtly.com/ref/{leadId}` — never a bare `scribtly.com` link
+5. **Write every message from scratch** — no templates, no reused phrases, based only on what you read on their specific website
+6. **Prefer contact forms over email** — less likely to be filtered as spam
+7. **Never contact opted-out leads** — the API rejects with 409 anyway
+8. **Log the exact message sent** — copy it verbatim into messageBody
+9. **One contact per lead** — don't re-contact unless `force: true` is explicitly instructed
 
 ---
 
@@ -328,21 +340,34 @@ Set via PATCH when skipping: `{ "outreachStatus": "SKIPPED_NOT_RELEVANT" }`
 1. Search: "social media marketing agency tiktok reels content production contact"
 
 2. Find: Loopable Agency — loopable.agency
-   → Visit with Playwright: team of 8, produce Reels + TikToks for e-commerce brands, 
-     mention writing all scripts in-house → fitScore 5
 
-3. Find contact email: hello@loopable.agency (found in footer)
-   → Verify at hunter.io/email-verifier → Status: Deliverable ✅
+3. CHECK DATASHEET FIRST:
+   GET /leads/loopable-agency → 404 ✅ Not in system, safe to proceed
+   
+   (If it had returned 200 with outreachStatus: CONTACTED_VIA_EMAIL → skip immediately)
 
-4. POST /leads → leadId: "loopable-agency"
-   agencyServices: "TikTok, Reels, short-form video for e-commerce brands"
+4. Visit site with Playwright:
+   → Team of 8, produce Reels + TikToks for Shopify brands
+   → Case study: grew @gymwear brand from 10k to 180k followers via scripted Reels
+   → Mention on About page: "we script every video in-house, it takes forever"
+   → fitScore 5
 
-5. No contact form found → use email
+5. Find contact email: hello@loopable.agency (footer)
+   → Verify at hunter.io/email-verifier → Deliverable ✅
 
-6. POST /leads/loopable-agency/send-email
-   to: "hello@loopable.agency"
-   body includes: "https://scribtly.com/ref/loopable-agency"
+6. POST /leads → leadId: "loopable-agency"
+   agencyServices: "TikTok, Reels, short-form video for Shopify/e-commerce brands"
+   notes: "Quote on About page: 'we script every video in-house, it takes forever' — perfect fit"
+
+7. No contact form → use email
+
+8. Write original email:
+   Subject: "Your 'scripting takes forever' problem"
+   Body: references the exact quote from their About page, mentions the gymwear case study,
+   explains Scribtly in one sentence, includes https://scribtly.com/ref/loopable-agency
+
+9. POST /leads/loopable-agency/send-email
    → Lead auto-updated to CONTACTED_VIA_EMAIL
 
-7. Move to next agency
+10. Move to next agency — check datasheet again before doing anything
 ```
