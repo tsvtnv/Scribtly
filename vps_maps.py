@@ -81,7 +81,7 @@ def pick_email(emails, domain):
     return sorted(domain_emails)[0]
 
 
-def scrape_maps_query(page, query, max_results=20):
+def scrape_maps_query(page, query, max_results=40):
     """Scrape Google Maps for one query. Returns dict of domain -> name."""
     agencies = {}
     url = "https://www.google.com/maps/search/" + query.replace(" ", "+")
@@ -113,7 +113,7 @@ def scrape_maps_query(page, query, max_results=20):
 
                 # Extract business name
                 try:
-                    name = page.locator("h1").first.inner_text(timeout=3000).strip()
+                    name = page.locator("h1.DUwDvf").first.inner_text(timeout=3000).strip()
                 except Exception:
                     pass
 
@@ -156,6 +156,20 @@ def scrape_all():
             locale="en-US",
         )
         page = context.new_page()
+
+        # Accept Google consent popup (appears on first load from EU IPs)
+        page.goto("https://www.google.com/maps", wait_until="domcontentloaded", timeout=30000)
+        page.wait_for_timeout(3000)
+        for btn_text in ["Accept all", "Alle akzeptieren", "I agree", "Zustimmen"]:
+            try:
+                btn = page.get_by_text(btn_text, exact=True).first
+                if btn.is_visible(timeout=2000):
+                    btn.click()
+                    log(f"Accepted consent: {btn_text}")
+                    page.wait_for_timeout(3000)
+                    break
+            except Exception:
+                pass
 
         for i, query in enumerate(SEARCHES):
             log(f"[{i+1}/{len(SEARCHES)}] {query}")
