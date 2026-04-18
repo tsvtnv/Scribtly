@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, Share2, LogOut } from "lucide-react";
 
 const links = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
   { href: "/admin/users", label: "Workspaces", icon: Users, exact: false },
+  { href: "/admin/outreach", label: "Outreach", icon: Share2, exact: false },
 ];
 
 export function AdminNav() {
