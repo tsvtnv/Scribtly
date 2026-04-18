@@ -16,6 +16,16 @@ import { OnboardingChecklist } from "@/components/onboarding/OnboardingChecklist
 export default async function DashboardPage() {
   const { user, workspace } = await ensureUser();
 
+  const betaData = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { isBetaTester: true, betaExpiresAt: true },
+  });
+  const betaActive =
+    (betaData?.isBetaTester ?? false) &&
+    betaData?.betaExpiresAt != null &&
+    betaData.betaExpiresAt > new Date();
+  const betaExpiresAt = betaData?.betaExpiresAt ?? null;
+
   const [totalClients, recentScripts, clients, onboardingData] = await Promise.all([
     prisma.client.count({ where: { workspaceId: workspace.id } }),
     prisma.script.findMany({
@@ -58,7 +68,20 @@ export default async function DashboardPage() {
           <span className="inline-flex items-center px-2 py-0.5 text-[11px] rounded-full bg-[var(--color-primary-tint)] text-[var(--color-primary)]">
             {workspace.name}
           </span>
+          {betaActive && (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+              🧪 Beta Tester
+            </span>
+          )}
         </div>
+        {betaActive && betaExpiresAt && (
+          <p className="text-xs text-text-secondary dark:text-dark-muted mt-0.5">
+            Beta access until{" "}
+            {betaExpiresAt.toLocaleDateString("en-GB", {
+              day: "numeric", month: "short", year: "numeric",
+            })}
+          </p>
+        )}
         <p className="text-sm text-text-secondary dark:text-dark-muted mt-1">
           Generate your next client script in under 60 seconds.
         </p>

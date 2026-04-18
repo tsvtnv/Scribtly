@@ -53,6 +53,8 @@ export function BillingPageClient({
   hasSubscription,
   success,
   canceled,
+  betaActive,
+  betaExpiresAt,
 }: {
   plan: Plan;
   scriptCount: number;
@@ -60,6 +62,8 @@ export function BillingPageClient({
   hasSubscription: boolean;
   success: boolean;
   canceled: boolean;
+  betaActive: boolean;
+  betaExpiresAt: string | null;
 }) {
   const resetDate = new Date(scriptCountResetAt).toLocaleDateString("en-GB", {
     month: "short",
@@ -138,14 +142,29 @@ export function BillingPageClient({
         </div>
       </Card>
 
+      {betaActive && betaExpiresAt && (
+        <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 p-4 mb-6">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-amber-600 dark:text-amber-400 font-semibold text-sm">🧪 Beta Tester</span>
+          </div>
+          <p className="text-sm text-amber-700 dark:text-amber-300">
+            You have free BASIC access until{" "}
+            {new Date(betaExpiresAt).toLocaleDateString("en-GB", {
+              day: "numeric", month: "short", year: "numeric",
+            })}
+            . After that you&apos;ll move to the Free plan unless you subscribe.
+          </p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <PlanCard plan="FREE" price={PRICE.FREE} features={FEATURES.FREE} currentPlan={plan} />
         <PlanCard
           plan="BASIC"
           price={PRICE.BASIC}
           features={FEATURES.BASIC}
-          currentPlan={plan}
-          onUpgrade={() => upgrade("BASIC")}
+          currentPlan={betaActive && plan !== "BASIC" ? "BASIC" : plan}
+          onUpgrade={betaActive ? undefined : () => upgrade("BASIC")}
           busy={busy === "BASIC"}
         />
         <PlanCard
