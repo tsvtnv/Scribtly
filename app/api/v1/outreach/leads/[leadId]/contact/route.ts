@@ -16,7 +16,7 @@ const contactSchema = z.object({
 const METHOD_TO_STATUS: Record<ContactMethod, OutreachStatus> = {
   RESEND_EMAIL: OutreachStatus.CONTACTED_VIA_EMAIL,
   WEBSITE_FORM: OutreachStatus.CONTACTED_VIA_FORM,
-  MANUAL: OutreachStatus.CONTACTED_VIA_EMAIL,
+  MANUAL: OutreachStatus.CONTACTED_VIA_EMAIL, // no separate manual status; treated as email contact
 };
 
 export async function POST(
@@ -25,6 +25,15 @@ export async function POST(
 ) {
   const auth = verifyOutreachApiKey(req);
   if (!auth.ok) return auth.response;
+
+  const body = await req.json().catch(() => null);
+  const parsed = contactSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Validation failed", code: "VALIDATION_ERROR", details: parsed.error.flatten() },
+      { status: 400 }
+    );
+  }
 
   const lead = await prisma.referralLead.findUnique({
     where: { leadId: params.leadId },
@@ -41,15 +50,6 @@ export async function POST(
     return NextResponse.json(
       { error: "Lead has opted out of contact", code: "CONFLICT" },
       { status: 409 }
-    );
-  }
-
-  const body = await req.json().catch(() => null);
-  const parsed = contactSchema.safeParse(body);
-  if (!parsed.success) {
-    return NextResponse.json(
-      { error: "Validation failed", code: "VALIDATION_ERROR", details: parsed.error.flatten() },
-      { status: 400 }
     );
   }
 

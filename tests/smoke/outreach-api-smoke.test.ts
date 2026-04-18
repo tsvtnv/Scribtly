@@ -5,7 +5,10 @@ import { prisma } from "@/lib/prisma";
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
-const API_KEY = process.env.OUTREACH_API_KEY!;
+if (!process.env.OUTREACH_API_KEY) {
+  throw new Error("OUTREACH_API_KEY must be set to run outreach smoke tests");
+}
+const API_KEY = process.env.OUTREACH_API_KEY;
 
 function makeReq(
   url: string,
