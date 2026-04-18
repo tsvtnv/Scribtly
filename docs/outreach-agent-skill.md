@@ -55,12 +55,71 @@ browser_snapshot
 
 **Never write a Node.js script. Never use curl. Never use bash to fetch URLs.** If Playwright MCP is not available, stop and tell the user immediately.
 
+### Using Email Scraper for Fast Email Discovery
+
+Optimized tool that finds the primary email address for any domain:
+
+```bash
+python email_scraper.py
+```
+
+When prompted, enter the agency website URL. The tool will:
+1. **Check homepage first** for emails visible in plain HTML
+2. **Check common contact pages** (/contact, /contact-us, /email, etc.)
+3. **Auto-upgrade to browser rendering** if emails are hidden behind JavaScript
+4. **Stop immediately** when it finds an email matching the domain
+5. **Return only that one email** — no noise, just the result
+
+**How it works:**
+- Tries fast HTTP requests first (works instantly for most sites)
+- If homepage + contact pages yield no results, switches to Playwright (slower but handles JS-rendered emails)
+- Returns as soon as it finds `name@agencywebsite.com`
+- Only keeps domain-matching emails (filters out form placeholders like `your@email.com`)
+
+**When to use Email Scraper:**
+- Quick lookup of primary domain email (replaces manual searching)
+- Before visiting site with Playwright (saves time)
+- Agency websites with JavaScript-rendered contact info
+- Get the main email address without visiting multiple pages
+
+**When NOT to use:**
+- You need email verification (use Hunter.io instead)
+- Agency uses contact forms only (use Playwright to fill forms directly)
+
+**Example (fast — plain HTML site):**
+```
+$ python email_scraper.py
+[+] Enter url to scan: tsvweb.com
+[*] Searching for emails on tsvweb.com domain...
+
+[1] Checking https://tsvweb.com ... FOUND
+
+[+] Found email: hello@tsvweb.com
+```
+
+**Example (slower — JavaScript-rendered site):**
+```
+$ python email_scraper.py
+[+] Enter url to scan: nexaskinmed.co.uk
+[*] Searching for emails on nexaskinmed.co.uk domain...
+
+[1] Checking https://nexaskinmed.co.uk ... no match
+[2] Checking https://nexaskinmed.co.uk/contact ... no match
+[*] Retrying with browser rendering for JavaScript content...
+
+[1] Checking https://nexaskinmed.co.uk ... no match
+[2] Checking https://nexaskinmed.co.uk/contact ... FOUND
+
+[+] Found email: sales@nexaskinmed.co.uk
+```
+
 ---
 
 ## Tools You Have
 
 - **Web search** — find agency names and URLs only. Do NOT use search snippets to qualify agencies or write messages.
 - **Playwright MCP** — the ONLY tool for reading website content, finding emails, verifying emails, filling contact forms
+- **Email Scraper** — Python tool for automated email extraction from agency websites (use when Playwright extraction is slow)
 - **Outreach API** — create leads, send emails, record contacts, check stats
 
 ---
