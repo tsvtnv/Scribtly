@@ -38,8 +38,6 @@ export function OnboardingWizard({ initialStep, workspaceName, userName }: Onboa
   }, [step]);
 
   function advanceStep(nextStep: number) {
-    const seconds = Math.round((Date.now() - stepStartTime.current) / 1000);
-    stepTimes.current.push({ step, timeSeconds: seconds });
     setStep(nextStep);
   }
 
@@ -54,7 +52,6 @@ export function OnboardingWizard({ initialStep, workspaceName, userName }: Onboa
   }
 
   if (showSuccess) {
-    trackOnboardingComplete(stepTimes.current);
     return (
       <div className="w-full max-w-lg">
         <StepSuccess scriptText={scriptText} />
@@ -85,7 +82,11 @@ export function OnboardingWizard({ initialStep, workspaceName, userName }: Onboa
             clientId={createdClientId}
             clientNiche={clientNiche}
             clientPlatform={clientPlatform}
-            onSuccess={(text) => { setScriptText(text); setShowSuccess(true); }}
+            onSuccess={(text) => {
+              trackOnboardingComplete(stepTimes.current);
+              setScriptText(text);
+              setShowSuccess(true);
+            }}
             onSkip={handleSkipToEnd}
           />
         )}

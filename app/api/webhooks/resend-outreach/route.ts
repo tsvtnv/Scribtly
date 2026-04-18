@@ -4,7 +4,11 @@ import { prisma } from "@/lib/prisma";
 const RESEND_WEBHOOK_SECRET = process.env.RESEND_OUTREACH_WEBHOOK_SECRET ?? "";
 
 async function verifySignature(req: NextRequest, rawBody: string): Promise<boolean> {
-  if (!RESEND_WEBHOOK_SECRET) return true; // skip verification in dev if secret not set
+  if (!RESEND_WEBHOOK_SECRET) {
+    if (process.env.NODE_ENV === "development") return true;
+    console.error("RESEND_OUTREACH_WEBHOOK_SECRET is not set");
+    return false;
+  }
   const signature = req.headers.get("svix-signature") ?? "";
   const timestamp = req.headers.get("svix-timestamp") ?? "";
   const msgId = req.headers.get("svix-id") ?? "";

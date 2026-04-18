@@ -51,15 +51,18 @@ export function RefLandingClient({
       trackPageExit(`/ref/${leadId}`, seconds);
     };
 
+    const handleVisibility = () => {
+      if (document.visibilityState === "hidden") handleExit();
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("beforeunload", handleExit);
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") handleExit();
-    });
+    document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("beforeunload", handleExit);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [leadId]);
 
