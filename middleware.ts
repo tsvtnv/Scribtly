@@ -26,7 +26,7 @@ const publicPaths = [
   "/api/track",
   "/api/ref",
   "/api/webhooks/resend-outreach",
-  "/api/v1",
+  "/api/v1", // bearer-token auth handled per-route via verifyOutreachApiKey
 ];
 
 function isPublic(pathname: string): boolean {

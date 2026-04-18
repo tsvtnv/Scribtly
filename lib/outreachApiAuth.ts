@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
 
-type AuthResult =
+export type AuthResult =
   | { ok: true }
   | { ok: false; response: NextResponse };
 
@@ -34,17 +34,11 @@ export function verifyOutreachApiKey(req: NextRequest): AuthResult {
   const provided = Buffer.from(token);
   const expected = Buffer.from(apiKey);
 
-  if (provided.length !== expected.length) {
-    return {
-      ok: false,
-      response: NextResponse.json(
-        { error: "Invalid API key", code: "UNAUTHORIZED" },
-        { status: 401 }
-      ),
-    };
-  }
-
-  const valid = timingSafeEqual(provided, expected);
+  // Always compare against expected; if lengths differ, compare against a
+  // dummy so the call site is timing-uniform.
+  const dummy = Buffer.alloc(expected.length);
+  const safe = provided.length === expected.length ? provided : dummy;
+  const valid = timingSafeEqual(safe, expected);
 
   if (!valid) {
     return {
