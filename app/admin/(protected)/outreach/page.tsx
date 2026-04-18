@@ -25,14 +25,15 @@ export default async function AdminOutreachPage() {
       <h1 className="text-2xl font-semibold tracking-tight mb-1">Outreach</h1>
       <p className="text-sm text-text-secondary mb-8">{leads.length} total leads</p>
 
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-3 md:grid-cols-7 gap-4 mb-8">
         {[
           { label: "Total Leads", value: String(leads.length) },
           { label: "Contacted", value: String(contacted) },
-          { label: "Delivered", value: String(delivered) },
-          { label: "Opened", value: String(opened) },
+          { label: "Email Delivered", value: String(delivered) },
+          { label: "Email Opened", value: String(opened) },
           { label: "Visited", value: String(visited) },
-          { label: "Signed Up", value: `${signedUp} (${convRate}%)` },
+          { label: "Signed Up", value: String(signedUp) },
+          { label: "Conversion Rate", value: `${convRate}%` },
         ].map(({ label, value }) => (
           <Card key={label}>
             <div className="text-xs uppercase tracking-wider text-text-secondary">{label}</div>
