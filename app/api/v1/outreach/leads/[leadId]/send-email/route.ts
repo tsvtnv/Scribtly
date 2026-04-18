@@ -61,12 +61,28 @@ export async function POST(
     );
   }
 
+  // Per-lead tracked URL so Resend click tracking + UTM attribution both work
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL?.replace("localhost:3000", "scribtly.com") ?? "https://scribtly.com";
+  const trackedUrl = `${baseUrl}?utm_source=outreach&utm_medium=email&utm_campaign=beta&utm_content=${encodeURIComponent(params.leadId)}`;
+
+  // Replace any bare scribtly.com links in the body with the tracked URL
+  const trackedBody = emailBody.replace(/https?:\/\/scribtly\.com[^\s]*/g, trackedUrl).replace(/\bscribtly\.com\b(?![^\s<])/g, trackedUrl);
+
+  // HTML version — required for Resend open/click tracking
+  const htmlBody = trackedBody
+    .split("\n\n")
+    .map((p) => `<p style="margin:0 0 16px 0;line-height:1.6">${p.replace(/\n/g, "<br/>")}</p>`)
+    .join("\n");
+
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"/></head><body style="font-family:sans-serif;font-size:15px;color:#1a1a1a;max-width:600px;margin:40px auto;padding:0 20px">${htmlBody}</body></html>`;
+
   const { data, error } = await resend.emails.send({
     from: "Kristiyan <Kristiyan@scribtly.com>",
     to,
     replyTo: "Kristiyan@scribtly.com",
     subject,
-    text: emailBody,
+    text: trackedBody,
+    html,
   });
 
   if (error || !data) {
@@ -84,8 +100,9 @@ export async function POST(
       outreachStatus: OutreachStatus.CONTACTED_VIA_EMAIL,
       resendMessageId: data.id,
       messageSubject: subject,
-      messageBody: emailBody,
+      messageBody: trackedBody,
       isBetaOffer,
+      sourceResultUrl: trackedUrl,
     },
   });
 

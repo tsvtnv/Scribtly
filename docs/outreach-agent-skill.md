@@ -162,20 +162,27 @@ Content-Type: application/json
 
 Use this when no contact form exists but you found an email address on their site.
 
+**IMPORTANT:** The API automatically:
+- Generates a **per-lead tracked URL** with UTM params: `https://scribtly.com?utm_source=outreach&utm_medium=email&utm_campaign=beta&utm_content={leadId}`
+- Replaces any `scribtly.com` link in your body with this tracked URL
+- Sends an **HTML email** (required for Resend open + click tracking)
+
+So in your `body`, just write `scribtly.com` or `https://scribtly.com` — the API will swap it for the tracked link automatically.
+
 ```
 POST https://scribtly.com/api/v1/outreach/leads/{leadId}/send-email
 Authorization: Bearer ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055
 Content-Type: application/json
 
 {
-  "to": "hello@pixelstudio.io",
-  "subject": "Scribtly — free beta for video agencies",
-  "body": "Hi Pixel Studio team,\n\nI came across your work and love what you're doing with explainer videos.\n\nI'm reaching out because we've built Scribtly — a tool that helps creative agencies write video scripts faster using AI...\n\nWe're currently offering free beta access.\nWould love to show you — scribtly.com\n\nKris\nscribtly.com",
+  "to": "hello@loopable.agency",
+  "subject": "Scribtly — free beta for social media agencies",
+  "body": "Hi Loopable team,\n\nI came across your work producing reels for e-commerce brands — love the content quality.\n\nI built Scribtly — AI script writing for social media agencies. If you're writing scripts or captions at scale for clients, it cuts that time dramatically.\n\nFree beta open now → https://scribtly.com\n\nKris\nscribtly.com",
   "isBetaOffer": true
 }
 ```
 
-The email sends from `hello@scribtly.com` via Resend and automatically updates the lead status to `CONTACTED_VIA_EMAIL`.
+The email sends from `Kristiyan@scribtly.com` via Resend and automatically updates the lead status to `CONTACTED_VIA_EMAIL`. Open rates and click tracking will appear in the Resend dashboard tied to the lead's `resendMessageId`.
 
 ---
 
