@@ -308,7 +308,7 @@ model ReferralLead {
   workspaceId           String?
   onboardingStartedAt   DateTime?
   onboardingCompletedAt DateTime?
-  onboardingStepsJson   String?
+  onboardingStepsJson   Json?
 
   outreachStatus OutreachStatus @default(NOT_CONTACTED)
   optedOut       Boolean        @default(false)
@@ -316,15 +316,21 @@ model ReferralLead {
   notes          String?
 
   events ReferralEvent[]
+
+  @@index([outreachStatus])
+  @@index([resendMessageId])
+  @@index([signedUp])
 }
 
 model ReferralEvent {
   id        String       @id @default(cuid())
   leadId    String
-  lead      ReferralLead @relation(fields: [leadId], references: [leadId])
+  lead      ReferralLead @relation(fields: [leadId], references: [leadId], onDelete: Cascade)
   createdAt DateTime     @default(now())
 
   eventType String
   page      String?
   metadata  String?
+
+  @@index([leadId, createdAt])
 }
