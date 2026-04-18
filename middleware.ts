@@ -26,6 +26,7 @@ const publicPaths = [
   "/api/track",
   "/api/ref",
   "/api/webhooks/resend-outreach",
+  "/api/v1",
 ];
 
 function isPublic(pathname: string): boolean {
