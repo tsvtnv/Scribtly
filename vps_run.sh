@@ -1,5 +1,5 @@
 #!/bin/bash
-# Runs discovery and extraction in parallel, auto-restarts on crash.
+# Run by systemd — restarts are handled by systemd, not this script.
 
 VENV=/home/ubuntu/venv/bin/python3
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -8,32 +8,21 @@ log() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
-run_discovery() {
-  while true; do
-    log "Starting vps_discover.py..."
-    $VENV "$REPO_DIR/vps_discover.py" 2>&1 | tee -a "$REPO_DIR/discovery.log"
-    log "vps_discover.py exited. Restarting in 60s..."
-    sleep 60
-  done
-}
-
-run_extraction() {
-  sleep 120
-  while true; do
-    log "Starting vps_extract.py..."
-    $VENV "$REPO_DIR/vps_extract.py" 2>&1 | tee -a "$REPO_DIR/extraction.log"
-    log "vps_extract.py exited. Restarting in 30s..."
-    sleep 30
-  done
-}
-
 log "=== Lead Discovery Engine Starting ==="
-run_discovery &
+log "REPO_DIR=$REPO_DIR"
+
+# Run discovery and extraction in parallel
+$VENV "$REPO_DIR/vps_discover.py" &
 DISCOVERY_PID=$!
-run_extraction &
+log "Discovery started PID=$DISCOVERY_PID"
+
+# Give discovery 2 minutes to populate queue before extraction starts
+sleep 120
+
+$VENV "$REPO_DIR/vps_extract.py" &
 EXTRACTION_PID=$!
+log "Extraction started PID=$EXTRACTION_PID"
 
-log "Discovery PID=$DISCOVERY_PID  Extraction PID=$EXTRACTION_PID"
-log "Logs: discovery.log  extraction.log"
-
-wait
+# Wait for both to finish (systemd will restart this script on exit)
+wait $DISCOVERY_PID $EXTRACTION_PID
+log "Both processes finished. Systemd will restart."
