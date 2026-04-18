@@ -5,14 +5,17 @@ import hashlib
 import re
 import time
 import random
+import threading
 from urllib.parse import urlparse
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
 API_URL = "https://scribtly.com/api/v1/outreach/leads/bulk"
 API_KEY = "ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055"
-CONCURRENCY = 100
+BROWSERS = 5       # parallel Playwright browser instances
+CONCURRENCY = 150  # aiohttp connections for email extraction
 BATCH_SIZE = 50
+FILE_LOCK = threading.Lock()  # guards maps_agencies.txt writes
 CONTACT_PATHS = ["/contact", "/contact-us", "/contactus", "/about", "/about-us"]
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
 GENERIC_PREFIXES = {"noreply", "no-reply", "donotreply", "postmaster", "abuse", "bounce", "mailer-daemon"}
@@ -146,8 +149,25 @@ def scrape_maps_query(page, query, max_results=40):
     return agencies
 
 
-def scrape_all(queue: asyncio.Queue, loop: asyncio.AbstractEventLoop, seen: set):
-    """Playwright scraper — feeds discovered agencies into async queue immediately."""
+def accept_consent(page):
+    """Accept Google consent popup if present."""
+    page.goto("https://www.google.com/maps", wait_until="domcontentloaded", timeout=30000)
+    page.wait_for_timeout(3000)
+    for btn_text in ["Accept all", "Alle akzeptieren", "I agree", "Zustimmen"]:
+        try:
+            btn = page.get_by_text(btn_text, exact=True).first
+            if btn.is_visible(timeout=2000):
+                btn.click()
+                log(f"[Browser] Accepted consent: {btn_text}")
+                page.wait_for_timeout(3000)
+                break
+        except Exception:
+            pass
+
+
+def scrape_worker(worker_id: int, queries: list, queue: asyncio.Queue,
+                  loop: asyncio.AbstractEventLoop, seen: set, seen_lock: threading.Lock):
+    """One Playwright browser instance handling its slice of queries."""
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(
@@ -155,43 +175,29 @@ def scrape_all(queue: asyncio.Queue, loop: asyncio.AbstractEventLoop, seen: set)
             locale="en-US",
         )
         page = context.new_page()
+        accept_consent(page)
 
-        # Accept Google consent popup (appears on first load from EU IPs)
-        page.goto("https://www.google.com/maps", wait_until="domcontentloaded", timeout=30000)
-        page.wait_for_timeout(3000)
-        for btn_text in ["Accept all", "Alle akzeptieren", "I agree", "Zustimmen"]:
-            try:
-                btn = page.get_by_text(btn_text, exact=True).first
-                if btn.is_visible(timeout=2000):
-                    btn.click()
-                    log(f"Accepted consent: {btn_text}")
-                    page.wait_for_timeout(3000)
-                    break
-            except Exception:
-                pass
-
-        for i, query in enumerate(SEARCHES):
-            log(f"[{i+1}/{len(SEARCHES)}] {query}")
+        for i, query in enumerate(queries):
+            log(f"[B{worker_id}] ({i+1}/{len(queries)}) {query}")
             found = scrape_maps_query(page, query)
             new_count = 0
             for domain, info in found.items():
-                if domain not in seen:
+                with seen_lock:
+                    if domain in seen:
+                        continue
                     seen.add(domain)
-                    new_count += 1
-                    # Push into async queue immediately
-                    asyncio.run_coroutine_threadsafe(
-                        queue.put({"domain": domain, **info}), loop
-                    ).result()
-                    # Append to file
+                new_count += 1
+                asyncio.run_coroutine_threadsafe(
+                    queue.put({"domain": domain, **info}), loop
+                ).result()
+                with FILE_LOCK:
                     with open("maps_agencies.txt", "a") as f:
                         f.write(f"{domain}|{info['name']}|{info.get('query','')}\n")
-            log(f"  +{new_count} new (total seen: {len(seen)})")
-            time.sleep(random.uniform(3.0, 6.0))
+            log(f"  [B{worker_id}] +{new_count} new (total: {len(seen)})")
+            time.sleep(random.uniform(2.0, 4.0))
 
         browser.close()
-
-    # Signal worker that scraping is done
-    asyncio.run_coroutine_threadsafe(queue.put(None), loop).result()
+    log(f"[B{worker_id}] Done.")
 
 
 # ── async email extraction + API push ────────────────────────────────────────
@@ -240,16 +246,20 @@ async def push_single(session, lead):
     return False
 
 
-async def worker(queue: asyncio.Queue):
+async def worker(queue: asyncio.Queue, num_sentinels: int = 1):
     """Async worker: pulls from queue, fetches email, pushes to API immediately."""
     connector = aiohttp.TCPConnector(limit=CONCURRENCY)
     async with aiohttp.ClientSession(connector=connector) as session:
         pushed = 0
         failed = []
+        sentinels_received = 0
         while True:
             item = await queue.get()
-            if item is None:  # sentinel — scraping done
-                break
+            if item is None:
+                sentinels_received += 1
+                if sentinels_received >= num_sentinels:
+                    break
+                continue
             domain = item["domain"]
             email = await get_email(session, domain)
             if not email:
@@ -276,16 +286,35 @@ async def worker(queue: asyncio.Queue):
 
 
 async def main():
-    log("=== Google Maps Agency Scraper ===")
+    log(f"=== Google Maps Agency Scraper — {BROWSERS} parallel browsers ===")
     queue: asyncio.Queue = asyncio.Queue()
     seen: set = set()
+    seen_lock = threading.Lock()
     loop = asyncio.get_event_loop()
+    executor = asyncio.get_event_loop()
 
-    # Run Playwright scraper in thread, async worker in event loop — in parallel
-    scraper_future = loop.run_in_executor(None, scrape_all, queue, loop, seen)
-    worker_task = asyncio.create_task(worker(queue))
+    # Split queries evenly across browsers
+    slices = [SEARCHES[i::BROWSERS] for i in range(BROWSERS)]
+    log(f"Splitting {len(SEARCHES)} queries across {BROWSERS} browsers (~{len(slices[0])} each)")
 
-    await asyncio.gather(scraper_future, worker_task)
+    # Launch all browser threads in parallel
+    scraper_futures = [
+        loop.run_in_executor(None, scrape_worker, i, slices[i], queue, loop, seen, seen_lock)
+        for i in range(BROWSERS)
+    ]
+
+    # Worker drains queue; wait for all scrapers first, then send sentinel
+    worker_task = asyncio.create_task(worker(queue, num_sentinels=BROWSERS))
+
+    # Send one sentinel per browser when it finishes
+    async def watch_scraper(fut):
+        await fut
+        await queue.put(None)
+
+    await asyncio.gather(
+        *[watch_scraper(f) for f in scraper_futures],
+        worker_task,
+    )
     log("All done.")
 
 
