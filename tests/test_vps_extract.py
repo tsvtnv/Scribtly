@@ -42,3 +42,16 @@ def test_build_lead_payload():
 def test_build_lead_payload_no_email():
     lead = build_lead_payload(domain="test.com", email=None, query="agency")
     assert lead is None
+
+def test_extract_emails_filters_generic_prefixes():
+    html = "<p>noreply@example.com info@example.com postmaster@example.com</p>"
+    emails = extract_emails_from_html(html, "example.com")
+    assert "info@example.com" in emails
+    assert "noreply@example.com" not in emails
+    assert "postmaster@example.com" not in emails
+
+def test_extract_emails_strips_trailing_dot():
+    html = "<p>Contact: hello@example.com.</p>"
+    emails = extract_emails_from_html(html, "example.com")
+    assert "hello@example.com" in emails
+    assert "hello@example.com." not in emails
