@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { lucia, setSessionCookie } from "@/lib/auth";
-import { sendWelcome } from "@/lib/sendEmail";
+import { sendWelcome, sendBetaWelcome } from "@/lib/sendEmail";
 
 export const runtime = "nodejs";
 
@@ -30,5 +30,42 @@ export async function GET(req: NextRequest) {
 
   void sendWelcome({ to: user.email, name: user.name || undefined }).catch(console.error);
 
-  return NextResponse.redirect(new URL("/team-onboarding", appUrl));
+  // Auto-activate beta if user arrived via a beta referral link
+  const refLeadId = req.cookies.get("ref_lead_id")?.value;
+  if (refLeadId) {
+    const lead = await prisma.referralLead.findUnique({
+      where: { leadId: refLeadId },
+      select: { isBetaOffer: true, signedUp: true },
+    });
+    if (lead?.isBetaOffer && !lead.signedUp) {
+      const workspace = await prisma.workspace.findFirst({
+        where: { ownerId: user.id },
+        select: { id: true },
+      });
+      if (workspace) {
+        const betaExpiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);
+        await prisma.$transaction([
+          prisma.user.update({
+            where: { id: user.id },
+            data: { isBetaTester: true, betaExpiresAt },
+          }),
+          prisma.workspace.update({
+            where: { id: workspace.id },
+            data: { plan: "BASIC" },
+          }),
+          prisma.referralLead.update({
+            where: { leadId: refLeadId },
+            data: { signedUp: true, signedUpAt: new Date(), clerkUserId: user.id },
+          }),
+        ]);
+        void sendBetaWelcome({
+          to: user.email,
+          name: user.name ?? undefined,
+          betaExpiresAt,
+        }).catch(console.error);
+      }
+    }
+  }
+
+  return NextResponse.redirect(new URL("/onboarding", appUrl));
 }
