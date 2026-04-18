@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
+import { getSession } from "@/lib/auth";
 import { ensureUser } from "@/lib/ensureUser";
 import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
 
 export default async function OnboardingPage() {
-  const { userId } = auth();
-  if (!userId) redirect("/login");
+  const { session } = await getSession();
+  if (!session) redirect("/login");
 
   const { user, workspace } = await ensureUser();
 

@@ -66,3 +66,39 @@ export async function sendInvite({
     react: InviteEmailTemplate({ inviterName, workspaceName, acceptUrl }),
   });
 }
+
+export async function sendVerificationEmail({
+  to,
+  name,
+  verificationUrl,
+}: {
+  to: string;
+  name?: string;
+  verificationUrl: string;
+}) {
+  const { default: VerifyEmail } = await import("@/lib/emails/VerifyEmail");
+  return send({
+    from: EMAIL_FROM,
+    to,
+    subject: "Verify your Scribtly email",
+    react: VerifyEmail({ verificationUrl, name }),
+  });
+}
+
+export async function sendPasswordResetEmail({
+  to,
+  name,
+  resetUrl,
+}: {
+  to: string;
+  name?: string;
+  resetUrl: string;
+}) {
+  const { default: ResetPassword } = await import("@/lib/emails/ResetPassword");
+  return send({
+    from: EMAIL_FROM,
+    to,
+    subject: "Reset your Scribtly password",
+    react: ResetPassword({ resetUrl, name }),
+  });
+}
