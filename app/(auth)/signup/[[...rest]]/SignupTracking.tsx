@@ -60,17 +60,20 @@ export function SignupTracking({ refLeadId }: Props) {
       }
     };
 
+    const handleVisibility = () => {
+      if (document.visibilityState === "hidden") handleExit();
+    };
+
     document.addEventListener("focusin", handleFocus);
     document.addEventListener("focusout", handleBlur);
     window.addEventListener("beforeunload", handleExit);
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") handleExit();
-    });
+    document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
       document.removeEventListener("focusin", handleFocus);
       document.removeEventListener("focusout", handleBlur);
       window.removeEventListener("beforeunload", handleExit);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [refLeadId]);
 
