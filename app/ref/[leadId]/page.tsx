@@ -10,7 +10,7 @@ interface Props {
 export default async function RefLandingPage({ params }: Props) {
   const lead = await prisma.referralLead.findUnique({
     where: { leadId: params.leadId },
-    select: { leadId: true, agencyName: true, agencyServices: true },
+    select: { leadId: true, agencyName: true, agencyServices: true, isBetaOffer: true },
   });
 
   if (!lead) redirect("/");
@@ -24,6 +24,7 @@ export default async function RefLandingPage({ params }: Props) {
       tagline={copy.tagline}
       painPoints={copy.painPoints}
       solutions={copy.solutions}
+      isBetaOffer={lead.isBetaOffer}
     />
   );
 }

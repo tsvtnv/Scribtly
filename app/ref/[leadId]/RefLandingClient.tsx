@@ -15,6 +15,7 @@ interface RefLandingClientProps {
   tagline: string;
   painPoints: string[];
   solutions: string[];
+  isBetaOffer: boolean;
 }
 
 const SCROLL_THRESHOLDS = [25, 50, 75, 100];
@@ -25,6 +26,7 @@ export function RefLandingClient({
   tagline,
   painPoints,
   solutions,
+  isBetaOffer,
 }: RefLandingClientProps) {
   const router = useRouter();
   const startTime = useRef(Date.now());
@@ -68,7 +70,10 @@ export function RefLandingClient({
 
   function handleCta() {
     trackCtaClick(`/ref/${leadId}`);
-    router.push(`/signup?ref=${leadId}`);
+    const url = isBetaOffer
+      ? `/signup?ref=${leadId}&beta=true`
+      : `/signup?ref=${leadId}`;
+    router.push(url);
   }
 
   return (
@@ -76,9 +81,15 @@ export function RefLandingClient({
       {/* Hero */}
       <section className="flex flex-col items-center justify-center min-h-screen px-6 text-center relative">
         <div className="max-w-2xl">
-          <p className="text-sm font-medium text-primary mb-4 uppercase tracking-widest">
-            Made for {agencyName}
-          </p>
+          {isBetaOffer ? (
+            <p className="text-sm font-medium text-amber-600 dark:text-amber-400 mb-4 uppercase tracking-widest">
+              Beta Access — Limited Spots
+            </p>
+          ) : (
+            <p className="text-sm font-medium text-primary mb-4 uppercase tracking-widest">
+              Made for {agencyName}
+            </p>
+          )}
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
             Welcome, {agencyName}.
           </h1>
@@ -89,8 +100,15 @@ export function RefLandingClient({
             onClick={handleCta}
             className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-primary/90 transition-colors"
           >
-            Get free access for {agencyName} →
+            {isBetaOffer
+              ? `Claim free beta access for ${agencyName} →`
+              : `Get free access for ${agencyName} →`}
           </button>
+          {isBetaOffer && (
+            <p className="text-xs text-gray-400 mt-3">
+              3 months free on our £5/mo plan · No credit card · Cancel anytime
+            </p>
+          )}
         </div>
         <div className="absolute bottom-8 animate-bounce text-gray-400">
           <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -165,16 +183,20 @@ export function RefLandingClient({
       <section className="py-24 px-6 text-center">
         <div className="max-w-xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Ready to try it, {agencyName}?
+            {isBetaOffer
+              ? `Ready to join as a beta tester, ${agencyName}?`
+              : `Ready to try it, ${agencyName}?`}
           </h2>
           <p className="text-gray-500 dark:text-gray-400 mb-8 text-sm">
-            Free access. No credit card. Set up your first client voice profile in 2 minutes.
+            {isBetaOffer
+              ? "Limited beta spots. 3 months free. Help us build the best script tool for agencies."
+              : "Free access. No credit card. Set up your first client voice profile in 2 minutes."}
           </p>
           <button
             onClick={handleCta}
             className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-primary/90 transition-colors"
           >
-            Get free access for {agencyName} →
+            {isBetaOffer ? `Claim your beta spot →` : `Get free access for ${agencyName} →`}
           </button>
         </div>
       </section>
