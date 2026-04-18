@@ -146,9 +146,8 @@ def scrape_maps_query(page, query, max_results=40):
     return agencies
 
 
-def scrape_all():
-    all_agencies = {}
-
+def scrape_all(queue: asyncio.Queue, loop: asyncio.AbstractEventLoop, seen: set):
+    """Playwright scraper — feeds discovered agencies into async queue immediately."""
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(
@@ -174,14 +173,25 @@ def scrape_all():
         for i, query in enumerate(SEARCHES):
             log(f"[{i+1}/{len(SEARCHES)}] {query}")
             found = scrape_maps_query(page, query)
-            new = {k: v for k, v in found.items() if k not in all_agencies}
-            all_agencies.update(new)
-            log(f"  +{len(new)} new (total: {len(all_agencies)})")
+            new_count = 0
+            for domain, info in found.items():
+                if domain not in seen:
+                    seen.add(domain)
+                    new_count += 1
+                    # Push into async queue immediately
+                    asyncio.run_coroutine_threadsafe(
+                        queue.put({"domain": domain, **info}), loop
+                    ).result()
+                    # Append to file
+                    with open("maps_agencies.txt", "a") as f:
+                        f.write(f"{domain}|{info['name']}|{info.get('query','')}\n")
+            log(f"  +{new_count} new (total seen: {len(seen)})")
             time.sleep(random.uniform(3.0, 6.0))
 
         browser.close()
 
-    return all_agencies
+    # Signal worker that scraping is done
+    asyncio.run_coroutine_threadsafe(queue.put(None), loop).result()
 
 
 # ── async email extraction + API push ────────────────────────────────────────
@@ -208,17 +218,17 @@ async def get_email(session, domain):
     return pick_email(all_emails, domain)
 
 
-async def push_batch(session, batch):
+async def push_single(session, lead):
     headers = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
     for attempt in range(3):
         try:
             async with session.post(
-                API_URL, json={"leads": batch}, headers=headers,
+                API_URL, json={"leads": [lead]}, headers=headers,
                 timeout=aiohttp.ClientTimeout(total=30)
             ) as r:
                 if r.status in (200, 201):
                     data = await r.json()
-                    log(f"[API] Pushed {len(batch)} -> created:{data.get('created',0)} updated:{data.get('updated',0)}")
+                    log(f"[API] -> {lead['agencyName']} created:{data.get('created',0)}")
                     return True
                 elif r.status == 409:
                     return True
@@ -230,67 +240,53 @@ async def push_batch(session, batch):
     return False
 
 
-async def extract_and_push(agencies):
+async def worker(queue: asyncio.Queue):
+    """Async worker: pulls from queue, fetches email, pushes to API immediately."""
     connector = aiohttp.TCPConnector(limit=CONCURRENCY)
     async with aiohttp.ClientSession(connector=connector) as session:
-        domains = list(agencies.keys())
-        batch = []
         pushed = 0
         failed = []
+        while True:
+            item = await queue.get()
+            if item is None:  # sentinel — scraping done
+                break
+            domain = item["domain"]
+            email = await get_email(session, domain)
+            if not email:
+                log(f"  [skip] {domain} — no email found")
+                continue
+            lead = {
+                "leadId": lead_id(domain),
+                "agencyName": item["name"],
+                "agencyWebsite": f"https://{domain}",
+                "outreachStatus": "NOT_CONTACTED",
+                "agencyServices": "social media marketing",
+                "sourceSearchQuery": item.get("query", "google_maps"),
+                "notes": f"email: {email}",
+            }
+            ok = await push_single(session, lead)
+            if ok:
+                pushed += 1
+            else:
+                failed.append(domain)
+                with open("maps_failed.txt", "a") as f:
+                    f.write(domain + "\n")
 
-        for i in range(0, len(domains), 50):
-            chunk = domains[i:i+50]
-            emails = await asyncio.gather(*[get_email(session, d) for d in chunk])
-
-            for domain, email in zip(chunk, emails):
-                if not email:
-                    continue
-                info = agencies[domain]
-                batch.append({
-                    "leadId": lead_id(domain),
-                    "agencyName": info["name"],
-                    "agencyWebsite": f"https://{domain}",
-                    "outreachStatus": "NOT_CONTACTED",
-                    "agencyServices": "social media marketing",
-                    "sourceSearchQuery": info.get("query", "google_maps"),
-                    "notes": f"email: {email}",
-                })
-                if len(batch) >= BATCH_SIZE:
-                    ok = await push_batch(session, batch)
-                    if not ok:
-                        failed.extend(b["agencyWebsite"] for b in batch)
-                    pushed += len(batch)
-                    batch = []
-
-            log(f"[Email] {min(i+50, len(domains))}/{len(domains)} processed")
-
-        if batch:
-            ok = await push_batch(session, batch)
-            if not ok:
-                failed.extend(b["agencyWebsite"] for b in batch)
-            pushed += len(batch)
-
-        if failed:
-            with open("maps_failed.txt", "a") as f:
-                f.write("\n".join(failed) + "\n")
-
-        log(f"Done. {pushed} leads pushed, {len(failed)} failures.")
+        log(f"[Worker] Done. {pushed} leads pushed, {len(failed)} failures.")
 
 
 async def main():
     log("=== Google Maps Agency Scraper ===")
+    queue: asyncio.Queue = asyncio.Queue()
+    seen: set = set()
     loop = asyncio.get_event_loop()
-    agencies = await loop.run_in_executor(None, scrape_all)
 
-    log(f"Found {len(agencies)} unique agencies")
-    with open("maps_agencies.txt", "w") as f:
-        for domain, info in sorted(agencies.items()):
-            f.write(f"{domain}|{info['name']}|{info.get('query','')}\n")
+    # Run Playwright scraper in thread, async worker in event loop — in parallel
+    scraper_future = loop.run_in_executor(None, scrape_all, queue, loop, seen)
+    worker_task = asyncio.create_task(worker(queue))
 
-    if agencies:
-        await extract_and_push(agencies)
-    else:
-        log("No agencies found.")
+    await asyncio.gather(scraper_future, worker_task)
+    log("All done.")
 
 
 if __name__ == "__main__":
