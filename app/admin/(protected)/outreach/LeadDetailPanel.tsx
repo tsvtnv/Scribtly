@@ -20,6 +20,18 @@ export function LeadDetailPanel({ lead }: { lead: SerializedLead }) {
         <Detail label="User Agent" value={lead.userAgent} mono />
       </div>
 
+      {lead.notes && (
+        <>
+          <hr className="border-gray-200 dark:border-gray-700" />
+          <div>
+            <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Notes</p>
+            <pre className="whitespace-pre-wrap text-xs bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
+              {lead.notes}
+            </pre>
+          </div>
+        </>
+      )}
+
       <hr className="border-gray-200 dark:border-gray-700" />
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
