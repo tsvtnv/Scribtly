@@ -1,69 +1,162 @@
-"""
-vps_clutch.py — Clutch.co qualified social media agency scraper for Scribtly lead gen.
-Scrapes agency listings, extracts emails, and pushes to Scribtly outreach API.
-"""
+# vps_clutch.py
 import asyncio
 import aiohttp
-import aiofiles
-import re
-import random
-import time
 import hashlib
 import json
+import random
+import re
+import time
+from urllib.parse import urlparse
+from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
-# --- Config ---
 API_URL = "https://scribtly.com/api/v1/outreach/leads/bulk"
 API_KEY = "ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055"
-AGENCIES_FILE = "clutch_agencies.txt"
-FAILED_FILE = "clutch_failed.txt"
-BATCH_SIZE = 50
 CONCURRENCY = 100
+BATCH_SIZE = 50
+CONTACT_PATHS = ["/contact", "/contact-us", "/contactus", "/about", "/about-us"]
+EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
+GENERIC_PREFIXES = {"noreply", "no-reply", "donotreply", "postmaster", "abuse", "bounce"}
+PREFERRED_PREFIXES = ["contact", "hello", "info", "hi", "team", "media", "press"]
+
+SKIP_DOMAINS = {
+    "clutch.co", "designrush.com", "sortlist.com", "upcity.com",
+    "google.com", "facebook.com", "linkedin.com", "twitter.com",
+    "instagram.com", "youtube.com", "tiktok.com",
+}
 
 SOURCES = [
-    ("https://clutch.co/agencies/social-media", 50),
-    ("https://clutch.co/agencies/social-media-marketing", 30),
-]
-FALLBACK_SOURCES = [
-    "https://www.designrush.com/agency/social-media-marketing",
-    "https://www.sortlist.com/social-media-agency",
-    "https://upcity.com/profiles/social-media-agencies",
+    ("https://clutch.co/agencies/social-media", 40),
+    ("https://clutch.co/agencies/social-media-marketing", 20),
+    ("https://www.designrush.com/agency/social-media-marketing", 10),
+    ("https://upcity.com/profiles/social-media-agencies", 5),
 ]
 
-USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-]
-CONTACT_PATHS = ["/contact", "/contact-us", "/about", "/"]
-EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
-GENERIC = {"noreply", "no-reply", "donotreply", "mailer-daemon", "postmaster", "abuse", "bounce"}
+
+def log(msg):
+    print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
-def _log(msg: str):
-    print(f"[{time.strftime('%H:%M:%S')}] {msg}")
+def domain_from_url(url):
+    try:
+        d = urlparse(url).netloc.lower()
+        return d[4:] if d.startswith("www.") else d
+    except Exception:
+        return None
 
 
-def domain_md5(domain: str) -> str:
+def lead_id(domain):
     return hashlib.md5(domain.encode()).hexdigest()
 
 
-def clean_domain(url: str) -> str | None:
-    url = url.strip().lower()
-    url = re.sub(r"^https?://", "", url)
-    url = re.sub(r"^www\.", "", url)
-    url = url.split("/")[0].split("?")[0]
-    if "." not in url or "clutch.co" in url:
+def pick_email(emails, domain):
+    domain_emails = {e for e in emails if e.split("@")[-1] == domain or e.split("@")[-1].endswith("." + domain)}
+    domain_emails = {e for e in domain_emails if e.split("@")[0] not in GENERIC_PREFIXES}
+    if not domain_emails:
         return None
-    return url
+    for prefix in PREFERRED_PREFIXES:
+        for e in domain_emails:
+            if e.split("@")[0] == prefix:
+                return e
+    return sorted(domain_emails)[0]
 
 
-async def fetch(session: aiohttp.ClientSession, url: str, delay: float = 0) -> str:
-    if delay:
-        await asyncio.sleep(delay)
-    headers = {"User-Agent": random.choice(USER_AGENTS), "Accept-Language": "en-US,en;q=0.9"}
+def scrape_directory_page(page, url):
+    """Use Playwright to render a directory page and extract agency website links."""
+    domains = {}
     try:
-        async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=15), allow_redirects=True) as r:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        page.wait_for_timeout(3000)  # let JS render
+        html = page.content()
+        soup = BeautifulSoup(html, "html.parser")
+
+        # Try multiple selectors for agency rows
+        rows = (
+            soup.select("li.provider-row") or
+            soup.select("li[data-company_name]") or
+            soup.select(".company-list li") or
+            soup.select(".agency-card") or
+            soup.select("article.agency")
+        )
+
+        for row in rows:
+            name = ""
+            website = None
+            employees = ""
+
+            # Name
+            for sel in ["h3 a", "h2 a", ".company-name a", ".agency-name"]:
+                el = row.select_one(sel)
+                if el:
+                    name = el.get_text(strip=True)
+                    break
+
+            # Website — external link on the listing
+            for sel in ["a[data-link_type='website']", "a.website-link", "a[href*='//'][href*='.'][class*='web']"]:
+                el = row.select_one(sel)
+                if el and el.get("href", "").startswith("http"):
+                    website = el["href"]
+                    break
+
+            # Employees
+            for el in row.find_all(string=re.compile(r"\d+.*employee", re.I)):
+                employees = el.strip()
+                break
+
+            if website:
+                domain = domain_from_url(website)
+                if domain and domain not in SKIP_DOMAINS and "." in domain:
+                    domains[domain] = {"name": name or domain, "employees": employees}
+
+    except Exception as e:
+        log(f"  Page error {url}: {e}")
+
+    return domains
+
+
+def scrape_all_sources():
+    """Scrape all directory sources using Playwright. Returns dict of domain -> info."""
+    all_agencies = {}
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        )
+        page = context.new_page()
+
+        for base_url, max_pages in SOURCES:
+            log(f"Scraping {base_url} (up to {max_pages} pages)...")
+            consecutive_empty = 0
+
+            for page_num in range(max_pages):
+                url = f"{base_url}?page={page_num}" if page_num > 0 else base_url
+                found = scrape_directory_page(page, url)
+                new = {k: v for k, v in found.items() if k not in all_agencies}
+                all_agencies.update(new)
+                log(f"  Page {page_num}: +{len(new)} agencies (total: {len(all_agencies)})")
+
+                if len(found) == 0:
+                    consecutive_empty += 1
+                    if consecutive_empty >= 3:
+                        log(f"  3 empty pages, stopping this source")
+                        break
+                else:
+                    consecutive_empty = 0
+
+                time.sleep(random.uniform(2.0, 4.0))
+
+        browser.close()
+
+    return all_agencies
+
+
+# ── async email extraction ────────────────────────────────────────────────────
+
+async def fetch_page(session, url):
+    try:
+        async with session.get(url, timeout=aiohttp.ClientTimeout(total=10), allow_redirects=True,
+                               headers={"User-Agent": "Mozilla/5.0"}) as r:
             if r.status >= 400:
                 return ""
             return await r.text(encoding="utf-8", errors="ignore")
@@ -71,142 +164,16 @@ async def fetch(session: aiohttp.ClientSession, url: str, delay: float = 0) -> s
         return ""
 
 
-def parse_clutch_page(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "html.parser")
-    agencies = []
-    for listing in soup.select("li.provider-row, li[data-company_name], .provider"):
-        name_el = listing.select_one("h3.company_info a, h3 a, .company-name a, .company_info a")
-        if not name_el:
-            continue
-        name = name_el.get_text(strip=True)
-        # Website link
-        site_el = listing.select_one("a[data-link_type='website'], a.website-link, a[href*='http'][rel~='nofollow']")
-        website = ""
-        if site_el:
-            website = site_el.get("href", "")
-        if not website:
-            # Try any external link in listing
-            for a in listing.find_all("a", href=True):
-                href = a["href"]
-                if href.startswith("http") and "clutch.co" not in href:
-                    website = href
-                    break
-        domain = clean_domain(website) if website else None
-        # Employee count
-        employees = ""
-        text = listing.get_text(" ", strip=True)
-        m = re.search(r"(\d[\d,\-\+]*)\s*[Ee]mployees?", text)
-        if m:
-            employees = m.group(0)
-        if name and domain:
-            agencies.append({"name": name, "domain": domain, "employees": employees})
-    return agencies
-
-
-def parse_fallback_page(html: str, source: str) -> list[dict]:
-    """Generic fallback parser — extract agency names + external links."""
-    soup = BeautifulSoup(html, "html.parser")
-    agencies = []
-    seen = set()
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        if not href.startswith("http"):
-            continue
-        domain = clean_domain(href)
-        if not domain or domain in seen:
-            continue
-        if any(skip in domain for skip in ["designrush", "sortlist", "upcity", "google", "facebook", "linkedin", "twitter"]):
-            continue
-        seen.add(domain)
-        name = a.get_text(strip=True) or domain
-        agencies.append({"name": name, "domain": domain, "employees": ""})
-    return agencies
-
-
-async def scrape_clutch(session: aiohttp.ClientSession) -> list[dict]:
-    all_agencies: list[dict] = []
-    seen_domains: set[str] = set()
-    consecutive_empty = 0
-
-    for base_url, max_pages in SOURCES:
-        _log(f"[Clutch] Scraping {base_url} (0-{max_pages-1})")
-        for page in range(max_pages):
-            url = f"{base_url}?page={page}"
-            delay = random.uniform(2, 4)
-            html = await fetch(session, url, delay=delay)
-            agencies = parse_clutch_page(html) if html else []
-            if not agencies:
-                consecutive_empty += 1
-                _log(f"[Clutch] Page {page}: empty (consecutive={consecutive_empty})")
-                if consecutive_empty >= 3:
-                    _log("[Clutch] 3 empty pages — stopping this source")
-                    break
-                continue
-            consecutive_empty = 0
-            new_count = 0
-            for ag in agencies:
-                if ag["domain"] not in seen_domains:
-                    seen_domains.add(ag["domain"])
-                    all_agencies.append(ag)
-                    new_count += 1
-            _log(f"[Clutch] Page {page}: {len(agencies)} listings, {new_count} new | total={len(all_agencies)}")
-
-    return all_agencies
-
-
-async def scrape_fallbacks(session: aiohttp.ClientSession) -> list[dict]:
-    all_agencies: list[dict] = []
-    seen: set[str] = set()
-    for url in FALLBACK_SOURCES:
-        _log(f"[Fallback] Scraping {url}")
-        html = await fetch(session, url, delay=random.uniform(2, 4))
-        if not html:
-            continue
-        agencies = parse_fallback_page(html, url)
-        for ag in agencies:
-            if ag["domain"] not in seen:
-                seen.add(ag["domain"])
-                all_agencies.append(ag)
-        _log(f"[Fallback] {url}: {len(agencies)} found | total={len(all_agencies)}")
-    return all_agencies
-
-
-def extract_emails(html: str, domain: str) -> set[str]:
-    found = EMAIL_RE.findall(html)
-    result = set()
-    for email in found:
-        email = email.lower().strip(".")
-        prefix = email.split("@")[0]
-        if prefix in GENERIC:
-            continue
-        ed = email.split("@")[-1]
-        if ed == domain or ed.endswith("." + domain):
-            result.add(email)
-    return result
-
-
-PREFERRED = ["contact", "hello", "info", "hi", "team", "media", "press"]
-
-
-def best_email(emails: set[str]) -> str:
-    for p in PREFERRED:
-        for e in emails:
-            if e.split("@")[0] == p:
-                return e
-    return sorted(emails)[0]
-
-
-async def get_email(session: aiohttp.ClientSession, domain: str) -> str | None:
-    urls = [f"https://{domain}{p}" for p in CONTACT_PATHS]
-    pages = await asyncio.gather(*[fetch(session, u) for u in urls])
+async def get_email(session, domain):
+    urls = [f"https://{domain}"] + [f"https://{domain}{p}" for p in CONTACT_PATHS]
+    pages = await asyncio.gather(*[fetch_page(session, u) for u in urls])
+    all_emails = set()
     for html in pages:
-        emails = extract_emails(html, domain)
-        if emails:
-            return best_email(emails)
-    return None
+        all_emails.update(EMAIL_RE.findall(html.lower()))
+    return pick_email(all_emails, domain)
 
 
-async def push_batch(session: aiohttp.ClientSession, batch: list[dict], failed: list[str]) -> None:
+async def push_batch(session, batch):
     headers = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
     for attempt in range(3):
         try:
@@ -214,71 +181,79 @@ async def push_batch(session: aiohttp.ClientSession, batch: list[dict], failed: 
                                     timeout=aiohttp.ClientTimeout(total=30)) as r:
                 if r.status in (200, 201):
                     data = await r.json()
-                    _log(f"[API] Pushed {len(batch)} leads -> created:{data.get('created',0)} updated:{data.get('updated',0)}")
-                    return
+                    log(f"[API] Pushed {len(batch)} -> created:{data.get('created',0)} updated:{data.get('updated',0)}")
+                    return True
                 elif r.status == 409:
-                    _log(f"[API] 409 batch exists, skipping")
-                    return
+                    return True
                 else:
-                    body = await r.text()
-                    _log(f"[API] Push failed status={r.status}: {body[:200]}")
+                    log(f"[API] status={r.status} attempt={attempt+1}")
         except Exception as e:
-            _log(f"[API] Error attempt {attempt+1}: {e}")
+            log(f"[API] error attempt={attempt+1}: {e}")
         await asyncio.sleep(2 ** attempt)
-    failed.extend(lead["agencyWebsite"] for lead in batch)
+    return False
+
+
+async def extract_and_push(agencies):
+    connector = aiohttp.TCPConnector(limit=CONCURRENCY)
+    async with aiohttp.ClientSession(connector=connector) as session:
+        domains = list(agencies.keys())
+        batch = []
+        pushed = 0
+        failed = []
+
+        chunk_size = 50
+        for i in range(0, len(domains), chunk_size):
+            chunk = domains[i:i + chunk_size]
+            emails = await asyncio.gather(*[get_email(session, d) for d in chunk])
+
+            for domain, email in zip(chunk, emails):
+                if not email:
+                    continue
+                info = agencies[domain]
+                batch.append({
+                    "leadId": lead_id(domain),
+                    "agencyName": info["name"],
+                    "agencyWebsite": f"https://{domain}",
+                    "outreachStatus": "NOT_CONTACTED",
+                    "agencyServices": "social media marketing",
+                    "sourceSearchQuery": "clutch.co/agencies/social-media",
+                    "notes": f"email: {email} | employees: {info.get('employees', '')}",
+                })
+                if len(batch) >= BATCH_SIZE:
+                    ok = await push_batch(session, batch)
+                    if not ok:
+                        failed.extend(b["agencyWebsite"] for b in batch)
+                    pushed += len(batch)
+                    batch = []
+
+            log(f"Progress: {min(i+chunk_size, len(domains))}/{len(domains)} domains processed")
+
+        if batch:
+            ok = await push_batch(session, batch)
+            if not ok:
+                failed.extend(b["agencyWebsite"] for b in batch)
+            pushed += len(batch)
+
+        if failed:
+            with open("clutch_failed.txt", "a") as f:
+                f.write("\n".join(failed) + "\n")
+
+        log(f"Done. {pushed} leads pushed, {len(failed)} failures.")
 
 
 async def main():
-    connector = aiohttp.TCPConnector(limit=CONCURRENCY)
-    async with aiohttp.ClientSession(connector=connector) as session:
-        # Step 1: Scrape directory pages
-        agencies = await scrape_clutch(session)
-        if len(agencies) < 10:
-            _log("[Main] Clutch returned < 10 results — trying fallback directories")
-            agencies = await scrape_fallbacks(session)
+    log("=== Clutch Agency Scraper ===")
+    agencies = scrape_all_sources()
 
-        _log(f"[Main] Total unique agencies: {len(agencies)}")
+    log(f"Found {len(agencies)} unique agencies")
+    with open("clutch_agencies.txt", "w") as f:
+        for domain, info in sorted(agencies.items()):
+            f.write(f"{domain}|{info['name']}|{info.get('employees','')}\n")
 
-        # Step 2: Save domains
-        async with aiofiles.open(AGENCIES_FILE, "w") as f:
-            for ag in agencies:
-                await f.write(f"{ag['domain']}|{ag['name']}|{ag['employees']}\n")
-        _log(f"[Main] Saved {len(agencies)} agencies to {AGENCIES_FILE}")
-
-        # Step 3: Extract emails in chunks
-        _log(f"[Main] Extracting emails (concurrency={CONCURRENCY})")
-        leads: list[dict] = []
-        failed: list[str] = []
-        chunk_size = 20
-
-        for i in range(0, len(agencies), chunk_size):
-            chunk = agencies[i:i + chunk_size]
-            emails = await asyncio.gather(*[get_email(session, ag["domain"]) for ag in chunk])
-            for ag, email in zip(chunk, emails):
-                if email:
-                    leads.append({
-                        "leadId": domain_md5(ag["domain"]),
-                        "agencyName": ag["name"],
-                        "agencyWebsite": f"https://{ag['domain']}",
-                        "outreachStatus": "NOT_CONTACTED",
-                        "sourceSearchQuery": "clutch.co/agencies/social-media",
-                        "agencyServices": "social media marketing",
-                        "notes": f"email: {email}",
-                    })
-            _log(f"[Main] Email progress: {min(i+chunk_size, len(agencies))}/{len(agencies)} | leads with email: {len(leads)}")
-
-        # Step 4: Push in batches
-        _log(f"[Main] Pushing {len(leads)} leads in batches of {BATCH_SIZE}")
-        for i in range(0, len(leads), BATCH_SIZE):
-            await push_batch(session, leads[i:i + BATCH_SIZE], failed)
-
-        if failed:
-            async with aiofiles.open(FAILED_FILE, "w") as f:
-                for url in failed:
-                    await f.write(url + "\n")
-            _log(f"[Main] {len(failed)} failed pushes saved to {FAILED_FILE}")
-
-        _log(f"[Main] Done. {len(agencies)} agencies scraped, {len(leads)} emails found, {len(failed)} push failures.")
+    if agencies:
+        await extract_and_push(agencies)
+    else:
+        log("No agencies found — check if Playwright/Chromium is installed")
 
 
 if __name__ == "__main__":
