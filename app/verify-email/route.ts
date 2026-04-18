@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { lucia, setSessionCookie } from "@/lib/auth";
+import { sendWelcome } from "@/lib/sendEmail";
 
 export const runtime = "nodejs";
 
@@ -17,10 +19,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(new URL("/login?error=token_expired", appUrl));
   }
 
-  await prisma.$transaction([
+  const [user] = await prisma.$transaction([
     prisma.user.update({ where: { id: record.userId }, data: { emailVerified: true } }),
     prisma.emailVerificationToken.delete({ where: { id: record.id } }),
   ]);
+
+  // Create session now that email is verified
+  const session = await lucia.createSession(user.id, {});
+  await setSessionCookie(session.id);
+
+  void sendWelcome({ to: user.email, name: user.name || undefined }).catch(console.error);
 
   return NextResponse.redirect(new URL("/team-onboarding", appUrl));
 }

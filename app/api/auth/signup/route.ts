@@ -78,12 +78,8 @@ export async function POST(req: NextRequest) {
     return newUser;
   });
 
-  const session = await lucia.createSession(user.id, {});
-  await setSessionCookie(session.id);
-
   const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email?token=${verificationToken}`;
   void sendVerificationEmail({ to: email, name, verificationUrl }).catch(console.error);
-  void sendWelcome({ to: email, name: name || undefined }).catch(console.error);
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, pendingVerification: true });
 }

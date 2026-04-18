@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -9,12 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function SignupPage() {
-  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -31,13 +30,46 @@ export default function SignupPage() {
         setError(data.error || "Something went wrong. Please try again.");
         return;
       }
-      router.push("/dashboard");
-      router.refresh();
+      setSubmitted(true);
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
+  }
+
+  if (submitted) {
+    return (
+      <div className="flex flex-col gap-4">
+        <h1 className="text-2xl font-semibold tracking-tight">Check your email</h1>
+        <p className="text-sm text-muted-foreground">
+          We sent a verification link to <span className="font-medium text-foreground">{email}</span>.
+          Click it to activate your account.
+        </p>
+        <Alert>
+          <AlertDescription>
+            Didn&apos;t get it?{" "}
+            <button
+              className="underline hover:text-primary"
+              onClick={async () => {
+                await fetch("/api/auth/resend-verification", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email }),
+                });
+              }}
+            >
+              Resend verification email
+            </button>
+          </AlertDescription>
+        </Alert>
+        <p className="text-center text-sm">
+          <Link href="/login" className="underline hover:text-primary text-muted-foreground">
+            Back to sign in
+          </Link>
+        </p>
+      </div>
+    );
   }
 
   return (
