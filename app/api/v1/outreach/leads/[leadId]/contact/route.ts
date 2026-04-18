@@ -28,12 +28,19 @@ export async function POST(
 
   const lead = await prisma.referralLead.findUnique({
     where: { leadId: params.leadId },
-    select: { leadId: true },
+    select: { leadId: true, optedOut: true },
   });
   if (!lead) {
     return NextResponse.json(
       { error: "Lead not found", code: "NOT_FOUND" },
       { status: 404 }
+    );
+  }
+
+  if (lead.optedOut) {
+    return NextResponse.json(
+      { error: "Lead has opted out of contact", code: "CONFLICT" },
+      { status: 409 }
     );
   }
 
@@ -55,7 +62,7 @@ export async function POST(
       contactMethod,
       contactedAt: new Date(),
       outreachStatus: METHOD_TO_STATUS[contactMethod],
-      ...(isBetaOffer !== undefined ? { isBetaOffer } : {}),
+      isBetaOffer,
     },
   });
 

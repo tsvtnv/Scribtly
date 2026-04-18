@@ -24,12 +24,19 @@ export async function POST(
 
   const lead = await prisma.referralLead.findUnique({
     where: { leadId: params.leadId },
-    select: { leadId: true, outreachStatus: true },
+    select: { leadId: true, outreachStatus: true, optedOut: true },
   });
   if (!lead) {
     return NextResponse.json(
       { error: "Lead not found", code: "NOT_FOUND" },
       { status: 404 }
+    );
+  }
+
+  if (lead.optedOut) {
+    return NextResponse.json(
+      { error: "Lead has opted out of contact", code: "CONFLICT" },
+      { status: 409 }
     );
   }
 
@@ -47,7 +54,7 @@ export async function POST(
   if (!force && lead.outreachStatus !== OutreachStatus.NOT_CONTACTED) {
     return NextResponse.json(
       {
-        error: `Lead already contacted (status: ${lead.outreachStatus}). Use force:true to override.`,
+        error: "Lead has already been contacted. Use force:true to override.",
         code: "CONFLICT",
       },
       { status: 409 }
@@ -78,7 +85,7 @@ export async function POST(
       resendMessageId: data.id,
       messageSubject: subject,
       messageBody: emailBody,
-      ...(isBetaOffer !== undefined ? { isBetaOffer } : {}),
+      isBetaOffer,
     },
   });
 
