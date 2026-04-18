@@ -11,9 +11,10 @@ import {
 
 interface Props {
   refLeadId: string;
+  isBeta: boolean;
 }
 
-export function SignupTracking({ refLeadId }: Props) {
+export function SignupTracking({ refLeadId, isBeta }: Props) {
   const startTime = useRef(Date.now());
   const lastField = useRef("");
   const formStarted = useRef(false);
@@ -21,6 +22,8 @@ export function SignupTracking({ refLeadId }: Props) {
   useEffect(() => {
     // Ensure cookie is set from URL param (belt-and-suspenders alongside middleware)
     document.cookie = `ref_lead_id=${refLeadId}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
+
+    if (isBeta) sessionStorage.setItem("beta_lead_id", refLeadId);
 
     trackPageView("/sign-up");
 
@@ -76,6 +79,36 @@ export function SignupTracking({ refLeadId }: Props) {
       document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [refLeadId]);
+
+  useEffect(() => {
+    if (!isBeta) return;
+    const betaLeadId = sessionStorage.getItem("beta_lead_id");
+    if (!betaLeadId) return;
+
+    let attempts = 0;
+    const interval = setInterval(async () => {
+      attempts++;
+      if (attempts > 30) { clearInterval(interval); return; }
+
+      const hasSession = document.cookie.includes("auth_session");
+      if (!hasSession) return;
+
+      clearInterval(interval);
+      sessionStorage.removeItem("beta_lead_id");
+
+      try {
+        await fetch("/api/beta/activate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ leadId: betaLeadId }),
+        });
+      } catch {
+        // Best-effort — don't block the user
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isBeta]);
 
   return null;
 }
