@@ -2,8 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Scribtly",
+  title: "Terms of Service",
   description: "The terms that govern your use of the Scribtly service.",
+  alternates: { canonical: "/terms" },
+  openGraph: {
+    type: "article",
+    url: "/terms",
+    siteName: "Scribtly",
+    title: "Terms of Service · Scribtly",
+    description: "The terms that govern your use of the Scribtly service.",
+  },
+  twitter: { card: "summary", title: "Terms of Service · Scribtly" },
 };
 
 const LAST_UPDATED = "18 April 2026";

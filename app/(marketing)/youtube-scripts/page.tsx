@@ -4,9 +4,42 @@ import { Card } from "@/components/ui/Card";
 import { Check } from "lucide-react";
 
 export const metadata = {
-  title: "YouTube script writer for freelancers · Scribtly",
+  title: "YouTube script writer for freelancers",
   description:
     "Write YouTube scripts that keep viewers watching. Scribtly generates long-form YouTube scripts in your client's exact voice, with hooks, sections, and CTAs built for the algorithm.",
+  keywords: [
+    "YouTube script generator",
+    "AI YouTube script writer",
+    "long-form video scripts",
+    "YouTube hook generator",
+    "video script for freelancers",
+  ],
+  alternates: { canonical: "/youtube-scripts" },
+  openGraph: {
+    type: "website",
+    url: "/youtube-scripts",
+    siteName: "Scribtly",
+    title: "YouTube script writer for freelancers · Scribtly",
+    description:
+      "Long-form YouTube scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly YouTube script writer" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "YouTube script writer for freelancers · Scribtly",
+    description:
+      "Long-form YouTube scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
+    images: ["/og-image.svg"],
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+    { "@type": "ListItem", position: 2, name: "YouTube Scripts", item: "/youtube-scripts" },
+  ],
 };
 
 const steps = [
@@ -26,6 +59,10 @@ const wins = [
 export default function YouTubePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <section className="max-w-4xl mx-auto px-5 pt-20 pb-10 text-center">
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
           YouTube scripts that keep viewers watching

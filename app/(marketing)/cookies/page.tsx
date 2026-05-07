@@ -3,8 +3,17 @@ import Link from "next/link";
 import { OpenCookieSettingsButton } from "@/components/consent/OpenCookieSettingsButton";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy — Scribtly",
+  title: "Cookie Policy",
   description: "Which cookies and local-storage items Scribtly uses and why.",
+  alternates: { canonical: "/cookies" },
+  openGraph: {
+    type: "article",
+    url: "/cookies",
+    siteName: "Scribtly",
+    title: "Cookie Policy · Scribtly",
+    description: "Which cookies and local-storage items Scribtly uses and why.",
+  },
+  twitter: { card: "summary", title: "Cookie Policy · Scribtly" },
 };
 
 const LAST_UPDATED = "18 April 2026";

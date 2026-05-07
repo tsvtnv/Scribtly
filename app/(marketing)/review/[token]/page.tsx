@@ -10,10 +10,11 @@ export async function generateMetadata({ params }: { params: { token: string } }
     where: { shareToken: params.token, shareEnabled: true },
     select: { title: true, client: { select: { name: true } } },
   })
-  if (!script) return { title: 'Review' }
+  if (!script) return { title: 'Review', robots: { index: false, follow: false } }
   return {
     title: `Review: ${script.title}`,
     description: script.client ? `Script review for ${script.client.name}` : 'Script review',
+    robots: { index: false, follow: false },
   }
 }
 

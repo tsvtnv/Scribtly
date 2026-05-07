@@ -4,9 +4,43 @@ import { Card } from "@/components/ui/Card";
 import { Check } from "lucide-react";
 
 export const metadata = {
-  title: "TikTok script writer for freelancers · Scribtly",
+  title: "TikTok script writer for freelancers",
   description:
     "Write TikTok scripts that hook viewers in the first second. Scribtly generates short-form scripts in your client's exact voice: 15, 30, or 60 seconds.",
+  keywords: [
+    "TikTok script generator",
+    "AI TikTok script writer",
+    "short-form video scripts",
+    "Reels script generator",
+    "TikTok hook generator",
+    "video script for freelancers",
+  ],
+  alternates: { canonical: "/tiktok-scripts" },
+  openGraph: {
+    type: "website",
+    url: "/tiktok-scripts",
+    siteName: "Scribtly",
+    title: "TikTok script writer for freelancers · Scribtly",
+    description:
+      "Short-form TikTok and Reels scripts in your client's voice — hooks, beats, and loops in 15/30/60s.",
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly TikTok script writer" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TikTok script writer for freelancers · Scribtly",
+    description:
+      "Short-form TikTok and Reels scripts in your client's voice — hooks, beats, and loops in 15/30/60s.",
+    images: ["/og-image.svg"],
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+    { "@type": "ListItem", position: 2, name: "TikTok Scripts", item: "/tiktok-scripts" },
+  ],
 };
 
 const steps = [
@@ -26,6 +60,10 @@ const wins = [
 export default function TikTokPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <section className="max-w-4xl mx-auto px-5 pt-20 pb-10 text-center">
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
           TikTok scripts that hook viewers in the first second

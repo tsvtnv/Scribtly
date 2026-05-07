@@ -2,8 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Scribtly",
+  title: "Privacy Policy",
   description: "How Scribtly collects, uses, and protects your personal data under UK GDPR.",
+  alternates: { canonical: "/privacy" },
+  openGraph: {
+    type: "article",
+    url: "/privacy",
+    siteName: "Scribtly",
+    title: "Privacy Policy · Scribtly",
+    description: "How Scribtly collects, uses, and protects your personal data under UK GDPR.",
+  },
+  twitter: { card: "summary", title: "Privacy Policy · Scribtly" },
 };
 
 const LAST_UPDATED = "18 April 2026";
