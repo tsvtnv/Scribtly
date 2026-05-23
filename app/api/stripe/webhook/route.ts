@@ -38,24 +38,59 @@ export async function POST(req: NextRequest) {
 
         const workspace = await prisma.workspace.update({
           where: { id: workspaceId },
-          data: { plan, stripeSubscriptionId: subscription.id, stripeCustomerId: typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id },
+          data: {
+            plan,
+            stripeSubscriptionId: subscription.id,
+            stripeCustomerId: typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id,
+            onboardingStep: 4,
+            onboardingCompleted: true,
+          },
           include: { owner: true },
         });
 
         void (async () => {
           try {
-            const { sendUpgradeConfirmation } = await import("@/lib/sendEmail");
-            await sendUpgradeConfirmation({ to: workspace.owner.email, plan });
+            const { sendUpgradeConfirmationEmail } = await import("@/lib/emails/onboarding");
+            const firstName = workspace.owner.name?.split(" ")[0] || workspace.owner.email.split("@")[0];
+            const billingDate = new Date().getDate().toString();
+            await sendUpgradeConfirmationEmail(
+              workspace.id,
+              workspace.owner.email,
+              firstName,
+              plan,
+              billingDate
+            );
           } catch (err) {
-            console.error("Upgrade email failed", err);
+            console.error("Upgrade onboarding email failed", err);
           }
         })();
+        break;
+      }
+      case "invoice.paid": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const subId =
+          typeof (invoice as any).subscription === "string"
+            ? (invoice as any).subscription
+            : (invoice as any).subscription?.id;
+        if (subId) {
+          await prisma.workspace.updateMany({
+            where: { stripeSubscriptionId: subId },
+            data: {
+              scriptCount: 0,
+              scriptCountResetAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            },
+          });
+        }
         break;
       }
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription;
         const priceId = subscription.items.data[0]?.price.id;
-        const plan = priceIdToPlan(priceId);
+        let plan: "FREE" | "BASIC" | "PRO" | "AGENCY" = "FREE";
+        if (priceId === process.env.STRIPE_BASIC_PRICE_ID) plan = "BASIC";
+        else if (priceId === process.env.STRIPE_PRO_PRICE_ID) plan = "PRO";
+        else if (priceId === process.env.STRIPE_AGENCY_PRICE_ID) plan = "AGENCY";
+        else plan = priceIdToPlan(priceId);
         await prisma.workspace.updateMany({
           where: { stripeSubscriptionId: subscription.id },
           data: { plan },

@@ -37,21 +37,20 @@ export default async function ClientsPage() {
               <Plus size={16} /> New client
             </Button>
             <div className="absolute right-0 top-full mt-1 w-64 text-xs bg-[var(--color-surface)] border-hair border-[var(--color-border)] rounded-md p-2 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
-              You're on the Free plan (1 client max). Upgrade to Pro for unlimited clients.
+              You're on the Free plan (1 client max). Upgrade to Pro for more clients.
             </div>
           </div>
         )}
       </div>
 
       {clients.length === 0 ? (
-        <div className="text-center py-20 border-hair border-dashed border-[var(--color-border)] rounded-lg">
-          <p className="text-text-secondary dark:text-dark-muted">
-            Add your first client to get started.
+        <div className="text-center py-16 space-y-3">
+          <h2 className="text-lg font-semibold">Add your first client</h2>
+          <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
+            Set up a client profile once and every script you generate will automatically match their voice.
           </p>
-          <Link href="/clients/new" className="inline-block mt-4">
-            <Button>
-              <Plus size={16} /> Add client
-            </Button>
+          <Link href="/clients/new">
+            <Button size="sm"><Plus size={14} /> Add a client</Button>
           </Link>
         </div>
       ) : (

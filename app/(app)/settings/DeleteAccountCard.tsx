@@ -1,22 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useClerk } from "@clerk/nextjs";
-import { Card } from "@/components/ui/Card";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { useToast } from "@/components/ui/Toast";
 
 export function DeleteAccountCard() {
-  const { signOut } = useClerk();
-  const toast = useToast();
-  const [open, setOpen] = useState(false);
+  const router = useRouter();
   const [confirm, setConfirm] = useState("");
-  const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  async function onDelete() {
+  async function handleDelete() {
     if (confirm !== "DELETE") return;
-    setBusy(true);
+    setLoading(true);
+    setError(null);
     try {
       const res = await fetch("/api/account", {
         method: "DELETE",
@@ -24,38 +22,42 @@ export function DeleteAccountCard() {
         body: JSON.stringify({ confirm: "DELETE" }),
       });
       if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        toast.push(body.error || "Delete failed", "error");
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "Failed to delete account.");
         return;
       }
-      await signOut({ redirectUrl: "/" });
+      router.push("/");
+      router.refresh();
+    } catch {
+      setError("Something went wrong. Please try again.");
     } finally {
-      setBusy(false);
+      setLoading(false);
     }
   }
 
   return (
-    <Card className="border-danger/30">
-      <h2 className="text-sm font-semibold uppercase tracking-wider text-danger mb-2">Danger zone</h2>
-      <p className="text-sm text-text-secondary dark:text-dark-muted mb-3">
-        Delete your account and everything associated with it. This cannot be undone.
+    <div className="flex flex-col gap-4">
+      <p className="text-sm text-muted-foreground">
+        This will permanently delete your account, all your workspaces, and cancel any active subscriptions. This cannot be undone.
       </p>
-      {!open ? (
-        <Button variant="danger" size="sm" onClick={() => setOpen(true)}>Delete account</Button>
-      ) : (
-        <div className="space-y-2">
-          <p className="text-xs">Type <strong>DELETE</strong> to confirm.</p>
-          <Input value={confirm} onChange={(e) => setConfirm(e.target.value)} />
-          <div className="flex items-center gap-2">
-            <Button variant="danger" size="sm" loading={busy} disabled={confirm !== "DELETE"} onClick={onDelete}>
-              Permanently delete
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => { setOpen(false); setConfirm(""); }}>
-              Cancel
-            </Button>
-          </div>
-        </div>
-      )}
-    </Card>
+      <div className="flex flex-col gap-1.5">
+        <p className="text-sm">Type <span className="font-mono font-semibold">DELETE</span> to confirm.</p>
+        <Input
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          placeholder="DELETE"
+          className="max-w-xs"
+        />
+      </div>
+      {error && <p className="text-sm text-destructive">{error}</p>}
+      <Button
+        variant="danger"
+        onClick={handleDelete}
+        disabled={confirm !== "DELETE" || loading}
+        className="w-fit"
+      >
+        {loading ? "Deleting..." : "Delete account"}
+      </Button>
+    </div>
   );
 }

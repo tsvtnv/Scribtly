@@ -21,10 +21,12 @@ export function GeneratePageClient({
   clients,
   plan,
   scriptCount,
+  scriptCountResetAt,
 }: {
   clients: Client[];
   plan: Plan;
   scriptCount: number;
+  scriptCountResetAt: string;
 }) {
   const router = useRouter();
   const toast = useToast();
@@ -42,17 +44,21 @@ export function GeneratePageClient({
   // Show pre-emptive upgrade warning at 2/3 used
   useEffect(() => {
     if (plan === "FREE" && scriptCount === 2 && !upgradeOpen) {
-      toast.push("You've used 2 of 3 free scripts. Upgrade for unlimited.", "info");
+      toast.push("You've used 2 of 3 free scripts. Upgrade for more.", "info");
     }
   }, [plan, scriptCount, upgradeOpen, toast]);
 
-  // Handle stream errors → upgrade modal
+  // Handle stream errors → upgrade modal / toast
   useEffect(() => {
     if (stream.error?.code === "upgrade_required") {
-      setUpgradeReason(stream.error.reason || "default");
+      const reason = stream.error.reason || "default";
+      if (reason === "model_not_available") {
+        toast.push("This quality level requires a paid plan", "error");
+      }
+      setUpgradeReason(reason);
       setUpgradeOpen(true);
     }
-  }, [stream.error]);
+  }, [stream.error, toast]);
 
   // Auto-save when stream completes
   useEffect(() => {
@@ -132,7 +138,7 @@ export function GeneratePageClient({
   return (
     <>
       {bulkAllowed ? (
-        <div className="inline-flex items-center gap-1 mb-4 p-1 rounded-md bg-[var(--color-surface)] border-hair border-[var(--color-border)]">
+        <div className="flex justify-center mb-4"><div className="inline-flex items-center gap-1 p-1 rounded-md bg-[var(--color-surface)] border-hair border-[var(--color-border)]">
           <button
             onClick={() => setMode("single")}
             className={`px-3 py-1 text-xs rounded-sm ${mode === "single" ? "bg-primary text-white" : "text-text-secondary"}`}
@@ -145,7 +151,7 @@ export function GeneratePageClient({
           >
             Bulk
           </button>
-        </div>
+        </div></div>
       ) : null}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -154,6 +160,8 @@ export function GeneratePageClient({
             <GenerateForm
               clients={clients}
               workspacePlan={plan}
+              scriptCount={scriptCount}
+              scriptCountResetAt={scriptCountResetAt}
               onSubmit={handleSubmit}
               isStreaming={stream.isStreaming}
               onLockedPlatform={onLockedPlatform}

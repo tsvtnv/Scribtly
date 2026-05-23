@@ -1,25 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { Script, ScriptStatus, Plan } from "@prisma/client";
-import { Copy, FileDown, CheckCircle, Send, Trash2 } from "lucide-react";
+import { Copy, FileDown, CheckCircle, Send, Trash2, Share2, Link as LinkIcon, X } from "lucide-react";
+import NextLink from "next/link";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
+import { canExportPDF } from "@/lib/planLimits";
 
-export function ScriptActions({
-  script,
-  plan,
-}: {
-  script: Script;
-  plan: Plan;
-}) {
+interface ScriptActionsProps {
+  script: Script & { shareToken?: string | null; shareEnabled?: boolean }
+  plan: Plan
+}
+
+export function ScriptActions({ script, plan }: ScriptActionsProps) {
   const router = useRouter();
   const toast = useToast();
   const [busy, setBusy] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [shareEnabled, setShareEnabled] = useState(script.shareEnabled ?? false);
+  const [shareToken, setShareToken] = useState(script.shareToken ?? null);
+  const [shareOpen, setShareOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const canPdf = plan === "PRO" || plan === "AGENCY";
+  const [shareUrl, setShareUrl] = useState('')
+  useEffect(() => {
+    if (shareToken) setShareUrl(`${window.location.origin}/review/${shareToken}`)
+  }, [shareToken])
+
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShareOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
 
   async function copy() {
     try {
@@ -58,18 +78,65 @@ export function ScriptActions({
     }
   }
 
+  async function enableShare() {
+    setBusy("share");
+    const res = await fetch(`/api/scripts/${script.id}/share`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ enabled: true }),
+    });
+    setBusy(null);
+    if (!res.ok) { toast.push("Failed to create share link", "error"); return; }
+    const data = await res.json() as { shareToken: string; shareEnabled: boolean };
+    setShareEnabled(true);
+    setShareToken(data.shareToken);
+    const url = `${window.location.origin}/review/${data.shareToken}`;
+    const copied = await navigator.clipboard.writeText(url).then(() => true).catch(() => false);
+    toast.push(copied ? "Link copied!" : "Share enabled — copy the link below", "success");
+  }
+
+  async function disableShare() {
+    setBusy("share-disable");
+    const res = await fetch(`/api/scripts/${script.id}/share`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ enabled: false }),
+    });
+    setBusy(null);
+    if (!res.ok) { toast.push("Failed to disable sharing", "error"); return; }
+    setShareEnabled(false);
+    setShareOpen(false);
+    toast.push("Sharing disabled", "success");
+  }
+
+  async function copyLink() {
+    if (!shareToken) return;
+    const url = `${window.location.origin}/review/${shareToken}`;
+    const copied = await navigator.clipboard.writeText(url).then(() => true).catch(() => false);
+    toast.push(copied ? "Link copied!" : "Could not copy — link shown above", "success");
+  }
+
   return (
-    <div className="sticky bottom-0 bg-[var(--color-surface)] border-t-hair border-[var(--color-border)] -mx-6 md:-mx-10 px-6 md:px-10 py-3 flex flex-wrap items-center gap-2">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-[var(--color-surface)] border-t border-[var(--color-border)] md:left-60">
+      <div className="max-w-4xl mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-2">
       <Button variant="secondary" size="sm" onClick={copy}>
         <Copy size={14} /> Copy
       </Button>
-      {canPdf ? (
+      {canExportPDF({ plan }) ? (
         <a href={`/api/export/pdf/${script.id}`} target="_blank" rel="noreferrer">
           <Button variant="secondary" size="sm">
             <FileDown size={14} /> PDF
           </Button>
         </a>
-      ) : null}
+      ) : (
+        <div className="text-xs text-text-secondary dark:text-dark-muted p-2 rounded border border-[var(--color-border)] bg-[var(--color-surface)]">
+          PDF export is available on Pro.{" "}
+          <NextLink href="/pricing" className="text-primary hover:underline">
+            Upgrade to Pro
+          </NextLink>{" "}
+          to send polished reports to clients.
+        </div>
+      )}
       {script.status !== "FINAL" ? (
         <Button variant="secondary" size="sm" loading={busy === "FINAL"} onClick={() => setStatus("FINAL")}>
           <CheckCircle size={14} /> Mark final
@@ -80,6 +147,50 @@ export function ScriptActions({
           <Send size={14} /> Mark sent
         </Button>
       ) : null}
+
+      {/* Share button */}
+      <div className="relative" ref={dropdownRef}>
+        {!shareEnabled ? (
+          <Button
+            variant="secondary"
+            size="sm"
+            loading={busy === "share"}
+            onClick={enableShare}
+          >
+            <Share2 size={14} /> Share with client
+          </Button>
+        ) : (
+          <>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => setShareOpen(v => !v)}
+            >
+              <Share2 size={14} /> Shared
+            </Button>
+            {shareOpen && (
+              <div className="absolute bottom-full mb-2 right-0 w-72 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-lg p-3 flex flex-col gap-2 z-50">
+                <div className="flex items-center gap-2">
+                  <LinkIcon size={12} className="text-text-secondary dark:text-dark-muted flex-shrink-0" />
+                  <span className="text-xs text-text-secondary dark:text-dark-muted truncate flex-1">{shareUrl}</span>
+                </div>
+                <Button variant="secondary" size="sm" onClick={copyLink}>
+                  <Copy size={12} /> Copy link
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  loading={busy === "share-disable"}
+                  onClick={disableShare}
+                >
+                  <X size={12} /> Disable sharing
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
       <div className="ml-auto flex items-center gap-2">
         {confirmDelete ? (
           <>
@@ -96,6 +207,7 @@ export function ScriptActions({
             <Trash2 size={14} /> Delete
           </Button>
         )}
+      </div>
       </div>
     </div>
   );

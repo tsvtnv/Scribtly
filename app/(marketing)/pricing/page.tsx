@@ -1,117 +1,203 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
-import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { PricingSlider, type PlanId } from "@/components/marketing/PricingSlider";
+import { EnterpriseContactForm } from "@/components/marketing/EnterpriseContactForm";
+import { PricingFAQ } from "@/components/marketing/PricingFAQ";
 
-export const metadata = {
-  title: "Pricing — Plans for Freelancers and Agencies",
-  description:
-    "ScriptFast pricing: start free with 3 scripts, or upgrade to Pro for unlimited scripts across YouTube, TikTok, and Reels. Simple plans for freelancers and agencies.",
-  alternates: {
-    canonical: "/pricing",
-  },
-  openGraph: {
-    title: "ScriptFast Pricing — Plans for Freelancers and Agencies",
-    description:
-      "Start free with 3 scripts, or upgrade to Pro for unlimited YouTube, TikTok, and Reels script generation in your client's voice.",
-    url: "/pricing",
-  },
+type PlanCard = {
+  id: PlanId;
+  label: string;
+  price: string;
+  period: string;
+  features: string[];
+  cta: { text: string; href: string };
+  popular?: boolean;
 };
 
-const plans = [
+const PLANS: PlanCard[] = [
   {
     id: "FREE",
     label: "Free",
     price: "£0",
     period: "forever",
-    features: ["3 scripts per month", "1 client profile", "YouTube only", "Script library"],
+    features: [
+      "5 scripts/month",
+      "1 client",
+      "Script library",
+      "Standard quality model",
+      "All platforms",
+    ],
     cta: { text: "Start free", href: "/signup" },
+  },
+  {
+    id: "BASIC",
+    label: "Basic",
+    price: "£5",
+    period: "/mo",
+    features: [
+      "25 scripts/month",
+      "3 clients",
+      "All quality models",
+      "All platforms",
+      "Script library",
+    ],
+    cta: { text: "Start Basic", href: "/signup?plan=BASIC" },
   },
   {
     id: "PRO",
     label: "Pro",
-    price: "£29",
-    period: "/month",
-    features: ["Unlimited scripts", "Unlimited clients", "All 5 platforms", "All extras (titles, hashtags)", "PDF export"],
-    cta: { text: "Start Pro", href: "/signup" },
-    highlight: true,
+    price: "£19",
+    period: "/mo",
+    features: [
+      "100 scripts/month",
+      "10 clients",
+      "Everything in Basic",
+      "Content pipeline",
+      "Calendar view",
+      "PDF export",
+      "Title and hashtag extras",
+    ],
+    cta: { text: "Start Pro", href: "/signup?plan=PRO" },
+    popular: true,
   },
   {
     id: "AGENCY",
     label: "Agency",
-    price: "£79",
-    period: "/month",
-    features: ["Everything in Pro", "5 team members", "Bulk generation", "Priority support"],
-    cta: { text: "Start Agency", href: "/signup" },
+    price: "£49",
+    period: "/mo",
+    features: [
+      "350 scripts/month",
+      "Unlimited clients",
+      "Everything in Pro",
+      "3 team members",
+      "Bulk generation",
+      "Priority support",
+    ],
+    cta: { text: "Start Agency", href: "/signup?plan=AGENCY" },
   },
 ];
 
-const faq = [
-  { q: "Can I cancel anytime?", a: "Yes. Cancel from your settings page, no questions asked. You keep access until the end of your billing period." },
-  { q: "What counts as a script?", a: "Each generation counts as one script. Editing a saved script does not count." },
-  { q: "Do you offer refunds?", a: "Yes — if you're not happy in your first 7 days, email us for a full refund." },
-  { q: "Can I add team members?", a: "On the Agency plan you can invite up to 5 team members who share your client profiles and script library." },
-];
-
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faq.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
-
 export default function PricingPage() {
+  const [activePlan, setActivePlan] = useState<PlanId>("BASIC");
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <section className="max-w-5xl mx-auto px-5 pt-16 pb-10 text-center">
-        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Simple pricing for freelancers</h1>
-        <p className="text-sm text-text-secondary dark:text-dark-muted mt-3">
-          Start free. Upgrade only when you need to.
+      <section className="max-w-5xl mx-auto px-5 pt-16 pb-6 text-center">
+        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-text-primary dark:text-dark-text">
+          Simple pricing that scales with you
+        </h1>
+        <p className="text-sm md:text-base text-text-secondary dark:text-dark-muted mt-3 max-w-2xl mx-auto">
+          Choose the plan that matches your script volume. Upgrade anytime.
         </p>
       </section>
 
-      <section className="max-w-5xl mx-auto px-5 pb-16 grid grid-cols-1 md:grid-cols-3 gap-4">
-        {plans.map((p) => (
-          <Card key={p.id} className={p.highlight ? "border-primary/40 bg-primary/5" : undefined}>
-            <div className="flex items-baseline justify-between mb-3">
-              <h2 className="text-lg font-semibold">{p.label}</h2>
-              <div>
-                <span className="text-2xl font-bold">{p.price}</span>
-                <span className="text-xs text-text-secondary">{p.period}</span>
-              </div>
-            </div>
-            <ul className="space-y-2 mb-5 text-sm">
-              {p.features.map((f) => (
-                <li key={f} className="flex items-start gap-1.5">
-                  <Check size={14} className="text-success mt-0.5 shrink-0" />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
-            <Link href={p.cta.href}>
-              <Button fullWidth variant={p.highlight ? "primary" : "secondary"}>{p.cta.text}</Button>
-            </Link>
-          </Card>
-        ))}
+      <section className="max-w-5xl mx-auto px-5 pb-10">
+        <PricingSlider value={activePlan} onPlanChange={setActivePlan} />
       </section>
 
-      <section className="max-w-2xl mx-auto px-5 pb-20">
-        <h2 className="text-2xl font-semibold tracking-tight text-center mb-6">FAQ</h2>
-        <div className="space-y-3">
-          {faq.map((f) => (
-            <details key={f.q} className="border-hair border-[var(--color-border)] rounded-md bg-[var(--color-surface)]">
-              <summary className="px-4 py-3 cursor-pointer font-medium text-sm">{f.q}</summary>
-              <p className="px-4 pb-3 text-sm text-text-secondary dark:text-dark-muted">{f.a}</p>
-            </details>
-          ))}
+      <section className="max-w-6xl mx-auto px-5 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {PLANS.map((p) => {
+            const isActive = p.id === activePlan;
+            return (
+              <div key={p.id} className="relative">
+                {p.popular ? (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+                    <span
+                      className="inline-block px-3 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide text-white"
+                      style={{ background: "#7F77DD" }}
+                    >
+                      Most popular
+                    </span>
+                  </div>
+                ) : null}
+                <div
+                  className={`h-full rounded-xl p-6 flex flex-col transition-all duration-200 ${
+                    isActive
+                      ? "bg-[var(--color-surface)] scale-[1.02]"
+                      : "bg-[var(--color-surface)] opacity-70 scale-100 border-hair border-[var(--color-border)]"
+                  }`}
+                  style={
+                    isActive
+                      ? { border: "2px solid #7F77DD" }
+                      : undefined
+                  }
+                >
+                  <div className="mb-4">
+                    <h2 className="text-lg font-semibold text-text-primary dark:text-dark-text">
+                      {p.label}
+                    </h2>
+                    <div className="mt-1 flex items-baseline gap-1">
+                      <span className="text-3xl font-bold text-text-primary dark:text-dark-text">
+                        {p.price}
+                      </span>
+                      <span className="text-xs text-text-secondary dark:text-dark-muted">
+                        {p.period}
+                      </span>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 mb-6 text-sm flex-1">
+                    {p.features.map((f) => (
+                      <li
+                        key={f}
+                        className="flex items-start gap-2 text-text-primary dark:text-dark-text"
+                      >
+                        <Check
+                          size={14}
+                          className="mt-0.5 shrink-0"
+                          style={{ color: "#7F77DD" }}
+                        />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={p.cta.href}>
+                    <Button
+                      fullWidth
+                      variant={isActive ? "primary" : "secondary"}
+                    >
+                      {p.cta.text}
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-5 pb-16">
+        <div
+          className="rounded-2xl border-hair border-[var(--color-border)] p-8 md:p-10"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(127,119,221,0.08), rgba(127,119,221,0.02))",
+          }}
+        >
+          <div className="max-w-2xl mb-8">
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-text-primary dark:text-dark-text">
+              Need more than 350 scripts a month?
+            </h2>
+            <p className="text-sm md:text-base text-text-secondary dark:text-dark-muted mt-2">
+              We offer custom Enterprise plans for larger agencies and teams
+              with higher volume, extra team seats, and dedicated support. Tell
+              us what you need and we&apos;ll get back to you within one business
+              day.
+            </p>
+          </div>
+          <EnterpriseContactForm />
+        </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-24">
+        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-6 text-text-primary dark:text-dark-text">
+          Frequently asked questions
+        </h2>
+        <PricingFAQ />
       </section>
     </>
   );

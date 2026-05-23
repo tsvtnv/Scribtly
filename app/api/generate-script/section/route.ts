@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { anthropic } from "@/lib/anthropic";
 import { ensureUser } from "@/lib/ensureUser";
 import { buildPrompt } from "@/lib/buildPrompt";
+import { getClaudeModelId, DEFAULT_CLAUDE_MODEL } from "@/lib/modelAccess";
 import { NotFoundError, ValidationError, errorResponse } from "@/lib/errors";
 
 export const runtime = "nodejs";
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest) {
       topic: script.topic,
       duration: script.duration,
       hookStyle: script.hookStyle,
+      model: getClaudeModelId(DEFAULT_CLAUDE_MODEL),
     });
 
     const hint = parsed.data.regenerationHint

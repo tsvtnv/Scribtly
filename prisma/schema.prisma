@@ -10,8 +10,10 @@ datasource db {
 
 enum Plan {
   FREE
+  BASIC
   PRO
   AGENCY
+  ENTERPRISE
 }
 
 enum Platform {
@@ -33,17 +35,61 @@ enum MemberRole {
   MEMBER
 }
 
+enum PipelineStage {
+  IDEA
+  SCRIPTING
+  REVIEW
+  APPROVED
+  SCHEDULED
+  PUBLISHED
+}
+
+enum ReviewVerdict {
+  APPROVED
+  REJECTED
+}
+
 model User {
-  id                  String            @id @default(cuid())
-  clerkId             String            @unique
-  email               String            @unique
-  name                String?
-  defaultWorkspaceId  String?
-  createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
-  ownedWorkspaces     Workspace[]       @relation("WorkspaceOwner")
-  memberships         WorkspaceMember[]
-  sentInvites         Invite[]          @relation("InviteSender")
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  name               String?
+  passwordHash       String?
+  googleId           String?   @unique
+  avatarUrl          String?
+  emailVerified      Boolean   @default(false)
+  defaultWorkspaceId String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  isBetaTester          Boolean   @default(false)
+  betaExpiresAt         DateTime?
+  betaWarningEmailSentAt DateTime?
+
+  sessions              Session[]
+  ownedWorkspaces       Workspace[]       @relation("WorkspaceOwner")
+  memberships           WorkspaceMember[]
+  sentInvites           Invite[]          @relation("InviteSender")
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
 }
 
 model Workspace {
@@ -58,13 +104,25 @@ model Workspace {
   scriptCountResetAt   DateTime
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
+  onboardingStep       Int               @default(0)
+  onboardingCompleted  Boolean           @default(false)
+  firstScriptGeneratedAt DateTime?
+  firstClientAddedAt   DateTime?
+  welcomeEmailSentAt   DateTime?
+  day2EmailSentAt      DateTime?
+  day7EmailSentAt      DateTime?
+  day14EmailSentAt     DateTime?
+  emailOptOut          Boolean           @default(false)
   members              WorkspaceMember[]
   clients              Client[]
   scripts              Script[]
   invites              Invite[]
+  contentItems         ContentItem[]
+  cronSchedules        CronSchedule[]
 
   @@index([ownerId])
   @@index([stripeSubscriptionId])
+  @@index([emailOptOut, onboardingCompleted])
 }
 
 model WorkspaceMember {
@@ -108,9 +166,20 @@ model Client {
   avoidTopics     String?
   primaryPlatform Platform  @default(YOUTUBE)
   avatarColor     String    @default("#7F77DD")
+  // Extended profile fields
+  contentGoal     String?
+  videoPace       String?
+  languageStyle   String?
+  ctaStyle        String?
+  brandKeywords   String?
+  competitorNames String?
+  postingFrequency String?
+  contentPillars  String?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   scripts         Script[]
+  contentItems    ContentItem[]
+  cronSchedules   CronSchedule[]
 
   @@index([workspaceId])
 }
@@ -133,8 +202,166 @@ model Script {
   pdfUrl      String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  shareToken   String?  @unique
+  shareEnabled Boolean  @default(false)
+  comments     ScriptComment[]
+
+  contentItem  ContentItem?
 
   @@index([workspaceId])
   @@index([workspaceId, clientId])
   @@index([workspaceId, createdAt])
+}
+
+model ScriptComment {
+  id          String         @id @default(cuid())
+  scriptId    String
+  script      Script         @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+  authorName  String
+  body        String
+  verdict     ReviewVerdict?
+  createdAt   DateTime       @default(now())
+
+  @@index([scriptId])
+  @@index([scriptId, createdAt])
+}
+
+model ContentItem {
+  id            String        @id @default(cuid())
+  workspaceId   String
+  workspace     Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  clientId      String
+  client        Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  scriptId      String?       @unique
+  script        Script?       @relation(fields: [scriptId], references: [id], onDelete: SetNull)
+  title         String
+  platform      Platform
+  stage         PipelineStage @default(IDEA)
+  scheduledDate DateTime?
+  publishedAt   DateTime?
+  notes         String?
+  views         Int?
+  position      Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([workspaceId])
+  @@index([workspaceId, stage])
+  @@index([workspaceId, clientId])
+}
+
+model CronSchedule {
+  id            String    @id @default(cuid())
+  workspaceId   String
+  workspace     Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  clientId      String
+  client        Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  platform      Platform
+  topicTemplate String
+  frequency     String
+  active        Boolean   @default(true)
+  lastRunAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([workspaceId])
+  @@index([active])
+}
+
+enum ContactMethod {
+  RESEND_EMAIL
+  WEBSITE_FORM
+  MANUAL
+}
+
+enum OutreachStatus {
+  NOT_CONTACTED
+  CONTACTED_VIA_FORM
+  CONTACTED_VIA_EMAIL
+  SKIPPED_DUPLICATE
+  SKIPPED_NO_CONTACT_METHOD
+  SKIPPED_NOT_RELEVANT
+  SKIPPED_POLICY_BLOCKS_OUTREACH
+  NEEDS_MANUAL_REVIEW
+  FAILED
+}
+
+model ReferralLead {
+  id        String   @id @default(cuid())
+  leadId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agencyName     String
+  agencyWebsite  String?
+  agencyLocation String?
+  agencyServices String?
+  fitScore       Int?
+
+  contactedAt             DateTime?
+  contactMethod           ContactMethod?
+  contactFormUrl          String?
+  contactFormConfirmation String?
+  resendMessageId         String?
+  messageSubject          String?
+  messageBody             String?
+  sourceSearchQuery       String?
+  sourceResultUrl         String?
+
+  emailDelivered Boolean   @default(false)
+  emailBounced   Boolean   @default(false)
+  emailOpenedAt  DateTime?
+  emailClickedAt DateTime?
+
+  firstVisitAt           DateTime?
+  lastVisitAt            DateTime?
+  totalVisits            Int       @default(0)
+  totalTimeOnSiteSeconds Int       @default(0)
+
+  ipAddress  String?
+  country    String?
+  city       String?
+  region     String?
+  userAgent  String?
+  browser    String?
+  os         String?
+  deviceType String?
+
+  signupFormStartedAt   DateTime?
+  signupFormAbandonedAt DateTime?
+  signupFormLastField   String?
+  signupFormTimeSeconds Int?
+
+  signedUp              Boolean   @default(false)
+  signedUpAt            DateTime?
+  clerkUserId           String?
+  workspaceId           String?
+  onboardingStartedAt   DateTime?
+  onboardingCompletedAt DateTime?
+  onboardingStepsJson   Json?
+
+  outreachStatus OutreachStatus @default(NOT_CONTACTED)
+  optedOut       Boolean        @default(false)
+  optedOutAt     DateTime?
+  notes          String?
+  isBetaOffer    Boolean        @default(false)
+
+  events ReferralEvent[]
+
+  @@index([outreachStatus])
+  @@index([resendMessageId])
+  @@index([signedUp])
+}
+
+model ReferralEvent {
+  id        String       @id @default(cuid())
+  leadId    String
+  lead      ReferralLead @relation(fields: [leadId], references: [leadId], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+
+  eventType String
+  page      String?
+  metadata  String?
+
+  @@index([leadId, createdAt])
 }

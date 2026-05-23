@@ -9,12 +9,24 @@ import { UsageMeter } from "@/components/billing/UsageMeter";
 import { PlatformBadge, StatusBadge } from "@/components/ui/Badge";
 import { ClientAvatar } from "@/components/client/ClientAvatar";
 import { relativeDate } from "@/lib/utils";
-import { getRemainingScripts } from "@/lib/planLimits";
+import { getRemainingScripts, getScriptLimit } from "@/lib/planLimits";
+import { OnboardingBanner } from "@/components/onboarding/OnboardingBanner";
+import { OnboardingChecklist } from "@/components/onboarding/OnboardingChecklist";
 
 export default async function DashboardPage() {
   const { user, workspace } = await ensureUser();
 
-  const [totalClients, recentScripts, clients] = await Promise.all([
+  const betaData = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { isBetaTester: true, betaExpiresAt: true },
+  });
+  const betaActive =
+    (betaData?.isBetaTester ?? false) &&
+    betaData?.betaExpiresAt != null &&
+    betaData.betaExpiresAt > new Date();
+  const betaExpiresAt = betaData?.betaExpiresAt ?? null;
+
+  const [totalClients, recentScripts, clients, onboardingData] = await Promise.all([
     prisma.client.count({ where: { workspaceId: workspace.id } }),
     prisma.script.findMany({
       where: { workspaceId: workspace.id },
@@ -28,6 +40,18 @@ export default async function DashboardPage() {
       orderBy: { createdAt: "desc" },
       take: 6,
     }),
+    prisma.workspace.findUnique({
+      where: { id: workspace.id },
+      select: {
+        onboardingStep: true,
+        onboardingCompleted: true,
+        firstClientAddedAt: true,
+        firstScriptGeneratedAt: true,
+        plan: true,
+        scriptCount: true,
+        scriptCountResetAt: true,
+      },
+    }),
   ]);
 
   const firstName = user.name?.split(" ")[0] || user.email.split("@")[0];
@@ -35,13 +59,29 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-6">
+      {onboardingData && !onboardingData.onboardingCompleted && (
+        <OnboardingBanner onboardingStep={onboardingData.onboardingStep} />
+      )}
       <div>
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="text-2xl font-semibold tracking-tight">Welcome back, {firstName}</h1>
           <span className="inline-flex items-center px-2 py-0.5 text-[11px] rounded-full bg-[var(--color-primary-tint)] text-[var(--color-primary)]">
             {workspace.name}
           </span>
+          {betaActive && (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+              🧪 Beta Tester
+            </span>
+          )}
         </div>
+        {betaActive && betaExpiresAt && (
+          <p className="text-xs text-text-secondary dark:text-dark-muted mt-0.5">
+            Beta access until{" "}
+            {betaExpiresAt.toLocaleDateString("en-GB", {
+              day: "numeric", month: "short", year: "numeric",
+            })}
+          </p>
+        )}
         <p className="text-sm text-text-secondary dark:text-dark-muted mt-1">
           Generate your next client script in under 60 seconds.
         </p>
@@ -53,13 +93,44 @@ export default async function DashboardPage() {
             <div>
               <div className="font-medium text-sm">You've used {workspace.scriptCount} of 3 free scripts.</div>
               <div className="text-xs text-text-secondary dark:text-dark-muted">
-                Upgrade to Pro for unlimited scripts and all platforms.
+                Upgrade to Pro for more scripts and all platforms.
               </div>
             </div>
             <Link href="/settings/billing"><Button size="sm">Upgrade</Button></Link>
           </div>
         </Card>
       ) : null}
+
+      {onboardingData && !onboardingData.onboardingCompleted && (
+        <OnboardingChecklist
+          initialCompleted={[
+            { id: 1, key: "add_client", completed: onboardingData.firstClientAddedAt !== null },
+            { id: 2, key: "generate_script", completed: onboardingData.firstScriptGeneratedAt !== null },
+            { id: 3, key: "explore_library", completed: onboardingData.onboardingStep >= 3 },
+            { id: 4, key: "invite_or_upgrade", completed: onboardingData.plan !== "FREE" },
+          ]}
+          initialOnboardingCompleted={onboardingData.onboardingCompleted}
+        />
+      )}
+
+      {(() => {
+        const limit = getScriptLimit(workspace.plan);
+        const used = workspace.scriptCount;
+        const resetDate = workspace.scriptCountResetAt.toLocaleDateString("en-GB", { day: "numeric", month: "long" });
+        if (limit !== Infinity && used / limit >= 0.8) {
+          return (
+            <div className="rounded-md border border-amber-300 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-800 px-4 py-3 flex items-center justify-between gap-4 flex-wrap">
+              <span className="text-sm text-amber-800 dark:text-amber-300">
+                You've used <strong>{used}</strong> of <strong>{limit}</strong> scripts this month — resets {resetDate}.
+              </span>
+              <Link href="/pricing" className="text-xs font-medium text-amber-800 dark:text-amber-300 hover:underline flex-shrink-0">
+                Upgrade for more →
+              </Link>
+            </div>
+          );
+        }
+        return null;
+      })()}
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card>
@@ -77,7 +148,7 @@ export default async function DashboardPage() {
           </div>
           <div className="text-3xl font-semibold">{totalClients}</div>
           <div className="text-xs text-text-secondary dark:text-dark-muted mt-1">
-            {workspace.plan === "FREE" ? `of 1 on Free plan` : `Unlimited on ${workspace.plan}`}
+            {workspace.plan === "FREE" ? `of 1 on Free plan` : `On ${workspace.plan}`}
           </div>
         </Card>
         <Card>

@@ -1,0 +1,17 @@
+[Unit]
+Description=Lead Discovery Engine
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/scripter
+ExecStart=/bin/bash /home/ubuntu/scripter/vps_run.sh
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+Environment=SCRIBTLY_API_KEY=ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055
+
+[Install]
+WantedBy=multi-user.target

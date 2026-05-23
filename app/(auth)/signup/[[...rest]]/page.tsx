@@ -1,5 +1,17 @@
-import { SignUp } from "@clerk/nextjs";
+import { SignupForm } from "./SignupForm";
+import { SignupTracking } from "./SignupTracking";
 
-export default function SignupPage() {
-  return <SignUp routing="path" path="/signup" signInUrl="/login" />;
+interface Props {
+  searchParams: { ref?: string; beta?: string };
+}
+
+export default function SignupPage({ searchParams }: Props) {
+  return (
+    <>
+      {searchParams.ref && (
+        <SignupTracking refLeadId={searchParams.ref} isBeta={searchParams.beta === "true"} />
+      )}
+      <SignupForm />
+    </>
+  );
 }

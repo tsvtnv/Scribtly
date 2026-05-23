@@ -4,24 +4,48 @@ import { Card } from "@/components/ui/Card";
 import { Check } from "lucide-react";
 
 export const metadata = {
-  title: "YouTube Script Writer for Freelancers",
+  title: "YouTube script writer for freelancers",
   description:
-    "Generate full YouTube scripts — hook, intro, sections, and CTA — in your client's exact voice. Stop starting from a blank page. Try ScriptFast free.",
-  alternates: {
-    canonical: "/youtube-scripts",
-  },
+    "Write YouTube scripts that keep viewers watching. Scribtly generates long-form YouTube scripts in your client's exact voice, with hooks, sections, and CTAs built for the algorithm.",
+  keywords: [
+    "YouTube script generator",
+    "AI YouTube script writer",
+    "long-form video scripts",
+    "YouTube hook generator",
+    "video script for freelancers",
+  ],
+  alternates: { canonical: "/youtube-scripts" },
   openGraph: {
-    title: "YouTube Script Writer for Freelancers — ScriptFast",
-    description:
-      "Generate full YouTube scripts — hook, intro, sections, and CTA — in your client's exact voice. Try ScriptFast free.",
+    type: "website",
     url: "/youtube-scripts",
+    siteName: "Scribtly",
+    title: "YouTube script writer for freelancers · Scribtly",
+    description:
+      "Long-form YouTube scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly YouTube script writer" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "YouTube script writer for freelancers · Scribtly",
+    description:
+      "Long-form YouTube scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
+    images: ["/og-image.svg"],
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+    { "@type": "ListItem", position: 2, name: "YouTube Scripts", item: "/youtube-scripts" },
+  ],
 };
 
 const steps = [
   { n: "1", title: "Add your client", desc: "Save their niche, audience, tone, and phrases once. That's it." },
   { n: "2", title: "Describe the topic", desc: "Paste the idea, pick a length (3-5, 8-10, or 15-20 minutes), and go." },
-  { n: "3", title: "Get a full script", desc: "Hook, intro, three sections, and a natural CTA — all in their voice, streamed in under 60 seconds." },
+  { n: "3", title: "Get a full script", desc: "Hook, intro, three sections, and a natural CTA, all in their voice, streamed in under 60 seconds." },
 ];
 
 const wins = [
@@ -35,15 +59,19 @@ const wins = [
 export default function YouTubePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <section className="max-w-4xl mx-auto px-5 pt-20 pb-10 text-center">
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
           YouTube scripts that keep viewers watching
         </h1>
         <p className="text-base text-text-secondary dark:text-dark-muted mt-5 max-w-2xl mx-auto">
-          Stop writing from a blank page. ScriptFast generates a full YouTube script — hook, intro, sections, CTA — in your client's voice, in under 60 seconds.
+          Stop writing from a blank page. Scribtly generates a full YouTube script (hook, intro, sections, CTA) in your client's voice, in under 60 seconds.
         </p>
         <Link href="/signup" className="inline-block mt-7">
-          <Button size="lg">Start free — 3 scripts</Button>
+          <Button size="lg">Start free · 3 scripts</Button>
         </Link>
       </section>
 
@@ -74,19 +102,7 @@ export default function YouTubePage() {
 
       <section className="max-w-3xl mx-auto px-5 py-20 text-center">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">Ready to write faster?</h2>
-        <div className="flex flex-wrap gap-3 justify-center">
-          <Link href="/signup"><Button size="lg">Start free</Button></Link>
-          <Link href="/pricing"><Button size="lg" variant="ghost">See pricing</Button></Link>
-        </div>
-      </section>
-
-      <section className="max-w-3xl mx-auto px-5 pb-16 text-center">
-        <p className="text-sm text-text-secondary dark:text-dark-muted">
-          Also need short-form content?{" "}
-          <Link href="/tiktok-scripts" className="text-primary hover:underline">
-            See our TikTok script writer →
-          </Link>
-        </p>
+        <Link href="/signup"><Button size="lg">Start free</Button></Link>
       </section>
     </>
   );

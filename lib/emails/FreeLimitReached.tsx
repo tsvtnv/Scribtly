@@ -8,7 +8,7 @@ export function FreeLimitReachedEmail({ appUrl }: { appUrl: string }) {
         <Container style={{ background: "#FFFFFF", borderRadius: 12, padding: 32, maxWidth: 520, margin: "0 auto" }}>
           <Heading style={{ fontSize: 22, margin: "0 0 12px" }}>You've used all 3 free scripts</Heading>
           <Text style={{ color: "#5F5E5A", lineHeight: 1.6 }}>
-            Upgrade to Pro for £29/month and get unlimited scripts for all your clients, every platform, and PDF export.
+            Upgrade to Pro for £19/month to get 100 scripts, all platforms, and PDF export.
           </Text>
           <Button
             href={`${appUrl}/settings/billing`}

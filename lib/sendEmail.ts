@@ -5,7 +5,7 @@ import { FreeLimitReachedEmail } from "@/lib/emails/FreeLimitReached";
 import { UpgradeConfirmationEmail } from "@/lib/emails/UpgradeConfirmation";
 import { InviteEmailTemplate } from "@/lib/emails/InviteEmail";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scriptfast.app";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
 
 async function send(params: Parameters<typeof resend.emails.send>[0]) {
   if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === "re_placeholder") {
@@ -43,7 +43,7 @@ export async function sendUpgradeConfirmation({ to, plan }: { to: string; plan: 
   return send({
     from: EMAIL_FROM,
     to,
-    subject: `You're now on ScriptFast ${plan === "AGENCY" ? "Agency" : "Pro"}`,
+    subject: `You're now on Scribtly ${plan === "AGENCY" ? "Agency" : "Pro"}`,
     react: UpgradeConfirmationEmail({ plan, appUrl: APP_URL }),
   });
 }
@@ -62,7 +62,85 @@ export async function sendInvite({
   return send({
     from: EMAIL_FROM,
     to,
-    subject: `${inviterName} invited you to ${workspaceName} on ScriptFast`,
+    subject: `${inviterName} invited you to ${workspaceName} on Scribtly`,
     react: InviteEmailTemplate({ inviterName, workspaceName, acceptUrl }),
+  });
+}
+
+export async function sendVerificationEmail({
+  to,
+  name,
+  verificationUrl,
+}: {
+  to: string;
+  name?: string;
+  verificationUrl: string;
+}) {
+  const { default: VerifyEmail } = await import("@/lib/emails/VerifyEmail");
+  return send({
+    from: EMAIL_FROM,
+    to,
+    subject: "Verify your Scribtly email",
+    react: VerifyEmail({ verificationUrl, name }),
+  });
+}
+
+export async function sendPasswordResetEmail({
+  to,
+  name,
+  resetUrl,
+}: {
+  to: string;
+  name?: string;
+  resetUrl: string;
+}) {
+  const { default: ResetPassword } = await import("@/lib/emails/ResetPassword");
+  return send({
+    from: EMAIL_FROM,
+    to,
+    subject: "Reset your Scribtly password",
+    react: ResetPassword({ resetUrl, name }),
+  });
+}
+
+export async function sendBetaWelcome({
+  to,
+  name,
+  betaExpiresAt,
+}: {
+  to: string;
+  name?: string;
+  betaExpiresAt: Date;
+}) {
+  const { BetaWelcomeEmail } = await import("@/lib/emails/BetaWelcome");
+  const formatted = betaExpiresAt.toLocaleDateString("en-GB", {
+    day: "numeric", month: "short", year: "numeric",
+  });
+  return send({
+    from: EMAIL_FROM,
+    to,
+    subject: "You're in — your beta access is live",
+    react: BetaWelcomeEmail({ name, betaExpiresAt: formatted, appUrl: APP_URL }),
+  });
+}
+
+export async function sendBetaExpiring({
+  to,
+  name,
+  betaExpiresAt,
+}: {
+  to: string;
+  name?: string;
+  betaExpiresAt: Date;
+}) {
+  const { BetaExpiringEmail } = await import("@/lib/emails/BetaExpiring");
+  const formatted = betaExpiresAt.toLocaleDateString("en-GB", {
+    day: "numeric", month: "short", year: "numeric",
+  });
+  return send({
+    from: EMAIL_FROM,
+    to,
+    subject: "Your Scribtly beta access expires in 7 days",
+    react: BetaExpiringEmail({ name, betaExpiresAt: formatted, appUrl: APP_URL }),
   });
 }

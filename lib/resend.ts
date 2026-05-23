@@ -7,4 +7,4 @@ export const resend =
 
 if (process.env.NODE_ENV !== "production") globalForResend.resend = resend;
 
-export const EMAIL_FROM = "ScriptFast <hello@scriptfast.app>";
+export const EMAIL_FROM = "Scribtly <hello@scribtly.com>";

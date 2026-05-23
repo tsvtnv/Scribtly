@@ -1,8 +1,8 @@
-# ScriptFast Implementation Plan
+# Scribtly Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the full ScriptFast SaaS platform per `docs/superpowers/specs/2026-04-17-scriptfast-design.md` — Next.js 14 app with Clerk auth, Supabase/Prisma, Anthropic streaming, Stripe billing, Resend emails, PDF export, full dark theme, workspace-based team invites for Agency, and bulk generation mode.
+**Goal:** Build the full Scribtly SaaS platform per `docs/superpowers/specs/2026-04-17-scribtly-design.md` — Next.js 14 app with Clerk auth, Supabase/Prisma, Anthropic streaming, Stripe billing, Resend emails, PDF export, full dark theme, workspace-based team invites for Agency, and bulk generation mode.
 
 **Architecture:** Next.js 14 App Router with route groups for marketing / auth / app. All authenticated requests resolve through `lib/ensureUser.ts` which lazily syncs Clerk users to Postgres and bootstraps a personal workspace (or accepts a pending invite). All data is workspace-scoped; plan gates enforced server-side and mirrored in the UI. Streaming uses native `ReadableStream` piped from Anthropic SDK to the client via a `useScriptStream` hook.
 
@@ -23,7 +23,7 @@
 
 ```json
 {
-  "name": "scriptfast",
+  "name": "scribtly",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -584,7 +584,7 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 - [ ] **Step 1:** `lib/pdf.tsx` — `ScriptPdfDocument({ script, client, workspace })` using `@react-pdf/renderer`:
   - `<Document>` → `<Page size="A4">`
-  - Header: ScriptFast wordmark (left), workspace name (right)
+  - Header: Scribtly wordmark (left), workspace name (right)
   - Subheader: client name, platform badge, formatted date, word count, duration
   - Body: map parsed segments — section headers as h2-styled Text, inline tags italic muted, plain text normal, CAPS preserved
   - Footer: page number via render prop
@@ -664,7 +664,7 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 - [ ] **Step 1:** Each template is a React Email component (uses `@react-email/components`: Html, Head, Body, Container, Heading, Text, Button, Link). Content per spec section 12.
 
-- [ ] **Step 2:** `lib/sendEmail.ts` exports typed wrappers `sendWelcome`, `sendFreeLimitReached`, `sendUpgradeConfirmation`, `sendInvite`. All call `resend.emails.send` with from `hello@scriptfast.app`, swallow errors with `console.error`.
+- [ ] **Step 2:** `lib/sendEmail.ts` exports typed wrappers `sendWelcome`, `sendFreeLimitReached`, `sendUpgradeConfirmation`, `sendInvite`. All call `resend.emails.send` with from `hello@scribtly.com`, swallow errors with `console.error`.
 
 - [ ] **Step 3:** Wire triggers:
   - `ensureUser` new-user path → `sendWelcome`
@@ -802,6 +802,6 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 ### Task 13.3: Deploy docs
 
-- [ ] **Step 1:** Flesh out README with: Clerk setup (instance, webhook URL, signing secret), Supabase setup (connection strings, run `npx prisma db push`), Stripe setup (product IDs, webhook endpoint URL, signing secret), Resend setup (verified domain `scriptfast.app`), env var list, Vercel deploy steps.
+- [ ] **Step 1:** Flesh out README with: Clerk setup (instance, webhook URL, signing secret), Supabase setup (connection strings, run `npx prisma db push`), Stripe setup (product IDs, webhook endpoint URL, signing secret), Resend setup (verified domain `scribtly.com`), env var list, Vercel deploy steps.
 
 - [ ] **Step 2:** Commit.

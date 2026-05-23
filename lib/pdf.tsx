@@ -2,7 +2,7 @@ import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { Script, Client, Workspace } from "@prisma/client";
 
 const styles = StyleSheet.create({
-  page: { padding: 48, fontSize: 11, color: "#2C2C2A", fontFamily: "Helvetica" },
+  page: { padding: 48, fontSize: 11, color: "#2C2C2A" },
   headerRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 20, paddingBottom: 10, borderBottomWidth: 0.5, borderBottomColor: "#2C2C2A33" },
   wordmark: { fontSize: 14, fontWeight: 700, color: "#7F77DD" },
   wsName: { fontSize: 9, color: "#5F5E5A" },
@@ -50,7 +50,7 @@ export function ScriptPdfDocument({
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.headerRow} fixed>
-          <Text style={styles.wordmark}>ScriptFast</Text>
+          <Text style={styles.wordmark}>Scribtly</Text>
           <Text style={styles.wsName}>{workspace.name}</Text>
         </View>
 
@@ -87,7 +87,7 @@ export function ScriptPdfDocument({
         </View>
 
         <View style={styles.footer} fixed>
-          <Text>ScriptFast · {client?.name || "Unassigned"}</Text>
+          <Text>Scribtly · {client?.name || "Unassigned"}</Text>
           <Text render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} />
         </View>
       </Page>

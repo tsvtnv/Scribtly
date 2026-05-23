@@ -1,5 +1,5 @@
 {
-  "name": "scriptfast",
+  "name": "scribtly",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -15,33 +15,42 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
-    "next": "14.2.5",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "@clerk/nextjs": "5.3.0",
-    "@prisma/client": "5.18.0",
     "@anthropic-ai/sdk": "0.27.0",
-    "stripe": "16.7.0",
-    "resend": "4.0.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@lucia-auth/adapter-prisma": "^4.0.1",
+    "@prisma/client": "5.18.0",
     "@react-email/components": "0.0.22",
     "@react-pdf/renderer": "4.0.0",
-    "svix": "1.29.0",
-    "zod": "3.23.8",
+    "arctic": "^3.7.0",
+    "argon2": "^0.44.0",
+    "canvas-confetti": "^1.9.4",
     "clsx": "2.1.1",
+    "date-fns": "^4.1.0",
+    "lucia": "^3.2.2",
+    "lucide-react": "0.439.0",
+    "next": "14.2.5",
+    "playwright": "^1.59.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "resend": "4.0.0",
+    "stripe": "16.7.0",
     "tailwind-merge": "2.5.2",
-    "lucide-react": "0.439.0"
+    "zod": "3.23.8"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "20.16.5",
     "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
-    "typescript": "5.5.4",
-    "tailwindcss": "3.4.10",
-    "postcss": "8.4.45",
     "autoprefixer": "10.4.20",
-    "prisma": "5.18.0",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.5",
-    "vitest": "2.0.5"
+    "postcss": "8.4.45",
+    "prisma": "5.18.0",
+    "tailwindcss": "3.4.10",
+    "typescript": "5.5.4",
+    "vitest": "^3.2.4"
   }
 }

@@ -1,23 +1,29 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://scriptfast.app";
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
         disallow: [
-          "/dashboard",
-          "/clients",
-          "/scripts",
-          "/settings",
-          "/billing",
-          "/invite/",
+          "/admin",
+          "/admin/",
           "/api/",
+          "/onboarding",
+          "/onboarding/",
+          "/auth",
+          "/auth/",
+          "/verify-email",
+          "/verify-email/",
+          "/ref/",
+          "/review/",
         ],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }

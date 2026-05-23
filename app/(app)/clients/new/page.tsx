@@ -16,7 +16,7 @@ export default async function NewClientPage() {
         </Link>
         <h1 className="text-2xl font-semibold mt-4">Client limit reached</h1>
         <p className="text-sm text-text-secondary dark:text-dark-muted mt-2">
-          You're on the Free plan, which allows 1 client. Upgrade to Pro for unlimited clients.
+          You're on the Free plan, which allows 1 client. Upgrade to Pro for more clients.
         </p>
         <Link href="/settings/billing" className="inline-block mt-4 text-primary hover:underline">
           View billing →

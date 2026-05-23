@@ -1,46 +1,111 @@
+'use client'
+
 import Link from "next/link";
-import type { Script, Client, Platform } from "@prisma/client";
-import { ClientAvatar } from "@/components/client/ClientAvatar";
-import { StatusBadge } from "@/components/ui/Badge";
-import { relativeDate } from "@/lib/utils";
-import { cn } from "@/lib/utils";
+import type { Script, Client, Platform, ScriptStatus } from "@prisma/client";
+import { initials, relativeDate } from "@/lib/utils";
 
-const stripe: Record<Platform, string> = {
-  YOUTUBE: "bg-platform-youtube-border",
-  TIKTOK: "bg-platform-tiktok-border",
-  REELS: "bg-platform-reels-border",
-  LINKEDIN: "bg-platform-linkedin-border",
-  PODCAST: "bg-platform-podcast-border",
-};
+export interface ScriptWithPipeline extends Script {
+  client: Client | null
+  contentItem?: { id: string; stage: string } | null
+}
 
-export function ScriptCard({ script }: { script: Script & { client: Client | null } }) {
+const PLATFORM_BADGE: Record<Platform, { bg: string; text: string; label: string }> = {
+  YOUTUBE:  { bg: '#FAECE7', text: '#4A1B0C', label: 'YouTube' },
+  TIKTOK:   { bg: '#F1EFE8', text: '#2C2C2A', label: 'TikTok' },
+  REELS:    { bg: '#FBEAF0', text: '#4B1528', label: 'Reels' },
+  LINKEDIN: { bg: '#E6F1FB', text: '#042C53', label: 'LinkedIn' },
+  PODCAST:  { bg: '#EEEDFE', text: '#26215C', label: 'Podcast' },
+}
+
+const STATUS_BADGE: Record<ScriptStatus, { bg: string; text: string; label: string }> = {
+  DRAFT: { bg: '#F1EFE8', text: '#444441', label: 'Draft' },
+  FINAL: { bg: '#E1F5EE', text: '#085041', label: 'Final' },
+  SENT:  { bg: '#FAECE7', text: '#4A1B0C', label: 'Sent' },
+}
+
+export function ScriptCard({
+  script,
+  onAddToPipeline,
+}: {
+  script: ScriptWithPipeline
+  onAddToPipeline?: (script: ScriptWithPipeline) => void
+}) {
+  const platform = PLATFORM_BADGE[script.platform]
+  const status   = STATUS_BADGE[script.status]
+  const inPipeline = !!script.contentItem
+
   return (
-    <Link href={`/scripts/${script.id}`} className="block group relative">
-      <div className="h-full rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)] overflow-hidden hover:border-primary/40 transition-colors">
-        <div className={cn("h-1 w-full", stripe[script.platform])} />
-        <div className="p-4">
-          <div className="font-medium text-sm line-clamp-2 min-h-[2.6em]">{script.title}</div>
-
-          <div className="mt-3 flex items-center gap-2 text-xs text-text-secondary dark:text-dark-muted">
-            {script.client ? (
-              <>
-                <ClientAvatar name={script.client.name} color={script.client.avatarColor} size={16} />
-                <span className="truncate">{script.client.name}</span>
-              </>
-            ) : (
-              <span>Unassigned</span>
-            )}
-          </div>
-
-          <div className="mt-3 flex items-center justify-between text-[11px] text-text-secondary dark:text-dark-muted">
-            <span>{relativeDate(script.createdAt)}</span>
-            <span>{script.wordCount ?? 0} words · {script.duration}</span>
-          </div>
-          <div className="mt-2">
-            <StatusBadge status={script.status} />
-          </div>
-        </div>
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-[10px_12px] transition-all duration-150 hover:border-[var(--color-primary)] flex flex-col">
+      {/* Top row: platform badge + status badge */}
+      <div className="flex items-center justify-between gap-1 mb-1.5">
+        <span
+          className="text-[10px] font-medium px-1.5 py-0.5 rounded-full"
+          style={{ backgroundColor: platform.bg, color: platform.text }}
+        >
+          {platform.label}
+        </span>
+        <span
+          className="text-[10px] font-medium px-1.5 py-0.5 rounded-full"
+          style={{ backgroundColor: status.bg, color: status.text }}
+        >
+          {status.label}
+        </span>
       </div>
-    </Link>
-  );
+
+      {/* Title — clickable */}
+      <Link href={`/scripts/${script.id}`} className="block mb-1">
+        <p className="text-[13px] font-medium leading-snug line-clamp-2 text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors">
+          {script.title}
+        </p>
+      </Link>
+
+      {/* Meta row: word count + duration */}
+      <p className="text-[11px] text-[var(--color-text-tertiary)] mb-1.5">
+        {script.wordCount ?? 0} words{script.duration ? ` · ${script.duration}` : ''}
+      </p>
+
+      {/* Client row */}
+      <div className="flex items-center gap-1.5 mt-auto mb-2">
+        {script.client ? (
+          <>
+            <span
+              className="w-5 h-5 rounded-full flex items-center justify-center text-white flex-shrink-0"
+              style={{ backgroundColor: script.client.avatarColor, fontSize: '9px', fontWeight: 500 }}
+            >
+              {initials(script.client.name)}
+            </span>
+            <span className="text-[11px] text-[var(--color-text-secondary)] truncate flex-1">
+              {script.client.name}
+            </span>
+          </>
+        ) : (
+          <span className="text-[11px] text-[var(--color-text-tertiary)] flex-1">Unassigned</span>
+        )}
+        <span className="text-[11px] text-[var(--color-text-tertiary)] ml-auto flex-shrink-0">
+          {relativeDate(script.createdAt)}
+        </span>
+      </div>
+
+      {/* Pipeline indicator / add button */}
+      {inPipeline ? (
+        <span
+          className="text-[10px] font-medium px-[7px] py-[2px] rounded-full self-start"
+          style={{ backgroundColor: '#E1F5EE', color: '#085041' }}
+        >
+          In pipeline
+        </span>
+      ) : (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault()
+            onAddToPipeline?.(script)
+          }}
+          className="text-[11px] border border-[var(--color-border)] bg-transparent rounded-md px-[10px] py-1 text-[var(--color-text-secondary)] hover:bg-[var(--color-bg)] transition-colors self-start"
+        >
+          + Add to pipeline
+        </button>
+      )}
+    </div>
+  )
 }

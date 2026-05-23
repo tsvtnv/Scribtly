@@ -8,18 +8,22 @@ import { useToast } from "@/components/ui/Toast";
 
 const REASON_HEADLINES: Record<string, string> = {
   free_limit: "You've used all 3 free scripts",
+  script_limit_reached: "You've hit your monthly script limit",
+  model_not_available: "This quality level requires a paid plan",
   platform_locked: "This platform is a Pro feature",
   extras_locked: "Extras are a Pro feature",
+  model_locked: "Quality and Premium models are Pro features",
   pdf_locked: "PDF export is a Pro feature",
   client_limit: "Free plan is limited to 1 client",
   default: "Upgrade to unlock this feature",
 };
 
 const PRO_FEATURES = [
-  "Unlimited scripts",
+  "100 scripts per month",
   "All 5 platforms (YouTube, TikTok, Reels, LinkedIn, Podcast)",
-  "Unlimited clients",
+  "10 clients",
   "All extras (titles, hashtags, chapters, etc.)",
+  "Quality and Premium model generation",
   "PDF export",
 ];
 
@@ -60,7 +64,7 @@ export function UpgradeModal({ open, onClose, reason }: { open: boolean; onClose
     <Modal open={open} onClose={onClose} title={headline} maxWidth="lg">
       <div className="space-y-4">
         <p className="text-sm text-text-secondary dark:text-dark-muted">
-          Upgrade to keep generating, unlock every platform, and work with unlimited clients.
+          Upgrade to keep generating, unlock every platform, and grow your client roster.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -68,7 +72,7 @@ export function UpgradeModal({ open, onClose, reason }: { open: boolean; onClose
             <div className="flex items-baseline justify-between mb-2">
               <h3 className="font-semibold">Pro</h3>
               <div className="text-lg font-bold">
-                £29<span className="text-xs font-normal text-text-secondary">/mo</span>
+                £19<span className="text-xs font-normal text-text-secondary">/mo</span>
               </div>
             </div>
             <ul className="space-y-1.5 text-xs mb-4">
@@ -88,7 +92,7 @@ export function UpgradeModal({ open, onClose, reason }: { open: boolean; onClose
             <div className="flex items-baseline justify-between mb-2">
               <h3 className="font-semibold">Agency</h3>
               <div className="text-lg font-bold">
-                £79<span className="text-xs font-normal text-text-secondary">/mo</span>
+                £49<span className="text-xs font-normal text-text-secondary">/mo</span>
               </div>
             </div>
             <ul className="space-y-1.5 text-xs mb-4">

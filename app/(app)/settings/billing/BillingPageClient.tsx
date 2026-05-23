@@ -11,41 +11,64 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 
 const FEATURES: Record<Plan, string[]> = {
-  FREE: ["3 scripts per month", "1 client profile", "YouTube only", "Script library"],
+  FREE: ["5 scripts per month", "1 client", "Standard quality model", "Script library"],
+  BASIC: ["25 scripts per month", "3 clients", "All quality models", "All platforms"],
   PRO: [
-    "Unlimited scripts",
-    "Unlimited clients",
-    "All 5 platforms",
-    "All extras (titles, hashtags, etc.)",
+    "100 scripts per month",
+    "10 clients",
+    "Content pipeline",
+    "Calendar view",
     "PDF export",
+    "Title and hashtag extras",
   ],
   AGENCY: [
+    "350 scripts per month",
+    "Unlimited clients",
     "Everything in Pro",
-    "5 team members",
+    "3 team members",
     "Bulk generation",
     "Priority support",
+  ],
+  ENTERPRISE: [
+    "Custom script volume",
+    "Unlimited clients",
+    "Unlimited team members",
+    "Dedicated account manager",
+    "SLA + custom onboarding",
   ],
 };
 
 const PRICE: Record<Plan, string> = {
   FREE: "£0",
-  PRO: "£29/mo",
-  AGENCY: "£79/mo",
+  BASIC: "£5/mo",
+  PRO: "£19/mo",
+  AGENCY: "£49/mo",
+  ENTERPRISE: "Custom",
 };
 
 export function BillingPageClient({
   plan,
   scriptCount,
+  scriptCountResetAt,
   hasSubscription,
   success,
   canceled,
+  betaActive,
+  betaExpiresAt,
 }: {
   plan: Plan;
   scriptCount: number;
+  scriptCountResetAt: Date | string;
   hasSubscription: boolean;
   success: boolean;
   canceled: boolean;
+  betaActive: boolean;
+  betaExpiresAt: string | null;
 }) {
+  const resetDate = new Date(scriptCountResetAt).toLocaleDateString("en-GB", {
+    month: "short",
+    day: "numeric",
+  });
   const toast = useToast();
   const [busy, setBusy] = useState<Plan | "portal" | null>(null);
 
@@ -106,6 +129,9 @@ export function BillingPageClient({
             <div className="text-2xl font-semibold mt-1">{plan}</div>
             <div className="mt-3 w-64">
               <UsageMeter plan={plan} scriptCount={scriptCount} />
+              <div className="text-xs text-text-secondary dark:text-dark-muted mt-1">
+                Resets {resetDate}
+              </div>
             </div>
           </div>
           {hasSubscription ? (
@@ -116,8 +142,31 @@ export function BillingPageClient({
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {betaActive && betaExpiresAt && (
+        <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 p-4 mb-6">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-amber-600 dark:text-amber-400 font-semibold text-sm">🧪 Beta Tester</span>
+          </div>
+          <p className="text-sm text-amber-700 dark:text-amber-300">
+            You have free BASIC access until{" "}
+            {new Date(betaExpiresAt).toLocaleDateString("en-GB", {
+              day: "numeric", month: "short", year: "numeric",
+            })}
+            . After that you&apos;ll move to the Free plan unless you subscribe.
+          </p>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <PlanCard plan="FREE" price={PRICE.FREE} features={FEATURES.FREE} currentPlan={plan} />
+        <PlanCard
+          plan="BASIC"
+          price={PRICE.BASIC}
+          features={FEATURES.BASIC}
+          currentPlan={betaActive && plan !== "BASIC" ? "BASIC" : plan}
+          onUpgrade={betaActive ? undefined : () => upgrade("BASIC")}
+          busy={busy === "BASIC"}
+        />
         <PlanCard
           plan="PRO"
           price={PRICE.PRO}
@@ -125,7 +174,7 @@ export function BillingPageClient({
           currentPlan={plan}
           onUpgrade={() => upgrade("PRO")}
           busy={busy === "PRO"}
-          highlight={plan === "FREE"}
+          highlight={plan === "FREE" || plan === "BASIC"}
         />
         <PlanCard
           plan="AGENCY"

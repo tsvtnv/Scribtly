@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#F1EFE8"/>
+  <rect x="80" y="80" width="120" height="120" rx="26" fill="#7F77DD"/>
+  <path d="M161.5 122.5c-4.1-4.7-10.5-7.1-17.2-7.1-10.5 0-18.4 5.6-18.4 14.1 0 7.9 6.4 11.4 16.5 13.9l4.9 1.1c8.6 2.1 12.4 3.7 12.4 8.2 0 4.9-5 7.9-13.1 7.9-6.9 0-12.6-2.4-16.9-6.9l-6 6.4c5.3 5.6 13.1 8.8 22.5 8.8 12 0 20.6-5.8 20.6-14.8 0-8.4-6.4-12.2-17.4-14.8l-4.9-1.1c-7.3-1.7-11.4-3.4-11.4-7.3 0-4.3 4.7-7.1 11.6-7.1 5.1 0 9.6 1.7 12.7 5.1l6-6.2z" fill="#fff"/>
+  <text x="80" y="320" font-family="Inter, system-ui, sans-serif" font-size="76" font-weight="800" fill="#2C2C2A" letter-spacing="-2">AI video scripts</text>
+  <text x="80" y="400" font-family="Inter, system-ui, sans-serif" font-size="76" font-weight="800" fill="#7F77DD" letter-spacing="-2">in your client's voice.</text>
+  <text x="80" y="490" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="500" fill="#5F5E5A">YouTube · TikTok · Reels — generated in under 60 seconds.</text>
+  <text x="80" y="570" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="#2C2C2A">scribtly.com</text>
+</svg>
