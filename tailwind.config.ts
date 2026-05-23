@@ -55,6 +55,15 @@ const config: Config = {
       borderWidth: {
         hair: "0.5px",
       },
+      keyframes: {
+        shimmer: {
+          from: { transform: "translateX(-220%) rotate(12deg)" },
+          to:   { transform: "translateX(700%) rotate(12deg)" },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 2.2s ease-in-out infinite",
+      },
     },
   },
   plugins: [],
