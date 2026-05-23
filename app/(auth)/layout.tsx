@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <Link href="/" className="mb-8 text-xl font-semibold tracking-tight">
         Scribtly
       </Link>
-      <div className="w-full max-w-sm">{children}</div>
+      <div className="w-full max-w-md">{children}</div>
     </div>
   );
 }

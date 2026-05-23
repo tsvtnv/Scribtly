@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { FounderNote } from "@/components/home/FounderCard";
 
 export function SignupForm() {
   const [name, setName] = useState("");
@@ -74,6 +75,7 @@ export function SignupForm() {
 
   return (
     <div className="flex flex-col gap-6">
+      <FounderNote />
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
         <p className="text-sm text-muted-foreground mt-1">

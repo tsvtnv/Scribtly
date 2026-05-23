@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Check, Clock, DollarSign, Repeat } from "lucide-react";
+import { FounderNote } from "@/components/home/FounderCard";
 
 export const metadata = {
   title: "Script writing tool for freelancers — Scribtly",
@@ -136,6 +137,10 @@ export default function ForFreelancersPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-4">
+        <FounderNote />
       </section>
 
       <section className="max-w-3xl mx-auto px-5 py-20 text-center">

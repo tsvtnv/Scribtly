@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Check, Users, LayoutGrid, TrendingUp } from "lucide-react";
+import { FounderNote } from "@/components/home/FounderCard";
 
 export const metadata = {
   title: "Video script writing tool for content agencies — Scribtly",
@@ -153,6 +154,10 @@ export default function ForAgenciesPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-4">
+        <FounderNote />
       </section>
 
       <section className="max-w-3xl mx-auto px-5 py-20 text-center">

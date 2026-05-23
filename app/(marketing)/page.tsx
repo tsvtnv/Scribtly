@@ -19,6 +19,7 @@ import {
   AnimatedStats,
   ScrollReveal,
 } from "@/components/home/HomepageInteractives";
+import { FounderSection } from "@/components/home/FounderCard";
 
 export const metadata = {
   title: "Scribtly: AI Video Script Generator for Freelancers",
@@ -401,6 +402,9 @@ export default function HomePage() {
       <section className="max-w-4xl mx-auto px-5 py-16">
         <AnimatedStats />
       </section>
+
+      {/* ── FOUNDER ── */}
+      <FounderSection />
 
       {/* ── PRICING TEASER ── */}
       <section className="relative mx-auto max-w-6xl overflow-hidden px-5 py-16 md:py-20">
