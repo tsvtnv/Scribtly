@@ -52,25 +52,35 @@ export default async function AdminOutreachPage() {
 
   const serializedLeads = leads.map(serializeLead);
 
-  return (
-    <div className="p-6 md:p-10 w-full">
-      <h1 className="text-2xl font-semibold tracking-tight mb-1">Outreach</h1>
-      <p className="text-sm text-text-secondary mb-8">{leads.length} total leads</p>
+  const openRate = delivered > 0 ? ((opened / delivered) * 100).toFixed(1) : "0";
+  const clickRate = opened > 0 ? ((leads.filter((l) => l.emailClickedAt !== null).length / opened) * 100).toFixed(1) : "0";
 
-      <div className="grid grid-cols-3 md:grid-cols-7 gap-4 mb-8 w-full">
+  return (
+    <div className="p-6 md:p-10 w-full max-w-7xl mx-auto">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold tracking-tight">Outreach</h1>
+        <p className="text-sm text-text-secondary mt-0.5">{leads.length} total leads</p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-9 gap-4 mb-8 w-full">
         {[
-          { label: "Total Leads", value: String(leads.length) },
+          { label: "Total Leads", value: String(leads.length), accent: true },
           { label: "Contacted", value: String(contacted) },
-          { label: "Email Delivered", value: String(delivered) },
-          { label: "Email Opened", value: String(opened) },
+          { label: "Delivered", value: String(delivered) },
+          { label: "Opened", value: String(opened) },
+          { label: "Open Rate", value: `${openRate}%` },
+          { label: "Clicked", value: `${clickRate}%` },
           { label: "Visited", value: String(visited) },
           { label: "Signed Up", value: String(signedUp) },
-          { label: "Conversion Rate", value: `${convRate}%` },
-        ].map(({ label, value }) => (
-          <Card key={label}>
-            <div className="text-xs uppercase tracking-wider text-text-secondary">{label}</div>
-            <div className="text-2xl font-semibold mt-1">{value}</div>
-          </Card>
+          { label: "Conv. Rate", value: `${convRate}%`, accent: true },
+        ].map(({ label, value, accent }) => (
+          <div
+            key={label}
+            className={`rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 ${accent ? "ring-1 ring-[var(--color-primary)]/20" : ""}`}
+          >
+            <div className="text-xs uppercase tracking-wider text-text-secondary mb-1">{label}</div>
+            <div className={`text-2xl font-bold ${accent ? "text-[var(--color-primary)]" : ""}`}>{value}</div>
+          </div>
         ))}
       </div>
 

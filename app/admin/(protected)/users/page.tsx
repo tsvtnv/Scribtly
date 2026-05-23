@@ -44,8 +44,10 @@ export default async function AdminUsersPage() {
 
   return (
     <div className="p-6 md:p-10 max-w-7xl mx-auto">
-      <h1 className="text-2xl font-semibold tracking-tight mb-1">Workspaces</h1>
-      <p className="text-sm text-text-secondary mb-8">{rows.length} total workspaces</p>
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold tracking-tight">Workspaces</h1>
+        <p className="text-sm text-text-secondary mt-0.5">{rows.length} total workspaces</p>
+      </div>
       <WorkspacesTable rows={rows} />
     </div>
   );
