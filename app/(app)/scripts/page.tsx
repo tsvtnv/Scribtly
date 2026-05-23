@@ -8,6 +8,7 @@ import { ScriptsPageTracker } from "@/components/onboarding/ScriptsPageTracker";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { makeHref as buildHref } from "@/lib/scriptsPageHelpers";
 
 const PLATFORMS: Platform[] = ["YOUTUBE", "TIKTOK", "REELS", "LINKEDIN", "PODCAST"];
 const STATUSES: ScriptStatus[] = ["DRAFT", "FINAL", "SENT"];
@@ -55,16 +56,6 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
     prisma.client.findMany({ where: { workspaceId: workspace.id }, orderBy: { name: "asc" } }),
   ]);
 
-  const makeHref = (patch: Partial<Search>) => {
-    const params = new URLSearchParams();
-    const merged = { ...searchParams, ...patch } as Record<string, string | undefined>;
-    Object.entries(merged).forEach(([k, v]) => {
-      if (v && v !== "all") params.set(k, v);
-    });
-    const qs = params.toString();
-    return qs ? `/scripts?${qs}` : "/scripts";
-  };
-
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
       <ScriptsPageTracker />
@@ -91,7 +82,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
 
       <div className="flex flex-wrap gap-2 mb-5 text-xs">
         <Link
-          href={makeHref({ platform: undefined })}
+          href={buildHref(searchParams, { platform: undefined })}
           className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.platform ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
         >
           All platforms
@@ -99,7 +90,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
         {PLATFORMS.map((p) => (
           <Link
             key={p}
-            href={makeHref({ platform: p })}
+            href={buildHref(searchParams, { platform: p })}
             className={cn("px-2.5 py-1 rounded-full border-hair", searchParams.platform === p ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
           >
             {p[0] + p.slice(1).toLowerCase()}
@@ -107,7 +98,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
         ))}
         <span className="text-text-secondary mx-1">·</span>
         <Link
-          href={makeHref({ status: undefined })}
+          href={buildHref(searchParams, { status: undefined })}
           className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.status ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
         >
           Any status
@@ -115,7 +106,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
         {STATUSES.map((s) => (
           <Link
             key={s}
-            href={makeHref({ status: s })}
+            href={buildHref(searchParams, { status: s })}
             className={cn("px-2.5 py-1 rounded-full border-hair uppercase", searchParams.status === s ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
           >
             {s}
@@ -126,7 +117,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
       {clients.length > 0 ? (
         <div className="flex flex-wrap gap-2 mb-5 text-xs">
           <Link
-            href={makeHref({ clientId: undefined })}
+            href={buildHref(searchParams, { clientId: undefined })}
             className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.clientId ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
           >
             All clients
@@ -134,7 +125,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
           {clients.map((c) => (
             <Link
               key={c.id}
-              href={makeHref({ clientId: c.id })}
+              href={buildHref(searchParams, { clientId: c.id })}
               className={cn("px-2.5 py-1 rounded-full border-hair", searchParams.clientId === c.id ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
             >
               {c.name}
@@ -159,7 +150,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
 
       {total > scripts.length ? (
         <div className="flex justify-center mt-6">
-          <Link href={makeHref({ page: String(page + 1) })}>
+          <Link href={buildHref(searchParams, { page: String(page + 1) })}>
             <Button variant="secondary">Load more</Button>
           </Link>
         </div>
