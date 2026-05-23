@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { PlanBadge } from "@/components/billing/PlanBadge";
 import { DeleteAccountCard } from "./DeleteAccountCard";
 import { WorkspaceNameForm } from "./WorkspaceNameForm";
+import { ThemeSettingCard } from "./ThemeSettingCard";
 
 export default async function SettingsPage() {
   const { user, workspace, role } = await ensureUser();
@@ -77,6 +78,25 @@ export default async function SettingsPage() {
           </Link>
         </Card>
       ) : null}
+
+      <ThemeSettingCard />
+
+      <Card>
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-4">
+          Developer
+        </h2>
+        <dl className="space-y-3 text-sm">
+          <div className="grid grid-cols-[120px_1fr] gap-3 items-center">
+            <dt className="text-text-secondary">Workspace ID</dt>
+            <dd className="font-mono text-xs bg-[var(--color-bg)] border border-[var(--color-border)] rounded px-2 py-1 select-all truncate">
+              {workspace.id}
+            </dd>
+          </div>
+        </dl>
+        <p className="text-xs text-text-secondary dark:text-dark-muted mt-3">
+          Use your Workspace ID to identify your account when contacting support.
+        </p>
+      </Card>
 
       <Card className="border-danger/30">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-danger mb-4">

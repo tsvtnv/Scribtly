@@ -219,8 +219,8 @@ export default async function DashboardPage() {
           <Link href="/clients" className="text-xs text-primary hover:underline">Manage all →</Link>
         </div>
         {clients.length === 0 ? (
-          <Card className="text-center">
-            <p className="text-sm mb-3">Add your first client to start generating scripts in their voice.</p>
+          <Card className="text-center py-4 flex flex-col items-center gap-4">
+            <p className="text-sm text-text-secondary dark:text-dark-muted">Add your first client to start generating scripts in their voice.</p>
             <Link href="/clients/new"><Button size="sm"><Plus size={14} /> Add client</Button></Link>
           </Card>
         ) : (

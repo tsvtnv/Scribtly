@@ -135,11 +135,13 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
       ) : null}
 
       {scripts.length === 0 ? (
-        <div className="text-center py-16 space-y-3">
-          <h2 className="text-lg font-semibold">Your script library is empty</h2>
-          <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
-            Generate your first script and it will appear here, organised by client and platform.
-          </p>
+        <div className="text-center py-20 flex flex-col items-center gap-4">
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">Your script library is empty</h2>
+            <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
+              Generate your first script and it will appear here, organised by client and platform.
+            </p>
+          </div>
           <Link href="/generate">
             <Button size="sm">Generate a script</Button>
           </Link>

@@ -23,11 +23,13 @@ export default async function GeneratePage() {
             Pick a client, pick a platform, and your script will stream in.
           </p>
         </div>
-        <div className="text-center py-16 space-y-3">
-          <h2 className="text-lg font-semibold">Add a client first</h2>
-          <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
-            To generate a script in your client&apos;s voice, you need to set up their profile first.
-          </p>
+        <div className="text-center py-20 flex flex-col items-center gap-4">
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">Add a client first</h2>
+            <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
+              To generate a script in your client&apos;s voice, you need to set up their profile first.
+            </p>
+          </div>
           <Link href="/clients/new">
             <Button size="sm"><Plus size={14} /> Add a client</Button>
           </Link>

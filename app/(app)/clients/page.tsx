@@ -45,11 +45,13 @@ export default async function ClientsPage() {
       </div>
 
       {clients.length === 0 ? (
-        <div className="text-center py-16 space-y-3">
-          <h2 className="text-lg font-semibold">Add your first client</h2>
-          <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
-            Set up a client profile once and every script you generate will automatically match their voice.
-          </p>
+        <div className="text-center py-20 flex flex-col items-center gap-4">
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">Add your first client</h2>
+            <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
+              Set up a client profile once and every script you generate will automatically match their voice.
+            </p>
+          </div>
           <Link href="/clients/new">
             <Button size="sm"><Plus size={14} /> Add a client</Button>
           </Link>

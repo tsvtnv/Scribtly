@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Sparkles, FileText, Users, Settings, UsersRound, LayoutGrid, Timer, Menu, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Sparkles, FileText, Users, Settings, UsersRound, LayoutGrid, Timer, Menu, X, ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { PlanBadge } from "@/components/billing/PlanBadge";
 import { useWorkspace } from "./WorkspaceProvider";
 import { useState, useEffect } from "react";
+import { getScriptLimit } from "@/lib/planLimits";
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -43,6 +44,46 @@ export function Sidebar() {
     ...(isAgencyOwner ? [{ href: "/settings/team", label: "Team", icon: UsersRound }] : []),
     { href: "/settings", label: "Settings", icon: Settings },
   ];
+
+  const scriptLimit = getScriptLimit(workspace.plan);
+  const showUpgradeCta = workspace.plan === "FREE" || workspace.plan === "BASIC";
+  const usagePct = scriptLimit < 999999 ? Math.min(100, (workspace.scriptCount / scriptLimit) * 100) : 0;
+
+  const UpgradeCta = ({ compact }: { compact?: boolean }) => {
+    if (!showUpgradeCta) return null;
+    if (compact) {
+      return (
+        <Link
+          href="/settings/billing"
+          title="Upgrade plan"
+          className="flex items-center justify-center w-9 h-9 rounded-md text-[var(--color-primary)] hover:bg-[var(--color-primary-tint)] transition-colors"
+        >
+          <Zap size={16} />
+        </Link>
+      );
+    }
+    return (
+      <div className="mx-3 mb-2 rounded-lg bg-[var(--color-primary-tint)] border border-primary/20 px-3 py-3">
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-xs font-medium text-[var(--color-primary)]">Scripts this month</span>
+          <span className="text-xs text-text-secondary dark:text-dark-muted">{workspace.scriptCount}/{scriptLimit}</span>
+        </div>
+        <div className="w-full bg-[var(--color-border)] rounded-full h-1.5 mb-2.5">
+          <div
+            className="bg-[var(--color-primary)] h-1.5 rounded-full transition-all"
+            style={{ width: `${usagePct}%` }}
+          />
+        </div>
+        <Link
+          href="/settings/billing"
+          className="flex items-center gap-1 text-xs font-medium text-[var(--color-primary)] hover:underline"
+        >
+          <Zap size={11} />
+          Upgrade for more
+        </Link>
+      </div>
+    );
+  };
 
   const NavLinks = ({ onClick }: { onClick?: () => void }) => (
     <nav className="flex-1 px-2 space-y-0.5 overflow-y-auto">
@@ -106,6 +147,7 @@ export function Sidebar() {
         </div>
         <div className="px-4 pb-3 text-xs text-text-secondary dark:text-dark-muted truncate">{workspace.name}</div>
         <NavLinks onClick={() => setMobileOpen(false)} />
+        <UpgradeCta />
         <div className="px-3 py-3 border-t border-[var(--color-border)] flex items-center justify-between gap-2">
           <PlanBadge plan={workspace.plan} />
           <div className="flex items-center gap-1">
@@ -144,6 +186,8 @@ export function Sidebar() {
         )}
 
         <NavLinks />
+
+        {collapsed ? <UpgradeCta compact /> : <UpgradeCta />}
 
         <div className={cn(
           "py-3 border-t border-[var(--color-border)] flex items-center gap-2",
