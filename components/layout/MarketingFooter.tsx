@@ -11,6 +11,7 @@ export function MarketingFooter() {
           <span>Made for freelancers</span>
         </div>
         <div className="flex flex-wrap items-center gap-5">
+          <Link href="/blog" className="hover:text-primary">Blog</Link>
           <Link href="/pricing" className="hover:text-primary">Pricing</Link>
           <Link href="/youtube-scripts" className="hover:text-primary">YouTube scripts</Link>
           <Link href="/tiktok-scripts" className="hover:text-primary">TikTok scripts</Link>
