@@ -53,18 +53,18 @@ export function OnboardingWizard({ initialStep, workspaceName, userName }: Onboa
 
   if (showSuccess) {
     return (
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-xl">
         <StepSuccess scriptText={scriptText} />
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-lg">
+    <div className="w-full max-w-xl">
       <ProgressIndicator currentStep={step} />
       <div key={step} style={{ animation: "onboardingFadeSlide 0.25s ease forwards" }}>
         {step === 1 && (
-          <StepWorkspace initialName={defaultName} onNext={() => advanceStep(2)} />
+          <StepWorkspace initialName={defaultName} userName={userName} onNext={() => advanceStep(2)} />
         )}
         {step === 2 && (
           <StepClient
