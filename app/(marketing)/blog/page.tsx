@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
+
 export const metadata = {
   title: "Blog — Script writing tips for freelancers",
   description:
@@ -41,27 +43,55 @@ export default async function BlogPage({
 }) {
   const page = Math.max(1, parseInt(searchParams.page ?? "1", 10));
 
-  const [posts, total] = await Promise.all([
-    prisma.blogPost.findMany({
-      where: { published: true },
-      orderBy: { publishedAt: "desc" },
-      skip: (page - 1) * PER_PAGE,
-      take: PER_PAGE,
-      select: {
-        slug: true,
-        title: true,
-        excerpt: true,
-        tags: true,
-        readingMins: true,
-        publishedAt: true,
-      },
+  let posts: { slug: string; title: string; excerpt: string; tags: string[]; readingMins: number; publishedAt: Date }[] = [];
+  let total = 0;
+  try {
+    [posts, total] = await Promise.all([
+      prisma.blogPost.findMany({
+        where: { published: true },
+        orderBy: { publishedAt: "desc" },
+        skip: (page - 1) * PER_PAGE,
+        take: PER_PAGE,
+        select: {
+          slug: true,
+          title: true,
+          excerpt: true,
+          tags: true,
+          readingMins: true,
+          publishedAt: true,
+        },
+      }),
+      prisma.blogPost.count({ where: { published: true } }),
+    ]);
+  } catch {
+    // DB not available at build time
+  }
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Scribtly Blog",
+    description: "Script writing tips, freelancer guides, and AI tools for content creators.",
+    url: `${BASE_URL}/blog`,
+    publisher: { "@type": "Organization", name: "Scribtly", url: BASE_URL },
+    ...(posts.length > 0 && {
+      blogPost: posts.map((p) => ({
+        "@type": "BlogPosting",
+        headline: p.title,
+        url: `${BASE_URL}/blog/${p.slug}`,
+        datePublished: p.publishedAt.toISOString(),
+      })),
     }),
-    prisma.blogPost.count({ where: { published: true } }),
-  ]);
+  };
 
   const totalPages = Math.ceil(total / PER_PAGE);
 
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <div className="max-w-5xl mx-auto px-5 pt-16 pb-20">
       <h1 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Blog</h1>
       <p className="text-sm text-text-secondary dark:text-dark-muted mb-10">
@@ -127,5 +157,6 @@ export default async function BlogPage({
         </div>
       )}
     </div>
+    </>
   );
 }
