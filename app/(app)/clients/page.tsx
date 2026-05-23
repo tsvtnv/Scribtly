@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ensureUser } from "@/lib/ensureUser";
 import { prisma } from "@/lib/prisma";
-import { canAddClient } from "@/lib/planLimits";
+import { canAddClient, getClientLimit } from "@/lib/planLimits";
 import { ClientCard } from "@/components/client/ClientCard";
 import { Button } from "@/components/ui/Button";
 import { Plus } from "lucide-react";
@@ -15,6 +15,7 @@ export default async function ClientsPage() {
   });
 
   const canAdd = canAddClient(workspace, clients.length);
+  const clientLimit = getClientLimit(workspace.plan);
 
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
@@ -37,7 +38,7 @@ export default async function ClientsPage() {
               <Plus size={16} /> New client
             </Button>
             <div className="absolute right-0 top-full mt-1 w-64 text-xs bg-[var(--color-surface)] border-hair border-[var(--color-border)] rounded-md p-2 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
-              You're on the Free plan (1 client max). Upgrade to Pro for more clients.
+              You've reached the {clientLimit}-client limit on your {workspace.plan.charAt(0) + workspace.plan.slice(1).toLowerCase()} plan. Upgrade to add more clients.
             </div>
           </div>
         )}

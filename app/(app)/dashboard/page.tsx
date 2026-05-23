@@ -91,7 +91,7 @@ export default async function DashboardPage() {
         <Card className="bg-primary/5 border-primary/30">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <div>
-              <div className="font-medium text-sm">You've used {workspace.scriptCount} of 3 free scripts.</div>
+              <div className="font-medium text-sm">You've used {workspace.scriptCount} of {getScriptLimit(workspace.plan)} free scripts.</div>
               <div className="text-xs text-text-secondary dark:text-dark-muted">
                 Upgrade to Pro for more scripts and all platforms.
               </div>
