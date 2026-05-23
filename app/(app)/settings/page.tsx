@@ -78,7 +78,12 @@ export default async function SettingsPage() {
         </Card>
       ) : null}
 
-      <DeleteAccountCard />
+      <Card className="border-danger/30">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-danger mb-4">
+          Danger zone
+        </h2>
+        <DeleteAccountCard />
+      </Card>
     </div>
   );
 }

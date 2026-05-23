@@ -37,7 +37,7 @@ export function DeleteAccountCard() {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-text-secondary dark:text-dark-muted">
         This will permanently delete your account, all your workspaces, and cancel any active subscriptions. This cannot be undone.
       </p>
       <div className="flex flex-col gap-1.5">
@@ -49,7 +49,7 @@ export function DeleteAccountCard() {
           className="max-w-xs"
         />
       </div>
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {error && <p className="text-sm text-danger">{error}</p>}
       <Button
         variant="danger"
         onClick={handleDelete}
