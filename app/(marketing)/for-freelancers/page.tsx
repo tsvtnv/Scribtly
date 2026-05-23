@@ -7,7 +7,7 @@ import { FounderNote } from "@/components/home/FounderCard";
 export const metadata = {
   title: "Script writing tool for freelancers — Scribtly",
   description:
-    "Scribtly helps freelance script writers deliver faster, take on more clients, and protect their margins. Write YouTube, TikTok, and Reels scripts in any client's voice in under 60 seconds.",
+    "Scribtly helps freelancers deliver more scripts and take on more clients. Write YouTube, TikTok, and Reels scripts in any client's voice in 60 seconds.",
   keywords: [
     "script writing tool for freelancers",
     "freelance video script writer",

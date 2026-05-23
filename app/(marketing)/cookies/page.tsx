@@ -4,16 +4,17 @@ import { OpenCookieSettingsButton } from "@/components/consent/OpenCookieSetting
 
 export const metadata: Metadata = {
   title: "Cookie Policy",
-  description: "Which cookies and local-storage items Scribtly uses and why.",
+  description: "Which cookies and local-storage items Scribtly uses and why. See what's strictly necessary, what's optional, and how to change your preferences.",
   alternates: { canonical: "/cookies" },
   openGraph: {
     type: "article",
     url: "/cookies",
     siteName: "Scribtly",
     title: "Cookie Policy · Scribtly",
-    description: "Which cookies and local-storage items Scribtly uses and why.",
+    description: "Which cookies and local-storage items Scribtly uses and why — and how to change your preferences.",
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly Cookie Policy" }],
   },
-  twitter: { card: "summary", title: "Cookie Policy · Scribtly" },
+  twitter: { card: "summary", title: "Cookie Policy · Scribtly", description: "Which cookies and local-storage items Scribtly uses and why — and how to change your preferences." },
 };
 
 const LAST_UPDATED = "18 April 2026";
@@ -95,7 +96,7 @@ export default function CookiesPage() {
       <section className="space-y-4 mb-10">
         <h2 className="text-xl font-semibold">Questions</h2>
         <p>
-          Email <a href="mailto:support@scribtly.com" className="text-primary underline">support@scribtly.com</a>.
+          Email <a href="mailto:support@scribtly.com" className="text-primary underline">support&#64;scribtly&#46;com</a>.
         </p>
       </section>
     </article>

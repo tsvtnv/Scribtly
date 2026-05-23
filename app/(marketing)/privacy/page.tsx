@@ -3,16 +3,17 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How Scribtly collects, uses, and protects your personal data under UK GDPR.",
+  description: "How Scribtly collects, uses, and protects your personal data under UK GDPR. Understand what we collect, why we collect it, and your rights.",
   alternates: { canonical: "/privacy" },
   openGraph: {
     type: "article",
     url: "/privacy",
     siteName: "Scribtly",
     title: "Privacy Policy · Scribtly",
-    description: "How Scribtly collects, uses, and protects your personal data under UK GDPR.",
+    description: "How Scribtly collects, uses, and protects your personal data under UK GDPR. Understand what we collect and your rights.",
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly Privacy Policy" }],
   },
-  twitter: { card: "summary", title: "Privacy Policy · Scribtly" },
+  twitter: { card: "summary", title: "Privacy Policy · Scribtly", description: "How Scribtly collects, uses, and protects your personal data under UK GDPR. Understand what we collect and your rights." },
 };
 
 const LAST_UPDATED = "18 April 2026";
@@ -34,7 +35,7 @@ export default function PrivacyPage() {
         <p>
           Scribtly is operated by Kristiyan Tsvetanov, trading as TsvWeb ("Scribtly", "we", "us").
           We are the data controller for personal data processed through the Scribtly service.
-          You can contact us at <a href="mailto:support@scribtly.com" className="text-primary underline">support@scribtly.com</a>.
+          You can contact us by email at <a href="mailto:support@scribtly.com" className="text-primary underline">support&#64;scribtly&#46;com</a>.
         </p>
       </section>
 
@@ -106,7 +107,7 @@ export default function PrivacyPage() {
       <section className="space-y-4 mb-10">
         <h2 className="text-xl font-semibold">8. How to exercise your rights</h2>
         <p>
-          Email us at <a href="mailto:support@scribtly.com" className="text-primary underline">support@scribtly.com</a>.
+          Email us at <a href="mailto:support@scribtly.com" className="text-primary underline">support&#64;scribtly&#46;com</a>.
           We will respond within 30 days.
         </p>
       </section>

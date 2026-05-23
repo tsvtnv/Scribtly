@@ -6,7 +6,7 @@ import { Check, Zap, Users, FileText } from "lucide-react";
 export const metadata = {
   title: "AI script writer for YouTube, TikTok & Reels",
   description:
-    "Scribtly is an AI script writer that generates YouTube, TikTok, and Instagram Reels scripts in your client's exact voice. Save brand voices. Deliver faster. Start free.",
+    "Scribtly is an AI script writer for YouTube, TikTok, and Reels. Generate scripts in your client's exact voice. Save brand voices. Deliver faster.",
   keywords: [
     "AI script writer",
     "AI video script generator",

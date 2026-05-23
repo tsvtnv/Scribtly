@@ -3,16 +3,17 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "The terms that govern your use of the Scribtly service.",
+  description: "The terms that govern your use of the Scribtly service. Read about subscriptions, acceptable use, intellectual property, and your cancellation rights.",
   alternates: { canonical: "/terms" },
   openGraph: {
     type: "article",
     url: "/terms",
     siteName: "Scribtly",
     title: "Terms of Service · Scribtly",
-    description: "The terms that govern your use of the Scribtly service.",
+    description: "The terms that govern your use of the Scribtly service — subscriptions, acceptable use, and cancellation rights.",
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly Terms of Service" }],
   },
-  twitter: { card: "summary", title: "Terms of Service · Scribtly" },
+  twitter: { card: "summary", title: "Terms of Service · Scribtly", description: "The terms that govern your use of the Scribtly service — subscriptions, acceptable use, and cancellation rights." },
 };
 
 const LAST_UPDATED = "18 April 2026";
@@ -33,7 +34,7 @@ export default function TermsPage() {
         <h2 className="text-xl font-semibold">1. Who we are</h2>
         <p>
           Scribtly is operated by Kristiyan Tsvetanov, trading as TsvWeb ("Scribtly", "we", "us").
-          Contact: <a href="mailto:support@scribtly.com" className="text-primary underline">support@scribtly.com</a>.
+          Contact: <a href="mailto:support@scribtly.com" className="text-primary underline">support&#64;scribtly&#46;com</a>.
           By creating an account or using the service, you ("you") agree to these Terms.
         </p>
       </section>

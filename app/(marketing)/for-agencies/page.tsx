@@ -7,7 +7,7 @@ import { FounderNote } from "@/components/home/FounderCard";
 export const metadata = {
   title: "Video script writing tool for content agencies — Scribtly",
   description:
-    "Scribtly helps content agencies produce YouTube, TikTok, and Reels scripts at scale. Save every client's voice. Keep quality consistent across your whole team. Start free.",
+    "Scribtly helps content agencies produce YouTube, TikTok, and Reels scripts at scale. Save every client's voice. Keep quality consistent. Start free.",
   keywords: [
     "script writing tool for agencies",
     "content agency script software",

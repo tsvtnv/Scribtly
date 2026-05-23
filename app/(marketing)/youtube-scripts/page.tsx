@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 export const metadata = {
   title: "YouTube script writer for freelancers",
   description:
-    "Write YouTube scripts that keep viewers watching. Scribtly generates long-form YouTube scripts in your client's exact voice, with hooks, sections, and CTAs built for the algorithm.",
+    "Write YouTube scripts that keep viewers watching. Scribtly generates scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
   keywords: [
     "YouTube script generator",
     "AI YouTube script writer",

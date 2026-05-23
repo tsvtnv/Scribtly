@@ -174,7 +174,7 @@ Tools like Scribtly can cut the time you spend on first drafts by 60–70%, whic
     slug: "client-voice-profile-guide-for-script-writers",
     title: "How to build a client voice profile that actually works",
     metaDescription:
-      "A good client voice profile means every script sounds like them, not like you. Here's how to capture tone, phrases, and audience in a format you can use every time.",
+      "A good client voice profile means every script sounds like them, not like you. Here's how to capture tone, phrases, and audience in a format you can reuse.",
     excerpt:
       "Starting from scratch every time a client gives you a brief is the slowest way to work. A voice profile changes that — one document, built once, that makes every future script faster and more accurate.",
     tags: ["client management", "brand voice", "freelance workflow", "script writing"],
@@ -231,7 +231,7 @@ Scribtly stores a voice profile for each of your clients and pulls from it autom
     slug: "broll-notes-in-video-scripts",
     title: "B-roll notes in scripts: what to write and why it matters",
     metaDescription:
-      "B-roll notes in a video script tell editors exactly what to cut to — saving time, preventing bad edits, and making your deliverable twice as useful. Here's how to write them.",
+      "B-roll notes tell editors exactly what to cut to — saving time, preventing bad edits, and making your deliverable more useful. Here's how to write them.",
     excerpt:
       "A script without B-roll notes is half a script. Editors working without direction make arbitrary cuts — and creators blame the script. Here's how to write B-roll notes that make your work better and your clients happier.",
     tags: ["video production", "script writing", "broll", "editing workflow"],

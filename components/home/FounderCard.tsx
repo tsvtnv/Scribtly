@@ -60,7 +60,7 @@ export function FounderSection() {
             href="mailto:kristiyan@scribtly.com"
             className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-medium"
           >
-            kristiyan@scribtly.com
+            kristiyan&#64;scribtly&#46;com
           </a>
         </div>
       </div>

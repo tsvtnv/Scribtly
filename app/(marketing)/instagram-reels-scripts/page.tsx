@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 export const metadata = {
   title: "Instagram Reels script writer for freelancers",
   description:
-    "Write Instagram Reels scripts that stop the scroll. Scribtly generates punchy, hook-first Reels scripts in your client's exact voice — ready in under 60 seconds.",
+    "Write Instagram Reels scripts that stop the scroll. Scribtly generates hook-first Reels scripts in your client's exact voice — ready in under 60 seconds.",
   keywords: [
     "Instagram Reels script generator",
     "AI Reels script writer",
