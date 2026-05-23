@@ -23,23 +23,23 @@ export const metadata = {
     title: "TikTok script writer for freelancers · Scribtly",
     description:
       "Short-form TikTok and Reels scripts in your client's voice — hooks, beats, and loops in 15/30/60s.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly TikTok script writer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "TikTok script writer for freelancers · Scribtly",
     description:
       "Short-form TikTok and Reels scripts in your client's voice — hooks, beats, and loops in 15/30/60s.",
-    images: ["/og-image.svg"],
   },
 };
+
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-    { "@type": "ListItem", position: 2, name: "TikTok Scripts", item: "/tiktok-scripts" },
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+    { "@type": "ListItem", position: 2, name: "TikTok Scripts", item: `${SITE_URL}/tiktok-scripts` },
   ],
 };
 

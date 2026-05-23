@@ -41,13 +41,11 @@ export async function generateMetadata({
       title: post.title,
       description: post.metaDescription,
       publishedTime: post.publishedAt.toISOString(),
-      images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.metaDescription,
-      images: ["/og-image.svg"],
     },
   };
 }

@@ -16,14 +16,12 @@ export const metadata = {
     title: "Blog · Scribtly",
     description:
       "Practical guides on writing YouTube, TikTok, and Reels scripts faster for freelancers and content agencies.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly blog" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog · Scribtly",
     description:
       "Practical guides on writing YouTube, TikTok, and Reels scripts faster for freelancers and content agencies.",
-    images: ["/og-image.svg"],
   },
 };
 

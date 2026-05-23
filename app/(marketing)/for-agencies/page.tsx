@@ -23,23 +23,23 @@ export const metadata = {
     title: "Video script writing tool for content agencies · Scribtly",
     description:
       "Scale script production across your whole client roster. One tool, every client's voice, consistent quality.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly for agencies" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Video script writing tool for content agencies · Scribtly",
     description:
       "Scale script production across your whole client roster. One tool, every client's voice, consistent quality.",
-    images: ["/og-image.svg"],
   },
 };
+
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-    { "@type": "ListItem", position: 2, name: "For Agencies", item: "/for-agencies" },
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+    { "@type": "ListItem", position: 2, name: "For Agencies", item: `${SITE_URL}/for-agencies` },
   ],
 };
 

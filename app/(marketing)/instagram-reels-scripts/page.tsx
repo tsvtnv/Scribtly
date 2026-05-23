@@ -22,23 +22,23 @@ export const metadata = {
     title: "Instagram Reels script writer for freelancers · Scribtly",
     description:
       "Hook-first Instagram Reels scripts in your client's voice. Stop the scroll in 3 seconds or less.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly Instagram Reels script writer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Instagram Reels script writer for freelancers · Scribtly",
     description:
       "Hook-first Instagram Reels scripts in your client's voice. Stop the scroll in 3 seconds or less.",
-    images: ["/og-image.svg"],
   },
 };
+
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-    { "@type": "ListItem", position: 2, name: "Instagram Reels Scripts", item: "/instagram-reels-scripts" },
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+    { "@type": "ListItem", position: 2, name: "Instagram Reels Scripts", item: `${SITE_URL}/instagram-reels-scripts` },
   ],
 };
 

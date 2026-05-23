@@ -23,23 +23,23 @@ export const metadata = {
     title: "The script writing tool for freelancers · Scribtly",
     description:
       "Deliver scripts faster, take on more clients, and stop starting from a blank page. Built for freelance script writers.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly for freelancers" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "The script writing tool for freelancers · Scribtly",
     description:
       "Deliver scripts faster, take on more clients, and stop starting from a blank page. Built for freelance script writers.",
-    images: ["/og-image.svg"],
   },
 };
+
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-    { "@type": "ListItem", position: 2, name: "For Freelancers", item: "/for-freelancers" },
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+    { "@type": "ListItem", position: 2, name: "For Freelancers", item: `${SITE_URL}/for-freelancers` },
   ],
 };
 

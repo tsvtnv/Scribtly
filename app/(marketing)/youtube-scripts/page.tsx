@@ -22,23 +22,23 @@ export const metadata = {
     title: "YouTube script writer for freelancers · Scribtly",
     description:
       "Long-form YouTube scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly YouTube script writer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "YouTube script writer for freelancers · Scribtly",
     description:
       "Long-form YouTube scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
-    images: ["/og-image.svg"],
   },
 };
+
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-    { "@type": "ListItem", position: 2, name: "YouTube Scripts", item: "/youtube-scripts" },
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+    { "@type": "ListItem", position: 2, name: "YouTube Scripts", item: `${SITE_URL}/youtube-scripts` },
   ],
 };
 

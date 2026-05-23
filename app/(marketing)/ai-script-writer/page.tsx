@@ -23,14 +23,12 @@ export const metadata = {
     title: "AI script writer for YouTube, TikTok & Reels · Scribtly",
     description:
       "Generate platform-specific video scripts in your client's exact voice. YouTube, TikTok, Reels — all in under 60 seconds.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly AI script writer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "AI script writer for YouTube, TikTok & Reels · Scribtly",
     description:
       "Generate platform-specific video scripts in your client's exact voice. YouTube, TikTok, Reels — all in under 60 seconds.",
-    images: ["/og-image.svg"],
   },
 };
 
@@ -42,7 +40,7 @@ const softwareJsonLd = {
   operatingSystem: "Web",
   description:
     "AI script writer for YouTube, TikTok, and Instagram Reels. Saves client brand voices and generates platform-specific scripts in under 60 seconds.",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "GBP" },
   url: "https://scribtly.com",
 };
 

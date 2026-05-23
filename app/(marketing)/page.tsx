@@ -33,14 +33,12 @@ export const metadata = {
     title: "Scribtly: Write video scripts 10x faster",
     description:
       "AI script generator built for freelancers. Save client voices. Generate forever. Start free.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Scribtly — AI video scripts" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Scribtly: Write video scripts 10x faster",
     description:
       "AI script generator built for freelancers. Save client voices. Generate forever. Start free.",
-    images: ["/og-image.svg"],
   },
 };
 
@@ -55,7 +53,7 @@ const softwareJsonLd = {
   offers: {
     "@type": "Offer",
     price: "0",
-    priceCurrency: "USD",
+    priceCurrency: "GBP",
     description: "Free plan with 5 scripts included",
   },
 };
