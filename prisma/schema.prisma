@@ -63,6 +63,7 @@ model User {
   isBetaTester          Boolean   @default(false)
   betaExpiresAt         DateTime?
   betaWarningEmailSentAt DateTime?
+  disabled              Boolean   @default(false)
 
   sessions              Session[]
   ownedWorkspaces       Workspace[]       @relation("WorkspaceOwner")
@@ -102,6 +103,7 @@ model Workspace {
   stripeSubscriptionId String?
   scriptCount          Int               @default(0)
   scriptCountResetAt   DateTime
+  suspended            Boolean           @default(false)
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
   onboardingStep       Int               @default(0)
@@ -364,6 +366,18 @@ model ReferralEvent {
   metadata  String?
 
   @@index([leadId, createdAt])
+}
+
+model AdminAuditLog {
+  id         String   @id @default(cuid())
+  action     String
+  targetId   String?
+  targetType String?
+  details    String?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([targetId])
 }
 
 model BlogPost {

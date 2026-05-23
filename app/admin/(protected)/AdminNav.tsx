@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, Share2, LogOut, Sun, Moon } from "lucide-react";
+import { LayoutDashboard, Users, Share2, LogOut, Sun, Moon, UserCircle, ClipboardList } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
 const links = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
   { href: "/admin/users", label: "Workspaces", icon: Users, exact: false },
+  { href: "/admin/accounts", label: "Accounts", icon: UserCircle, exact: false },
   { href: "/admin/outreach", label: "Outreach", icon: Share2, exact: false },
+  { href: "/admin/audit", label: "Audit log", icon: ClipboardList, exact: false },
 ];
 
 export function AdminNav() {

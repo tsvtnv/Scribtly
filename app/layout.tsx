@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Source_Serif_4 } from "next/font/google";
 import { ConsentProvider } from "@/components/consent/ConsentProvider";
 import { CookieConsent } from "@/components/consent/CookieConsent";
+import { ImpersonationBanner } from "@/components/ImpersonationBanner";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="font-sans">
+        <ImpersonationBanner />
         <ConsentProvider>
           {children}
           <CookieConsent />

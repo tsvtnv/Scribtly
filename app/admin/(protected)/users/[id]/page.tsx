@@ -4,6 +4,7 @@ import Link from "next/link";
 import { requireAdmin } from "@/lib/adminAuth";
 import { Card } from "@/components/ui/Card";
 import { ArrowLeft } from "lucide-react";
+import { WorkspaceActions } from "./WorkspaceActions";
 
 export default async function AdminWorkspaceDetailPage({ params }: { params: { id: string } }) {
   await requireAdmin();
@@ -11,7 +12,7 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: { i
   const ws = await prisma.workspace.findUnique({
     where: { id: params.id },
     include: {
-      owner: { select: { email: true, name: true, createdAt: true } },
+      owner: { select: { id: true, email: true, name: true, createdAt: true, disabled: true } },
       members: { include: { user: { select: { email: true, name: true } } } },
       clients: {
         select: {
@@ -62,11 +63,34 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: { i
         <ArrowLeft size={14} /> All workspaces
       </Link>
 
-      <h1 className="text-2xl font-semibold tracking-tight mb-1">{ws.name}</h1>
-      <p className="text-sm text-text-secondary mb-6 font-mono">{ws.id}</p>
+      <div className="flex items-start justify-between gap-4 mb-1 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">{ws.name}</h1>
+          <p className="text-sm text-text-secondary font-mono">{ws.id}</p>
+        </div>
+        <div className="flex gap-2">
+          {ws.suspended && (
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+              SUSPENDED
+            </span>
+          )}
+          {ws.owner.disabled && (
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
+              OWNER DISABLED
+            </span>
+          )}
+        </div>
+      </div>
+
+      <WorkspaceActions
+        workspaceId={ws.id}
+        ownerId={ws.owner.id}
+        ownerEmail={ws.owner.email}
+        suspended={ws.suspended}
+      />
 
       {/* Core details */}
-      <Card className="mb-6">
+      <Card className="mb-6 mt-6">
         <h2 className="text-sm font-semibold mb-3">Details</h2>
         <dl className="grid grid-cols-2 gap-x-6 gap-y-3">
           {fields.map(([k, v]) => (
