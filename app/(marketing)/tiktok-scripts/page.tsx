@@ -72,7 +72,7 @@ export default function TikTokPage() {
           Short-form TikTok scripts (hook, body, payoff) written in your client's voice. No padding, no filler, no "Hey guys".
         </p>
         <Link href="/signup" className="inline-block mt-7">
-          <Button size="lg">Start free · 3 scripts</Button>
+          <Button size="lg">Start free · 5 scripts</Button>
         </Link>
       </section>
 

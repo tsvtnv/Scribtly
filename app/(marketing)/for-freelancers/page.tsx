@@ -96,7 +96,7 @@ export default function ForFreelancersPage() {
           Scribtly is the script writing tool that freelancers actually use in client work. Save each client's voice, generate professional scripts in under 60 seconds, and take on more work without burning out.
         </p>
         <Link href="/signup" className="inline-block mt-7">
-          <Button size="lg">Start free · 3 scripts</Button>
+          <Button size="lg">Start free · 5 scripts</Button>
         </Link>
       </section>
 
@@ -145,7 +145,7 @@ export default function ForFreelancersPage() {
 
       <section className="max-w-3xl mx-auto px-5 py-20 text-center">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">
-          Start with 3 free scripts
+          Start with 5 free scripts
         </h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted mb-6">
           No credit card. No commitment. See how fast your workflow can be.

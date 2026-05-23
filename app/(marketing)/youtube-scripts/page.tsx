@@ -71,7 +71,7 @@ export default function YouTubePage() {
           Stop writing from a blank page. Scribtly generates a full YouTube script (hook, intro, sections, CTA) in your client's voice, in under 60 seconds.
         </p>
         <Link href="/signup" className="inline-block mt-7">
-          <Button size="lg">Start free · 3 scripts</Button>
+          <Button size="lg">Start free · 5 scripts</Button>
         </Link>
       </section>
 

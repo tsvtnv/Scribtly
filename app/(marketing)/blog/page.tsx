@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import { prisma } from "@/lib/prisma";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
@@ -157,6 +158,20 @@ export default async function BlogPage({
         </div>
       )}
     </div>
+
+    <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
+      <div className="max-w-3xl mx-auto px-5 py-16 text-center">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3">
+          Stop writing scripts from scratch
+        </h2>
+        <p className="text-sm text-text-secondary dark:text-dark-muted mb-6 max-w-md mx-auto">
+          Save each client&apos;s voice once. Generate YouTube, TikTok, and Reels scripts in under 60 seconds. Start free — no card needed.
+        </p>
+        <Link href="/signup">
+          <Button size="lg">Start free · 5 scripts included</Button>
+        </Link>
+      </div>
+    </section>
     </>
   );
 }

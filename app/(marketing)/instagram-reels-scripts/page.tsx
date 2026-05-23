@@ -90,7 +90,7 @@ export default function InstagramReelsPage() {
           Your client has 3 seconds. Scribtly writes hook-first Instagram Reels scripts in their exact voice — punchy, paced for the algorithm, and ready to film.
         </p>
         <Link href="/signup" className="inline-block mt-7">
-          <Button size="lg">Start free · 3 scripts</Button>
+          <Button size="lg">Start free · 5 scripts</Button>
         </Link>
       </section>
 

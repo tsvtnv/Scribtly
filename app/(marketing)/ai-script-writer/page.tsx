@@ -109,7 +109,7 @@ export default function AIScriptWriterPage() {
         </p>
         <div className="flex items-center justify-center gap-3 mt-7 flex-wrap">
           <Link href="/signup">
-            <Button size="lg">Start free · 3 scripts</Button>
+            <Button size="lg">Start free · 5 scripts</Button>
           </Link>
           <Link href="/pricing">
             <Button size="lg" variant="outline">See pricing</Button>
@@ -172,7 +172,7 @@ export default function AIScriptWriterPage() {
           Try it free — no credit card needed
         </h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted mb-6">
-          3 free scripts to start. Upgrade when you're ready.
+          5 free scripts to start. Upgrade when you're ready.
         </p>
         <Link href="/signup">
           <Button size="lg">Start writing for free</Button>
