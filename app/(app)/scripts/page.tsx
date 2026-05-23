@@ -49,7 +49,8 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
         contentItem: { select: { id: true, stage: true } },
       },
       orderBy: { createdAt: "desc" },
-      take: limit * page,
+      skip: (page - 1) * limit,
+      take: limit,
     }),
     prisma.client.findMany({ where: { workspaceId: workspace.id }, orderBy: { name: "asc" } }),
   ]);
