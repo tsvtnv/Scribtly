@@ -51,12 +51,14 @@ export const metadata: Metadata = {
     description:
       "Generate YouTube, TikTok, and Reels scripts in your client's exact voice — in under 60 seconds.",
     locale: "en_US",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly — AI video scripts" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Scribtly — AI video scripts for freelancers",
     description:
       "Generate YouTube, TikTok, and Reels scripts in your client's exact voice — in under 60 seconds.",
+    images: ["/opengraph-image"],
   },
   icons: {
     icon: "/icon.svg",

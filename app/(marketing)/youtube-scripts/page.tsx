@@ -22,12 +22,14 @@ export const metadata = {
     title: "YouTube script writer for freelancers · Scribtly",
     description:
       "Long-form YouTube scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly YouTube script writer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "YouTube script writer for freelancers · Scribtly",
     description:
       "Long-form YouTube scripts in your client's voice — hooks, sections, and CTAs built for the algorithm.",
+    images: ["/opengraph-image"],
   },
 };
 

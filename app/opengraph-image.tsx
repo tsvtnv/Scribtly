@@ -10,7 +10,7 @@ export default function OgImage() {
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #0f0f1a 0%, #1a1830 50%, #0f0f1a 100%)",
+          background: "linear-gradient(135deg, #0f0f1a 0%, #1c1a35 50%, #0f0f1a 100%)",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -21,61 +21,67 @@ export default function OgImage() {
           position: "relative",
         }}
       >
-        {/* purple glow top-left */}
+        {/* Top-left accent circle */}
         <div
           style={{
             position: "absolute",
-            top: -100,
-            left: -100,
-            width: 500,
-            height: 500,
+            top: -120,
+            left: -120,
+            width: 480,
+            height: 480,
             borderRadius: "50%",
-            background: "rgba(127,119,221,0.25)",
-            filter: "blur(80px)",
+            background: "rgba(127,119,221,0.22)",
+            display: "flex",
           }}
         />
-        {/* green glow bottom-right */}
+        {/* Bottom-right accent circle */}
         <div
           style={{
             position: "absolute",
-            bottom: -80,
-            right: -80,
-            width: 400,
-            height: 400,
+            bottom: -100,
+            right: -100,
+            width: 380,
+            height: 380,
             borderRadius: "50%",
-            background: "rgba(56,193,114,0.15)",
-            filter: "blur(70px)",
+            background: "rgba(56,193,114,0.14)",
+            display: "flex",
           }}
         />
 
-        {/* Logo area */}
+        {/* Logo row */}
         <div
           style={{
             display: "flex",
+            flexDirection: "row",
             alignItems: "center",
-            gap: 16,
-            marginBottom: 32,
+            marginBottom: 36,
           }}
         >
           <div
             style={{
-              width: 56,
-              height: 56,
+              width: 60,
+              height: 60,
               borderRadius: 14,
               background: "#7F77DD",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 28,
-              color: "white",
-              fontWeight: 700,
+              marginRight: 16,
             }}
           >
-            S
+            <span
+              style={{
+                fontSize: 30,
+                fontWeight: 700,
+                color: "white",
+              }}
+            >
+              S
+            </span>
           </div>
           <span
             style={{
-              fontSize: 40,
+              fontSize: 42,
               fontWeight: 700,
               color: "white",
               letterSpacing: "-1px",
@@ -88,27 +94,32 @@ export default function OgImage() {
         {/* Headline */}
         <div
           style={{
-            fontSize: 56,
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            fontSize: 58,
             fontWeight: 700,
             color: "white",
             textAlign: "center",
             lineHeight: 1.1,
             letterSpacing: "-1.5px",
-            maxWidth: 900,
-            marginBottom: 24,
+            width: 900,
+            marginBottom: 28,
           }}
         >
           AI video scripts for{" "}
-          <span style={{ color: "#7F77DD" }}>freelancers</span>
+          <span style={{ color: "#7F77DD", marginLeft: 14 }}>freelancers</span>
         </div>
 
         {/* Subline */}
         <div
           style={{
+            display: "flex",
             fontSize: 26,
-            color: "rgba(255,255,255,0.65)",
+            color: "rgba(255,255,255,0.60)",
             textAlign: "center",
-            maxWidth: 700,
+            width: 680,
           }}
         >
           YouTube, TikTok &amp; Reels — in your client's voice, in 60 seconds
@@ -118,19 +129,27 @@ export default function OgImage() {
         <div
           style={{
             position: "absolute",
-            bottom: 40,
+            bottom: 44,
             display: "flex",
+            flexDirection: "row",
             alignItems: "center",
-            gap: 8,
             background: "rgba(127,119,221,0.18)",
             border: "1px solid rgba(127,119,221,0.3)",
             borderRadius: 999,
-            padding: "8px 20px",
-            color: "rgba(255,255,255,0.7)",
-            fontSize: 18,
+            paddingTop: 8,
+            paddingBottom: 8,
+            paddingLeft: 22,
+            paddingRight: 22,
           }}
         >
-          scribtly.com
+          <span
+            style={{
+              color: "rgba(255,255,255,0.65)",
+              fontSize: 20,
+            }}
+          >
+            scribtly.com
+          </span>
         </div>
       </div>
     ),

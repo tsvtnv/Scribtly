@@ -22,12 +22,14 @@ export const metadata = {
     title: "Instagram Reels script writer for freelancers · Scribtly",
     description:
       "Hook-first Instagram Reels scripts in your client's voice. Stop the scroll in 3 seconds or less.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly Instagram Reels script writer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Instagram Reels script writer for freelancers · Scribtly",
     description:
       "Hook-first Instagram Reels scripts in your client's voice. Stop the scroll in 3 seconds or less.",
+    images: ["/opengraph-image"],
   },
 };
 

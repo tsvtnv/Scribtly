@@ -23,12 +23,14 @@ export const metadata = {
     title: "TikTok script writer for freelancers · Scribtly",
     description:
       "Short-form TikTok and Reels scripts in your client's voice — hooks, beats, and loops in 15/30/60s.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly TikTok script writer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "TikTok script writer for freelancers · Scribtly",
     description:
       "Short-form TikTok and Reels scripts in your client's voice — hooks, beats, and loops in 15/30/60s.",
+    images: ["/opengraph-image"],
   },
 };
 

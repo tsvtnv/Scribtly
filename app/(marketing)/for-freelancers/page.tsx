@@ -23,12 +23,14 @@ export const metadata = {
     title: "The script writing tool for freelancers · Scribtly",
     description:
       "Deliver scripts faster, take on more clients, and stop starting from a blank page. Built for freelance script writers.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly for freelancers" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "The script writing tool for freelancers · Scribtly",
     description:
       "Deliver scripts faster, take on more clients, and stop starting from a blank page. Built for freelance script writers.",
+    images: ["/opengraph-image"],
   },
 };
 

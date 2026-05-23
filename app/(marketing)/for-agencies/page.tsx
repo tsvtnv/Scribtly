@@ -23,12 +23,14 @@ export const metadata = {
     title: "Video script writing tool for content agencies · Scribtly",
     description:
       "Scale script production across your whole client roster. One tool, every client's voice, consistent quality.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly for agencies" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Video script writing tool for content agencies · Scribtly",
     description:
       "Scale script production across your whole client roster. One tool, every client's voice, consistent quality.",
+    images: ["/opengraph-image"],
   },
 };
 

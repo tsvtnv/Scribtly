@@ -23,12 +23,14 @@ export const metadata = {
     title: "AI script writer for YouTube, TikTok & Reels · Scribtly",
     description:
       "Generate platform-specific video scripts in your client's exact voice. YouTube, TikTok, Reels — all in under 60 seconds.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly AI script writer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "AI script writer for YouTube, TikTok & Reels · Scribtly",
     description:
       "Generate platform-specific video scripts in your client's exact voice. YouTube, TikTok, Reels — all in under 60 seconds.",
+    images: ["/opengraph-image"],
   },
 };
 

@@ -5,6 +5,8 @@ const SESSION_COOKIE = "auth_session";
 const publicPaths = [
   "/",
   "/pricing",
+  "/opengraph-image",
+  "/apple-icon",
   "/youtube-scripts",
   "/tiktok-scripts",
   "/instagram-reels-scripts",
