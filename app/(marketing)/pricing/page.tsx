@@ -4,8 +4,18 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 
 export const metadata = {
-  title: "Pricing — ScriptFast",
-  description: "Simple pricing for freelancers. Start free, upgrade when you're ready.",
+  title: "Pricing — Plans for Freelancers and Agencies",
+  description:
+    "ScriptFast pricing: start free with 3 scripts, or upgrade to Pro for unlimited scripts across YouTube, TikTok, and Reels. Simple plans for freelancers and agencies.",
+  alternates: {
+    canonical: "/pricing",
+  },
+  openGraph: {
+    title: "ScriptFast Pricing — Plans for Freelancers and Agencies",
+    description:
+      "Start free with 3 scripts, or upgrade to Pro for unlimited YouTube, TikTok, and Reels script generation in your client's voice.",
+    url: "/pricing",
+  },
 };
 
 const plans = [
@@ -43,9 +53,23 @@ const faq = [
   { q: "Can I add team members?", a: "On the Agency plan you can invite up to 5 team members who share your client profiles and script library." },
 ];
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
 export default function PricingPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <section className="max-w-5xl mx-auto px-5 pt-16 pb-10 text-center">
         <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Simple pricing for freelancers</h1>
         <p className="text-sm text-text-secondary dark:text-dark-muted mt-3">

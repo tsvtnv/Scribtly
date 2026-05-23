@@ -4,9 +4,18 @@ import { Card } from "@/components/ui/Card";
 import { Check } from "lucide-react";
 
 export const metadata = {
-  title: "YouTube script writer for freelancers — ScriptFast",
+  title: "YouTube Script Writer for Freelancers",
   description:
-    "Write YouTube scripts that keep viewers watching. ScriptFast generates long-form YouTube scripts in your client's exact voice, with hooks, sections, and CTAs built for the algorithm.",
+    "Generate full YouTube scripts — hook, intro, sections, and CTA — in your client's exact voice. Stop starting from a blank page. Try ScriptFast free.",
+  alternates: {
+    canonical: "/youtube-scripts",
+  },
+  openGraph: {
+    title: "YouTube Script Writer for Freelancers — ScriptFast",
+    description:
+      "Generate full YouTube scripts — hook, intro, sections, and CTA — in your client's exact voice. Try ScriptFast free.",
+    url: "/youtube-scripts",
+  },
 };
 
 const steps = [
@@ -65,7 +74,19 @@ export default function YouTubePage() {
 
       <section className="max-w-3xl mx-auto px-5 py-20 text-center">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">Ready to write faster?</h2>
-        <Link href="/signup"><Button size="lg">Start free</Button></Link>
+        <div className="flex flex-wrap gap-3 justify-center">
+          <Link href="/signup"><Button size="lg">Start free</Button></Link>
+          <Link href="/pricing"><Button size="lg" variant="ghost">See pricing</Button></Link>
+        </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-16 text-center">
+        <p className="text-sm text-text-secondary dark:text-dark-muted">
+          Also need short-form content?{" "}
+          <Link href="/tiktok-scripts" className="text-primary hover:underline">
+            See our TikTok script writer →
+          </Link>
+        </p>
       </section>
     </>
   );

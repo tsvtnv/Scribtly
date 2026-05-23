@@ -4,9 +4,18 @@ import { Card } from "@/components/ui/Card";
 import { Check } from "lucide-react";
 
 export const metadata = {
-  title: "TikTok script writer for freelancers — ScriptFast",
+  title: "TikTok Script Writer for Freelancers",
   description:
-    "Write TikTok scripts that hook viewers in the first second. ScriptFast generates short-form scripts in your client's exact voice — 15, 30, or 60 seconds.",
+    "Generate TikTok scripts that hook viewers in the first second — written in your client's exact voice. 15, 30, or 60 seconds. Hook, body, payoff. Try ScriptFast free.",
+  alternates: {
+    canonical: "/tiktok-scripts",
+  },
+  openGraph: {
+    title: "TikTok Script Writer for Freelancers — ScriptFast",
+    description:
+      "Generate TikTok scripts that hook viewers in the first second, written in your client's exact voice. Try ScriptFast free.",
+    url: "/tiktok-scripts",
+  },
 };
 
 const steps = [
@@ -65,7 +74,19 @@ export default function TikTokPage() {
 
       <section className="max-w-3xl mx-auto px-5 py-20 text-center">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">Ready to write faster?</h2>
-        <Link href="/signup"><Button size="lg">Start free</Button></Link>
+        <div className="flex flex-wrap gap-3 justify-center">
+          <Link href="/signup"><Button size="lg">Start free</Button></Link>
+          <Link href="/pricing"><Button size="lg" variant="ghost">See pricing</Button></Link>
+        </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-16 text-center">
+        <p className="text-sm text-text-secondary dark:text-dark-muted">
+          Also need long-form content?{" "}
+          <Link href="/youtube-scripts" className="text-primary hover:underline">
+            See our YouTube script writer →
+          </Link>
+        </p>
       </section>
     </>
   );

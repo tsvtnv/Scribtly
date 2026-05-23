@@ -9,6 +9,8 @@ export function MarketingNav() {
           ScriptFast
         </Link>
         <div className="flex items-center gap-5 text-sm">
+          <Link href="/youtube-scripts" className="hover:text-primary hidden md:inline">YouTube</Link>
+          <Link href="/tiktok-scripts" className="hover:text-primary hidden md:inline">TikTok</Link>
           <Link href="/pricing" className="hover:text-primary">Pricing</Link>
           <Link href="/login" className="hover:text-primary">Log in</Link>
           <Link href="/signup">
