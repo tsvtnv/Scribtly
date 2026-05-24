@@ -54,6 +54,17 @@ export function MarketingFooter() {
 
         <div className="border-t-hair border-[var(--color-border)] pt-6 flex flex-wrap gap-4 items-center justify-between text-xs text-text-secondary dark:text-dark-muted">
           <span>© {new Date().getFullYear()} Scribtly · Made for freelancers</span>
+          <span>
+            Developed &amp; hosted by{" "}
+            <a
+              href="https://tsvweb.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              tsvweb.com
+            </a>
+          </span>
         </div>
       </div>
     </footer>
