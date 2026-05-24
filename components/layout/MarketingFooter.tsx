@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { OpenCookieSettingsButton } from "@/components/consent/OpenCookieSettingsButton";
 
 export function MarketingFooter() {
@@ -53,7 +54,10 @@ export function MarketingFooter() {
         </div>
 
         <div className="border-t-hair border-[var(--color-border)] pt-6 flex flex-wrap gap-4 items-center justify-between text-xs text-text-secondary dark:text-dark-muted">
-          <span>© {new Date().getFullYear()} Scribtly · Made for freelancers</span>
+          <span className="inline-flex items-center gap-2">
+            <Image src="/brand/logo-icon.png" alt="Scribtly" width={20} height={20} className="rounded-md" />
+            © {new Date().getFullYear()} Scribtly · Made for freelancers
+          </span>
           <span>
             Developed &amp; hosted by{" "}
             <a

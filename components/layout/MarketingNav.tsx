@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -14,8 +15,9 @@ export function MarketingNav() {
       </Link>
       <nav className="w-full bg-[var(--color-bg)]/80 backdrop-blur border-b-hair border-[var(--color-border)]">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
-            Scribtly
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/brand/logo-icon.png" alt="Scribtly" width={28} height={28} className="rounded-lg" />
+            <span className="text-lg font-semibold tracking-tight">Scribtly</span>
           </Link>
           <div className="flex items-center gap-5 text-sm">
             <Link href="/blog" className="hidden sm:inline hover:text-primary">Blog</Link>

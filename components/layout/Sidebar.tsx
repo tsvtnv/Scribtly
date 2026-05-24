@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard, Sparkles, FileText, Users, Settings, UsersRound, LayoutGrid, Timer, Menu, X, ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -138,8 +139,9 @@ export function Sidebar() {
         )}
       >
         <div className="px-5 pt-6 pb-4 flex items-center justify-between">
-          <Link href="/dashboard" className="text-lg font-semibold tracking-tight">
-            Scribtly
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <Image src="/brand/logo-icon.png" alt="Scribtly" width={26} height={26} className="rounded-md" />
+            <span className="text-lg font-semibold tracking-tight">Scribtly</span>
           </Link>
           <button onClick={() => setMobileOpen(false)} className="p-1 rounded hover:bg-[var(--color-primary-tint)]" aria-label="Close menu">
             <X size={16} />
@@ -165,9 +167,14 @@ export function Sidebar() {
         )}
       >
         <div className={cn("pt-6 pb-4 flex items-center", collapsed ? "justify-center px-2" : "px-5 justify-between")}>
-          {!collapsed && (
-            <Link href="/dashboard" className="text-lg font-semibold tracking-tight truncate">
-              Scribtly
+          {collapsed ? (
+            <Link href="/dashboard">
+              <Image src="/brand/logo-icon.png" alt="Scribtly" width={26} height={26} className="rounded-md" />
+            </Link>
+          ) : (
+            <Link href="/dashboard" className="flex items-center gap-2 min-w-0">
+              <Image src="/brand/logo-icon.png" alt="Scribtly" width={26} height={26} className="rounded-md shrink-0" />
+              <span className="text-lg font-semibold tracking-tight truncate">Scribtly</span>
             </Link>
           )}
           <button

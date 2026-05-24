@@ -362,30 +362,19 @@ export default function HomePage() {
 
           {/* Voice feature */}
           <ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-              <div>
-                <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">Client voice</span>
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
-                  Write in your client's exact voice
-                </h2>
-                <p className="text-text-secondary dark:text-dark-muted text-sm leading-relaxed mb-6">
-                  Save each client's niche, audience, tone, and brand phrases once. Scribtly reads that profile every time you generate — so every script sounds like it came straight from them, not a template.
-                </p>
-                <Link href="/signup">
-                  <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
-                    Try it free <ArrowRight size={13} />
-                  </Button>
-                </Link>
-              </div>
-              <div className="relative rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(127,119,221,0.2)] ring-1 ring-[var(--color-border)]">
-                <Image
-                  src="/brand/feature-voice.png"
-                  alt="Scribtly generate page showing client-ready scripts in seconds"
-                  width={1200}
-                  height={1200}
-                  className="w-full h-auto"
-                />
-              </div>
+            <div className="max-w-2xl">
+              <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">Client voice</span>
+              <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+                Write in your client's exact voice
+              </h2>
+              <p className="text-text-secondary dark:text-dark-muted text-sm leading-relaxed mb-6">
+                Save each client's niche, audience, tone, and brand phrases once. Scribtly reads that profile every time you generate — so every script sounds like it came straight from them, not a template.
+              </p>
+              <Link href="/signup">
+                <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
+                  Try it free <ArrowRight size={13} />
+                </Button>
+              </Link>
             </div>
           </ScrollReveal>
 

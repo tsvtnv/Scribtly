@@ -10,8 +10,9 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
   return (
     <div className="min-h-screen flex flex-col bg-[var(--color-bg)]">
       <header className="flex items-center justify-center py-6 md:hidden">
-        <Link href="/" className="text-xl font-semibold tracking-tight text-text-primary">
-          Scribtly
+        <Link href="/" className="flex items-center gap-2">
+          <Image src="/brand/logo-icon.png" alt="Scribtly" width={28} height={28} className="rounded-lg" />
+          <span className="text-xl font-semibold tracking-tight text-text-primary">Scribtly</span>
         </Link>
       </header>
 

@@ -126,22 +126,8 @@ export default function PricingPage() {
 
   return (
     <>
-      {/* ── PRICING HERO IMAGE ── */}
-      <section className="max-w-3xl mx-auto px-5 pt-12 pb-0">
-        <div className="rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(127,119,221,0.18)] ring-1 ring-[var(--color-border)]">
-          <Image
-            src="/brand/pricing-hero.png"
-            alt="Scribtly pricing tiers — Free, Pro and Agency plans"
-            width={1536}
-            height={1024}
-            className="w-full h-auto"
-            priority
-          />
-        </div>
-      </section>
-
       {/* ── HERO ── */}
-      <section className="max-w-4xl mx-auto px-5 pt-10 pb-8 text-center">
+      <section className="max-w-4xl mx-auto px-5 pt-16 pb-8 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-xs text-text-secondary dark:text-dark-muted mb-5 shadow-sm">
           <Sparkles size={11} className="text-primary" />
           Launch pricing — lock in your rate early
