@@ -1,0 +1,69 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - link "Scribtly" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Collapse sidebar" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+    - generic [ref=e9]: TEST
+    - navigation [ref=e10]:
+      - link "Dashboard" [ref=e11] [cursor=pointer]:
+        - /url: /dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link "Generate" [ref=e18] [cursor=pointer]:
+        - /url: /generate
+        - img [ref=e19]
+        - generic [ref=e21]: Generate
+      - link "Scripts" [ref=e22] [cursor=pointer]:
+        - /url: /scripts
+        - img [ref=e23]
+        - generic [ref=e26]: Scripts
+      - link "Pipeline" [ref=e27] [cursor=pointer]:
+        - /url: /pipeline
+        - img [ref=e28]
+        - generic [ref=e33]: Pipeline
+      - link "Clients" [ref=e34] [cursor=pointer]:
+        - /url: /clients
+        - img [ref=e35]
+        - generic [ref=e40]: Clients
+      - link "Settings" [ref=e41] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e42]
+        - generic [ref=e45]: Settings
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - generic [ref=e48]: Scripts this month
+        - generic [ref=e49]: 0/25
+      - link "Upgrade for more" [ref=e51] [cursor=pointer]:
+        - /url: /settings/billing
+        - img [ref=e52]
+        - text: Upgrade for more
+    - generic [ref=e54]:
+      - link "BASIC" [ref=e55] [cursor=pointer]:
+        - /url: /settings/billing
+      - generic [ref=e56]:
+        - button "Toggle theme" [ref=e57] [cursor=pointer]:
+          - img [ref=e58]
+        - button "↪" [ref=e60] [cursor=pointer]:
+          - generic [ref=e61]: ↪
+  - main [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - heading "Clients" [level=1] [ref=e66]
+          - paragraph [ref=e67]: Save each client once — we'll write every script in their voice.
+        - link "New client" [ref=e68] [cursor=pointer]:
+          - /url: /clients/new
+          - button "New client" [ref=e69]:
+            - img [ref=e70]
+            - text: New client
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - heading "Add your first client" [level=2] [ref=e73]
+          - paragraph [ref=e74]: Set up a client profile once and every script you generate will automatically match their voice.
+        - link "Add a client" [ref=e75] [cursor=pointer]:
+          - /url: /clients/new
+          - button "Add a client" [ref=e76]:
+            - img [ref=e77]
+            - text: Add a client

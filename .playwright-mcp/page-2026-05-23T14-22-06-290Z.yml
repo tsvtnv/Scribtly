@@ -1,0 +1,119 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Scribtly is in early access — join free today" [ref=e4] [cursor=pointer]:
+      - /url: /signup
+      - text: Scribtly is in early access — join free today
+      - img [ref=e5]
+    - navigation [ref=e7]:
+      - generic [ref=e8]:
+        - link "Scribtly" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e10]:
+          - link "Blog" [ref=e11] [cursor=pointer]:
+            - /url: /blog
+          - link "Pricing" [ref=e12] [cursor=pointer]:
+            - /url: /pricing
+          - link "Log in" [ref=e13] [cursor=pointer]:
+            - /url: /login
+          - link "Start free" [ref=e14] [cursor=pointer]:
+            - /url: /signup
+            - button "Start free" [ref=e15]
+  - main [ref=e16]:
+    - generic [ref=e17]:
+      - heading "YouTube scripts that keep viewers watching" [level=1] [ref=e18]
+      - paragraph [ref=e19]: Stop writing from a blank page. Scribtly generates a full YouTube script (hook, intro, sections, CTA) in your client's voice, in under 60 seconds.
+      - link "Start free · 3 scripts" [ref=e20] [cursor=pointer]:
+        - /url: /signup
+        - button "Start free · 3 scripts" [ref=e21]
+    - generic [ref=e22]:
+      - heading "How it works" [level=2] [ref=e23]
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - generic [ref=e26]: STEP 1
+          - heading "Add your client" [level=3] [ref=e27]
+          - paragraph [ref=e28]: Save their niche, audience, tone, and phrases once. That's it.
+        - generic [ref=e29]:
+          - generic [ref=e30]: STEP 2
+          - heading "Describe the topic" [level=3] [ref=e31]
+          - paragraph [ref=e32]: Paste the idea, pick a length (3-5, 8-10, or 15-20 minutes), and go.
+        - generic [ref=e33]:
+          - generic [ref=e34]: STEP 3
+          - heading "Get a full script" [level=3] [ref=e35]
+          - paragraph [ref=e36]: Hook, intro, three sections, and a natural CTA, all in their voice, streamed in under 60 seconds.
+    - generic [ref=e37]:
+      - heading "What you get" [level=2] [ref=e38]
+      - list [ref=e39]:
+        - listitem [ref=e40]:
+          - img [ref=e41]
+          - generic [ref=e43]: Hooks that stop people scrolling past
+        - listitem [ref=e44]:
+          - img [ref=e45]
+          - generic [ref=e47]: Sections structured for watch time
+        - listitem [ref=e48]:
+          - img [ref=e49]
+          - generic [ref=e51]: CTAs that don't beg for subscribes
+        - listitem [ref=e52]:
+          - img [ref=e53]
+          - generic [ref=e55]: "[B-ROLL] notes baked in"
+        - listitem [ref=e56]:
+          - img [ref=e57]
+          - generic [ref=e59]: Optional titles, descriptions, tags, and chapters
+    - generic [ref=e60]:
+      - heading "Ready to write faster?" [level=2] [ref=e61]
+      - link "Start free" [ref=e62] [cursor=pointer]:
+        - /url: /signup
+        - button "Start free" [ref=e63]
+  - contentinfo [ref=e64]:
+    - generic [ref=e65]:
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - paragraph [ref=e68]: Platform
+          - list [ref=e69]:
+            - listitem [ref=e70]:
+              - link "YouTube scripts" [ref=e71] [cursor=pointer]:
+                - /url: /youtube-scripts
+            - listitem [ref=e72]:
+              - link "TikTok scripts" [ref=e73] [cursor=pointer]:
+                - /url: /tiktok-scripts
+            - listitem [ref=e74]:
+              - link "Instagram Reels scripts" [ref=e75] [cursor=pointer]:
+                - /url: /instagram-reels-scripts
+            - listitem [ref=e76]:
+              - link "AI script writer" [ref=e77] [cursor=pointer]:
+                - /url: /ai-script-writer
+        - generic [ref=e78]:
+          - paragraph [ref=e79]: Solutions
+          - list [ref=e80]:
+            - listitem [ref=e81]:
+              - link "For freelancers" [ref=e82] [cursor=pointer]:
+                - /url: /for-freelancers
+            - listitem [ref=e83]:
+              - link "For agencies" [ref=e84] [cursor=pointer]:
+                - /url: /for-agencies
+            - listitem [ref=e85]:
+              - link "Pricing" [ref=e86] [cursor=pointer]:
+                - /url: /pricing
+        - generic [ref=e87]:
+          - paragraph [ref=e88]: Resources
+          - list [ref=e89]:
+            - listitem [ref=e90]:
+              - link "Blog" [ref=e91] [cursor=pointer]:
+                - /url: /blog
+        - generic [ref=e92]:
+          - paragraph [ref=e93]: Company
+          - list [ref=e94]:
+            - listitem [ref=e95]:
+              - link "Privacy" [ref=e96] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e97]:
+              - link "Terms" [ref=e98] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e99]:
+              - link "Cookies" [ref=e100] [cursor=pointer]:
+                - /url: /cookies
+            - listitem [ref=e101]:
+              - button "Cookie settings" [ref=e102] [cursor=pointer]
+            - listitem [ref=e103]:
+              - link "Log in" [ref=e104] [cursor=pointer]:
+                - /url: /login
+      - generic [ref=e106]: © 2026 Scribtly · Made for freelancers

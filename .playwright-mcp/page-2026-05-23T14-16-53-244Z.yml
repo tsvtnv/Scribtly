@@ -1,0 +1,185 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - link "Scribtly" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Collapse sidebar" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+    - generic [ref=e9]: TEST
+    - navigation [ref=e10]:
+      - link "Dashboard" [ref=e11] [cursor=pointer]:
+        - /url: /dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link "Generate" [ref=e18] [cursor=pointer]:
+        - /url: /generate
+        - img [ref=e19]
+        - generic [ref=e21]: Generate
+      - link "Scripts" [ref=e22] [cursor=pointer]:
+        - /url: /scripts
+        - img [ref=e23]
+        - generic [ref=e26]: Scripts
+      - link "Pipeline" [ref=e27] [cursor=pointer]:
+        - /url: /pipeline
+        - img [ref=e28]
+        - generic [ref=e33]: Pipeline
+      - link "Clients" [ref=e34] [cursor=pointer]:
+        - /url: /clients
+        - img [ref=e35]
+        - generic [ref=e40]: Clients
+      - link "Settings" [ref=e41] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e42]
+        - generic [ref=e45]: Settings
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - generic [ref=e48]: Scripts this month
+        - generic [ref=e49]: 0/25
+      - link "Upgrade for more" [ref=e51] [cursor=pointer]:
+        - /url: /settings/billing
+        - img [ref=e52]
+        - text: Upgrade for more
+    - generic [ref=e54]:
+      - link "BASIC" [ref=e55] [cursor=pointer]:
+        - /url: /settings/billing
+      - generic [ref=e56]:
+        - button "Toggle theme" [ref=e57] [cursor=pointer]:
+          - img [ref=e58]
+        - button "↪" [ref=e60] [cursor=pointer]:
+          - generic [ref=e61]: ↪
+  - main [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - link "Back to settings" [ref=e65] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e66]
+          - text: Back to settings
+        - heading "Billing" [level=1] [ref=e68]
+        - paragraph [ref=e69]: Manage your plan and subscription.
+      - generic [ref=e71]:
+        - generic [ref=e72]: 🧪
+        - generic [ref=e73]:
+          - generic [ref=e74]: Beta Tester — Free BASIC access
+          - paragraph [ref=e75]:
+            - text: Active until
+            - strong [ref=e76]: 18 Jul 2026
+            - text: . After that you'll move to the Free plan unless you subscribe.
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - generic [ref=e80]: Current plan
+          - generic [ref=e81]:
+            - generic [ref=e82]: BASIC
+            - generic [ref=e83]: £5/mo
+          - generic [ref=e86]:
+            - generic [ref=e87]: Scripts this month
+            - generic [ref=e88]: 0 / 25
+          - generic [ref=e90]: Resets 22 Jun
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - img [ref=e93]
+              - text: 25 scripts per month
+            - generic [ref=e95]:
+              - img [ref=e96]
+              - text: 3 clients
+            - generic [ref=e98]:
+              - img [ref=e99]
+              - text: All quality models
+            - generic [ref=e101]:
+              - img [ref=e102]
+              - text: All platforms
+        - button "Upgrade to Pro" [ref=e105] [cursor=pointer]:
+          - img [ref=e106]
+          - text: Upgrade to Pro
+      - generic [ref=e108]:
+        - heading "All plans" [level=2] [ref=e109]
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - generic [ref=e112]:
+              - heading "Free" [level=3] [ref=e113]
+              - generic [ref=e114]: £0
+            - list [ref=e115]:
+              - listitem [ref=e116]:
+                - img [ref=e117]
+                - generic [ref=e119]: 5 scripts per month
+              - listitem [ref=e120]:
+                - img [ref=e121]
+                - generic [ref=e123]: 1 client
+              - listitem [ref=e124]:
+                - img [ref=e125]
+                - generic [ref=e127]: Standard quality model
+              - listitem [ref=e128]:
+                - img [ref=e129]
+                - generic [ref=e131]: Script library
+            - button "Downgrade to Free" [ref=e132] [cursor=pointer]
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - heading "Basic" [level=3] [ref=e135]
+              - generic [ref=e136]: £5/mo
+            - list [ref=e137]:
+              - listitem [ref=e138]:
+                - img [ref=e139]
+                - generic [ref=e141]: 25 scripts per month
+              - listitem [ref=e142]:
+                - img [ref=e143]
+                - generic [ref=e145]: 3 clients
+              - listitem [ref=e146]:
+                - img [ref=e147]
+                - generic [ref=e149]: All quality models
+              - listitem [ref=e150]:
+                - img [ref=e151]
+                - generic [ref=e153]: All platforms
+            - button "Current plan" [disabled] [ref=e154]
+          - generic [ref=e155]:
+            - generic [ref=e156]:
+              - heading "Pro" [level=3] [ref=e157]
+              - generic [ref=e158]: £19/mo
+            - list [ref=e159]:
+              - listitem [ref=e160]:
+                - img [ref=e161]
+                - generic [ref=e163]: 100 scripts per month
+              - listitem [ref=e164]:
+                - img [ref=e165]
+                - generic [ref=e167]: 10 clients
+              - listitem [ref=e168]:
+                - img [ref=e169]
+                - generic [ref=e171]: Content pipeline
+              - listitem [ref=e172]:
+                - img [ref=e173]
+                - generic [ref=e175]: Calendar view
+              - listitem [ref=e176]:
+                - img [ref=e177]
+                - generic [ref=e179]: PDF export
+              - listitem [ref=e180]:
+                - img [ref=e181]
+                - generic [ref=e183]: Title and hashtag extras
+            - button "Upgrade to Pro" [ref=e184] [cursor=pointer]
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - heading "Agency" [level=3] [ref=e187]
+              - generic [ref=e188]: £49/mo
+            - list [ref=e189]:
+              - listitem [ref=e190]:
+                - img [ref=e191]
+                - generic [ref=e193]: 350 scripts per month
+              - listitem [ref=e194]:
+                - img [ref=e195]
+                - generic [ref=e197]: Unlimited clients
+              - listitem [ref=e198]:
+                - img [ref=e199]
+                - generic [ref=e201]: Everything in Pro
+              - listitem [ref=e202]:
+                - img [ref=e203]
+                - generic [ref=e205]: 3 team members
+              - listitem [ref=e206]:
+                - img [ref=e207]
+                - generic [ref=e209]: Bulk generation
+              - listitem [ref=e210]:
+                - img [ref=e211]
+                - generic [ref=e213]: Priority support
+            - button "Upgrade to Agency" [ref=e214] [cursor=pointer]
+      - generic [ref=e216]:
+        - generic [ref=e217]:
+          - generic [ref=e218]: Enterprise
+          - paragraph [ref=e219]: Custom volume, unlimited team members, SLA, and dedicated support.
+        - link "Contact us →" [ref=e220] [cursor=pointer]:
+          - /url: mailto:hello@scribtly.com

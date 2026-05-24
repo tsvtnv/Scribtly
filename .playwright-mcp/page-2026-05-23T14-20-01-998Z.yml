@@ -1,0 +1,42 @@
+- generic [ref=e2]:
+  - link "Scribtly" [ref=e3] [cursor=pointer]:
+    - /url: /
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - img "Kristiyan Tsvetanov — Founder of Scribtly" [ref=e7]
+      - generic [ref=e8]:
+        - paragraph [ref=e9]: “I built Scribtly because freelancers I know were spending hours on scripts that should take minutes. I reply to every support email personally — if something isn't working, just reach out.”
+        - paragraph [ref=e10]: Kristiyan Tsvetanov · Founder, Scribtly
+    - generic [ref=e11]:
+      - heading "Create an account" [level=1] [ref=e12]
+      - paragraph [ref=e13]:
+        - text: Already have an account?
+        - link "Sign in" [ref=e14] [cursor=pointer]:
+          - /url: /login
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]: Name
+        - textbox "Name" [ref=e18]:
+          - /placeholder: Your name
+      - generic [ref=e19]:
+        - generic [ref=e20]: Email
+        - textbox "Email" [ref=e21]:
+          - /placeholder: you@example.com
+      - generic [ref=e22]:
+        - generic [ref=e23]: Password
+        - textbox "Password" [ref=e24]:
+          - /placeholder: At least 8 characters
+      - button "Create account" [ref=e25] [cursor=pointer]
+    - generic [ref=e30]: Or
+    - link "Continue with Google" [ref=e31] [cursor=pointer]:
+      - /url: /api/auth/google
+      - img [ref=e32]
+      - text: Continue with Google
+    - paragraph [ref=e37]:
+      - text: By creating an account you agree to our
+      - link "Terms" [ref=e38] [cursor=pointer]:
+        - /url: /terms
+      - text: and
+      - link "Privacy Policy" [ref=e39] [cursor=pointer]:
+        - /url: /privacy
+      - text: .

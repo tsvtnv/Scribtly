@@ -1,0 +1,129 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Scribtly is in early access — join free today" [ref=e4] [cursor=pointer]:
+      - /url: /signup
+      - text: Scribtly is in early access — join free today
+      - img [ref=e5]
+    - navigation [ref=e7]:
+      - generic [ref=e8]:
+        - link "Scribtly" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e10]:
+          - link "Blog" [ref=e11] [cursor=pointer]:
+            - /url: /blog
+          - link "Pricing" [ref=e12] [cursor=pointer]:
+            - /url: /pricing
+          - link "Log in" [ref=e13] [cursor=pointer]:
+            - /url: /login
+          - link "Start free" [ref=e14] [cursor=pointer]:
+            - /url: /signup
+            - button "Start free" [ref=e15]
+  - main [ref=e16]:
+    - generic [ref=e17]:
+      - heading "Blog" [level=1] [ref=e18]
+      - paragraph [ref=e19]: Script writing tips, freelancer guides, and AI tools for content creators.
+      - generic [ref=e20]:
+        - 'link "video production script writing B-roll notes in scripts: what to write and why it matters A script without B-roll notes is half a script. Editors working without direction make arbitrary cuts — and creators blame the script. Here''s how to write B-roll notes that make your work better and your clients happier. 23 May 2026 4 min read" [ref=e21] [cursor=pointer]':
+          - /url: /blog/broll-notes-in-video-scripts
+          - generic [ref=e22]:
+            - generic [ref=e23]: video production
+            - generic [ref=e24]: script writing
+          - 'heading "B-roll notes in scripts: what to write and why it matters" [level=2] [ref=e25]'
+          - paragraph [ref=e26]: A script without B-roll notes is half a script. Editors working without direction make arbitrary cuts — and creators blame the script. Here's how to write B-roll notes that make your work better and your clients happier.
+          - generic [ref=e27]:
+            - generic [ref=e28]: 23 May 2026
+            - generic [ref=e29]: 4 min read
+        - link "client management brand voice How to build a client voice profile that actually works Starting from scratch every time a client gives you a brief is the slowest way to work. A voice profile changes that — one document, built once, that makes every future script faster and more accurate. 23 May 2026 5 min read" [ref=e30] [cursor=pointer]:
+          - /url: /blog/client-voice-profile-guide-for-script-writers
+          - generic [ref=e31]:
+            - generic [ref=e32]: client management
+            - generic [ref=e33]: brand voice
+          - heading "How to build a client voice profile that actually works" [level=2] [ref=e34]
+          - paragraph [ref=e35]: Starting from scratch every time a client gives you a brief is the slowest way to work. A voice profile changes that — one document, built once, that makes every future script faster and more accurate.
+          - generic [ref=e36]:
+            - generic [ref=e37]: 23 May 2026
+            - generic [ref=e38]: 5 min read
+        - link "freelance pricing script writing rates How to price freelance script writing without underselling yourself Most freelance script writers undercharge because they're pricing the wrong thing. Here's a practical guide to moving from hourly rates to value-based pricing — and what that looks like in practice. 23 May 2026 6 min read" [ref=e39] [cursor=pointer]:
+          - /url: /blog/how-to-price-freelance-script-writing
+          - generic [ref=e40]:
+            - generic [ref=e41]: freelance pricing
+            - generic [ref=e42]: script writing rates
+          - heading "How to price freelance script writing without underselling yourself" [level=2] [ref=e43]
+          - paragraph [ref=e44]: Most freelance script writers undercharge because they're pricing the wrong thing. Here's a practical guide to moving from hourly rates to value-based pricing — and what that looks like in practice.
+          - generic [ref=e45]:
+            - generic [ref=e46]: 23 May 2026
+            - generic [ref=e47]: 6 min read
+        - 'link "tiktok scripts short-form video TikTok script structure: the formula freelancers actually use Writing TikTok scripts for clients is different to writing long-form content. The pacing, the hooks, the retention tactics — everything changes at 60 seconds. Here''s the structure that works. 23 May 2026 4 min read" [ref=e48] [cursor=pointer]':
+          - /url: /blog/tiktok-script-structure-for-freelancers
+          - generic [ref=e49]:
+            - generic [ref=e50]: tiktok scripts
+            - generic [ref=e51]: short-form video
+          - 'heading "TikTok script structure: the formula freelancers actually use" [level=2] [ref=e52]'
+          - paragraph [ref=e53]: Writing TikTok scripts for clients is different to writing long-form content. The pacing, the hooks, the retention tactics — everything changes at 60 seconds. Here's the structure that works.
+          - generic [ref=e54]:
+            - generic [ref=e55]: 23 May 2026
+            - generic [ref=e56]: 4 min read
+        - link "youtube scripts hook writing How to write a YouTube hook that keeps viewers watching The hook is the most important line in any YouTube script. Get it wrong and the rest of the script doesn't matter — viewers are already gone. Here's the formula that works. 23 May 2026 5 min read" [ref=e57] [cursor=pointer]:
+          - /url: /blog/how-to-write-a-youtube-hook
+          - generic [ref=e58]:
+            - generic [ref=e59]: youtube scripts
+            - generic [ref=e60]: hook writing
+          - heading "How to write a YouTube hook that keeps viewers watching" [level=2] [ref=e61]
+          - paragraph [ref=e62]: The hook is the most important line in any YouTube script. Get it wrong and the rest of the script doesn't matter — viewers are already gone. Here's the formula that works.
+          - generic [ref=e63]:
+            - generic [ref=e64]: 23 May 2026
+            - generic [ref=e65]: 5 min read
+  - contentinfo [ref=e66]:
+    - generic [ref=e67]:
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - paragraph [ref=e70]: Platform
+          - list [ref=e71]:
+            - listitem [ref=e72]:
+              - link "YouTube scripts" [ref=e73] [cursor=pointer]:
+                - /url: /youtube-scripts
+            - listitem [ref=e74]:
+              - link "TikTok scripts" [ref=e75] [cursor=pointer]:
+                - /url: /tiktok-scripts
+            - listitem [ref=e76]:
+              - link "Instagram Reels scripts" [ref=e77] [cursor=pointer]:
+                - /url: /instagram-reels-scripts
+            - listitem [ref=e78]:
+              - link "AI script writer" [ref=e79] [cursor=pointer]:
+                - /url: /ai-script-writer
+        - generic [ref=e80]:
+          - paragraph [ref=e81]: Solutions
+          - list [ref=e82]:
+            - listitem [ref=e83]:
+              - link "For freelancers" [ref=e84] [cursor=pointer]:
+                - /url: /for-freelancers
+            - listitem [ref=e85]:
+              - link "For agencies" [ref=e86] [cursor=pointer]:
+                - /url: /for-agencies
+            - listitem [ref=e87]:
+              - link "Pricing" [ref=e88] [cursor=pointer]:
+                - /url: /pricing
+        - generic [ref=e89]:
+          - paragraph [ref=e90]: Resources
+          - list [ref=e91]:
+            - listitem [ref=e92]:
+              - link "Blog" [ref=e93] [cursor=pointer]:
+                - /url: /blog
+        - generic [ref=e94]:
+          - paragraph [ref=e95]: Company
+          - list [ref=e96]:
+            - listitem [ref=e97]:
+              - link "Privacy" [ref=e98] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e99]:
+              - link "Terms" [ref=e100] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e101]:
+              - link "Cookies" [ref=e102] [cursor=pointer]:
+                - /url: /cookies
+            - listitem [ref=e103]:
+              - button "Cookie settings" [ref=e104] [cursor=pointer]
+            - listitem [ref=e105]:
+              - link "Log in" [ref=e106] [cursor=pointer]:
+                - /url: /login
+      - generic [ref=e108]: © 2026 Scribtly · Made for freelancers

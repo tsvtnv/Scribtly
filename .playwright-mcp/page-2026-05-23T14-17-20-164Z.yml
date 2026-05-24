@@ -1,0 +1,389 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Scribtly is in early access — join free today" [ref=e4] [cursor=pointer]:
+      - /url: /signup
+      - text: Scribtly is in early access — join free today
+      - img [ref=e5]
+    - navigation [ref=e7]:
+      - generic [ref=e8]:
+        - link "Scribtly" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e10]:
+          - link "Blog" [ref=e11] [cursor=pointer]:
+            - /url: /blog
+          - link "Pricing" [ref=e12] [cursor=pointer]:
+            - /url: /pricing
+          - link "Log in" [ref=e13] [cursor=pointer]:
+            - /url: /login
+          - link "Start free" [ref=e14] [cursor=pointer]:
+            - /url: /signup
+            - button "Start free" [ref=e15]
+  - main [ref=e16]:
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - img [ref=e23]
+          - text: Built for client script work, not generic chat
+        - heading "Write video scripts 10x faster, in your client's exact voice" [level=1] [ref=e25]:
+          - text: Write video scripts 10x faster,
+          - generic [ref=e26]: in your client's exact voice
+        - paragraph [ref=e28]: Scribtly turns saved brand voice, platform rules, and client context into ready-to-send YouTube, TikTok, and Reels scripts in under 60 seconds.
+        - generic [ref=e29]:
+          - link "Start free — 5 scripts included" [ref=e30] [cursor=pointer]:
+            - /url: /signup
+            - button "Start free — 5 scripts included" [ref=e31]:
+              - generic [ref=e32]:
+                - text: Start free — 5 scripts included
+                - img [ref=e33]
+          - link "See pricing" [ref=e35] [cursor=pointer]:
+            - /url: /pricing
+            - button "See pricing" [ref=e36]
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - img [ref=e39]
+            - text: 60s scripts
+          - generic [ref=e41]:
+            - img [ref=e42]
+            - text: 5 platforms
+          - generic [ref=e46]:
+            - img [ref=e47]
+            - text: No card
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - generic [ref=e54]:
+            - generic [ref=e55]: Generating for
+            - generic [ref=e56]: Acme Studios
+          - generic [ref=e57]: On voice
+        - generic [ref=e58]:
+          - generic [ref=e60]:
+            - generic [ref=e61]: Hook
+            - generic [ref=e62]: Strong open
+          - generic [ref=e66]:
+            - generic [ref=e67]: Intro
+            - generic [ref=e68]: Drafted
+          - generic [ref=e72]:
+            - generic [ref=e73]: Story beat
+            - generic [ref=e74]: Drafted
+          - generic [ref=e78]:
+            - generic [ref=e79]: CTA
+            - generic [ref=e80]: Drafted
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - generic [ref=e85]: 10×
+            - generic [ref=e86]: faster
+          - generic [ref=e87]:
+            - generic [ref=e88]: "5"
+            - generic [ref=e89]: formats
+          - generic [ref=e90]:
+            - generic [ref=e91]: "0"
+            - generic [ref=e92]: rework
+    - generic [ref=e94]:
+      - generic [ref=e95]: YouTube Scripts
+      - generic [ref=e97]: TikTok Content
+      - generic [ref=e99]: Instagram Reels
+      - generic [ref=e101]: LinkedIn Video
+      - generic [ref=e103]: Podcast Scripts
+      - generic [ref=e105]: Fitness Coaches
+      - generic [ref=e107]: Tech Creators
+      - generic [ref=e109]: Finance Educators
+      - generic [ref=e111]: Food Brands
+      - generic [ref=e113]: Beauty Influencers
+      - generic [ref=e115]: Real Estate
+      - generic [ref=e117]: SaaS Companies
+      - generic [ref=e119]: Gaming Channels
+      - generic [ref=e121]: Travel Creators
+      - generic [ref=e123]: Business Coaches
+      - generic [ref=e125]: Personal Finance
+      - generic [ref=e127]: YouTube Scripts
+      - generic [ref=e129]: TikTok Content
+      - generic [ref=e131]: Instagram Reels
+      - generic [ref=e133]: LinkedIn Video
+      - generic [ref=e135]: Podcast Scripts
+      - generic [ref=e137]: Fitness Coaches
+      - generic [ref=e139]: Tech Creators
+      - generic [ref=e141]: Finance Educators
+      - generic [ref=e143]: Food Brands
+      - generic [ref=e145]: Beauty Influencers
+      - generic [ref=e147]: Real Estate
+      - generic [ref=e149]: SaaS Companies
+      - generic [ref=e151]: Gaming Channels
+      - generic [ref=e153]: Travel Creators
+      - generic [ref=e155]: Business Coaches
+      - generic [ref=e157]: Personal Finance
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - heading "Writing scripts manually is killing your margins" [level=2] [ref=e161]
+        - paragraph [ref=e162]: Every hour you spend staring at a blank page is an hour you could spend taking on another client.
+      - generic [ref=e163]:
+        - generic [ref=e165]: 2–3 hours to write one decent YouTube script
+        - generic [ref=e167]: Re-explaining your client's tone to ChatGPT every time
+        - generic [ref=e169]: Scripts lost across docs, emails, and chat threads
+        - generic [ref=e171]: Clients asking for revisions on things you got wrong
+      - paragraph [ref=e173]: There is a better way.
+    - generic [ref=e175]:
+      - generic [ref=e176]:
+        - heading "From blank page to finished script in 3 steps" [level=2] [ref=e177]
+        - paragraph [ref=e178]: No prompt engineering. No copy-pasting tone guides. No rework.
+      - generic [ref=e179]:
+        - generic [ref=e182]:
+          - generic [ref=e183]: "01"
+          - heading "Save your client's profile" [level=3] [ref=e184]
+          - paragraph [ref=e185]: Add their niche, audience, tone, and brand phrases. Takes 2 minutes. Every future script starts from this.
+        - generic [ref=e187]:
+          - generic [ref=e188]: "02"
+          - heading "Drop in a topic" [level=3] [ref=e189]
+          - paragraph [ref=e190]: Describe the video idea. Pick the platform and length. That's all the context Scribtly needs.
+        - generic [ref=e192]:
+          - generic [ref=e193]: "03"
+          - heading "Get a ready-to-send script" [level=3] [ref=e194]
+          - paragraph [ref=e195]: Full script streamed in under 60 seconds. Structured for the platform. In their exact voice.
+      - link "Try it free — no card required" [ref=e198] [cursor=pointer]:
+        - /url: /signup
+        - button "Try it free — no card required" [ref=e199]
+    - generic [ref=e200]:
+      - generic [ref=e201]:
+        - heading "See it in action" [level=2] [ref=e202]
+        - paragraph [ref=e203]: Switch between platforms and watch the script structure change automatically.
+      - generic [ref=e204]:
+        - generic [ref=e205]:
+          - button "YouTube" [ref=e206] [cursor=pointer]
+          - button "TikTok" [ref=e207] [cursor=pointer]
+          - button "Reels" [ref=e208] [cursor=pointer]
+        - generic [ref=e209]:
+          - generic [ref=e215]: scribtly.com/generate
+          - generic [ref=e216]:
+            - generic [ref=e217]:
+              - generic [ref=e218]:
+                - generic [ref=e219]: Client
+                - generic [ref=e220]: Acme Studios
+              - generic [ref=e221]:
+                - generic [ref=e222]: Topic
+                - generic [ref=e223]: How to pick the right camera lens
+              - generic [ref=e224]:
+                - generic [ref=e225]: Platform
+                - generic [ref=e226]:
+                  - button "YouTube" [ref=e227] [cursor=pointer]
+                  - button "TikTok" [ref=e228] [cursor=pointer]
+                  - button "Reels" [ref=e229] [cursor=pointer]
+              - link "Generate script" [ref=e230] [cursor=pointer]:
+                - /url: /signup
+                - button "Generate script" [ref=e231]
+            - generic [ref=e232]:
+              - generic [ref=e233]:
+                - generic [ref=e234]: HOOK
+                - paragraph [ref=e237]: "The #1 mistake beginner photographers make picking camera lenses — and it's probably not what you think."
+              - generic [ref=e238]:
+                - generic [ref=e239]: INTRO
+                - paragraph [ref=e242]: If you've ever bought a lens and felt immediately confused, this video is for you.
+                - paragraph [ref=e243]: I'm breaking down exactly how to pick the right focal length for any shot — no Reddit rabbit holes required.
+              - generic [ref=e244]:
+                - generic [ref=e245]: SECTION 1 · Prime vs Zoom
+                - paragraph [ref=e248]: Prime lenses have one fixed focal length. Zoom lenses cover a range.
+                - paragraph [ref=e249]: Most beginners default to zoom — but here's why primes might completely change your work.
+              - generic [ref=e250]:
+                - generic [ref=e251]: CTA
+                - paragraph [ref=e254]: If this saved you from a bad lens purchase, drop a comment below with your current setup. I read every one.
+              - generic [ref=e257]: Generated in 51 seconds · On voice · YouTube
+        - paragraph [ref=e258]: Same client. Same topic. Different platform. Scribtly handles the structure.
+    - generic [ref=e259]:
+      - generic [ref=e260]:
+        - heading "Everything ChatGPT can't do for your clients" [level=2] [ref=e261]
+        - paragraph [ref=e262]: Only possible when the tool actually knows your clients.
+      - generic [ref=e263]:
+        - generic [ref=e265]:
+          - img [ref=e266]
+          - heading "Save client profiles once" [level=3] [ref=e268]
+          - paragraph [ref=e269]: Name, niche, tone, audience — stored forever. Every script auto-written in their voice.
+        - generic [ref=e271]:
+          - img [ref=e272]
+          - heading "Platform-specific structure" [level=3] [ref=e275]
+          - paragraph [ref=e276]: YouTube hooks are different to TikTok. Scribtly knows. You don't have to explain it.
+        - generic [ref=e278]:
+          - img [ref=e279]
+          - heading "Script library per client" [level=3] [ref=e281]
+          - paragraph [ref=e282]: All scripts organised by client. Find, reuse, export any script in seconds.
+        - generic [ref=e284]:
+          - generic [ref=e285]: Pro
+          - img [ref=e286]
+          - heading "One-click export" [level=3] [ref=e289]
+          - paragraph [ref=e290]: Download as PDF or copy to clipboard. Ready to send to your client instantly.
+      - generic [ref=e292]:
+        - generic [ref=e293]: Pro
+        - img [ref=e294]
+        - heading "Content pipeline" [level=3] [ref=e299]
+        - paragraph [ref=e300]: Track every piece of content from idea to published. Drag cards through Idea → Scripting → Review → Approved → Published.
+    - generic [ref=e302]:
+      - generic [ref=e303]:
+        - generic [ref=e304]: 0s
+        - generic [ref=e305]: Average generation time
+      - generic [ref=e306]:
+        - generic [ref=e307]: "0"
+        - generic [ref=e308]: Platforms supported
+      - generic [ref=e309]:
+        - generic [ref=e310]: £0/mo
+        - generic [ref=e311]: Starting price
+    - generic [ref=e313]:
+      - generic [ref=e314]:
+        - img "Kristiyan Tsvetanov — Founder of Scribtly" [ref=e315]
+        - generic [ref=e316]:
+          - paragraph [ref=e317]: Kristiyan Tsvetanov
+          - paragraph [ref=e318]: Founder, Scribtly
+      - generic [ref=e319]:
+        - paragraph [ref=e320]: A note from the founder
+        - blockquote [ref=e321]: “I built Scribtly because I watched freelancers waste hours on scripts that should take minutes. Every client re-brief, every blank page, every round of revisions that could have been avoided — I wanted to fix that at the source.
+        - blockquote [ref=e322]: Scribtly is a solo project. I built it, I maintain it, and I read every support email personally. If something isn't working for you, tell me — I'll fix it.”
+        - link "kristiyan@scribtly.com" [ref=e323] [cursor=pointer]:
+          - /url: mailto:kristiyan@scribtly.com
+    - generic [ref=e326]:
+      - generic [ref=e328]:
+        - generic [ref=e329]:
+          - img [ref=e330]
+          - text: Launch pricing
+        - heading "Simple pricing. No surprises." [level=2] [ref=e332]
+        - paragraph [ref=e333]: Start free. Upgrade when your client list grows.
+      - generic [ref=e334]:
+        - generic [ref=e336]:
+          - generic [ref=e338]: Free
+          - generic [ref=e340]: £0
+          - generic [ref=e341]: 5 scripts / month
+          - list [ref=e342]:
+            - listitem [ref=e343]:
+              - img [ref=e344]
+              - generic [ref=e346]: Standard quality model
+            - listitem [ref=e347]:
+              - img [ref=e348]
+              - generic [ref=e350]: 1 client
+            - listitem [ref=e351]:
+              - img [ref=e352]
+              - generic [ref=e354]: YouTube platform
+          - link "Start free" [ref=e355] [cursor=pointer]:
+            - /url: /signup
+            - button "Start free" [ref=e356]
+        - generic [ref=e358]:
+          - generic [ref=e360]: Basic
+          - generic [ref=e361]:
+            - generic [ref=e362]: £5
+            - text: /mo
+          - generic [ref=e363]: 25 scripts / month
+          - list [ref=e364]:
+            - listitem [ref=e365]:
+              - img [ref=e366]
+              - generic [ref=e368]: All quality models
+            - listitem [ref=e369]:
+              - img [ref=e370]
+              - generic [ref=e372]: 3 clients
+            - listitem [ref=e373]:
+              - img [ref=e374]
+              - generic [ref=e376]: All 5 platforms
+          - link "Start Basic" [ref=e377] [cursor=pointer]:
+            - /url: /signup
+            - button "Start Basic" [ref=e378]
+        - generic [ref=e380]:
+          - generic [ref=e382]: Most popular
+          - generic [ref=e383]: Pro
+          - generic [ref=e384]:
+            - generic [ref=e385]: £19
+            - text: /mo
+          - generic [ref=e386]: 100 scripts / month
+          - list [ref=e387]:
+            - listitem [ref=e388]:
+              - img [ref=e389]
+              - generic [ref=e391]: 10 clients
+            - listitem [ref=e392]:
+              - img [ref=e393]
+              - generic [ref=e395]: Content pipeline
+            - listitem [ref=e396]:
+              - img [ref=e397]
+              - generic [ref=e399]: PDF export
+          - link "Start Pro" [ref=e400] [cursor=pointer]:
+            - /url: /signup
+            - button "Start Pro" [ref=e401]
+        - generic [ref=e403]:
+          - generic [ref=e405]: Agency
+          - generic [ref=e406]:
+            - generic [ref=e407]: £49
+            - text: /mo
+          - generic [ref=e408]: 350 scripts / month
+          - list [ref=e409]:
+            - listitem [ref=e410]:
+              - img [ref=e411]
+              - generic [ref=e413]: Unlimited clients
+            - listitem [ref=e414]:
+              - img [ref=e415]
+              - generic [ref=e417]: 3 team members
+            - listitem [ref=e418]:
+              - img [ref=e419]
+              - generic [ref=e421]: Bulk generation
+          - link "Start Agency" [ref=e422] [cursor=pointer]:
+            - /url: /signup
+            - button "Start Agency" [ref=e423]
+      - link "See full pricing" [ref=e425] [cursor=pointer]:
+        - /url: /pricing
+        - text: See full pricing
+        - img [ref=e426]
+    - generic [ref=e433]:
+      - heading "Your next client script is 60 seconds away." [level=2] [ref=e434]
+      - paragraph [ref=e435]: 5 free scripts. No credit card. Upgrade anytime.
+      - generic [ref=e436]:
+        - link "Start free" [ref=e437] [cursor=pointer]:
+          - /url: /signup
+          - button "Start free" [ref=e438]:
+            - text: Start free
+            - img [ref=e439]
+        - link "See pricing" [ref=e441] [cursor=pointer]:
+          - /url: /pricing
+          - button "See pricing" [ref=e442]
+  - contentinfo [ref=e443]:
+    - generic [ref=e444]:
+      - generic [ref=e445]:
+        - generic [ref=e446]:
+          - paragraph [ref=e447]: Platform
+          - list [ref=e448]:
+            - listitem [ref=e449]:
+              - link "YouTube scripts" [ref=e450] [cursor=pointer]:
+                - /url: /youtube-scripts
+            - listitem [ref=e451]:
+              - link "TikTok scripts" [ref=e452] [cursor=pointer]:
+                - /url: /tiktok-scripts
+            - listitem [ref=e453]:
+              - link "Instagram Reels scripts" [ref=e454] [cursor=pointer]:
+                - /url: /instagram-reels-scripts
+            - listitem [ref=e455]:
+              - link "AI script writer" [ref=e456] [cursor=pointer]:
+                - /url: /ai-script-writer
+        - generic [ref=e457]:
+          - paragraph [ref=e458]: Solutions
+          - list [ref=e459]:
+            - listitem [ref=e460]:
+              - link "For freelancers" [ref=e461] [cursor=pointer]:
+                - /url: /for-freelancers
+            - listitem [ref=e462]:
+              - link "For agencies" [ref=e463] [cursor=pointer]:
+                - /url: /for-agencies
+            - listitem [ref=e464]:
+              - link "Pricing" [ref=e465] [cursor=pointer]:
+                - /url: /pricing
+        - generic [ref=e466]:
+          - paragraph [ref=e467]: Resources
+          - list [ref=e468]:
+            - listitem [ref=e469]:
+              - link "Blog" [ref=e470] [cursor=pointer]:
+                - /url: /blog
+        - generic [ref=e471]:
+          - paragraph [ref=e472]: Company
+          - list [ref=e473]:
+            - listitem [ref=e474]:
+              - link "Privacy" [ref=e475] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e476]:
+              - link "Terms" [ref=e477] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e478]:
+              - link "Cookies" [ref=e479] [cursor=pointer]:
+                - /url: /cookies
+            - listitem [ref=e480]:
+              - button "Cookie settings" [ref=e481] [cursor=pointer]
+            - listitem [ref=e482]:
+              - link "Log in" [ref=e483] [cursor=pointer]:
+                - /url: /login
+      - generic [ref=e485]: © 2026 Scribtly · Made for freelancers

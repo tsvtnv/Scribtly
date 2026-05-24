@@ -1,0 +1,95 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - link "Scribtly" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Collapse sidebar" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+    - generic [ref=e9]: kristiyan@tsvweb.com's workspace
+    - navigation [ref=e10]:
+      - link "Dashboard" [ref=e11] [cursor=pointer]:
+        - /url: /dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link "Generate" [ref=e18] [cursor=pointer]:
+        - /url: /generate
+        - img [ref=e19]
+        - generic [ref=e21]: Generate
+      - link "Scripts" [ref=e22] [cursor=pointer]:
+        - /url: /scripts
+        - img [ref=e23]
+        - generic [ref=e26]: Scripts
+      - link "Pipeline" [ref=e27] [cursor=pointer]:
+        - /url: /pipeline
+        - img [ref=e28]
+        - generic [ref=e33]: Pipeline
+      - link "Clients" [ref=e34] [cursor=pointer]:
+        - /url: /clients
+        - img [ref=e35]
+        - generic [ref=e40]: Clients
+      - link "Settings" [ref=e41] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e42]
+        - generic [ref=e45]: Settings
+    - generic [ref=e46]:
+      - link "BASIC" [ref=e47] [cursor=pointer]:
+        - /url: /settings/billing
+      - generic [ref=e48]:
+        - button "Toggle theme" [ref=e49] [cursor=pointer]:
+          - img [ref=e50]
+        - button "↪" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: ↪
+  - main [ref=e54]:
+    - generic [ref=e55]:
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - heading "Welcome back, kristiyan@tsvweb.com" [level=1] [ref=e58]
+          - generic [ref=e59]: kristiyan@tsvweb.com's workspace
+          - generic [ref=e60]: 🧪 Beta Tester
+        - paragraph [ref=e61]: Beta access until 18 Jul 2026
+        - paragraph [ref=e62]: Generate your next client script in under 60 seconds.
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e65]: Scripts this period
+          - generic [ref=e66]: "0"
+          - generic [ref=e69]:
+            - generic [ref=e70]: Scripts this month
+            - generic [ref=e71]: 0 / 25
+        - generic [ref=e73]:
+          - generic [ref=e74]: Clients
+          - generic [ref=e75]: "0"
+          - generic [ref=e76]: On BASIC
+        - generic [ref=e77]:
+          - generic [ref=e78]: Scripts remaining
+          - generic [ref=e79]: "25"
+          - generic [ref=e80]: All you need
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: Generate a new script
+          - generic [ref=e84]: Pick a client and get a script in 60 seconds.
+        - link "Start generating" [ref=e85] [cursor=pointer]:
+          - /url: /generate
+          - button "Start generating" [ref=e86]:
+            - img [ref=e87]
+            - text: Start generating
+      - generic [ref=e89]:
+        - generic [ref=e90]:
+          - heading "Recent scripts" [level=2] [ref=e91]
+          - link "View all →" [ref=e92] [cursor=pointer]:
+            - /url: /scripts
+        - generic [ref=e93]:
+          - text: No scripts yet.
+          - link "Generate your first." [ref=e94] [cursor=pointer]:
+            - /url: /generate
+      - generic [ref=e95]:
+        - generic [ref=e96]:
+          - heading "Clients" [level=2] [ref=e97]
+          - link "Manage all →" [ref=e98] [cursor=pointer]:
+            - /url: /clients
+        - generic [ref=e99]:
+          - paragraph [ref=e100]: Add your first client to start generating scripts in their voice.
+          - link "Add client" [ref=e101] [cursor=pointer]:
+            - /url: /clients/new
+            - button "Add client" [ref=e102]:
+              - img [ref=e103]
+              - text: Add client

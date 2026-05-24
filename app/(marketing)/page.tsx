@@ -21,6 +21,7 @@ import {
   ScrollReveal,
 } from "@/components/home/HomepageInteractives";
 import { FounderSection } from "@/components/home/FounderCard";
+import { HomepagePricingSlider } from "@/components/home/HomepagePricingSlider";
 
 export const metadata = {
   title: "Scribtly: AI Video Script Generator for Freelancers",
@@ -128,7 +129,7 @@ const plans = [
     features: ["All quality models", "3 clients", "All 5 platforms"],
     cta: "Start Basic",
     variant: "outline" as const,
-    accent: "text-[#38c172]",
+    accent: "text-primary",
   },
   {
     name: "Pro",
@@ -149,7 +150,7 @@ const plans = [
     features: ["Unlimited clients", "3 team members", "Bulk generation"],
     cta: "Start Agency",
     variant: "outline" as const,
-    accent: "text-[#f0b429]",
+    accent: "text-primary",
   },
 ];
 
@@ -195,7 +196,7 @@ export default function HomePage() {
             <Link href="/signup">
               <Button
                 size="lg"
-                className="relative overflow-hidden shadow-[0_18px_45px_rgba(127,119,221,0.38)] before:absolute before:inset-y-0 before:-left-10 before:w-10 before:rotate-12 before:bg-white/40 before:animate-shimmer"
+                className="relative overflow-hidden shadow-[0_18px_45px_rgba(127,119,221,0.38)] before:absolute before:inset-y-0 before:-left-16 before:w-16 before:rotate-12 before:bg-white/55 before:blur-sm before:animate-shimmer"
               >
                 <span className="relative inline-flex items-center gap-2">
                   Start free — 5 scripts included <ArrowRight size={15} />
@@ -259,12 +260,12 @@ export default function HomePage() {
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     {([
-                      { label: "YouTube", selected: true },
-                      { label: "TikTok", selected: false },
-                      { label: "Reels", selected: false },
-                      { label: "LinkedIn", selected: false },
-                      { label: "Podcast", selected: false },
-                    ] as const).map(({ label, selected }) => (
+                      { label: "YouTube", src: "/platforms/youtube.png", selected: true },
+                      { label: "TikTok", src: "/platforms/tiktok.png", selected: false },
+                      { label: "Reels", src: "/platforms/reels.png", selected: false },
+                      { label: "LinkedIn", src: "/platforms/linkedin.png", selected: false },
+                      { label: "Podcast", src: "/platforms/podcast.png", selected: false },
+                    ] as const).map(({ label, src, selected }) => (
                       <div
                         key={label}
                         className={`flex flex-col items-center gap-1 rounded-lg border-hair p-2 text-[10px] ${
@@ -273,9 +274,7 @@ export default function HomePage() {
                             : "border-[var(--color-border)] text-text-secondary dark:text-dark-muted"
                         }`}
                       >
-                        <span className="text-sm font-semibold leading-none">
-                          {label === "YouTube" ? "YT" : label === "TikTok" ? "TK" : label === "Reels" ? "IG" : label === "LinkedIn" ? "LI" : "🎙"}
-                        </span>
+                        <Image src={src} alt={label} width={22} height={22} className="rounded-sm" />
                         <span>{label}</span>
                       </div>
                     ))}
@@ -587,7 +586,9 @@ export default function HomePage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <HomepagePricingSlider />
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mt-10">
             {plans.map((plan, i) => (
               <ScrollReveal key={plan.name} delay={i * 80}>
                 <Card

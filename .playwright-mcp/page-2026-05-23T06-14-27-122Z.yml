@@ -1,0 +1,36 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - link "Client portal" [ref=e5] [cursor=pointer]:
+        - /url: /portal/login
+        - img [ref=e6]
+        - text: Client portal
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - img [ref=e11]
+            - text: Internal access
+          - heading "TsvWeb team sign in" [level=1] [ref=e14]
+          - paragraph [ref=e15]: For authorised workspace access only.
+        - link "Continue with Google" [ref=e16] [cursor=pointer]:
+          - /url: http://localhost:4000/api/oauth/google/start?purpose=admin_signin
+          - img [ref=e17]
+          - text: Continue with Google
+        - generic [ref=e24]: or password
+        - generic [ref=e26]:
+          - generic [ref=e27]: Team password
+          - generic [ref=e28]:
+            - img [ref=e29]
+            - textbox "Team password" [ref=e33]:
+              - /placeholder: Enter team password
+              - text: dev-secret
+          - generic [ref=e52]: Incorrect credentials
+          - button "Continue" [ref=e34] [cursor=pointer]
+    - region "TsvWeb internal portal" [ref=e35]:
+      - img "TsvWeb" [ref=e38]
+      - blockquote [ref=e39]:
+        - paragraph [ref=e40]: "\"Keep the work moving without making the client experience noisy.\""
+        - generic [ref=e41]: Team workspace
+  - button "Open Next.js Dev Tools" [ref=e47] [cursor=pointer]:
+    - img [ref=e48]
+  - alert [ref=e51]

@@ -1,0 +1,657 @@
+- generic [ref=e1]:
+  - region "We value your privacy" [ref=e2]:
+    - generic [ref=e4]:
+      - heading "We value your privacy" [level=2] [ref=e5]
+      - generic [ref=e6]:
+        - paragraph [ref=e8]: We use cookies to enhance your browsing experience, serve personalised ads or content, and analyse our traffic. By clicking "Accept All", you consent to our use of cookies.
+        - generic [ref=e9]:
+          - button "Customise" [ref=e10] [cursor=pointer]
+          - button "Reject All" [ref=e11] [cursor=pointer]
+          - button "Accept All" [ref=e12] [cursor=pointer]
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - generic [ref=e20] [cursor=pointer]:
+          - paragraph [ref=e23]: Add a top 1% marketer to your team
+          - generic [ref=e25]:
+            - generic [ref=e26]:
+              - generic:
+                - paragraph
+            - button [ref=e29]:
+              - img [ref=e30]
+          - img "Agent A" [ref=e36]
+        - banner [ref=e37]:
+          - generic [ref=e38]:
+            - link "Ahrefs" [ref=e42] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e43]: Ahrefs
+            - menubar "Navigation Menu" [ref=e44]:
+              - menuitem "Product" [ref=e45]:
+                - generic [ref=e46] [cursor=pointer]:
+                  - text: Product
+                  - img [ref=e48]
+              - link "Our data" [ref=e51] [cursor=pointer]:
+                - /url: /big-data
+              - menuitem "Resources" [ref=e52]:
+                - generic [ref=e53] [cursor=pointer]:
+                  - text: Resources
+                  - img [ref=e55]
+              - link "Pricing" [ref=e58] [cursor=pointer]:
+                - /url: /pricing
+              - link "Enterprise" [ref=e60] [cursor=pointer]:
+                - /url: /enterprise
+            - generic [ref=e61]:
+              - button "Search Ahrefs" [ref=e66] [cursor=pointer]:
+                - img [ref=e67]
+              - img [ref=e73] [cursor=pointer]
+              - link "Sign in" [ref=e77] [cursor=pointer]:
+                - /url: //app.ahrefs.com/user/login
+              - link "Sign up" [ref=e78] [cursor=pointer]:
+                - /url: /pricing?utm_source=site-audit
+                - generic [ref=e81]: Sign up
+            - generic [ref=e85]: Ahrefs
+      - link "Sign up" [ref=e88] [cursor=pointer]:
+        - /url: /pricing?utm_source=site-audit
+        - generic [ref=e91]: Sign up
+      - generic [ref=e95]:
+        - generic [ref=e97]:
+          - heading "Site Audit" [level=1] [ref=e99]:
+            - generic [ref=e100]: Site Audit
+          - paragraph [ref=e102]: Run a complete SEO audit of your website
+        - generic [ref=e103]:
+          - paragraph [ref=e105]: Identify, prioritize, and fix 170+ SEO issues. Keep your website in top shape for users and search engines.
+          - generic [ref=e107]:
+            - generic [ref=e109]:
+              - textbox "Enter domain" [active] [ref=e112]
+              - generic [ref=e116]:
+                - generic [ref=e119]: Free for websites with verified ownership
+                - img [ref=e122]
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - link "Sign up for Free" [ref=e126] [cursor=pointer]:
+                  - /url: /signup?utm_source=site-audit&plan=awt&return=SiteAudit&feature=sa
+                  - generic [ref=e129]: Sign up for Free
+                - paragraph [ref=e130]:
+                  - text: Signing up here gives you access to
+                  - link "Ahrefs Free ↗" [ref=e131] [cursor=pointer]:
+                    - /url: /free
+              - link "See All Plans" [ref=e132] [cursor=pointer]:
+                - /url: /pricing?
+                - generic [ref=e135]: See All Plans
+        - generic [ref=e141] [cursor=pointer]:
+          - generic [ref=e144]:
+            - img [ref=e146]
+            - generic [ref=e149]: Watch demo
+          - img [ref=e151]
+      - heading "Site Audit crawls all your website’s pages. It flags all possible technical and on-page SEO issues, provides recommendations on how to fix them, visualizes key data in a chart, and delivers an overall SEO health score." [level=2] [ref=e164]:
+        - generic [ref=e165]: Site Audit crawls all your website’s pages. It flags all possible technical and on-page SEO issues, provides recommendations on how to fix them, visualizes key data in a chart, and delivers an overall SEO health score.
+      - generic [ref=e169]:
+        - generic [ref=e170]:
+          - generic [ref=e173]:
+            - heading "Scans for 170+ issues. Grouped by major technical SEO categories." [level=3] [ref=e174]:
+              - generic [ref=e175]: Scans for 170+ issues. Grouped by major technical SEO categories.
+            - generic [ref=e176]:
+              - generic [ref=e178]: Slow Pages
+              - generic [ref=e180]: Core Web Vitals
+              - generic [ref=e182]: Heavy CSS or HTML
+              - generic [ref=e184]: Titles
+              - generic [ref=e186]: Meta Descriptions
+              - generic [ref=e188]: H1 Tags
+              - generic [ref=e190]: Content
+              - generic [ref=e192]: Duplicates
+              - generic [ref=e194]: Indexability
+              - generic [ref=e196]: Social Tags
+              - generic [ref=e198]: Localization
+              - generic [ref=e200]: Links
+              - generic [ref=e202]: Redirects
+              - generic [ref=e204]: Images
+              - generic [ref=e206]: JS
+              - generic [ref=e208]: CSS
+              - generic [ref=e210]: Robots
+              - generic [ref=e212]: Sitemaps
+              - generic [ref=e214]: Structured Data
+              - generic [ref=e216]: Slow Pages
+              - generic [ref=e218]: Core Web Vitals
+              - generic [ref=e220]: Heavy CSS or HTML
+              - generic [ref=e222]: Titles
+              - generic [ref=e224]: Meta Descriptions
+              - generic [ref=e226]: H1 Tags
+              - generic [ref=e228]: Content
+              - generic [ref=e230]: Duplicates
+              - generic [ref=e232]: Indexability
+              - generic [ref=e234]: Social Tags
+              - generic [ref=e236]: Localization
+              - generic [ref=e238]: Links
+              - generic [ref=e240]: Redirects
+              - generic [ref=e242]: Images
+              - generic [ref=e244]: JS
+              - generic [ref=e246]: CSS
+              - generic [ref=e248]: Robots
+              - generic [ref=e250]: Sitemaps
+              - generic [ref=e252]: Structured Data
+          - generic [ref=e253]:
+            - generic [ref=e256]:
+              - heading "Gives clear instructions on how to fix issues." [level=3] [ref=e257]
+              - img [ref=e259]
+            - heading "Blazing fast. Up to 170k URLs crawled each minute." [level=3] [ref=e263]:
+              - generic [ref=e264]: Blazing fast. Up to 170k URLs crawled each minute.
+        - generic [ref=e267]:
+          - generic [ref=e268]:
+            - generic [ref=e271]:
+              - heading "Executes JavaScript." [level=3] [ref=e272]
+              - img [ref=e274]
+            - generic [ref=e277]:
+              - generic [ref=e279]:
+                - heading "Free for websites with verified ownership." [level=3] [ref=e280]:
+                  - generic [ref=e281]: Free for websites with verified ownership.
+                - img [ref=e285]
+              - generic [ref=e287]:
+                - generic [ref=e289]: Up to
+                - generic [ref=e292]:
+                  - generic [ref=e294]: "5"
+                  - generic [ref=e296]: K
+                - generic [ref=e297]: Pages/mo
+          - heading "Visualizes data with charts and graphs. For the indexability distribution, page load speed, duplicates, and so on." [level=3] [ref=e301]:
+            - generic [ref=e302]: Visualizes data with charts and graphs. For the indexability distribution, page load speed, duplicates, and so on.
+      - generic [ref=e310]:
+        - heading "Every major SEO category is covered. Site Audit automatically groups issues by type and provides clear instructions on how to fix them." [level=2] [ref=e312]:
+          - generic [ref=e313]: Every major SEO category is covered. Site Audit automatically groups issues by type and provides clear instructions on how to fix them.
+        - generic [ref=e316]:
+          - generic [ref=e319] [cursor=pointer]: Slow Pages
+          - generic [ref=e322] [cursor=pointer]: Core Web Vitals
+          - generic [ref=e325] [cursor=pointer]: Heavy CSS or HTML
+          - generic [ref=e328] [cursor=pointer]: Titles
+          - generic [ref=e331] [cursor=pointer]: Meta Descriptions
+          - generic [ref=e334] [cursor=pointer]: H1 Tags
+          - generic [ref=e337] [cursor=pointer]: Content
+          - generic [ref=e340] [cursor=pointer]: Duplicates
+          - generic [ref=e343] [cursor=pointer]: Indexability
+          - generic [ref=e346] [cursor=pointer]: Social Tags
+          - generic [ref=e349] [cursor=pointer]: Localization
+          - generic [ref=e352] [cursor=pointer]: Links
+          - generic [ref=e355] [cursor=pointer]: Redirects
+          - generic [ref=e358] [cursor=pointer]: Images
+          - generic [ref=e361] [cursor=pointer]: JS
+          - generic [ref=e364] [cursor=pointer]: CSS
+          - generic [ref=e367] [cursor=pointer]: Robots
+          - generic [ref=e370] [cursor=pointer]: Sitemaps
+          - generic [ref=e373] [cursor=pointer]: Structured Data
+        - generic [ref=e374]:
+          - generic [ref=e377]:
+            - img [ref=e379]
+            - generic [ref=e381]:
+              - generic [ref=e382]: Duplicate pages without canonical
+              - paragraph [ref=e384]: Similar or duplicate pages of your website must have a "rel=canonical" attribute to instruct search engines to show the most authoritative (canonical) version of the page in search results.
+          - generic [ref=e387]:
+            - img [ref=e389]
+            - generic [ref=e391]:
+              - generic [ref=e392]: How to fix
+              - paragraph [ref=e394]: Similar or duplicate pages of your website must have a "rel=canonical" attribute to instruct search engines to show the most authoritative (canonical) version of the page in search results.
+      - generic [ref=e399]:
+        - generic [ref=e402]:
+          - heading "Make sense of data with charts and graphs for indexability distribution, page load speed, duplicates, and more." [level=2] [ref=e405]:
+            - generic [ref=e406]: Make sense of data with charts and graphs for indexability distribution, page load speed, duplicates, and more.
+          - generic [ref=e407]:
+            - button [disabled] [ref=e408] [cursor=pointer]:
+              - img [ref=e410]
+            - button [ref=e413] [cursor=pointer]:
+              - img [ref=e415]
+        - generic [ref=e419]:
+          - img "HTTP status code distribution chart in Ahrefs’ Site Audit" [ref=e421]
+          - img "Health Score in Ahrefs’ Site Audit" [ref=e423]
+          - img "Image subtype distribution pie chart in Ahrefs’ Site Audit" [ref=e425]
+          - img "Links by destination status codes in Ahrefs’ Site Audit" [ref=e428]
+          - img "Link type distribution chart in Ahrefs’ Site Audit" [ref=e430]
+          - img "CRuX performance history chart in Ahrefs’ Site Audit" [ref=e432]
+          - img "Crawl status of links found in Ahrefs’ Site Audit" [ref=e434]
+          - img "Lighthouse score history chart in Ahrefs’ Site Audit" [ref=e436]
+          - img "Crawled URLs distribution pie chart in Ahrefs’ Site Audit" [ref=e438]
+          - img "Duplicate pages chart in Ahrefs’ Site Audit" [ref=e440]
+          - img "Crawl history chart in Ahrefs’ Site Audit" [ref=e442]
+          - img "HTTP status code distribution chart in Ahrefs’ Site Audit" [ref=e444]
+      - generic [ref=e450]:
+        - heading "Uncover critical SEO issues and hidden opportunities. Scan your website for 170+ technical and on-page SEO issues to get a comprehensive website analysis." [level=2] [ref=e452]:
+          - generic [ref=e453]: Uncover critical SEO issues and hidden opportunities. Scan your website for 170+ technical and on-page SEO issues to get a comprehensive website analysis.
+        - generic [ref=e454]:
+          - generic [ref=e459]:
+            - generic [ref=e460]:
+              - img "Site Audit segments issues into errors, warnings, and notices, so you know which ones to fix first. You can also adjust their importance for ongoing projects." [ref=e462] [cursor=pointer]
+              - img "And preserve link authority. Find temporary and permanent redirects, spot redirect loops, and understand the distribution of the destination status codes." [ref=e464] [cursor=pointer]
+              - img "Be it title tags, meta descriptions, headings, or low-quality content pages." [ref=e467] [cursor=pointer]
+              - img "Measure the CRuX and Lighthouse performance metrics of your pages to see which ones are slowing down your website." [ref=e470] [cursor=pointer]
+              - img "On auto-pilot. Save time by knowing which page to link from, which page to link to, along with the ranking keyword and its context." [ref=e473] [cursor=pointer]
+              - img "Once your crawl is done, download the entire list of issues in a ZIP or CSV file to fix them or send it to your developers—fixing instructions included." [ref=e476] [cursor=pointer]
+            - generic [ref=e478]:
+              - generic [ref=e482]:
+                - heading "Fix issues by priority" [level=4] [ref=e483]
+                - generic [ref=e484]: Site Audit segments issues into errors, warnings, and notices, so you know which ones to fix first. You can also adjust their importance for ongoing projects.
+              - generic [ref=e488]:
+                - heading "Monitor redirects" [level=4] [ref=e489]
+                - generic [ref=e490]: And preserve link authority. Find temporary and permanent redirects, spot redirect loops, and understand the distribution of the destination status codes.
+              - generic [ref=e494]:
+                - heading "Find duplicate content" [level=4] [ref=e495]
+                - generic [ref=e496]: Be it title tags, meta descriptions, headings, or low-quality content pages.
+              - generic [ref=e500]:
+                - heading "Optimize pages for speed" [level=4] [ref=e501]
+                - generic [ref=e502]: Measure the CRuX and Lighthouse performance metrics of your pages to see which ones are slowing down your website.
+              - generic [ref=e506]:
+                - heading "Get internal linking suggestions" [level=4] [ref=e507]
+                - generic [ref=e508]: On auto-pilot. Save time by knowing which page to link from, which page to link to, along with the ranking keyword and its context.
+              - generic [ref=e512]:
+                - heading "Export all issues in bulk" [level=4] [ref=e513]
+                - generic [ref=e514]: Once your crawl is done, download the entire list of issues in a ZIP or CSV file to fix them or send it to your developers—fixing instructions included.
+          - button [ref=e526] [cursor=pointer]:
+            - img [ref=e527]
+        - separator [ref=e529]
+        - heading "Looking for something more advanced? Zoom in on specific technical SEO areas related to crawlability, international SEO, markup, site architecture, and robots.txt." [level=2] [ref=e531]:
+          - generic [ref=e532]: Looking for something more advanced? Zoom in on specific technical SEO areas related to crawlability, international SEO, markup, site architecture, and robots.txt.
+        - generic [ref=e533]:
+          - generic [ref=e538]:
+            - generic [ref=e539]:
+              - img "Go deeper than predefined issues with Page explorer & Link explorer. Both tools put you in full control of over 250+ different data points on each of your pages." [ref=e541] [cursor=pointer]
+              - 'img "Troubleshoot SEO issues at a glance, with all the info about a URL in one place: content fields, inlinks/outlinks, hreflang, structured data, and duplicates." [ref=e543] [cursor=pointer]'
+              - img "No need to configure a custom search before the crawl. You can do all kinds of searches in real-time and compare code or text changes in-between crawls." [ref=e546] [cursor=pointer]
+              - img "Know how to correctly specify the language and geographical targeting of a page and diagnose mislabeled ones at a glance." [ref=e549] [cursor=pointer]
+              - img "Check your content against 190+ Google and Schema.org validation requirements to increase your reach." [ref=e552] [cursor=pointer]
+              - img "Increase the crawl speed, enable JavaScript rendering, customize the crawl depth, you name it. You have absolute control over your crawl." [ref=e555] [cursor=pointer]
+              - img "Increase the crawl speed, enable JavaScript rendering, customize the crawl depth, you name it. You have absolute control over how you want your crawl to unfold." [ref=e558] [cursor=pointer]
+              - img "Connect to Looker Studio, PageSpeed Insights API, and Google Search Console to get greater insights on your chosen data points." [ref=e561] [cursor=pointer]
+              - img "Before they go live. Just add your credentials and we’ll take care of the rest. Make sure no SEO errors reach production!" [ref=e564] [cursor=pointer]
+              - img "Stay on top of Google’s mobile-first indexing. Choose to crawl the mobile version of your website by selecting our preconfigured mobile user agent." [ref=e567] [cursor=pointer]
+              - img "Isolate issues related to a specific section of a website, like a subdomain or a subfolder. Segment it, save it, then return to it in just a few clicks." [ref=e570] [cursor=pointer]
+              - img "Check if robots.txt timed out or blocked URLs. Also, verify if a URL was in the sitemap or if AhrefsSiteAuditBot couldn’t parse it." [ref=e573] [cursor=pointer]
+            - generic [ref=e575]:
+              - generic [ref=e579]:
+                - heading "Slice and dice through crawled data" [level=4] [ref=e580]
+                - generic [ref=e581]: Go deeper than predefined issues with Page explorer & Link explorer. Both tools put you in full control of over 250+ different data points on each of your pages.
+              - generic [ref=e585]:
+                - heading "Rely on the industry’s most complete URL details panel" [level=4] [ref=e586]
+                - generic [ref=e587]: "Troubleshoot SEO issues at a glance, with all the info about a URL in one place: content fields, inlinks/outlinks, hreflang, structured data, and duplicates."
+              - generic [ref=e591]:
+                - heading "Search the raw HTML, rendered HTML, and text of a crawled page" [level=4] [ref=e592]
+                - generic [ref=e593]: No need to configure a custom search before the crawl. You can do all kinds of searches in real-time and compare code or text changes in-between crawls.
+              - generic [ref=e597]:
+                - heading "Visualize hreflang issues in a network graph" [level=4] [ref=e598]
+                - generic [ref=e599]: Know how to correctly specify the language and geographical targeting of a page and diagnose mislabeled ones at a glance.
+              - generic [ref=e603]:
+                - heading "Rank in rich results with structured data" [level=4] [ref=e604]
+                - generic [ref=e605]: Check your content against 190+ Google and Schema.org validation requirements to increase your reach.
+              - generic [ref=e609]:
+                - heading "Configure your crawl with granular settings" [level=4] [ref=e610]
+                - generic [ref=e611]: Increase the crawl speed, enable JavaScript rendering, customize the crawl depth, you name it. You have absolute control over your crawl.
+              - generic [ref=e615]:
+                - heading "Configure your crawl with granular settings" [level=4] [ref=e616]
+                - generic [ref=e617]: Increase the crawl speed, enable JavaScript rendering, customize the crawl depth, you name it. You have absolute control over how you want your crawl to unfold.
+              - generic [ref=e621]:
+                - heading "Integrate with Looker Studio, PSI, and GSC/GA (soon)" [level=4] [ref=e622]
+                - generic [ref=e623]: Connect to Looker Studio, PageSpeed Insights API, and Google Search Console to get greater insights on your chosen data points.
+              - generic [ref=e627]:
+                - heading "Crawl staging and restricted websites" [level=4] [ref=e628]
+                - generic [ref=e629]: Before they go live. Just add your credentials and we’ll take care of the rest. Make sure no SEO errors reach production!
+              - generic [ref=e633]:
+                - heading "Crawl mobile websites" [level=4] [ref=e634]
+                - generic [ref=e635]: Stay on top of Google’s mobile-first indexing. Choose to crawl the mobile version of your website by selecting our preconfigured mobile user agent.
+              - generic [ref=e639]:
+                - heading "Segment crawls" [level=4] [ref=e640]
+                - generic [ref=e641]: Isolate issues related to a specific section of a website, like a subdomain or a subfolder. Segment it, save it, then return to it in just a few clicks.
+              - generic [ref=e645]:
+                - heading "Review robots.txt and sitemaps" [level=4] [ref=e646]
+                - generic [ref=e647]: Check if robots.txt timed out or blocked URLs. Also, verify if a URL was in the sitemap or if AhrefsSiteAuditBot couldn’t parse it.
+          - button [ref=e665] [cursor=pointer]:
+            - img [ref=e666]
+      - generic [ref=e673]:
+        - heading "Step into the next era of website performance. Catch SEO issues early, deploy fixes automatically, get indexed faster, and stay discoverable as search and AEO evolve." [level=2] [ref=e675]:
+          - generic [ref=e676]: Step into the next era of website performance. Catch SEO issues early, deploy fixes automatically, get indexed faster, and stay discoverable as search and AEO evolve.
+        - generic [ref=e677]:
+          - generic [ref=e682]:
+            - generic [ref=e683]:
+              - heading "Always-on audits" [level=2] [ref=e684]
+              - paragraph [ref=e686]: Crawl your website 24/7 to catch critical SEO issues early before they impact performance and cost you visibility.
+            - link "Learn more →" [ref=e689] [cursor=pointer]:
+              - /url: https://ahrefs.com/blog/always-on-audit/
+              - generic [ref=e690]: Learn more →
+          - generic [ref=e701]:
+            - generic [ref=e702]:
+              - heading "IndexNow integration" [level=2] [ref=e703]
+              - paragraph [ref=e705]: Get your content indexed faster so updates show up in search and AI results without delay.
+            - link "Learn more →" [ref=e708] [cursor=pointer]:
+              - /url: /index-now
+              - generic [ref=e709]: Learn more →
+          - generic [ref=e720]:
+            - generic [ref=e721]:
+              - heading "Patches" [level=2] [ref=e722]
+              - paragraph [ref=e724]: Publish SEO fixes to your website live - individually or in bulk. No devs needed. We handle all the backend.
+            - link "Learn more →" [ref=e727] [cursor=pointer]:
+              - /url: /patches
+              - generic [ref=e728]: Learn more →
+          - generic [ref=e735]:
+            - text: Learn more about
+            - link "scaling technical SEO with AI →" [ref=e736] [cursor=pointer]:
+              - /url: /ai-tech-seo
+      - generic [ref=e742]:
+        - generic [ref=e743]:
+          - generic [ref=e746]: Start for free. Fix all the technical SEO issues that block your discoverability.
+          - generic [ref=e751]: 20,928 users joined Ahrefs in the last 7 days
+        - generic [ref=e752]:
+          - generic [ref=e754]:
+            - textbox "Enter domain" [ref=e757]
+            - generic [ref=e761]:
+              - generic [ref=e764]: Free for websites with verified ownership
+              - img [ref=e767]
+          - generic [ref=e769]:
+            - generic [ref=e770]:
+              - link "Sign up for Free" [ref=e771] [cursor=pointer]:
+                - /url: /signup?utm_source=site-audit&plan=awt&return=SiteAudit&feature=sa
+                - generic [ref=e774]: Sign up for Free
+              - paragraph [ref=e775]:
+                - text: Site Audit is included with
+                - link "Ahrefs Free ↗" [ref=e776] [cursor=pointer]:
+                  - /url: /free
+            - link "See All Plans" [ref=e777] [cursor=pointer]:
+              - /url: /pricing?
+              - generic [ref=e780]: See All Plans
+      - contentinfo [ref=e783]:
+        - generic [ref=e786]:
+          - generic [ref=e787]:
+            - generic [ref=e788]:
+              - generic [ref=e790]:
+                - generic [ref=e792]: Core tools
+                - generic [ref=e793]:
+                  - link "Brand Radar" [ref=e795] [cursor=pointer]:
+                    - /url: /brand-radar
+                    - generic [ref=e796]: Brand Radar
+                  - link "Custom Prompts" [ref=e798] [cursor=pointer]:
+                    - /url: /custom-prompts
+                    - generic [ref=e799]: Custom Prompts
+                  - link "Dashboard" [ref=e801] [cursor=pointer]:
+                    - /url: /dashboard
+                    - generic [ref=e802]: Dashboard
+                  - link "Site Explorer" [ref=e804] [cursor=pointer]:
+                    - /url: /site-explorer
+                    - generic [ref=e805]: Site Explorer
+                  - link "Keywords Explorer" [ref=e807] [cursor=pointer]:
+                    - /url: /keywords-explorer
+                    - generic [ref=e808]: Keywords Explorer
+                  - generic [ref=e810]: Site Audit
+                  - link "Rank Tracker" [ref=e812] [cursor=pointer]:
+                    - /url: /rank-tracker
+                    - generic [ref=e813]: Rank Tracker
+                  - link "GSC Insights" [ref=e815] [cursor=pointer]:
+                    - /url: /gsc-insights
+                    - generic [ref=e816]: GSC Insights
+                  - link "Content Explorer" [ref=e818] [cursor=pointer]:
+                    - /url: /content-explorer
+                    - generic [ref=e819]: Content Explorer
+                  - link "Web Analytics" [ref=e821] [cursor=pointer]:
+                    - /url: /web-analytics
+                    - generic [ref=e822]: Web Analytics
+                  - link "Bot Analytics" [ref=e824] [cursor=pointer]:
+                    - /url: /bot-analytics
+                    - generic [ref=e825]: Bot Analytics
+                  - link "GBP Monitor" [ref=e827] [cursor=pointer]:
+                    - /url: /gbp-monitor
+                    - generic [ref=e828]: GBP Monitor
+                  - link "Social Media Manager" [ref=e830] [cursor=pointer]:
+                    - /url: /social-media-manager
+                    - generic [ref=e831]: Social Media Manager
+                  - link "AI Content Helper" [ref=e833] [cursor=pointer]:
+                    - /url: /ai-content-helper
+                    - generic [ref=e834]: AI Content Helper
+                  - link "Report Builder" [ref=e836] [cursor=pointer]:
+                    - /url: /report-builder
+                    - generic [ref=e837]: Report Builder
+              - generic [ref=e839]:
+                - link "Use cases →" [ref=e841] [cursor=pointer]:
+                  - /url: /use-cases
+                  - generic [ref=e842]: Use cases →
+                - generic [ref=e843]:
+                  - link "Competitive Intelligence" [ref=e845] [cursor=pointer]:
+                    - /url: /use-cases/competitive-intelligence
+                    - generic [ref=e846]: Competitive Intelligence
+                  - link "PPC" [ref=e848] [cursor=pointer]:
+                    - /url: /use-cases/ppc
+                    - generic [ref=e849]: PPC
+                  - link "SEO" [ref=e851] [cursor=pointer]:
+                    - /url: /use-cases/seo
+                    - generic [ref=e852]: SEO
+                  - link "AEO" [ref=e854] [cursor=pointer]:
+                    - /url: /use-cases/aeo
+                    - generic [ref=e855]: AEO
+                  - link "Content Marketing" [ref=e857] [cursor=pointer]:
+                    - /url: /use-cases/content-marketing
+                    - generic [ref=e858]: Content Marketing
+                  - link "Brand Marketing" [ref=e860] [cursor=pointer]:
+                    - /url: /use-cases/brand-marketing
+                    - generic [ref=e861]: Brand Marketing
+                  - link "Investing" [ref=e863] [cursor=pointer]:
+                    - /url: /use-cases/investing
+                    - generic [ref=e864]: Investing
+            - generic [ref=e866]:
+              - generic [ref=e868]: Extra tools & features
+              - generic [ref=e869]:
+                - link "Domain Comparison" [ref=e871] [cursor=pointer]:
+                  - /url: /domain-comparison
+                  - generic [ref=e872]: Domain Comparison
+                - link "Batch Analysis" [ref=e874] [cursor=pointer]:
+                  - /url: /batch-analysis
+                  - generic [ref=e875]: Batch Analysis
+                - link "Link Intersect" [ref=e877] [cursor=pointer]:
+                  - /url: /link-intersect
+                  - generic [ref=e878]: Link Intersect
+                - link "Content Gap" [ref=e880] [cursor=pointer]:
+                  - /url: /content-gap
+                  - generic [ref=e881]: Content Gap
+                - link "Email Alerts" [ref=e883] [cursor=pointer]:
+                  - /url: /alerts
+                  - generic [ref=e884]: Email Alerts
+                - link "SEO Checker" [ref=e886] [cursor=pointer]:
+                  - /url: /seo-checker
+                  - generic [ref=e887]: SEO Checker
+                - link "Traffic Checker" [ref=e889] [cursor=pointer]:
+                  - /url: /traffic-checker
+                  - generic [ref=e890]: Traffic Checker
+                - link "Looker Studio Connectors" [ref=e892] [cursor=pointer]:
+                  - /url: /google-data-studio-connectors
+                  - generic [ref=e893]: Looker Studio Connectors
+                - link "Top Websites" [ref=e895] [cursor=pointer]:
+                  - /url: https://ahrefstop.com/websites
+                  - generic [ref=e896]: Top Websites
+                - link "Patches" [ref=e898] [cursor=pointer]:
+                  - /url: /patches
+                  - generic [ref=e899]: Patches
+                - link "Portfolios" [ref=e901] [cursor=pointer]:
+                  - /url: /portfolios
+                  - generic [ref=e902]: Portfolios
+                - link "IndexNow" [ref=e904] [cursor=pointer]:
+                  - /url: /index-now
+                  - generic [ref=e905]: IndexNow
+                - link "AI Tech SEO" [ref=e907] [cursor=pointer]:
+                  - /url: /ai-tech-seo
+                  - generic [ref=e908]: AI Tech SEO
+                - link "All tools" [ref=e910] [cursor=pointer]:
+                  - /url: /all
+                  - generic [ref=e911]: All tools
+                - link [ref=e913] [cursor=pointer]:
+                  - /url: /agent-a?utm_source=ahrefs_website&utm_content=footer
+            - generic [ref=e916]:
+              - generic [ref=e917]:
+                - link "Free SEO tools →" [ref=e919] [cursor=pointer]:
+                  - /url: /free-seo-tools
+                  - generic [ref=e920]: Free SEO tools →
+                - generic [ref=e921]:
+                  - link "Ahrefs Free" [ref=e923] [cursor=pointer]:
+                    - /url: /free
+                    - generic [ref=e924]: Ahrefs Free
+                  - link "AI Visibility Checker" [ref=e926] [cursor=pointer]:
+                    - /url: /ai-visibility-checker
+                    - generic [ref=e927]: AI Visibility Checker
+                  - link "AI Writing Tools" [ref=e929] [cursor=pointer]:
+                    - /url: /writing-tools
+                    - generic [ref=e930]: AI Writing Tools
+                  - link "Backlink Checker" [ref=e932] [cursor=pointer]:
+                    - /url: /backlink-checker
+                    - generic [ref=e933]: Backlink Checker
+                  - link "Broken Link Checker" [ref=e935] [cursor=pointer]:
+                    - /url: /broken-link-checker
+                    - generic [ref=e936]: Broken Link Checker
+                  - link "Website Authority Checker" [ref=e938] [cursor=pointer]:
+                    - /url: /website-authority-checker
+                    - generic [ref=e939]: Website Authority Checker
+                  - link "Keyword Generator" [ref=e941] [cursor=pointer]:
+                    - /url: /keyword-generator
+                    - generic [ref=e942]: Keyword Generator
+                  - link "SERP Checker" [ref=e944] [cursor=pointer]:
+                    - /url: /serp-checker
+                    - generic [ref=e945]: SERP Checker
+                  - link "SEO Toolbar" [ref=e947] [cursor=pointer]:
+                    - /url: /seo-toolbar
+                    - generic [ref=e948]: SEO Toolbar
+                  - link "Keyword Rank Checker" [ref=e950] [cursor=pointer]:
+                    - /url: /keyword-rank-checker
+                    - generic [ref=e951]: Keyword Rank Checker
+                  - link "Keyword Difficulty Checker" [ref=e953] [cursor=pointer]:
+                    - /url: /keyword-difficulty
+                    - generic [ref=e954]: Keyword Difficulty Checker
+                  - link "Website Checker" [ref=e956] [cursor=pointer]:
+                    - /url: /website-checker
+                    - generic [ref=e957]: Website Checker
+                  - link "SEO Audit Tool" [ref=e959] [cursor=pointer]:
+                    - /url: /seo-audit-tool
+                    - generic [ref=e960]: SEO Audit Tool
+                  - link "Word Count" [ref=e962] [cursor=pointer]:
+                    - /url: https://wordcount.com
+                    - generic [ref=e963]: Word Count
+              - generic [ref=e964]:
+                - link "Alternatives →" [ref=e966] [cursor=pointer]:
+                  - /url: /vs
+                  - generic [ref=e967]: Alternatives →
+                - link "Ahrefs vs Semrush" [ref=e970] [cursor=pointer]:
+                  - /url: /vs/semrush
+                  - generic [ref=e971]: Ahrefs vs Semrush
+            - generic [ref=e972]:
+              - generic [ref=e973]:
+                - generic [ref=e975]: Product
+                - generic [ref=e976]:
+                  - link "Pricing" [ref=e978] [cursor=pointer]:
+                    - /url: /pricing
+                    - generic [ref=e979]: Pricing
+                  - link "Our data" [ref=e981] [cursor=pointer]:
+                    - /url: /big-data
+                    - generic [ref=e982]: Our data
+                  - link "AhrefsBot" [ref=e984] [cursor=pointer]:
+                    - /url: /robot
+                    - generic [ref=e985]: AhrefsBot
+                  - link "API" [ref=e987] [cursor=pointer]:
+                    - /url: https://docs.ahrefs.com/api
+                    - generic [ref=e988]: API
+                  - link "MCP" [ref=e990] [cursor=pointer]:
+                    - /url: /mcp
+                    - generic [ref=e991]: MCP
+                  - link "Enterprise" [ref=e993] [cursor=pointer]:
+                    - /url: /enterprise
+                    - generic [ref=e994]: Enterprise
+                  - link "What’s new?" [ref=e996] [cursor=pointer]:
+                    - /url: https://ahrefs.com/blog/category/product-blog/
+                    - generic [ref=e997]: What’s new?
+              - generic [ref=e999]:
+                - generic [ref=e1001]: Company
+                - generic [ref=e1002]:
+                  - link "About" [ref=e1004] [cursor=pointer]:
+                    - /url: /about
+                    - generic [ref=e1005]: About
+                  - link "Testimonials" [ref=e1007] [cursor=pointer]:
+                    - /url: /reviews
+                    - generic [ref=e1008]: Testimonials
+                  - link "Events" [ref=e1010] [cursor=pointer]:
+                    - /url: /events
+                    - generic [ref=e1011]: Events
+                  - link "Team" [ref=e1013] [cursor=pointer]:
+                    - /url: /team
+                    - generic [ref=e1014]: Team
+                  - link "Careers" [ref=e1016] [cursor=pointer]:
+                    - /url: /careers
+                    - generic [ref=e1017]: Careers
+                  - link "Tech" [ref=e1019] [cursor=pointer]:
+                    - /url: /tech
+                    - generic [ref=e1020]: Tech
+                  - link "Media kit" [ref=e1022] [cursor=pointer]:
+                    - /url: /media-kit
+                    - generic [ref=e1023]: Media kit
+                  - link "Contact us" [ref=e1025] [cursor=pointer]:
+                    - /url: mailto:support@ahrefs.com
+                    - generic [ref=e1026]: Contact us
+            - generic [ref=e1028]:
+              - generic [ref=e1030]: Resources
+              - generic [ref=e1031]:
+                - link "Blog" [ref=e1033] [cursor=pointer]:
+                  - /url: https://ahrefs.com/blog/
+                  - generic [ref=e1034]: Blog
+                - link "Tech blog" [ref=e1036] [cursor=pointer]:
+                  - /url: https://tech.ahrefs.com
+                  - generic [ref=e1037]: Tech blog
+                - link "Podcast" [ref=e1039] [cursor=pointer]:
+                  - /url: /podcast
+                  - generic [ref=e1040]: Podcast
+                - link "SEO Guide" [ref=e1042] [cursor=pointer]:
+                  - /url: /seo
+                  - generic [ref=e1043]: SEO Guide
+                - link "Help center" [ref=e1045] [cursor=pointer]:
+                  - /url: https://help.ahrefs.com/
+                  - generic [ref=e1046]: Help center
+                - link "Academy" [ref=e1048] [cursor=pointer]:
+                  - /url: /academy
+                  - generic [ref=e1049]: Academy
+                - link "Marketing Agencies" [ref=e1051] [cursor=pointer]:
+                  - /url: /agencies
+                  - generic [ref=e1052]: Marketing Agencies
+                - link "Digest" [ref=e1054] [cursor=pointer]:
+                  - /url: /newsletter
+                  - generic [ref=e1055]: Digest
+          - separator [ref=e1057]
+          - generic [ref=e1059]:
+            - generic [ref=e1060]:
+              - paragraph [ref=e1063]: "© 2026 Ahrefs Pte. Ltd. (201227417H) 16 Raffles Quay, #33-03 Hong Leong Building, Singapore 048581"
+              - generic [ref=e1065]:
+                - link "Legal info" [ref=e1067] [cursor=pointer]:
+                  - /url: /legal
+                  - generic [ref=e1068]: Legal info
+                - link "Privacy Policy" [ref=e1070] [cursor=pointer]:
+                  - /url: /legal/privacy-policy
+                  - generic [ref=e1071]: Privacy Policy
+                - link "Cookie Settings" [ref=e1073] [cursor=pointer]:
+                  - /url: javascript:void(0)
+                  - generic [ref=e1074]: Cookie Settings
+                - link "Terms of Service" [ref=e1076] [cursor=pointer]:
+                  - /url: /legal/terms
+                  - generic [ref=e1077]: Terms of Service
+            - generic [ref=e1078]:
+              - generic [ref=e1080]:
+                - link [ref=e1081] [cursor=pointer]:
+                  - /url: https://x.com/ahrefs
+                  - button [ref=e1082]:
+                    - img [ref=e1083]
+                - link [ref=e1085] [cursor=pointer]:
+                  - /url: https://www.youtube.com/c/AhrefsCom
+                  - button [ref=e1086]:
+                    - img [ref=e1087]
+                - link [ref=e1089] [cursor=pointer]:
+                  - /url: https://www.instagram.com/ahrefs
+                  - button [ref=e1090]:
+                    - img [ref=e1091]
+                - link [ref=e1093] [cursor=pointer]:
+                  - /url: https://www.facebook.com/Ahrefs
+                  - button [ref=e1094]:
+                    - img [ref=e1095]
+                - link [ref=e1097] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/ahrefs/
+                  - button [ref=e1098]:
+                    - img [ref=e1099]
+              - button "English" [ref=e1106] [cursor=pointer]:
+                - generic [ref=e1107]:
+                  - generic [ref=e1109]: English
+                  - img [ref=e1111]
+    - link [ref=e1114] [cursor=pointer]:
+      - /url: https://help.ahrefs.com/?mtm_campaign=floating-help-btn
+      - img [ref=e1115]
+  - button "Close menu" [ref=e1119] [cursor=pointer]:
+    - img [ref=e1120]

@@ -1,0 +1,78 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - link "Scribtly" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Collapse sidebar" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+    - generic [ref=e9]: kristiyan@tsvweb.com's workspace
+    - navigation [ref=e10]:
+      - link "Dashboard" [ref=e11] [cursor=pointer]:
+        - /url: /dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link "Generate" [ref=e18] [cursor=pointer]:
+        - /url: /generate
+        - img [ref=e19]
+        - generic [ref=e21]: Generate
+      - link "Scripts" [ref=e22] [cursor=pointer]:
+        - /url: /scripts
+        - img [ref=e23]
+        - generic [ref=e26]: Scripts
+      - link "Pipeline" [ref=e27] [cursor=pointer]:
+        - /url: /pipeline
+        - img [ref=e28]
+        - generic [ref=e33]: Pipeline
+      - link "Clients" [ref=e34] [cursor=pointer]:
+        - /url: /clients
+        - img [ref=e35]
+        - generic [ref=e40]: Clients
+      - link "Settings" [ref=e41] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e42]
+        - generic [ref=e45]: Settings
+    - generic [ref=e46]:
+      - link "BASIC" [ref=e47] [cursor=pointer]:
+        - /url: /settings/billing
+      - generic [ref=e48]:
+        - button "Toggle theme" [ref=e49] [cursor=pointer]:
+          - img [ref=e50]
+        - button "↪" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: ↪
+  - main [ref=e54]:
+    - generic [ref=e55]:
+      - heading "Settings" [level=1] [ref=e56]
+      - generic [ref=e57]:
+        - heading "Profile" [level=2] [ref=e58]
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - term [ref=e61]: Name
+            - definition [ref=e62]: kristiyan@tsvweb.com
+          - generic [ref=e63]:
+            - term [ref=e64]: Email
+            - definition [ref=e65]: kristiyan@tsvweb.com
+      - generic [ref=e66]:
+        - heading "Workspace" [level=2] [ref=e67]
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - term [ref=e70]: Name
+            - definition [ref=e71]:
+              - textbox [ref=e73]: kristiyan@tsvweb.com's workspace
+          - generic [ref=e74]:
+            - term [ref=e75]: Plan
+            - definition [ref=e76]:
+              - link "BASIC" [ref=e77] [cursor=pointer]:
+                - /url: /settings/billing
+          - generic [ref=e78]:
+            - term [ref=e79]: Members
+            - definition [ref=e80]: "1"
+      - generic [ref=e81]:
+        - heading "Billing" [level=2] [ref=e82]
+        - link "Manage plan and subscription →" [ref=e83] [cursor=pointer]:
+          - /url: /settings/billing
+      - generic [ref=e84]:
+        - paragraph [ref=e85]: This will permanently delete your account, all your workspaces, and cancel any active subscriptions. This cannot be undone.
+        - generic [ref=e86]:
+          - paragraph [ref=e87]: Type DELETE to confirm.
+          - textbox "DELETE" [ref=e88]
+        - button "Delete account" [disabled] [ref=e89]

@@ -1,0 +1,144 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Scribtly is in early access — join free today" [ref=e4] [cursor=pointer]:
+      - /url: /signup
+      - text: Scribtly is in early access — join free today
+      - img [ref=e5]
+    - navigation [ref=e7]:
+      - generic [ref=e8]:
+        - link "Scribtly" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e10]:
+          - link "Blog" [ref=e11] [cursor=pointer]:
+            - /url: /blog
+          - link "Pricing" [ref=e12] [cursor=pointer]:
+            - /url: /pricing
+          - link "Log in" [ref=e13] [cursor=pointer]:
+            - /url: /login
+          - link "Start free" [ref=e14] [cursor=pointer]:
+            - /url: /signup
+            - button "Start free" [ref=e15]
+  - main [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]: Built for freelancers
+      - heading "Write more scripts. Work fewer hours." [level=1] [ref=e19]
+      - paragraph [ref=e20]: Scribtly is the script writing tool that freelancers actually use in client work. Save each client's voice, generate professional scripts in under 60 seconds, and take on more work without burning out.
+      - link "Start free · 3 scripts" [ref=e21] [cursor=pointer]:
+        - /url: /signup
+        - button "Start free · 3 scripts" [ref=e22]
+    - generic [ref=e23]:
+      - heading "Three problems freelancers hit. One fix." [level=2] [ref=e24]
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - img [ref=e27]
+          - heading "Hours per script" [level=3] [ref=e30]
+          - paragraph [ref=e31]: You're spending 2–4 hours on a script that pays £50. Scribtly gets you to a solid first draft in under 60 seconds.
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - heading "Capped earnings" [level=3] [ref=e35]
+          - paragraph [ref=e36]: You can only write so many scripts. Scribtly lets you take on 3× the clients without working 3× the hours.
+        - generic [ref=e37]:
+          - img [ref=e38]
+          - heading "Starting from scratch every time" [level=3] [ref=e43]
+          - paragraph [ref=e44]: Every new client means relearning their voice. Scribtly saves their profile so every script sounds like them from day one.
+    - generic [ref=e45]:
+      - heading "Everything you get" [level=2] [ref=e46]
+      - list [ref=e47]:
+        - listitem [ref=e48]:
+          - img [ref=e49]
+          - generic [ref=e51]: Save each client's voice, tone, phrases, and audience once
+        - listitem [ref=e52]:
+          - img [ref=e53]
+          - generic [ref=e55]: Generate YouTube, TikTok, and Reels scripts in under 60 seconds
+        - listitem [ref=e56]:
+          - img [ref=e57]
+          - generic [ref=e59]: Share scripts for client review with one link — no email attachments
+        - listitem [ref=e60]:
+          - img [ref=e61]
+          - generic [ref=e63]: Export to PDF for polished delivery
+        - listitem [ref=e64]:
+          - img [ref=e65]
+          - generic [ref=e67]: Manage your entire script library in one place
+        - listitem [ref=e68]:
+          - img [ref=e69]
+          - generic [ref=e71]: Works for any niche — fitness, finance, food, tech, beauty, and more
+    - generic [ref=e72]:
+      - heading "Questions from freelancers" [level=2] [ref=e73]
+      - generic [ref=e74]:
+        - generic [ref=e75]:
+          - heading "I already have a process. Why would I change it?" [level=3] [ref=e76]
+          - paragraph [ref=e77]: You don't have to change your process — just speed it up. Use Scribtly to generate the first draft, then apply your expertise to refine it. Most freelancers cut their per-script time by 60–70% while improving consistency.
+        - generic [ref=e78]:
+          - heading "Will my clients be able to tell the scripts are AI-assisted?" [level=3] [ref=e79]
+          - paragraph [ref=e80]: Not if you use it right. Scribtly generates scripts based on your client's specific voice profile — their tone, phrases, audience, and niche. The output sounds like them, not like a generic AI template. Your job is to refine and deliver it.
+        - generic [ref=e81]:
+          - heading "How many clients can I manage?" [level=3] [ref=e82]
+          - paragraph [ref=e83]: As many as you like. Save a separate voice profile for each client and switch between them instantly.
+        - generic [ref=e84]:
+          - heading "What platforms does it support?" [level=3] [ref=e85]
+          - paragraph [ref=e86]: YouTube (3–20 minute long-form), TikTok (15–60 second short-form), and Instagram Reels (15–60 second). Each format gets scripts built for its own algorithm and pacing.
+    - generic [ref=e88]:
+      - img "Kristiyan Tsvetanov — Founder of Scribtly" [ref=e89]
+      - generic [ref=e90]:
+        - paragraph [ref=e91]: “I built Scribtly because freelancers I know were spending hours on scripts that should take minutes. I reply to every support email personally — if something isn't working, just reach out.”
+        - paragraph [ref=e92]: Kristiyan Tsvetanov · Founder, Scribtly
+    - generic [ref=e93]:
+      - heading "Start with 3 free scripts" [level=2] [ref=e94]
+      - paragraph [ref=e95]: No credit card. No commitment. See how fast your workflow can be.
+      - link "Try it free" [ref=e96] [cursor=pointer]:
+        - /url: /signup
+        - button "Try it free" [ref=e97]
+  - contentinfo [ref=e98]:
+    - generic [ref=e99]:
+      - generic [ref=e100]:
+        - generic [ref=e101]:
+          - paragraph [ref=e102]: Platform
+          - list [ref=e103]:
+            - listitem [ref=e104]:
+              - link "YouTube scripts" [ref=e105] [cursor=pointer]:
+                - /url: /youtube-scripts
+            - listitem [ref=e106]:
+              - link "TikTok scripts" [ref=e107] [cursor=pointer]:
+                - /url: /tiktok-scripts
+            - listitem [ref=e108]:
+              - link "Instagram Reels scripts" [ref=e109] [cursor=pointer]:
+                - /url: /instagram-reels-scripts
+            - listitem [ref=e110]:
+              - link "AI script writer" [ref=e111] [cursor=pointer]:
+                - /url: /ai-script-writer
+        - generic [ref=e112]:
+          - paragraph [ref=e113]: Solutions
+          - list [ref=e114]:
+            - listitem [ref=e115]:
+              - link "For freelancers" [ref=e116] [cursor=pointer]:
+                - /url: /for-freelancers
+            - listitem [ref=e117]:
+              - link "For agencies" [ref=e118] [cursor=pointer]:
+                - /url: /for-agencies
+            - listitem [ref=e119]:
+              - link "Pricing" [ref=e120] [cursor=pointer]:
+                - /url: /pricing
+        - generic [ref=e121]:
+          - paragraph [ref=e122]: Resources
+          - list [ref=e123]:
+            - listitem [ref=e124]:
+              - link "Blog" [ref=e125] [cursor=pointer]:
+                - /url: /blog
+        - generic [ref=e126]:
+          - paragraph [ref=e127]: Company
+          - list [ref=e128]:
+            - listitem [ref=e129]:
+              - link "Privacy" [ref=e130] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e131]:
+              - link "Terms" [ref=e132] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e133]:
+              - link "Cookies" [ref=e134] [cursor=pointer]:
+                - /url: /cookies
+            - listitem [ref=e135]:
+              - button "Cookie settings" [ref=e136] [cursor=pointer]
+            - listitem [ref=e137]:
+              - link "Log in" [ref=e138] [cursor=pointer]:
+                - /url: /login
+      - generic [ref=e140]: © 2026 Scribtly · Made for freelancers
