@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
@@ -66,6 +67,7 @@ const stats = [
 const platforms = [
   {
     name: "YouTube",
+    icon: "/platforms/youtube.png",
     href: "/youtube-scripts",
     badge: "Long-form",
     desc: "Full scripts with hooks, structured body sections, B-roll notes, chapters, and earned CTAs. Built to hold watch time.",
@@ -74,6 +76,7 @@ const platforms = [
   },
   {
     name: "TikTok",
+    icon: "/platforms/tiktok.png",
     href: "/tiktok-scripts",
     badge: "Short-form",
     desc: "Punchy, high-energy scripts with pattern interrupts and retention loops baked in. Every second earns the next.",
@@ -82,6 +85,7 @@ const platforms = [
   },
   {
     name: "Instagram Reels",
+    icon: "/platforms/reels.png",
     href: "/instagram-reels-scripts",
     badge: "Short-form",
     desc: "Hook-first scripts that stop the scroll in 3 seconds or less — paced and structured for the Reels algorithm.",
@@ -179,8 +183,13 @@ export default function AIScriptWriterPage() {
 
         <div className="relative max-w-4xl mx-auto px-5 pt-16 pb-12 text-center">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-primary backdrop-blur">
-            <Sparkles size={11} />
+            <Sparkles size={11} className="text-primary" />
             AI Script Writer
+            <span className="ml-1 inline-flex -space-x-1.5">
+              <Image src="/platforms/youtube.png" alt="YouTube" width={16} height={16} className="rounded-[3px] ring-1 ring-[var(--color-surface)]" />
+              <Image src="/platforms/tiktok.png" alt="TikTok" width={16} height={16} className="rounded-[3px] ring-1 ring-[var(--color-surface)]" />
+              <Image src="/platforms/reels.png" alt="Reels" width={16} height={16} className="rounded-[3px] ring-1 ring-[var(--color-surface)]" />
+            </span>
           </div>
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05]">
             The AI script writer built<br className="hidden md:block" /> for client work
@@ -212,6 +221,20 @@ export default function AIScriptWriterPage() {
         </div>
       </section>
 
+      {/* ── PRODUCT SHOWCASE ── */}
+      <section className="max-w-5xl mx-auto px-5 pt-12 md:pt-16">
+        <div className="relative mx-auto max-w-4xl rounded-2xl overflow-hidden border-hair border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_24px_70px_rgba(127,119,221,0.18)] ring-1 ring-primary/10">
+          <Image
+            src="/brand/feature-platforms.png"
+            alt="Scribtly generating scripts for YouTube, TikTok and Instagram Reels from one client voice"
+            width={1024}
+            height={1024}
+            className="w-full h-auto"
+            priority
+          />
+        </div>
+      </section>
+
       {/* ── PLATFORMS ── */}
       <section className="max-w-5xl mx-auto px-5 py-16 md:py-20">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-3">
@@ -224,9 +247,12 @@ export default function AIScriptWriterPage() {
           {platforms.map((p) => (
             <Link key={p.name} href={p.href} className="group block">
               <Card className="h-full hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-200">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold group-hover:text-primary transition-colors">{p.name}</h3>
-                  <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full ${p.color}`}>
+                <div className="flex items-center justify-between mb-3 gap-3">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <Image src={p.icon} alt={p.name} width={28} height={28} className="rounded-md shrink-0" />
+                    <h3 className="font-semibold group-hover:text-primary transition-colors truncate">{p.name}</h3>
+                  </div>
+                  <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full shrink-0 ${p.color}`}>
                     {p.badge}
                   </span>
                 </div>
@@ -264,6 +290,35 @@ export default function AIScriptWriterPage() {
                 <p className="text-sm text-text-secondary dark:text-dark-muted">{f.desc}</p>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── LIBRARY SHOWCASE ── */}
+      <section className="max-w-5xl mx-auto px-5 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div className="text-center md:text-left">
+            <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">Script library</span>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+              Every client, every script, in one place
+            </h2>
+            <p className="text-text-secondary dark:text-dark-muted text-sm leading-relaxed mb-6">
+              Organise scripts by client, platform, and date. Search, filter, reuse, or export any past script in seconds — no more digging through Google Docs or email threads.
+            </p>
+            <Link href="/signup">
+              <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
+                Start building your library <ArrowRight size={13} />
+              </Button>
+            </Link>
+          </div>
+          <div className="relative rounded-xl overflow-hidden ring-1 ring-[var(--color-border)] shadow-[0_20px_60px_rgba(127,119,221,0.18)]">
+            <Image
+              src="/brand/feature-library.png"
+              alt="Script library grid showing client scripts organised by platform"
+              width={1024}
+              height={1024}
+              className="w-full h-auto"
+            />
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
@@ -167,7 +168,7 @@ export default function YouTubePage() {
 
         <div className="relative max-w-4xl mx-auto px-5 pt-16 pb-12 text-center">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-primary backdrop-blur">
-            <Sparkles size={11} />
+            <Image src="/platforms/youtube.png" alt="YouTube" width={16} height={16} className="rounded-[3px]" />
             YouTube Scripts
           </div>
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05]">
@@ -197,6 +198,20 @@ export default function YouTubePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── PRODUCT SHOWCASE ── */}
+      <section className="max-w-5xl mx-auto px-5 pt-12 md:pt-16">
+        <div className="relative mx-auto max-w-4xl rounded-2xl overflow-hidden border-hair border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_24px_70px_rgba(127,119,221,0.18)] ring-1 ring-primary/10">
+          <Image
+            src="/brand/feature-voice.png"
+            alt="Scribtly generating a YouTube script in your client's exact voice"
+            width={1024}
+            height={1024}
+            className="w-full h-auto"
+            priority
+          />
         </div>
       </section>
 
@@ -289,6 +304,35 @@ export default function YouTubePage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ── MORE PLATFORMS ── */}
+      <section className="max-w-5xl mx-auto px-5 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div className="order-2 md:order-1 relative rounded-xl overflow-hidden ring-1 ring-[var(--color-border)] shadow-[0_20px_60px_rgba(127,119,221,0.18)]">
+            <Image
+              src="/brand/feature-platforms.png"
+              alt="One script adapted for YouTube, TikTok, Instagram Reels, LinkedIn and Podcast"
+              width={1024}
+              height={1024}
+              className="w-full h-auto"
+            />
+          </div>
+          <div className="order-1 md:order-2 text-center md:text-left">
+            <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">More than YouTube</span>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+              One client voice. Every platform.
+            </h2>
+            <p className="text-text-secondary dark:text-dark-muted text-sm leading-relaxed mb-6">
+              The same client profile that writes your YouTube scripts also writes their TikToks, Reels, LinkedIn posts, and Podcast outlines. Save once, generate everywhere.
+            </p>
+            <Link href="/signup">
+              <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
+                Try all platforms free <ArrowRight size={13} />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
