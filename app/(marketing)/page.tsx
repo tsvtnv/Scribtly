@@ -172,14 +172,13 @@ export default function HomePage() {
         <div className="absolute top-[-80px] left-[-60px] w-[420px] h-[420px] rounded-full bg-primary/10 blur-[90px] animate-orb-drift pointer-events-none" />
         <div className="absolute bottom-[-60px] right-[-40px] w-[340px] h-[340px] rounded-full bg-[#38c172]/10 blur-[80px] animate-orb-drift-alt pointer-events-none" />
 
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-[1.1fr_0.9fr] md:py-24">
-          <div>
+        <div className="relative mx-auto max-w-4xl px-5 py-16 text-center md:py-24">
             <div className="animate-fade-up-1 mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-text-secondary shadow-sm backdrop-blur dark:text-dark-muted">
               <Sparkles size={12} className="text-primary" />
               Built for client script work, not generic chat
             </div>
 
-            <h1 className="animate-fade-up-1 text-4xl font-semibold leading-[1.05] tracking-tight md:text-[3.5rem]">
+            <h1 className="animate-fade-up-1 text-5xl font-semibold leading-[1.0] tracking-tight md:text-6xl">
               Write video scripts 10x faster,{" "}
               <span className="relative inline-block text-primary whitespace-nowrap">
                 in your client's exact voice
@@ -187,12 +186,12 @@ export default function HomePage() {
               </span>
             </h1>
 
-            <p className="animate-fade-up-2 mt-6 max-w-xl text-base text-text-secondary md:text-lg dark:text-dark-muted">
+            <p className="animate-fade-up-2 mt-6 max-w-lg mx-auto text-base text-text-secondary md:text-lg dark:text-dark-muted">
               Scribtly turns saved brand voice, platform rules, and client context into
               ready-to-send YouTube, TikTok, and Reels scripts in under 60 seconds.
             </p>
 
-            <div className="animate-fade-up-3 mt-8 flex flex-wrap items-center gap-3">
+            <div className="animate-fade-up-3 mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link href="/signup">
                 <Button
                   size="lg"
@@ -208,7 +207,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="animate-fade-up-3 mt-7 grid max-w-sm grid-cols-3 gap-2 text-xs text-text-secondary dark:text-dark-muted">
+            <div className="animate-fade-up-3 mt-7 grid max-w-sm mx-auto grid-cols-3 gap-2 text-xs text-text-secondary dark:text-dark-muted">
               <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
                 <Zap size={13} className="text-primary shrink-0" /> 60s scripts
               </span>
@@ -219,55 +218,6 @@ export default function HomePage() {
                 <ShieldCheck size={13} className="text-[#f0b429] shrink-0" /> No card
               </span>
             </div>
-          </div>
-
-          {/* hero panel */}
-          <div className="animate-float-panel relative hidden md:block">
-            <div className="absolute -inset-4 rounded-2xl bg-primary/5 blur-xl" />
-            <div className="relative rounded-xl border-hair border-[var(--color-border)] bg-[var(--color-surface)]/90 p-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] backdrop-blur">
-              <div className="mb-4 flex items-center justify-between border-b-hair border-[var(--color-border)] pb-3">
-                <div>
-                  <div className="text-[11px] text-text-secondary dark:text-dark-muted">Generating for</div>
-                  <div className="font-semibold text-sm">Acme Studios</div>
-                </div>
-                <span className="rounded-full bg-[#d9f0df] px-2.5 py-1 text-[11px] font-medium text-[#274432] dark:bg-[#1f3b29] dark:text-[#c9e9d1]">
-                  On voice
-                </span>
-              </div>
-
-              <div className="space-y-4">
-                {["Hook", "Intro", "Story beat", "CTA"].map((label, i) => (
-                  <div key={label} className="animate-script-line" style={{ animationDelay: `${i * 200}ms` }}>
-                    <div className="mb-1.5 flex items-center justify-between text-[11px] uppercase text-text-secondary dark:text-dark-muted">
-                      <span>{label}</span>
-                      <span className="text-[10px]">{i === 0 ? "Strong open" : "Drafted"}</span>
-                    </div>
-                    <div className="h-2 rounded-full bg-[var(--color-border)]">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-primary to-primary/70 transition-all duration-1000"
-                        style={{ width: `${90 - i * 10}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 grid grid-cols-3 gap-2 text-center text-xs">
-                <div className="rounded-lg bg-[var(--color-primary-tint)] p-3">
-                  <div className="font-bold text-primary">10×</div>
-                  <div className="text-text-secondary dark:text-dark-muted text-[10px] mt-0.5">faster</div>
-                </div>
-                <div className="rounded-lg bg-[#d9f0df] p-3 text-[#274432] dark:bg-[#1f3b29] dark:text-[#c9e9d1]">
-                  <div className="font-bold">5</div>
-                  <div className="text-[10px] mt-0.5">formats</div>
-                </div>
-                <div className="rounded-lg bg-[#fff0cf] p-3 text-[#62430a] dark:bg-[#3a2f18] dark:text-[#f8d98b]">
-                  <div className="font-bold">0</div>
-                  <div className="text-[10px] mt-0.5">rework</div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
