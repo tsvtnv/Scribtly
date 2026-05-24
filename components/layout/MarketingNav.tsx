@@ -16,7 +16,7 @@ export function MarketingNav() {
       <nav className="w-full bg-[var(--color-bg)]/80 backdrop-blur border-b-hair border-[var(--color-border)]">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
           <Link href="/" className="flex items-center">
-            <Image src="/logo.svg" alt="Scribtly" width={110} height={29} priority />
+            <Image src="/brand/logo-full.png" alt="Scribtly" width={120} height={40} priority className="object-contain" />
           </Link>
           <div className="flex items-center gap-5 text-sm">
             <Link href="/blog" className="hidden sm:inline hover:text-primary">Blog</Link>
