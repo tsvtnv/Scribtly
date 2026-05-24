@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Sparkles,
   FileText,
@@ -33,14 +34,14 @@ export const metadata = {
     title: "Scribtly: Write video scripts 10x faster",
     description:
       "AI script generator built for freelancers. Save client voices. Generate forever. Start free.",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly — AI video scripts" }],
+    images: [{ url: "/brand/og-hero.png", width: 1536, height: 1024, alt: "Scribtly — AI video scripts" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Scribtly: Write video scripts 10x faster",
     description:
       "AI script generator built for freelancers. Save client voices. Generate forever. Start free.",
-    images: ["/opengraph-image"],
+    images: ["/brand/social-banner.png"],
   },
 };
 
@@ -353,6 +354,71 @@ export default function HomePage() {
           </p>
         </ScrollReveal>
         <PlatformDemo />
+      </section>
+
+      {/* ── VISUAL FEATURES ── */}
+      <section className="bg-[var(--color-surface)] border-y-hair border-[var(--color-border)]">
+        <div className="max-w-5xl mx-auto px-5 py-16 md:py-20 space-y-20">
+
+          {/* Voice feature */}
+          <ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">Client voice</span>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+                  Write in your client's exact voice
+                </h2>
+                <p className="text-text-secondary dark:text-dark-muted text-sm leading-relaxed mb-6">
+                  Save each client's niche, audience, tone, and brand phrases once. Scribtly reads that profile every time you generate — so every script sounds like it came straight from them, not a template.
+                </p>
+                <Link href="/signup">
+                  <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
+                    Try it free <ArrowRight size={13} />
+                  </Button>
+                </Link>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(127,119,221,0.2)] ring-1 ring-[var(--color-border)]">
+                <Image
+                  src="/brand/feature-voice.png"
+                  alt="Client voice profile being converted into a formatted AI script"
+                  width={1024}
+                  height={1024}
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Platforms feature */}
+          <ScrollReveal delay={80}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              <div className="order-2 md:order-1 relative rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(127,119,221,0.2)] ring-1 ring-[var(--color-border)]">
+                <Image
+                  src="/brand/feature-platforms.png"
+                  alt="One script adapted for YouTube, TikTok, Instagram Reels, LinkedIn and Podcast"
+                  width={1024}
+                  height={1024}
+                  className="w-full h-auto"
+                />
+              </div>
+              <div className="order-1 md:order-2">
+                <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">Multi-platform</span>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+                  One topic, every platform
+                </h2>
+                <p className="text-text-secondary dark:text-dark-muted text-sm leading-relaxed mb-6">
+                  A YouTube hook is nothing like a TikTok open. Scribtly knows the structure rules for all 5 platforms — YouTube, TikTok, Reels, LinkedIn, and Podcast — so you always get the right format without thinking about it.
+                </p>
+                <Link href="/signup">
+                  <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
+                    See all platforms <ArrowRight size={13} />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
+
+        </div>
       </section>
 
       {/* ── FEATURES ── */}

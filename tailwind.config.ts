@@ -24,8 +24,8 @@ const config: Config = {
           bg: "#F1EFE8",
         },
         text: {
-          primary: "#2C2C2A",
-          secondary: "#5F5E5A",
+          primary: "var(--color-text)",
+          secondary: "var(--color-text-muted)",
         },
         dark: {
           base: "#1A1A1A",
