@@ -169,8 +169,8 @@ export default function HomePage() {
         <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(var(--color-border)_1px,transparent_1px),linear-gradient(90deg,var(--color-border)_1px,transparent_1px)] [background-size:52px_52px]" />
 
         {/* floating orbs */}
-        <div className="absolute top-[-60px] left-[-80px] w-[500px] h-[500px] rounded-full bg-primary/8 blur-[100px] animate-orb-drift pointer-events-none" />
-        <div className="absolute bottom-[-80px] right-[-60px] w-[400px] h-[400px] rounded-full bg-primary/6 blur-[100px] animate-orb-drift-alt pointer-events-none" />
+        <div className="absolute top-[-60px] left-[-80px] w-[500px] h-[500px] rounded-full bg-primary/10 blur-[100px] animate-orb-drift pointer-events-none" />
+        <div className="absolute bottom-[-80px] right-[-60px] w-[400px] h-[400px] rounded-full bg-primary/5 blur-[100px] animate-orb-drift-alt pointer-events-none" />
 
         <div className="relative mx-auto max-w-4xl px-5 py-16 text-center md:py-24">
           <div className="animate-fade-up-1 mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-text-secondary shadow-sm backdrop-blur dark:text-dark-muted">
@@ -257,7 +257,7 @@ export default function HomePage() {
                     <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">2</span>
                     Platform
                   </div>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     {([
                       { label: "YouTube", selected: true },
                       { label: "TikTok", selected: false },
