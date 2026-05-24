@@ -212,10 +212,10 @@ export default function HomePage() {
               <Zap size={13} className="text-primary shrink-0" /> 60s scripts
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
-              <Target size={13} className="text-[#38c172] shrink-0" /> 5 platforms
+              <Target size={13} className="text-primary shrink-0" /> 5 platforms
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
-              <ShieldCheck size={13} className="text-[#f0b429] shrink-0" /> No card
+              <ShieldCheck size={13} className="text-primary shrink-0" /> No card
             </span>
           </div>
 
@@ -289,7 +289,7 @@ export default function HomePage() {
                       <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">3</span>
                       Your script
                     </div>
-                    <span className="rounded-full bg-[#d9f0df] px-2 py-0.5 text-[10px] font-medium text-[#274432] dark:bg-[#1f3b29] dark:text-[#c9e9d1]">
+                    <span className="rounded-full bg-[var(--color-primary-tint)] px-2 py-0.5 text-[10px] font-medium text-primary">
                       On voice
                     </span>
                   </div>
