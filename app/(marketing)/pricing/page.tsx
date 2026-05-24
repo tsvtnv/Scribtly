@@ -166,7 +166,7 @@ export default function PricingPage() {
               className={`text-[10px] font-semibold rounded-full px-1.5 py-0.5 transition-colors ${
                 billing === "annual"
                   ? "bg-white/20 text-white"
-                  : "bg-[var(--color-primary-tint)] text-primary dark:bg-primary/20 dark:text-primary"
+                  : "bg-[var(--color-primary-tint)] text-primary"
               }`}
             >
               2 months free
