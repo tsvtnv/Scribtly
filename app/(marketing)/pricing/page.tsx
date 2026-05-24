@@ -166,7 +166,7 @@ export default function PricingPage() {
               className={`text-[10px] font-semibold rounded-full px-1.5 py-0.5 transition-colors ${
                 billing === "annual"
                   ? "bg-white/20 text-white"
-                  : "bg-[#d9f0df] text-[#274432] dark:bg-[#1f3b29] dark:text-[#c9e9d1]"
+                  : "bg-[var(--color-primary-tint)] text-primary dark:bg-primary/20 dark:text-primary"
               }`}
             >
               2 months free
@@ -181,11 +181,11 @@ export default function PricingPage() {
           </span>
           <span className="text-[var(--color-border)]">·</span>
           <span className="inline-flex items-center gap-1.5">
-            <RotateCcw size={11} className="text-success" /> 7-day money-back guarantee
+            <RotateCcw size={11} className="text-primary" /> 7-day money-back guarantee
           </span>
           <span className="text-[var(--color-border)]">·</span>
           <span className="inline-flex items-center gap-1.5">
-            <ShieldCheck size={11} className="text-warning" /> Cancel anytime
+            <ShieldCheck size={11} className="text-primary" /> Cancel anytime
           </span>
         </div>
       </section>
@@ -219,9 +219,13 @@ export default function PricingPage() {
 
                 <div
                   className={`flex-1 rounded-xl p-6 flex flex-col transition-all duration-200 border ${
+                    p.popular ? "bg-[var(--color-primary-tint)]" : "bg-[var(--color-surface)]"
+                  } ${
                     isActive
-                      ? `bg-[var(--color-surface)] border-primary ring-2 ${p.ringClass || "ring-primary/20"} scale-[1.02] shadow-[0_16px_50px_rgba(127,119,221,0.18)]`
-                      : "bg-[var(--color-surface)] border-[var(--color-border)] opacity-80 hover:opacity-100 hover:shadow-sm"
+                      ? `border-primary ring-2 ${p.ringClass || "ring-primary/20"} scale-[1.02] shadow-[0_16px_50px_rgba(127,119,221,0.18)]`
+                      : p.popular
+                      ? "border-primary/40 hover:shadow-sm"
+                      : "border-[var(--color-border)] opacity-80 hover:opacity-100 hover:shadow-sm"
                   }`}
                 >
                   {/* Plan header */}
@@ -249,7 +253,7 @@ export default function PricingPage() {
                       )}
                     </div>
                     {billing === "annual" && p.monthlyPrice !== null && (
-                      <p className="text-[11px] text-success mt-1">
+                      <p className="text-[11px] text-primary mt-1">
                         Save £{p.monthlyPrice * 2} vs monthly
                       </p>
                     )}
