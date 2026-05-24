@@ -18,10 +18,10 @@ export function HomepagePricingSlider() {
     <div className="mt-8">
       <PricingSlider value={plan} onPlanChange={setPlan} />
       <div className="mt-6 flex items-baseline justify-center gap-1">
-        <span className="text-5xl font-bold text-primary">£{price}</span>
-        {suffix && <span className="text-base text-text-secondary">{suffix}</span>}
+        <span className="text-4xl font-bold text-primary sm:text-5xl">£{price}</span>
+        {suffix && <span className="text-sm text-text-secondary sm:text-base">{suffix}</span>}
       </div>
-      <p className="mt-1 text-center text-sm text-text-secondary">{scripts}</p>
+      <p className="mt-1 text-center text-xs text-text-secondary sm:text-sm">{scripts}</p>
     </div>
   );
 }
