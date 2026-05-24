@@ -160,7 +160,7 @@ export function Sidebar() {
       {/* Desktop sidebar */}
       <aside
         className={cn(
-          "hidden md:flex flex-col min-h-screen border-r border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 shrink-0",
+          "hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto border-r border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 shrink-0",
           collapsed ? "w-14" : "w-60"
         )}
       >
