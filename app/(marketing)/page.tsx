@@ -169,8 +169,8 @@ export default function HomePage() {
         <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(var(--color-border)_1px,transparent_1px),linear-gradient(90deg,var(--color-border)_1px,transparent_1px)] [background-size:52px_52px]" />
 
         {/* floating orbs */}
-        <div className="absolute top-[-80px] left-[-60px] w-[420px] h-[420px] rounded-full bg-primary/10 blur-[90px] animate-orb-drift pointer-events-none" />
-        <div className="absolute bottom-[-60px] right-[-40px] w-[340px] h-[340px] rounded-full bg-[#38c172]/10 blur-[80px] animate-orb-drift-alt pointer-events-none" />
+        <div className="absolute top-[-60px] left-[-80px] w-[500px] h-[500px] rounded-full bg-primary/8 blur-[100px] animate-orb-drift pointer-events-none" />
+        <div className="absolute bottom-[-80px] right-[-60px] w-[400px] h-[400px] rounded-full bg-primary/6 blur-[100px] animate-orb-drift-alt pointer-events-none" />
 
         <div className="relative mx-auto max-w-4xl px-5 py-16 text-center md:py-24">
           <div className="animate-fade-up-1 mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-text-secondary shadow-sm backdrop-blur dark:text-dark-muted">
@@ -217,6 +217,103 @@ export default function HomePage() {
             <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
               <ShieldCheck size={13} className="text-[#f0b429] shrink-0" /> No card
             </span>
+          </div>
+
+          {/* 3-step product preview panel */}
+          <div className="animate-fade-up-3 relative mt-12 mx-auto">
+            <div className="absolute -inset-4 rounded-2xl bg-primary/5 blur-xl pointer-events-none" />
+            <div className="relative rounded-xl border-hair border-[var(--color-border)] bg-[var(--color-surface)]/90 backdrop-blur shadow-[0_28px_90px_rgba(0,0,0,0.18)] overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-[var(--color-border)] md:divide-y-0 md:divide-x">
+
+                {/* Step 1: Brand Voice */}
+                <div className="p-6 text-left">
+                  <div className="mb-4 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest text-text-secondary dark:text-dark-muted">
+                    <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">1</span>
+                    Brand voice
+                  </div>
+                  <div className="mb-3 text-sm font-semibold">Acme Studios</div>
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    {(["Professional", "Warm", "Direct"] as const).map((tone, i) => (
+                      <span
+                        key={tone}
+                        className={`rounded-full border-hair px-2.5 py-1 text-xs ${
+                          i === 0
+                            ? "border-primary/30 bg-[var(--color-primary-tint)] font-medium text-primary"
+                            : "border-[var(--color-border)] text-text-secondary dark:text-dark-muted"
+                        }`}
+                      >
+                        {tone}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-xs italic leading-relaxed text-text-secondary dark:text-dark-muted">
+                    &quot;We make premium product videos that convert.&quot;
+                  </p>
+                </div>
+
+                {/* Step 2: Platform */}
+                <div className="p-6 text-left">
+                  <div className="mb-4 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest text-text-secondary dark:text-dark-muted">
+                    <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">2</span>
+                    Platform
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {([
+                      { label: "YouTube", selected: true },
+                      { label: "TikTok", selected: false },
+                      { label: "Reels", selected: false },
+                      { label: "LinkedIn", selected: false },
+                      { label: "Podcast", selected: false },
+                    ] as const).map(({ label, selected }) => (
+                      <div
+                        key={label}
+                        className={`flex flex-col items-center gap-1 rounded-lg border-hair p-2 text-[10px] ${
+                          selected
+                            ? "border-primary/30 bg-[var(--color-primary-tint)] font-medium text-primary"
+                            : "border-[var(--color-border)] text-text-secondary dark:text-dark-muted"
+                        }`}
+                      >
+                        <span className="text-sm font-semibold leading-none">
+                          {label === "YouTube" ? "YT" : label === "TikTok" ? "TK" : label === "Reels" ? "IG" : label === "LinkedIn" ? "LI" : "🎙"}
+                        </span>
+                        <span>{label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Step 3: Script output */}
+                <div className="p-6 text-left">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest text-text-secondary dark:text-dark-muted">
+                      <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">3</span>
+                      Your script
+                    </div>
+                    <span className="rounded-full bg-[#d9f0df] px-2 py-0.5 text-[10px] font-medium text-[#274432] dark:bg-[#1f3b29] dark:text-[#c9e9d1]">
+                      On voice
+                    </span>
+                  </div>
+                  <div className="space-y-3 text-xs">
+                    {([
+                      { label: "Hook", text: "Stop scrolling — this video could save your next project." },
+                      { label: "Story", text: "Last month, a client came to us with a brief and zero footage..." },
+                      { label: "CTA", text: "Check the link in bio to book a free discovery call." },
+                    ] as const).map(({ label, text }, i) => (
+                      <div key={label} className="animate-script-line" style={{ animationDelay: `${i * 200}ms` }}>
+                        <div className="mb-1 text-[10px] uppercase text-text-secondary dark:text-dark-muted">{label}</div>
+                        <p className="leading-relaxed text-text-primary dark:text-dark-text">
+                          {text}
+                          {i === 2 && (
+                            <span className="ml-0.5 inline-block h-3 w-0.5 animate-pulse bg-primary align-middle" />
+                          )}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
       </section>
