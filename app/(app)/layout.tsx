@@ -5,6 +5,9 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { WorkspaceProvider } from "@/components/layout/WorkspaceProvider";
 import { ToastProvider } from "@/components/ui/Toast";
 
+// Runs before paint — applies saved dark preference only for dashboard pages
+const themeScript = `(function(){try{var s=localStorage.getItem('theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;if(s?s==='dark':p)document.documentElement.classList.add('dark');}catch(_){}})();`;
+
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, workspace, role } = await ensureUser();
 
@@ -14,6 +17,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <WorkspaceProvider value={{ user, workspace, role }}>
+      {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
+      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       <ToastProvider>
         <div className="min-h-screen flex bg-[var(--color-bg)]">
           <Sidebar />
