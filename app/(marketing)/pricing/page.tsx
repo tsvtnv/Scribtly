@@ -46,8 +46,8 @@ const PLANS: PlanCard[] = [
     id: "BASIC",
     label: "Basic",
     monthlyPrice: 5,
-    accentClass: "text-success",
-    ringClass: "ring-success/30",
+    accentClass: "text-primary",
+    ringClass: "ring-primary/20",
     tagline: "Solo freelancers",
     scripts: "25 scripts / month",
     features: [
@@ -83,8 +83,8 @@ const PLANS: PlanCard[] = [
     id: "AGENCY",
     label: "Agency",
     monthlyPrice: 49,
-    accentClass: "text-warning",
-    ringClass: "ring-warning/30",
+    accentClass: "text-primary",
+    ringClass: "ring-primary/20",
     tagline: "Agencies & teams",
     scripts: "350 scripts / month",
     features: [
