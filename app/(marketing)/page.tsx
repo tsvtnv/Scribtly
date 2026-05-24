@@ -173,51 +173,51 @@ export default function HomePage() {
         <div className="absolute bottom-[-60px] right-[-40px] w-[340px] h-[340px] rounded-full bg-[#38c172]/10 blur-[80px] animate-orb-drift-alt pointer-events-none" />
 
         <div className="relative mx-auto max-w-4xl px-5 py-16 text-center md:py-24">
-            <div className="animate-fade-up-1 mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-text-secondary shadow-sm backdrop-blur dark:text-dark-muted">
-              <Sparkles size={12} className="text-primary" />
-              Built for client script work, not generic chat
-            </div>
+          <div className="animate-fade-up-1 mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-text-secondary shadow-sm backdrop-blur dark:text-dark-muted">
+            <Sparkles size={12} className="text-primary" />
+            Built for client script work, not generic chat
+          </div>
 
-            <h1 className="animate-fade-up-1 text-5xl font-semibold leading-[1.0] tracking-tight md:text-6xl">
-              Write video scripts 10x faster,{" "}
-              <span className="relative inline-block text-primary whitespace-nowrap">
-                in your client's exact voice
-                <span className="absolute left-0 right-0 -bottom-1 h-[3px] rounded-full bg-primary/30 animate-underline-sweep" />
-              </span>
-            </h1>
+          <h1 className="animate-fade-up-1 text-5xl font-semibold leading-tight tracking-tight md:text-6xl">
+            Write video scripts 10x faster,{" "}
+            <span className="relative inline-block text-primary whitespace-nowrap">
+              in your client's exact voice
+              <span className="absolute left-0 right-0 -bottom-1 h-[3px] rounded-full bg-primary/30 animate-underline-sweep" />
+            </span>
+          </h1>
 
-            <p className="animate-fade-up-2 mt-6 max-w-lg mx-auto text-base text-text-secondary md:text-lg dark:text-dark-muted">
-              Scribtly turns saved brand voice, platform rules, and client context into
-              ready-to-send YouTube, TikTok, and Reels scripts in under 60 seconds.
-            </p>
+          <p className="animate-fade-up-2 mt-6 max-w-lg mx-auto text-base text-text-secondary md:text-lg dark:text-dark-muted">
+            Scribtly turns saved brand voice, platform rules, and client context into
+            ready-to-send YouTube, TikTok, and Reels scripts in under 60 seconds.
+          </p>
 
-            <div className="animate-fade-up-3 mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link href="/signup">
-                <Button
-                  size="lg"
-                  className="relative overflow-hidden shadow-[0_18px_45px_rgba(127,119,221,0.38)] before:absolute before:inset-y-0 before:-left-10 before:w-10 before:rotate-12 before:bg-white/40 before:animate-shimmer"
-                >
-                  <span className="relative inline-flex items-center gap-2">
-                    Start free — 5 scripts included <ArrowRight size={15} />
-                  </span>
-                </Button>
-              </Link>
-              <Link href="/pricing">
-                <Button size="lg" variant="outline">See pricing</Button>
-              </Link>
-            </div>
+          <div className="animate-fade-up-3 mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link href="/signup">
+              <Button
+                size="lg"
+                className="relative overflow-hidden shadow-[0_18px_45px_rgba(127,119,221,0.38)] before:absolute before:inset-y-0 before:-left-10 before:w-10 before:rotate-12 before:bg-white/40 before:animate-shimmer"
+              >
+                <span className="relative inline-flex items-center gap-2">
+                  Start free — 5 scripts included <ArrowRight size={15} />
+                </span>
+              </Button>
+            </Link>
+            <Link href="/pricing">
+              <Button size="lg" variant="outline">See pricing</Button>
+            </Link>
+          </div>
 
-            <div className="animate-fade-up-3 mt-7 grid max-w-sm mx-auto grid-cols-3 gap-2 text-xs text-text-secondary dark:text-dark-muted">
-              <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
-                <Zap size={13} className="text-primary shrink-0" /> 60s scripts
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
-                <Target size={13} className="text-[#38c172] shrink-0" /> 5 platforms
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
-                <ShieldCheck size={13} className="text-[#f0b429] shrink-0" /> No card
-              </span>
-            </div>
+          <div className="animate-fade-up-3 mt-7 grid max-w-sm mx-auto grid-cols-3 gap-2 text-xs text-text-secondary dark:text-dark-muted">
+            <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
+              <Zap size={13} className="text-primary shrink-0" /> 60s scripts
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
+              <Target size={13} className="text-[#38c172] shrink-0" /> 5 platforms
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
+              <ShieldCheck size={13} className="text-[#f0b429] shrink-0" /> No card
+            </span>
+          </div>
         </div>
       </section>
 
