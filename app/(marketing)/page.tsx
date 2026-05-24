@@ -380,9 +380,9 @@ export default function HomePage() {
               <div className="relative rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(127,119,221,0.2)] ring-1 ring-[var(--color-border)]">
                 <Image
                   src="/brand/feature-voice.png"
-                  alt="Client voice profile being converted into a formatted AI script"
-                  width={1024}
-                  height={1024}
+                  alt="Scribtly generate page showing client-ready scripts in seconds"
+                  width={1200}
+                  height={1200}
                   className="w-full h-auto"
                 />
               </div>
@@ -412,6 +412,67 @@ export default function HomePage() {
                 <Link href="/signup">
                   <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
                     See all platforms <ArrowRight size={13} />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Library feature */}
+          <ScrollReveal delay={80}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">Script library</span>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+                  Every script, always within reach
+                </h2>
+                <p className="text-text-secondary dark:text-dark-muted text-sm leading-relaxed mb-6">
+                  All your scripts organised by client, platform, and date. Search, filter, reuse, or export any script in seconds — no more digging through Google Docs or email threads.
+                </p>
+                <Link href="/signup">
+                  <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
+                    Start building your library <ArrowRight size={13} />
+                  </Button>
+                </Link>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(127,119,221,0.2)] ring-1 ring-[var(--color-border)]">
+                <Image
+                  src="/brand/feature-library.png"
+                  alt="Script library grid showing client scripts organised by platform"
+                  width={1024}
+                  height={1024}
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Pipeline feature */}
+          <ScrollReveal delay={80}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              <div className="order-2 md:order-1 relative rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(127,119,221,0.2)] ring-1 ring-[var(--color-border)]">
+                <Image
+                  src="/brand/feature-pipeline.png"
+                  alt="Content pipeline Kanban board showing scripts moving from Idea to Published"
+                  width={1024}
+                  height={1024}
+                  className="w-full h-auto"
+                />
+              </div>
+              <div className="order-1 md:order-2">
+                <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
+                  Content pipeline
+                  <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-primary/10 text-primary normal-case tracking-normal">Pro</span>
+                </span>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+                  Track every script from idea to published
+                </h2>
+                <p className="text-text-secondary dark:text-dark-muted text-sm leading-relaxed mb-6">
+                  Drag scripts through Idea → Scripting → Review → Approved → Published. Never lose track of what's in progress across all your clients.
+                </p>
+                <Link href="/signup?plan=PRO">
+                  <Button variant="outline" size="sm" className="inline-flex items-center gap-2">
+                    Unlock pipeline <ArrowRight size={13} />
                   </Button>
                 </Link>
               </div>
