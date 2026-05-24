@@ -28,37 +28,37 @@ export function FounderNote() {
 /* Full homepage section */
 export function FounderSection() {
   return (
-    <section className="max-w-3xl mx-auto px-5 py-16">
-      <div className="rounded-2xl border-hair border-[var(--color-border)] bg-[var(--color-surface)] p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start shadow-sm">
+    <section className="max-w-3xl mx-auto px-4 py-12 sm:px-5 sm:py-16">
+      <div className="rounded-2xl border-hair border-[var(--color-border)] bg-[var(--color-surface)] p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-6 sm:gap-8 items-center md:items-start shadow-sm">
         <div className="shrink-0 flex flex-col items-center gap-3">
           <Image
             src="/founder.jpeg"
             alt="Kristiyan Tsvetanov — Founder of Scribtly"
             width={96}
             height={96}
-            className="rounded-full object-cover ring-4 ring-primary/15 shadow-md"
+            className="h-20 w-20 sm:h-24 sm:w-24 rounded-full object-cover ring-4 ring-primary/15 shadow-md"
           />
           <div className="text-center">
             <p className="text-sm font-semibold">Kristiyan Tsvetanov</p>
             <p className="text-xs text-text-secondary dark:text-dark-muted">Founder, Scribtly</p>
           </div>
         </div>
-        <div>
+        <div className="text-center md:text-left">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-3">
             A note from the founder
           </p>
-          <blockquote className="text-base leading-relaxed text-[var(--color-text)] mb-4">
+          <blockquote className="text-sm leading-relaxed text-[var(--color-text)] mb-4 sm:text-base">
             &ldquo;I built Scribtly because I watched freelancers waste hours on scripts that should take minutes.
             Every client re-brief, every blank page, every round of revisions that could have been avoided —
             I wanted to fix that at the source.
           </blockquote>
-          <blockquote className="text-base leading-relaxed text-[var(--color-text)] mb-4">
+          <blockquote className="text-sm leading-relaxed text-[var(--color-text)] mb-4 sm:text-base">
             Scribtly is a solo project. I built it, I maintain it, and I read every support email personally.
             If something isn&apos;t working for you, tell me — I&apos;ll fix it.&rdquo;
           </blockquote>
           <a
             href="mailto:kristiyan@scribtly.com"
-            className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-medium"
+            className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-medium break-all"
           >
             kristiyan&#64;scribtly&#46;com
           </a>

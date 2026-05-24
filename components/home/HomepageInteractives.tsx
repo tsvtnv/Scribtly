@@ -155,12 +155,12 @@ export function PlatformDemo() {
       className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
     >
       {/* tab strip */}
-      <div className="flex items-center justify-center gap-2 mb-7">
+      <div className="flex items-center justify-center gap-2 mb-7 flex-wrap">
         {PLATFORMS.map((p, i) => (
           <button
             key={p.id}
             onClick={() => switchPlatform(i)}
-            className={`relative px-5 py-2 rounded-full text-xs font-medium transition-all duration-200 ${
+            className={`relative px-4 sm:px-5 py-2 rounded-full text-xs font-medium transition-all duration-200 ${
               i === active
                 ? "bg-primary text-white shadow-[0_4px_18px_rgba(127,119,221,0.45)]"
                 : "border-hair border-[var(--color-border)] bg-[var(--color-surface)] text-text-secondary hover:border-primary/50 dark:text-dark-muted"
@@ -185,7 +185,7 @@ export function PlatformDemo() {
 
         <div className="grid grid-cols-1 md:grid-cols-5 min-h-[360px]">
           {/* sidebar */}
-          <div className="md:col-span-2 border-r-hair border-[var(--color-border)] p-5 space-y-4 bg-[var(--color-surface)]">
+          <div className="md:col-span-2 border-b-hair border-[var(--color-border)] md:border-b-0 md:border-r-hair p-4 space-y-4 bg-[var(--color-surface)] sm:p-5">
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-wide text-text-secondary dark:text-dark-muted mb-1.5">Client</div>
               <div className="h-9 rounded-md border-hair border-[var(--color-border)] px-3 flex items-center text-sm font-medium">
@@ -222,7 +222,7 @@ export function PlatformDemo() {
           </div>
 
           {/* script output */}
-          <div key={key} className="md:col-span-3 p-5 bg-[var(--color-bg)] space-y-5 overflow-auto">
+          <div key={key} className="md:col-span-3 p-4 bg-[var(--color-bg)] space-y-5 overflow-auto sm:p-5">
             {platform.sections.map((section, si) => (
               <div
                 key={si}

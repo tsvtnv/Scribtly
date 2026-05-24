@@ -31,14 +31,14 @@ export function PricingSlider({ value = "BASIC", onPlanChange }: PricingSliderPr
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-1 py-4 select-none">
-      <div className="flex items-baseline justify-between mb-4">
-        <span className="text-sm text-text-secondary dark:text-dark-muted">
+    <div className="w-full max-w-3xl mx-auto px-4 py-4 select-none sm:px-1">
+      <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+        <span className="text-xs text-text-secondary dark:text-dark-muted sm:text-sm">
           How many scripts do you need per month?
         </span>
-        <span className="text-2xl font-semibold" style={{ color: "#7F77DD" }}>
+        <span className="text-xl font-semibold sm:text-2xl" style={{ color: "#7F77DD" }}>
           {NOTCHES[safeIndex].value}
-          <span className="text-sm text-text-secondary dark:text-dark-muted ml-1 font-normal">
+          <span className="text-xs text-text-secondary dark:text-dark-muted ml-1 font-normal sm:text-sm">
             scripts
           </span>
         </span>
@@ -104,12 +104,24 @@ export function PricingSlider({ value = "BASIC", onPlanChange }: PricingSliderPr
         {NOTCHES.map((n, i) => {
           const left = (i / (NOTCHES.length - 1)) * 100;
           const isActive = i === safeIndex;
+          const isFirst = i === 0;
+          const isLast = i === NOTCHES.length - 1;
+          const translateClass = isFirst
+            ? "translate-x-0"
+            : isLast
+            ? "-translate-x-full"
+            : "-translate-x-1/2";
+          const alignClass = isFirst
+            ? "items-start text-left"
+            : isLast
+            ? "items-end text-right"
+            : "items-center text-center";
           return (
             <button
               key={n.value}
               type="button"
               onClick={() => onPlanChange(n.plan)}
-              className="absolute -translate-x-1/2 flex flex-col items-center gap-0.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1"
+              className={`absolute flex flex-col gap-0.5 text-[11px] sm:text-xs focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1 ${translateClass} ${alignClass}`}
               style={{ left: `${left}%` }}
             >
               <span

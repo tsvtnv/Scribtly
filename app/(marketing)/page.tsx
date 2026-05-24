@@ -173,61 +173,64 @@ export default function HomePage() {
         <div className="absolute top-[-60px] left-[-80px] w-[500px] h-[500px] rounded-full bg-primary/10 blur-[100px] animate-orb-drift pointer-events-none" />
         <div className="absolute bottom-[-80px] right-[-60px] w-[400px] h-[400px] rounded-full bg-primary/5 blur-[100px] animate-orb-drift-alt pointer-events-none" />
 
-        <div className="relative mx-auto max-w-4xl px-5 py-16 text-center md:py-24">
-          <div className="animate-fade-up-1 mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-text-secondary shadow-sm backdrop-blur dark:text-dark-muted">
-            <Sparkles size={12} className="text-primary" />
-            Built for client script work, not generic chat
+        <div className="relative mx-auto max-w-4xl px-5 py-14 text-center sm:py-16 md:py-24">
+          <div className="animate-fade-up-1 mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-[11px] sm:text-xs text-text-secondary shadow-sm backdrop-blur dark:text-dark-muted">
+            <Sparkles size={12} className="text-primary shrink-0" />
+            <span className="leading-snug">Built for client script work, not generic chat</span>
           </div>
 
-          <h1 className="animate-fade-up-1 text-5xl font-semibold leading-tight tracking-tight md:text-6xl">
+          <h1 className="animate-fade-up-1 text-[2rem] font-semibold leading-[1.1] tracking-tight sm:text-5xl sm:leading-tight md:text-6xl">
             Write video scripts 10x faster,{" "}
-            <span className="relative inline-block text-primary whitespace-nowrap">
+            <span className="relative inline-block text-primary">
               in your client's exact voice
               <span className="absolute left-0 right-0 -bottom-1 h-[3px] rounded-full bg-primary/30 animate-underline-sweep" />
             </span>
           </h1>
 
-          <p className="animate-fade-up-2 mt-6 max-w-lg mx-auto text-base text-text-secondary md:text-lg dark:text-dark-muted">
+          <p className="animate-fade-up-2 mt-5 max-w-lg mx-auto text-sm text-text-secondary sm:mt-6 sm:text-base md:text-lg dark:text-dark-muted">
             Scribtly turns saved brand voice, platform rules, and client context into
             ready-to-send YouTube, TikTok, and Reels scripts in under 60 seconds.
           </p>
 
-          <div className="animate-fade-up-3 mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/signup">
+          <div className="animate-fade-up-3 mt-7 flex flex-col items-stretch justify-center gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center">
+            <Link href="/signup" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="relative overflow-hidden shadow-[0_18px_45px_rgba(127,119,221,0.38)] before:absolute before:inset-y-0 before:-left-16 before:w-16 before:rotate-12 before:bg-white/55 before:blur-sm before:animate-shimmer"
+                fullWidth
+                className="relative overflow-hidden shadow-[0_18px_45px_rgba(127,119,221,0.38)] before:absolute before:inset-y-0 before:-left-16 before:w-16 before:rotate-12 before:bg-white/55 before:blur-sm before:animate-shimmer sm:w-auto"
               >
                 <span className="relative inline-flex items-center gap-2">
-                  Start free — 5 scripts included <ArrowRight size={15} />
+                  <span className="sm:hidden">Start free — 5 scripts</span>
+                  <span className="hidden sm:inline">Start free — 5 scripts included</span>
+                  <ArrowRight size={15} />
                 </span>
               </Button>
             </Link>
-            <Link href="/pricing">
-              <Button size="lg" variant="outline">See pricing</Button>
+            <Link href="/pricing" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" fullWidth className="sm:w-auto">See pricing</Button>
             </Link>
           </div>
 
-          <div className="animate-fade-up-3 mt-7 grid max-w-sm mx-auto grid-cols-3 gap-2 text-xs text-text-secondary dark:text-dark-muted">
-            <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
+          <div className="animate-fade-up-3 mt-6 grid max-w-sm mx-auto grid-cols-3 gap-2 text-[11px] sm:mt-7 sm:text-xs text-text-secondary dark:text-dark-muted">
+            <span className="inline-flex items-center justify-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-2 py-2 backdrop-blur sm:px-3">
               <Zap size={13} className="text-primary shrink-0" /> 60s scripts
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
+            <span className="inline-flex items-center justify-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-2 py-2 backdrop-blur sm:px-3">
               <Target size={13} className="text-primary shrink-0" /> 5 platforms
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-3 py-2 backdrop-blur">
+            <span className="inline-flex items-center justify-center gap-1.5 rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)]/60 px-2 py-2 backdrop-blur sm:px-3">
               <ShieldCheck size={13} className="text-primary shrink-0" /> No card
             </span>
           </div>
 
           {/* 3-step product preview panel */}
-          <div className="animate-fade-up-3 relative mt-12 mx-auto">
+          <div className="animate-fade-up-3 relative mt-10 mx-auto sm:mt-12">
             <div className="absolute -inset-4 rounded-2xl bg-primary/5 blur-xl pointer-events-none" />
             <div className="relative rounded-xl border-hair border-[var(--color-border)] bg-[var(--color-surface)]/90 backdrop-blur shadow-[0_28px_90px_rgba(0,0,0,0.18)] overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-[var(--color-border)] md:divide-y-0 md:divide-x">
 
                 {/* Step 1: Brand Voice */}
-                <div className="p-6 text-left">
+                <div className="p-5 text-left sm:p-6">
                   <div className="mb-4 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest text-text-secondary dark:text-dark-muted">
                     <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">1</span>
                     Brand voice
@@ -253,7 +256,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Step 2: Platform */}
-                <div className="p-6 text-left">
+                <div className="p-5 text-left sm:p-6">
                   <div className="mb-4 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest text-text-secondary dark:text-dark-muted">
                     <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">2</span>
                     Platform
@@ -282,7 +285,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Step 3: Script output */}
-                <div className="p-6 text-left">
+                <div className="p-5 text-left sm:p-6">
                   <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest text-text-secondary dark:text-dark-muted">
                       <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">3</span>
@@ -569,8 +572,8 @@ export default function HomePage() {
       <FounderSection />
 
       {/* ── PRICING TEASER ── */}
-      <section className="relative mx-auto max-w-6xl overflow-hidden px-5 py-16 md:py-20">
-        <div className="absolute inset-x-5 top-8 bottom-8 rounded-xl border-hair border-[var(--color-border)] bg-[var(--color-surface)]/40 shadow-[0_28px_90px_rgba(0,0,0,0.1)] dark:bg-white/[0.03]" />
+      <section className="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-5 sm:py-16 md:py-20">
+        <div className="absolute inset-x-4 top-6 bottom-6 rounded-xl border-hair border-[var(--color-border)] bg-[var(--color-surface)]/40 shadow-[0_28px_90px_rgba(0,0,0,0.1)] dark:bg-white/[0.03] sm:inset-x-5 sm:top-8 sm:bottom-8" />
         <div className="relative">
           <ScrollReveal>
             <div className="mx-auto mb-10 max-w-2xl text-center">
@@ -639,31 +642,32 @@ export default function HomePage() {
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section className="relative overflow-hidden mx-5 mb-16 md:mx-10 rounded-2xl">
+      <section className="relative overflow-hidden mx-4 mb-12 sm:mx-5 sm:mb-16 md:mx-10 rounded-2xl">
         {/* gradient bg */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-[#6c64d0] to-[#5a53b8]" />
         <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:40px_40px]" />
         <div className="absolute top-[-40px] right-[-40px] w-64 h-64 rounded-full bg-white/10 blur-[60px]" />
         <div className="absolute bottom-[-30px] left-[-20px] w-48 h-48 rounded-full bg-[#38c172]/20 blur-[50px]" />
 
-        <div className="relative max-w-3xl mx-auto px-8 py-16 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">
+        <div className="relative max-w-3xl mx-auto px-5 py-12 text-center text-white sm:px-8 sm:py-16">
+          <h2 className="text-2xl font-semibold tracking-tight mb-3 leading-tight sm:text-3xl sm:mb-4 md:text-4xl">
             Your next client script is 60 seconds away.
           </h2>
-          <p className="text-white/80 mb-8 text-base">
+          <p className="text-white/80 mb-7 text-sm sm:text-base sm:mb-8">
             5 free scripts. No credit card. Upgrade anytime.
           </p>
-          <div className="flex flex-wrap gap-3 items-center justify-center">
-            <Link href="/signup">
+          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+            <Link href="/signup" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="bg-white text-primary hover:bg-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.2)]"
+                fullWidth
+                className="bg-white text-primary hover:bg-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.2)] sm:w-auto"
               >
                 Start free <ArrowRight size={15} />
               </Button>
             </Link>
-            <Link href="/pricing">
-              <Button size="lg" className="bg-white/10 text-white border-hair border-white/30 hover:bg-white/20">
+            <Link href="/pricing" className="w-full sm:w-auto">
+              <Button size="lg" fullWidth className="bg-white/10 text-white border-hair border-white/30 hover:bg-white/20 sm:w-auto">
                 See pricing
               </Button>
             </Link>
