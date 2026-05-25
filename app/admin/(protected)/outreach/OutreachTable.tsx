@@ -107,13 +107,13 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
   return (
     <div>
       {/* Filters */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-3">
         <input
           type="text"
-          placeholder="Agency name…"
+          placeholder="Search agency…"
           value={nameFilter}
           onChange={(e) => setNameFilter(e.target.value)}
-          className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary min-w-[160px]"
         />
         <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className={selectClass}>
           <option value="">All Statuses</option>
@@ -145,9 +145,12 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
           ))}
         </select>
       </div>
+      <p className="text-xs text-gray-400 mb-3">
+        Showing {filtered.length} of {leads.length} leads
+      </p>
 
-      <div className="w-full rounded-xl border border-gray-200 dark:border-gray-700">
-        <table className="w-full text-xs">
+      <div className="w-full rounded-xl border border-gray-200 dark:border-gray-700 overflow-x-auto">
+        <table className="w-full text-xs min-w-[900px]">
           <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 uppercase tracking-wider">
             <tr>
               {(

@@ -62,7 +62,7 @@ export default async function AdminOutreachPage() {
         <p className="text-sm text-text-secondary mt-0.5">{leads.length} total leads</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-9 gap-4 mb-8 w-full">
+      <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-3 mb-8 w-full">
         {[
           { label: "Total Leads", value: String(leads.length), accent: true },
           { label: "Contacted", value: String(contacted) },

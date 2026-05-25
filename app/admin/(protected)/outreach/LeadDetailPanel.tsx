@@ -1,10 +1,89 @@
 "use client";
 
+import { useState } from "react";
 import type { SerializedLead } from "./page";
 
+const ALL_STATUSES = [
+  "NOT_CONTACTED",
+  "CONTACTED_VIA_FORM",
+  "CONTACTED_VIA_EMAIL",
+  "SKIPPED_DUPLICATE",
+  "SKIPPED_NO_CONTACT_METHOD",
+  "SKIPPED_NOT_RELEVANT",
+  "SKIPPED_POLICY_BLOCKS_OUTREACH",
+  "NEEDS_MANUAL_REVIEW",
+  "FAILED",
+];
+
 export function LeadDetailPanel({ lead }: { lead: SerializedLead }) {
+  const [status, setStatus] = useState(lead.outreachStatus);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const refUrl = `https://scribtly.com/ref/${lead.leadId}`;
+
+  async function saveStatus() {
+    setSaving(true);
+    await fetch(`/api/admin/leads/${lead.leadId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ outreachStatus: status }),
+    });
+    setSaving(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  }
+
+  function copyRefUrl() {
+    navigator.clipboard.writeText(refUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
   return (
     <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 text-sm space-y-4 border border-gray-200 dark:border-gray-700 mt-2">
+
+      {/* Quick actions bar */}
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-2">
+          <select
+            value={status}
+            onChange={(e) => { setStatus(e.target.value as typeof status); setSaved(false); }}
+            className="px-2 py-1.5 text-xs border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            {ALL_STATUSES.map((s) => (
+              <option key={s} value={s}>{s.replace(/_/g, " ")}</option>
+            ))}
+          </select>
+          <button
+            onClick={saveStatus}
+            disabled={saving || status === lead.outreachStatus}
+            className="px-3 py-1.5 text-xs bg-primary text-white rounded-lg disabled:opacity-40 hover:opacity-90 transition-opacity"
+          >
+            {saving ? "Saving…" : saved ? "Saved ✓" : "Save"}
+          </button>
+        </div>
+        <div className="flex items-center gap-2 ml-auto">
+          <a
+            href={refUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 text-xs border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            Open ref page ↗
+          </a>
+          <button
+            onClick={copyRefUrl}
+            className="px-3 py-1.5 text-xs border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            {copied ? "Copied ✓" : "Copy ref URL"}
+          </button>
+        </div>
+      </div>
+
+      <hr className="border-gray-200 dark:border-gray-700" />
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Detail label="Agency" value={lead.agencyName} />
         <Detail label="Website" value={lead.agencyWebsite} link />
