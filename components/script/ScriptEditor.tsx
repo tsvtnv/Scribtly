@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Textarea } from "@/components/ui/Textarea";
 import { ScriptOutput } from "./ScriptOutput";
 import { cn, wordCount } from "@/lib/utils";
@@ -16,17 +16,25 @@ export function ScriptEditor({
   onChange?: (content: string) => void;
 }) {
   const [content, setContent] = useState(initialContent);
-  const [mode, setMode] = useState<"preview" | "edit">("preview");
+  const [editing, setEditing] = useState(false);
   const [savingState, setSavingState] = useState<"idle" | "saving" | "saved">("idle");
   const toast = useToast();
   const dirtyRef = useRef(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     setContent(initialContent);
   }, [initialContent]);
 
-  async function save() {
-    if (!dirtyRef.current) return;
+  useEffect(() => {
+    if (editing) textareaRef.current?.focus();
+  }, [editing]);
+
+  const save = useCallback(async () => {
+    if (!dirtyRef.current) {
+      setEditing(false);
+      return;
+    }
     dirtyRef.current = false;
     setSavingState("saving");
     const res = await fetch(`/api/scripts/${scriptId}`, {
@@ -42,45 +50,61 @@ export function ScriptEditor({
       setSavingState("idle");
       toast.push("Save failed", "error");
     }
+    setEditing(false);
+  }, [content, scriptId, onChange, toast]);
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      save();
+    }
   }
+
+  const SHARED = "rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 font-serif text-[15px] leading-relaxed min-h-[500px]";
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
-        <div className="inline-flex p-1 rounded-md bg-[var(--color-surface)] border-hair border-[var(--color-border)]">
-          <button
-            onClick={() => setMode("preview")}
-            className={cn("px-3 py-1 text-xs rounded-sm", mode === "preview" ? "bg-primary text-white" : "text-text-secondary")}
-          >
-            Preview
-          </button>
-          <button
-            onClick={() => setMode("edit")}
-            className={cn("px-3 py-1 text-xs rounded-sm", mode === "edit" ? "bg-primary text-white" : "text-text-secondary")}
-          >
-            Edit
-          </button>
-        </div>
-        <div className="flex items-center gap-4 text-xs text-text-secondary dark:text-dark-muted">
-          <span>{wordCount(content)} words</span>
-          {savingState === "saving" ? <span>Saving…</span> : savingState === "saved" ? <span className="text-success">Saved</span> : null}
-        </div>
+      <div className="flex items-center justify-between mb-3 min-h-[24px]">
+        <span className="text-xs text-text-secondary dark:text-dark-muted">
+          {wordCount(content)} words
+        </span>
+        <span className="text-xs text-text-secondary dark:text-dark-muted">
+          {editing
+            ? "Click outside to save"
+            : savingState === "saving"
+            ? "Saving…"
+            : savingState === "saved"
+            ? <span className="text-success">Saved</span>
+            : null}
+        </span>
       </div>
 
-      {mode === "preview" ? (
-        <div className="rounded-lg border-hair border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-          <ScriptOutput text={content} />
-        </div>
-      ) : (
+      {editing ? (
         <Textarea
+          ref={textareaRef}
           value={content}
           onChange={(e) => {
             setContent(e.target.value);
             dirtyRef.current = true;
           }}
           onBlur={save}
-          className="font-serif text-[15px] min-h-[500px] leading-relaxed"
+          onKeyDown={handleKeyDown}
+          className={cn(SHARED, "resize-none")}
         />
+      ) : (
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setEditing(true)}
+          onKeyDown={(e) => e.key === "Enter" && setEditing(true)}
+          className={cn(
+            SHARED,
+            "cursor-text transition-colors hover:border-primary/30 hover:bg-primary/[0.02]"
+          )}
+          title="Click to edit"
+        >
+          <ScriptOutput text={content} />
+        </div>
       )}
     </div>
   );
