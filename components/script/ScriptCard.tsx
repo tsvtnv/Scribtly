@@ -35,7 +35,7 @@ export function ScriptCard({
   const inPipeline = !!script.contentItem
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-[10px_12px] transition-all duration-150 hover:border-[var(--color-primary)] flex flex-col">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 transition-all duration-150 hover:border-[var(--color-primary)] hover:shadow-md flex flex-col">
       {/* Top row: platform badge + status badge */}
       <div className="flex items-center justify-between gap-1 mb-1.5">
         <span
@@ -54,7 +54,7 @@ export function ScriptCard({
 
       {/* Title — clickable */}
       <Link href={`/scripts/${script.id}`} className="block mb-1">
-        <p className="text-[13px] font-medium leading-snug line-clamp-2 text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors">
+        <p className="text-[14px] font-medium leading-snug line-clamp-2 text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors">
           {script.title}
         </p>
       </Link>
