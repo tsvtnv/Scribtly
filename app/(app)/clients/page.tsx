@@ -5,6 +5,7 @@ import { canAddClient, getClientLimit } from "@/lib/planLimits";
 import { ClientCard } from "@/components/client/ClientCard";
 import { Button } from "@/components/ui/Button";
 import { Plus } from "lucide-react";
+import { HelpTooltip } from "@/components/ui/HelpTooltip";
 
 export default async function ClientsPage() {
   const { workspace } = await ensureUser();
@@ -21,7 +22,10 @@ export default async function ClientsPage() {
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
+            <HelpTooltip text="Create a profile for each person or brand you write for. The AI uses their niche, tone of voice, and style notes to write every script in their unique voice — no extra prompting needed." position="right" />
+          </div>
           <p className="text-sm text-text-secondary dark:text-dark-muted mt-1">
             Save each client once — we'll write every script in their voice.
           </p>

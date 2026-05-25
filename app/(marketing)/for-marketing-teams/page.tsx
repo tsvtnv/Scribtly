@@ -6,40 +6,41 @@ import {
   Check,
   ArrowRight,
   Sparkles,
-  Target,
-  Zap,
-  Repeat,
-  MessageSquare,
+  Users,
   Timer,
-  Volume2,
+  FileQuestion,
+  BookMarked,
+  Layers,
+  Library,
+  Share2,
 } from "lucide-react";
 
 export const metadata = {
-  title: "Instagram Reels script writer for freelancers",
+  title: "AI script writer for marketing teams — Scribtly",
   description:
-    "Write Instagram Reels scripts that stop the scroll. Scribtly generates hook-first Reels scripts in your client's exact voice — ready in under 60 seconds.",
+    "Scribtly helps marketing teams produce video scripts at scale. Save brand voices for multiple clients or campaigns. Generate YouTube, TikTok, and Reels scripts in under 60 seconds.",
   keywords: [
-    "Instagram Reels script generator",
-    "AI Reels script writer",
-    "short-form video scripts",
-    "Instagram script for freelancers",
-    "Reels hook generator",
+    "AI script writer for marketing teams",
+    "video script tool for teams",
+    "marketing team script generator",
+    "brand voice script tool",
+    "content team script writer",
   ],
-  alternates: { canonical: "/instagram-reels-scripts" },
+  alternates: { canonical: "/for-marketing-teams" },
   openGraph: {
     type: "website",
-    url: "/instagram-reels-scripts",
+    url: "/for-marketing-teams",
     siteName: "Scribtly",
-    title: "Instagram Reels script writer for freelancers · Scribtly",
+    title: "AI script writer for marketing teams · Scribtly",
     description:
-      "Hook-first Instagram Reels scripts in your client's voice. Stop the scroll in 3 seconds or less.",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly Instagram Reels script writer" }],
+      "Scribtly helps marketing teams produce video scripts at scale. Save brand voices for multiple clients or campaigns. Generate platform-native scripts in under 60 seconds.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scribtly for marketing teams" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Instagram Reels script writer for freelancers · Scribtly",
+    title: "AI script writer for marketing teams · Scribtly",
     description:
-      "Hook-first Instagram Reels scripts in your client's voice. Stop the scroll in 3 seconds or less.",
+      "Scribtly helps marketing teams produce video scripts at scale. Save brand voices for multiple clients or campaigns. Generate platform-native scripts in under 60 seconds.",
     images: ["/opengraph-image"],
   },
 };
@@ -51,107 +52,115 @@ const breadcrumbJsonLd = {
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-    { "@type": "ListItem", position: 2, name: "Instagram Reels Scripts", item: `${SITE_URL}/instagram-reels-scripts` },
+    { "@type": "ListItem", position: 2, name: "For Marketing Teams", item: `${SITE_URL}/for-marketing-teams` },
   ],
 };
 
 const stats = [
-  { value: "3 sec", label: "to hook the viewer" },
-  { value: "< 60s", label: "to write the script" },
-  { value: "15–60s", label: "script lengths" },
+  { value: "< 60s", label: "per script" },
+  { value: "Multiple brands", label: "in one workspace" },
+  { value: "Consistent voice", label: "across campaigns" },
 ];
 
 const steps = [
   {
     n: "1",
-    title: "Save your client",
-    desc: "Add their niche, brand voice, tone, and phrases they always use. One setup — every future script starts from that profile.",
+    title: "Save each brand or campaign's voice profile",
+    desc: "Build a voice profile for each client or campaign once. Tone, key messages, audience, and phrases — all saved and ready.",
   },
   {
     n: "2",
-    title: "Give Scribtly the topic",
-    desc: "Type the idea or talking point. Pick 15, 30, or 60 seconds. Hit generate.",
+    title: "Generate scripts for any platform + length",
+    desc: "Pick the brand, platform, and topic. Scribtly generates a platform-native script in under 60 seconds — consistent every time.",
   },
   {
     n: "3",
-    title: "Get a scroll-stopping script",
-    desc: "A hard-hitting hook, punchy body, and earned CTA — all in their voice, in under 60 seconds. Ready to film.",
+    title: "Share for review — export, deliver, repeat",
+    desc: "Share scripts for internal or client review with one link. Export, deliver, and move on. Your whole pipeline moves faster.",
+  },
+];
+
+const pains = [
+  {
+    icon: Users,
+    title: "Brand voice inconsistency across the team",
+    desc: "Different writers produce scripts that sound different — even for the same brand. Scribtly locks in the brand voice so the output is consistent regardless of who generates it.",
+  },
+  {
+    icon: Timer,
+    title: "Video production backlogs",
+    desc: "Scripts are the bottleneck in most content pipelines. Scribtly gets you from brief to first draft in under 60 seconds — so nothing is waiting on copy.",
+  },
+  {
+    icon: FileQuestion,
+    title: "Briefing overhead",
+    desc: "Every script starting with a tone guide re-read wastes hours across a team. Save each brand profile once — and never re-brief again.",
   },
 ];
 
 const features = [
   {
-    icon: Target,
-    title: "3-second hooks",
-    desc: "Scribtly opens every Reels script with a pattern interrupt designed to stop the scroll before the viewer considers swiping.",
+    icon: BookMarked,
+    title: "Shared brand voice profiles",
+    desc: "Save each client or campaign's voice profile once. Every team member generates from the same source — no briefing, no inconsistency.",
   },
   {
-    icon: Timer,
-    title: "Paced for 15, 30, or 60 seconds",
-    desc: "Each length gets its own structure. A 15-second script is built differently to a 60-second one — Scribtly handles the pacing automatically.",
+    icon: Layers,
+    title: "Multi-platform (YouTube, TikTok, Reels)",
+    desc: "Generate platform-native scripts for all three major video platforms from one workspace — with the right structure for each.",
   },
   {
-    icon: Zap,
-    title: "Punchy, spoken-word sentences",
-    desc: "Short, direct lines written to sound natural when filmed. No AI-sounding filler, no long-winded explanations.",
+    icon: Library,
+    title: "Script library per brand",
+    desc: "Every generated script is saved and searchable in your library, organised by brand. Build on past work, spot patterns, avoid repeating topics.",
   },
   {
-    icon: Repeat,
-    title: "Retention techniques built in",
-    desc: "Pattern interrupts, open loops, and rewatch bait are woven into the script structure — not added as an afterthought.",
-  },
-  {
-    icon: Volume2,
-    title: "Sounds like the creator",
-    desc: "Every script is generated from the saved client profile — their specific tone, niche, and phrases. Not a generic Reels template.",
-  },
-  {
-    icon: MessageSquare,
-    title: "Captions and hashtags",
-    desc: "Post captions and relevant hashtag sets generated alongside the script so your client can go straight to posting.",
+    icon: Share2,
+    title: "One-link review sharing",
+    desc: "Share any script for internal review or client sign-off with a single link. No exports, no email threads, no copy-pasting into docs.",
   },
 ];
 
 const befores = [
-  "Staring at a blank doc trying to think of a hook",
-  "Re-pasting brand voice notes into ChatGPT again",
-  "Generic scripts that sound nothing like the creator",
-  "Hooks that don't grab attention in the first 3 seconds",
-  "Missing captions and hashtags to write separately",
+  "Scripts that sound different depending on who wrote them",
+  "Video content pipeline stuck at the script stage",
+  "Re-briefing every writer on every campaign",
+  "No central script archive",
+  "Separate tools per platform",
 ];
 
 const afters = [
-  "Hook-first script delivered in under 60 seconds",
-  "Client's voice profile saved and applied automatically",
-  "Pattern interrupts matched to their tone and niche",
-  "Scripts paced for exactly 15, 30, or 60 seconds",
-  "Captions and hashtags included in every output",
+  "Consistent brand voice regardless of who generates the script",
+  "Scripts in 60 seconds unblocking the pipeline",
+  "Brand profiles saved — no rebriefing needed",
+  "Organised script library per brand",
+  "All platforms from one workspace",
 ];
 
 const faqs = [
   {
-    q: "Can I write Reels scripts for multiple clients?",
-    a: "Yes. Save each client's voice separately and switch between them instantly. Scribtly keeps their tone, niche, and phrases on file so you never start from scratch.",
+    q: "Can multiple team members use one account?",
+    a: "Yes. Team plans allow multiple users to access the same workspace, share brand profiles, and collaborate on scripts. Everyone works from the same source of truth.",
   },
   {
-    q: "How is this different from ChatGPT?",
-    a: "ChatGPT writes generic scripts. Scribtly writes in your specific client's voice, with Reels-specific pacing, hook formulas, and retention structures built in. It also remembers your client profiles across sessions.",
+    q: "How do brand profiles work for multiple clients?",
+    a: "Each client or campaign gets its own saved voice profile — tone, audience, key messages, and phrases. Team members switch between profiles instantly without re-reading a brief.",
   },
   {
-    q: "What makes a good Reels hook?",
-    a: "A good hook creates tension, curiosity, or surprise in the first 2–3 seconds. Scribtly uses pattern-interrupt formulas matched to your client's niche — so the hook sounds like something they'd naturally say.",
+    q: "Can we review scripts before delivery?",
+    a: "Yes. Every script can be shared for review via a single link — internally for sign-off or directly with the client. No exports or email threads needed.",
   },
   {
-    q: "Do the scripts work for both Instagram and TikTok?",
-    a: "Short-form scripts share a similar structure across both platforms. You can use a Reels script for TikTok with light adaptation — or use the dedicated TikTok page for TikTok-specific output.",
+    q: "What platforms are supported?",
+    a: "YouTube (long-form and Shorts), TikTok (15–60 seconds), and Instagram Reels (15–60 seconds). Each platform gets a script built for its own structure and pacing.",
   },
   {
-    q: "Do I need video editing skills to use this?",
-    a: "No. Scribtly writes the words. What you do with the camera is entirely up to you and your client.",
+    q: "What plan is right for a team?",
+    a: "Teams typically start on the Pro plan and upgrade to the Agency plan as they add more brand profiles and team members. You can start with 5 free scripts to try it before committing.",
   },
 ];
 
-export default function InstagramReelsPage() {
+export default function ForMarketingTeamsPage() {
   return (
     <>
       <script
@@ -159,23 +168,22 @@ export default function InstagramReelsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      {/* ── HERO ── */}
       <section className="relative overflow-hidden border-b-hair border-[var(--color-border)]">
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(240,68,56,0.06),transparent_40%),linear-gradient(315deg,rgba(127,119,221,0.12),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(127,119,221,0.14),transparent_40%),linear-gradient(315deg,rgba(56,193,114,0.08),transparent_50%)]" />
         <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(var(--color-border)_1px,transparent_1px),linear-gradient(90deg,var(--color-border)_1px,transparent_1px)] [background-size:52px_52px]" />
         <div className="absolute top-[-60px] left-[-40px] w-[340px] h-[340px] rounded-full bg-primary/10 blur-[80px] pointer-events-none" />
-        <div className="absolute bottom-[-40px] right-[-30px] w-[260px] h-[260px] rounded-full bg-[#f0b429]/8 blur-[70px] pointer-events-none" />
+        <div className="absolute bottom-[-40px] right-[-30px] w-[260px] h-[260px] rounded-full bg-[#38c172]/10 blur-[70px] pointer-events-none" />
 
         <div className="relative max-w-4xl mx-auto px-5 pt-16 pb-12 text-center">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border-hair border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-1.5 text-xs text-primary backdrop-blur">
             <Sparkles size={11} />
-            Instagram Reels
+            For Marketing Teams
           </div>
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05]">
-            Reels scripts that stop<br className="hidden md:block" /> the scroll
+            Scale your video content<br className="hidden md:block" /> without scaling your team.
           </h1>
           <p className="text-base text-text-secondary dark:text-dark-muted mt-5 max-w-xl mx-auto leading-relaxed">
-            Your client has 3 seconds. Scribtly writes hook-first Instagram Reels scripts in their exact voice — punchy, paced for the algorithm, and ready to film.
+            Scribtly gives marketing teams a shared system for video scripts. Save brand voices for every campaign or client. Generate platform-native scripts in under 60 seconds — and keep your whole team writing consistently.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link href="/signup">
@@ -200,8 +208,8 @@ export default function InstagramReelsPage() {
           </div>
           <div className="mt-10 mx-auto max-w-3xl px-2">
             <Image
-              src="/hero-instagram-reels.png"
-              alt="Scribtly Instagram Reels script writer interface"
+              src="/hero-freelancers.png"
+              alt="Scribtly AI script writer for marketing teams"
               width={1200}
               height={630}
               sizes="(max-width: 768px) 100vw, 768px"
@@ -212,13 +220,12 @@ export default function InstagramReelsPage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
       <section className="max-w-5xl mx-auto px-5 py-16 md:py-20">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-3">
-          From idea to filmed Reel in 3 steps
+          From brand brief to delivered script in 3 steps
         </h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-12 max-w-xl mx-auto">
-          No prompt engineering. No copy-pasting brand docs. No rework.
+          No re-briefing. No inconsistency. No pipeline bottlenecks.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
           <div className="hidden md:block absolute top-7 left-[calc(16.67%+16px)] right-[calc(16.67%+16px)] h-px bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30" />
@@ -241,37 +248,49 @@ export default function InstagramReelsPage() {
         </div>
       </section>
 
-      {/* ── FEATURES ── */}
       <section className="bg-[var(--color-surface)] border-y-hair border-[var(--color-border)]">
         <div className="max-w-5xl mx-auto px-5 py-16 md:py-20">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-3">
-            What every Reels script includes
+            Three problems marketing teams hit. One fix.
           </h2>
           <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-10 max-w-xl mx-auto">
-            Algorithm-native structure, your client's voice, and everything they need to film and post.
+            These are the things that slow down video production at scale. Scribtly fixes all three.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+            {pains.map((p) => (
+              <Card
+                key={p.title}
+                className="group hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-200"
+              >
+                <p.icon size={20} className="text-primary mb-3 group-hover:scale-110 transition-transform duration-200" />
+                <h3 className="font-semibold mb-1">{p.title}</h3>
+                <p className="text-sm text-text-secondary dark:text-dark-muted">{p.desc}</p>
+              </Card>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {features.map((f) => (
               <Card
                 key={f.title}
-                className="group hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-200"
+                className="group flex items-start gap-4 hover:border-primary/40 transition-all duration-200"
               >
-                <f.icon size={20} className="text-primary mb-3 group-hover:scale-110 transition-transform duration-200" />
-                <h3 className="font-semibold mb-1">{f.title}</h3>
-                <p className="text-sm text-text-secondary dark:text-dark-muted">{f.desc}</p>
+                <f.icon size={18} className="text-primary shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200" />
+                <div>
+                  <h3 className="font-semibold mb-1">{f.title}</h3>
+                  <p className="text-sm text-text-secondary dark:text-dark-muted">{f.desc}</p>
+                </div>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── BEFORE / AFTER ── */}
       <section className="max-w-4xl mx-auto px-5 py-16 md:py-20">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-3">
           Before and after Scribtly
         </h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-10 max-w-xl mx-auto">
-          Same client, same topic — completely different experience.
+          Same team, same campaign — completely different pipeline.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="rounded-xl border-hair border-[var(--color-border)] bg-[var(--color-surface)] p-6">
@@ -305,10 +324,9 @@ export default function InstagramReelsPage() {
         </div>
       </section>
 
-      {/* ── FAQ ── */}
       <section className="max-w-3xl mx-auto px-5 py-16">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-8">
-          Frequently asked questions
+          Questions from marketing teams
         </h2>
         <div className="divide-y divide-[var(--color-border)]">
           {faqs.map((faq) => (
@@ -320,22 +338,21 @@ export default function InstagramReelsPage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="relative overflow-hidden mx-5 mb-16 md:mx-10 rounded-2xl">
+      <section className="relative overflow-hidden mx-5 mb-16 md:mx-10 rounded-2xl mt-12">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-[#6c64d0] to-[#5a53b8]" />
         <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:40px_40px]" />
         <div className="absolute top-[-40px] right-[-40px] w-64 h-64 rounded-full bg-white/10 blur-[60px]" />
         <div className="relative max-w-2xl mx-auto px-8 py-14 text-center text-white">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
-            Stop staring at a blank page.
+            Give your team a script-writing system that scales.
           </h2>
           <p className="text-white/75 mb-8">
-            Write your first Reels script in under 60 seconds. No credit card required.
+            No credit card. No commitment. See how fast your pipeline can move.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="/signup">
               <Button size="lg" className="bg-white text-primary hover:bg-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.2)]">
-                Start free <ArrowRight size={15} className="ml-1" />
+                Try it free <ArrowRight size={15} className="ml-1" />
               </Button>
             </Link>
             <Link href="/pricing">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Client, Platform } from "@prisma/client";
 import { Input } from "@/components/ui/Input";
@@ -107,9 +107,36 @@ export function ClientForm({ mode, initial }: { mode: Mode; initial?: Client }) 
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const fieldRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  function validate(): Record<string, string> {
+    const e: Record<string, string> = {};
+    if (!name.trim()) e.name = "Client name is required";
+    if (!niche.trim()) e.niche = "Niche is required";
+    if (!targetAudience.trim()) e.targetAudience = "Target audience is required";
+    if (toneMode === "custom" && !toneCustom.trim()) e.toneCustom = "Custom tone description is required";
+    return e;
+  }
+
+  function clearError(field: string) {
+    if (errors[field]) setErrors((prev) => { const n = { ...prev }; delete n[field]; return n; });
+  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      // Scroll to first errored field
+      const firstKey = Object.keys(newErrors)[0];
+      const el = fieldRefs.current[firstKey];
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        (el as HTMLElement).focus?.();
+      }
+      return;
+    }
     setSaving(true);
     const toneOfVoice = toneMode === "preset" ? tonePreset : toneCustom.trim();
     const payload = {
@@ -184,30 +211,53 @@ export function ClientForm({ mode, initial }: { mode: Mode; initial?: Client }) 
         <h2 className="text-sm font-semibold text-text-secondary dark:text-dark-muted uppercase tracking-wider">Identity</h2>
         <div>
           <label className="block text-sm font-medium mb-1.5">Client name <span className="text-danger">*</span></label>
-          <Input value={name} onChange={(e) => setName(e.target.value)} required maxLength={120} />
-          <p className="text-xs text-text-secondary mt-1">{name.length}/120</p>
+          <Input
+            ref={(el) => { fieldRefs.current.name = el; }}
+            value={name}
+            onChange={(e) => { setName(e.target.value); clearError("name"); }}
+            maxLength={120}
+            className={errors.name ? "border-danger focus:ring-danger focus:border-danger" : ""}
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "error-name" : undefined}
+          />
+          {errors.name
+            ? <p id="error-name" className="text-xs text-danger mt-1 flex items-center gap-1"><span>⚠</span>{errors.name}</p>
+            : <p className="text-xs text-text-secondary mt-1">{name.length}/120</p>
+          }
         </div>
         <div>
           <label className="block text-sm font-medium mb-1.5">Their niche <span className="text-danger">*</span></label>
           <Input
+            ref={(el) => { fieldRefs.current.niche = el; }}
             value={niche}
-            onChange={(e) => setNiche(e.target.value)}
+            onChange={(e) => { setNiche(e.target.value); clearError("niche"); }}
             placeholder="e.g. fitness coach, travel blogger, SaaS founder"
-            required
             maxLength={200}
+            className={errors.niche ? "border-danger focus:ring-danger focus:border-danger" : ""}
+            aria-invalid={!!errors.niche}
+            aria-describedby={errors.niche ? "error-niche" : undefined}
           />
-          <p className="text-xs text-text-secondary mt-1">{niche.length}/200</p>
+          {errors.niche
+            ? <p id="error-niche" className="text-xs text-danger mt-1 flex items-center gap-1"><span>⚠</span>{errors.niche}</p>
+            : <p className="text-xs text-text-secondary mt-1">{niche.length}/200</p>
+          }
         </div>
         <div>
           <label className="block text-sm font-medium mb-1.5">Target audience <span className="text-danger">*</span></label>
           <Textarea
+            ref={(el) => { fieldRefs.current.targetAudience = el; }}
             value={targetAudience}
-            onChange={(e) => setTargetAudience(e.target.value)}
+            onChange={(e) => { setTargetAudience(e.target.value); clearError("targetAudience"); }}
             placeholder="e.g. busy professionals aged 30-45 who want to get fit without going to the gym"
-            required
             maxLength={600}
+            className={errors.targetAudience ? "border-danger focus:ring-danger focus:border-danger" : ""}
+            aria-invalid={!!errors.targetAudience}
+            aria-describedby={errors.targetAudience ? "error-targetAudience" : undefined}
           />
-          <p className="text-xs text-text-secondary mt-1">{targetAudience.length}/600</p>
+          {errors.targetAudience
+            ? <p id="error-targetAudience" className="text-xs text-danger mt-1 flex items-center gap-1"><span>⚠</span>{errors.targetAudience}</p>
+            : <p className="text-xs text-text-secondary mt-1">{targetAudience.length}/600</p>
+          }
         </div>
         <div>
           <label className="block text-sm font-medium mb-1.5">Primary platform <span className="text-danger">*</span></label>
@@ -259,13 +309,21 @@ export function ClientForm({ mode, initial }: { mode: Mode; initial?: Client }) 
               ))}
             </Select>
           ) : (
-            <Textarea
-              value={toneCustom}
-              onChange={(e) => setToneCustom(e.target.value)}
-              placeholder="Describe the tone in their own words"
-              required
-              maxLength={600}
-            />
+            <>
+              <Textarea
+                ref={(el) => { fieldRefs.current.toneCustom = el; }}
+                value={toneCustom}
+                onChange={(e) => { setToneCustom(e.target.value); clearError("toneCustom"); }}
+                placeholder="Describe the tone in their own words"
+                maxLength={600}
+                className={errors.toneCustom ? "border-danger focus:ring-danger focus:border-danger" : ""}
+                aria-invalid={!!errors.toneCustom}
+                aria-describedby={errors.toneCustom ? "error-toneCustom" : undefined}
+              />
+              {errors.toneCustom && (
+                <p id="error-toneCustom" className="text-xs text-danger mt-1 flex items-center gap-1"><span>⚠</span>{errors.toneCustom}</p>
+              )}
+            </>
           )}
         </div>
         <div>
@@ -362,6 +420,17 @@ export function ClientForm({ mode, initial }: { mode: Mode; initial?: Client }) 
           <p className="text-xs text-text-secondary mt-1">Kept strictly out of all generated content.</p>
         </div>
       </Card>
+
+      {Object.keys(errors).length > 0 && (
+        <div role="alert" className="rounded-md border border-danger/40 bg-danger/5 px-4 py-3 text-sm text-danger flex items-start gap-2">
+          <span className="mt-0.5">⚠</span>
+          <span>
+            {Object.keys(errors).length === 1
+              ? "Please fix 1 field above before saving."
+              : `Please fix ${Object.keys(errors).length} fields above before saving.`}
+          </span>
+        </div>
+      )}
 
       <div className="flex items-center gap-3">
         <Button type="submit" loading={saving}>

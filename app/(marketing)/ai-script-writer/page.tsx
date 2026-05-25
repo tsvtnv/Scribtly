@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
@@ -208,6 +209,17 @@ export default function AIScriptWriterPage() {
                 <span className="text-text-secondary dark:text-dark-muted">{s.label}</span>
               </div>
             ))}
+          </div>
+          <div className="mt-10 mx-auto max-w-3xl px-2">
+            <Image
+              src="/hero-ai-script-writer.png"
+              alt="Scribtly AI script writer — YouTube, TikTok, and Reels"
+              width={1200}
+              height={630}
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="w-full rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.25)] border border-[var(--color-border)]"
+              priority
+            />
           </div>
         </div>
       </section>

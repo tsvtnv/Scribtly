@@ -12,6 +12,7 @@ import { relativeDate } from "@/lib/utils";
 import { getRemainingScripts, getScriptLimit } from "@/lib/planLimits";
 import { OnboardingBanner } from "@/components/onboarding/OnboardingBanner";
 import { OnboardingChecklist } from "@/components/onboarding/OnboardingChecklist";
+import { HelpTooltip } from "@/components/ui/HelpTooltip";
 
 export default async function DashboardPage() {
   const { user, workspace } = await ensureUser();
@@ -134,8 +135,9 @@ export default async function DashboardPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card>
-          <div className="text-xs uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-1">
+          <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-1">
             Scripts this period
+            <HelpTooltip text="Total scripts generated in your current billing period. This counter resets on your monthly renewal date." position="bottom" />
           </div>
           <div className="text-3xl font-semibold">{workspace.scriptCount}</div>
           <div className="mt-3">
@@ -143,8 +145,9 @@ export default async function DashboardPage() {
           </div>
         </Card>
         <Card>
-          <div className="text-xs uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-1">
+          <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-1">
             Clients
+            <HelpTooltip text="Each client profile stores their niche, tone of voice, and style. Every script you generate will be written to match that client's voice automatically." position="bottom" />
           </div>
           <div className="text-3xl font-semibold">{totalClients}</div>
           <div className="text-xs text-text-secondary dark:text-dark-muted mt-1">
@@ -152,8 +155,9 @@ export default async function DashboardPage() {
           </div>
         </Card>
         <Card>
-          <div className="text-xs uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-1">
+          <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-1">
             Scripts remaining
+            <HelpTooltip text="How many more scripts you can generate before your monthly limit resets. Upgrade your plan for a higher limit or unlimited generation." position="bottom" />
           </div>
           <div className="text-3xl font-semibold">{remaining === Infinity ? "∞" : remaining}</div>
           <div className="text-xs text-text-secondary dark:text-dark-muted mt-1">
@@ -178,8 +182,9 @@ export default async function DashboardPage() {
 
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-muted">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-muted flex items-center gap-1.5">
             Recent scripts
+            <HelpTooltip text="Your 5 most recently generated scripts. Click any script to view, edit, or export it." position="right" />
           </h2>
           <Link href="/scripts" className="text-xs text-primary hover:underline">View all →</Link>
         </div>

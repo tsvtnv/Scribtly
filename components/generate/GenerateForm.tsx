@@ -21,6 +21,7 @@ import { CLAUDE_MODELS, DEFAULT_CLAUDE_MODEL, canUseClaudeModel, type ClaudeMode
 import promptsConfig from "@/config/prompts.config.json";
 import { cn } from "@/lib/utils";
 import { Sparkles, Lock, AlertTriangle } from "lucide-react";
+import { HelpTooltip } from "@/components/ui/HelpTooltip";
 
 type PlatformCfg = {
   durations: string[];
@@ -130,7 +131,10 @@ export function GenerateForm({
     <form onSubmit={submit} className="space-y-5">
       <Card className="space-y-5">
         <div>
-          <label className="block text-sm font-medium mb-1.5">Client</label>
+          <label className="flex items-center gap-1.5 text-sm font-medium mb-1.5">
+            Client
+            <HelpTooltip text="The AI will write the script in this client's voice. Their tone, niche, and style preferences are stored in their profile and applied automatically." position="right" />
+          </label>
           <div className="flex items-center gap-2">
             <Select value={clientId} onChange={(e) => setClientId(e.target.value)} required>
               {clients.map((c) => (
@@ -150,7 +154,10 @@ export function GenerateForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5">Platform</label>
+          <label className="flex items-center gap-1.5 text-sm font-medium mb-1.5">
+            Platform
+            <HelpTooltip text="Each platform has a different ideal script structure. YouTube scripts are longer and more detailed; TikTok and Reels are punchy and short-form. The AI adapts its writing style accordingly." position="right" />
+          </label>
           <PlatformPicker
             value={platform}
             onChange={setPlatform}
@@ -181,7 +188,10 @@ export function GenerateForm({
             </Select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5">Hook style (optional)</label>
+            <label className="flex items-center gap-1.5 text-sm font-medium mb-1.5">
+              Hook style (optional)
+              <HelpTooltip text="The hook is the opening 5–15 seconds of your script — the most critical part for retaining viewers. Leave blank to let the AI choose the best approach for your topic." position="top" />
+            </label>
             <Select value={hookStyle} onChange={(e) => setHookStyle(e.target.value)}>
               <option value="">AI picks best fit</option>
               {platformCfg.hook_styles.map((h) => (
@@ -192,7 +202,10 @@ export function GenerateForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5">Quality</label>
+          <label className="flex items-center gap-1.5 text-sm font-medium mb-1.5">
+            Quality
+            <HelpTooltip text="Controls which AI model writes your script. Standard is fast and great for short-form content. Quality suits most scripts. Premium uses the most powerful model — best for long YouTube videos where nuance matters." position="top" />
+          </label>
           <div className="grid grid-cols-3 gap-2">
             {(Object.keys(CLAUDE_MODELS) as ClaudeModelKey[]).map((key) => {
               const locked = !allModelsAllowed && key !== "STANDARD";
@@ -245,7 +258,10 @@ export function GenerateForm({
 
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="block text-sm font-medium">Also generate</label>
+            <label className="flex items-center gap-1.5 text-sm font-medium">
+              Also generate
+              <HelpTooltip text="Generate additional content assets alongside your script in the same request — things like email newsletters, social media captions, or YouTube descriptions." position="top" />
+            </label>
             {!extrasAllowed ? (
               <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-primary/10 text-primary inline-flex items-center gap-1">
                 <Lock size={10} /> Pro

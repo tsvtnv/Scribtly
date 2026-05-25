@@ -6,6 +6,7 @@ import { PlanBadge } from "@/components/billing/PlanBadge";
 import { DeleteAccountCard } from "./DeleteAccountCard";
 import { WorkspaceNameForm } from "./WorkspaceNameForm";
 import { ThemeSettingCard } from "./ThemeSettingCard";
+import { HelpTooltip } from "@/components/ui/HelpTooltip";
 
 export default async function SettingsPage() {
   const { user, workspace, role } = await ensureUser();
@@ -87,7 +88,10 @@ export default async function SettingsPage() {
         </h2>
         <dl className="space-y-3 text-sm">
           <div className="grid grid-cols-[120px_1fr] gap-3 items-center">
-            <dt className="text-text-secondary">Workspace ID</dt>
+            <dt className="text-text-secondary flex items-center gap-1.5">
+              Workspace ID
+              <HelpTooltip text="Your unique workspace identifier. Share this with support when reporting issues so we can locate your account quickly." position="right" />
+            </dt>
             <dd className="font-mono text-xs bg-[var(--color-bg)] border border-[var(--color-border)] rounded px-2 py-1 select-all truncate">
               {workspace.id}
             </dd>

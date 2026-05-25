@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { makeHref as buildHref } from "@/lib/scriptsPageHelpers";
+import { HelpTooltip } from "@/components/ui/HelpTooltip";
 
 const PLATFORMS: Platform[] = ["YOUTUBE", "TIKTOK", "REELS", "LINKEDIN", "PODCAST"];
 const STATUSES: ScriptStatus[] = ["DRAFT", "FINAL", "SENT"];
@@ -80,7 +81,8 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
         {searchParams.status ? <input type="hidden" name="status" value={searchParams.status} /> : null}
       </form>
 
-      <div className="flex flex-wrap gap-2 mb-5 text-xs">
+      <div className="flex flex-wrap gap-2 mb-5 text-xs items-center">
+        <HelpTooltip text="Filter scripts by platform. Each platform has a different script style — YouTube for long-form, TikTok/Reels for short punchy content, LinkedIn for professional audiences, Podcast for conversational audio." position="right" />
         <Link
           href={buildHref(searchParams, { platform: undefined })}
           className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.platform ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
@@ -97,6 +99,7 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
           </Link>
         ))}
         <span className="text-text-secondary mx-1">·</span>
+        <HelpTooltip text="Filter by script status. Draft = work in progress. Final = approved and ready. Sent = delivered to your client." position="right" />
         <Link
           href={buildHref(searchParams, { status: undefined })}
           className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.status ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
