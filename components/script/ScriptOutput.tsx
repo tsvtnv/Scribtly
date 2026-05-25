@@ -10,6 +10,8 @@ const H1_RE = /^#\s+(.+)$/;
 const H2_RE = /^##\s+(.+)$/;
 const H3_RE = /^###\s+(.+)$/;
 
+const BOLD_RE = /(\*\*[^*]+\*\*)/g;
+
 function renderInline(text: string, keyBase: string) {
   const parts = text.split(INLINE_TAG_RE);
   return parts.map((p, i) => {
@@ -24,17 +26,25 @@ function renderInline(text: string, keyBase: string) {
         </span>
       );
     }
-    // Highlight CAPS words (3+ letters)
-    const caps = p.split(/(\b[A-Z]{3,}\b)/g);
-    return caps.map((c, j) => {
-      if (/^[A-Z]{3,}$/.test(c)) {
-        return (
-          <span key={`${keyBase}-c-${i}-${j}`} className="font-semibold text-primary dark:text-primary-onDark">
-            {c}
-          </span>
-        );
+    // Bold: **text**
+    const boldParts = p.split(BOLD_RE);
+    return boldParts.map((b, bi) => {
+      if (BOLD_RE.test(b)) {
+        BOLD_RE.lastIndex = 0;
+        return <strong key={`${keyBase}-b-${i}-${bi}`}>{b.slice(2, -2)}</strong>;
       }
-      return <span key={`${keyBase}-n-${i}-${j}`}>{c}</span>;
+      // Highlight CAPS words (3+ letters)
+      const caps = b.split(/(\b[A-Z]{3,}\b)/g);
+      return caps.map((c, j) => {
+        if (/^[A-Z]{3,}$/.test(c)) {
+          return (
+            <span key={`${keyBase}-c-${i}-${bi}-${j}`} className="font-semibold text-primary dark:text-primary-onDark">
+              {c}
+            </span>
+          );
+        }
+        return <span key={`${keyBase}-n-${i}-${bi}-${j}`}>{c}</span>;
+      });
     });
   });
 }

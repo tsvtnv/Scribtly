@@ -35,7 +35,7 @@ export default async function ScriptViewPage({ params }: { params: { id: string 
   }));
 
   return (
-    <div className="p-6 md:p-10 max-w-4xl mx-auto pb-24">
+    <div className="p-6 md:p-10 max-w-4xl mx-auto pb-32">
       <Link href="/scripts" className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-primary">
         <ArrowLeft size={14} /> Back to library
       </Link>

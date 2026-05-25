@@ -129,7 +129,7 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
   }
 
   return (
-    <div className="fixed bottom-6 left-0 right-0 flex justify-center z-40 pointer-events-none">
+    <div className="fixed bottom-6 left-0 right-0 md:left-60 flex justify-center z-40 pointer-events-none">
       <div className="pointer-events-auto inline-flex items-center gap-1.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl shadow-lg px-3 py-2 max-w-[calc(100vw-2rem)] flex-wrap" role="toolbar" aria-label="Script actions">
         {/* Utility */}
         <Button variant="secondary" size="sm" onClick={copy}>
