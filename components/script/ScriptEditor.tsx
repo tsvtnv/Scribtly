@@ -6,6 +6,8 @@ import { ScriptOutput } from "./ScriptOutput";
 import { cn, wordCount } from "@/lib/utils";
 import { useToast } from "@/components/ui/Toast";
 
+const SHARED = "rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 font-serif text-[15px] leading-relaxed min-h-[500px]";
+
 export function ScriptEditor({
   scriptId,
   initialContent,
@@ -19,8 +21,16 @@ export function ScriptEditor({
   const [editing, setEditing] = useState(false);
   const [savingState, setSavingState] = useState<"idle" | "saving" | "saved">("idle");
   const toast = useToast();
+  const toastRef = useRef(toast);
   const dirtyRef = useRef(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    return () => { isMountedRef.current = false; };
+  }, []);
+
+  useEffect(() => { toastRef.current = toast; }, [toast]);
 
   useEffect(() => {
     setContent(initialContent);
@@ -35,23 +45,24 @@ export function ScriptEditor({
       setEditing(false);
       return;
     }
-    dirtyRef.current = false;
     setSavingState("saving");
     const res = await fetch(`/api/scripts/${scriptId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
     });
+    if (!isMountedRef.current) return;
     if (res.ok) {
+      dirtyRef.current = false;
       setSavingState("saved");
-      setTimeout(() => setSavingState("idle"), 1500);
+      setTimeout(() => { if (isMountedRef.current) setSavingState("idle"); }, 1500);
       onChange?.(content);
     } else {
       setSavingState("idle");
-      toast.push("Save failed", "error");
+      toastRef.current.push("Save failed", "error");
     }
     setEditing(false);
-  }, [content, scriptId, onChange, toast]);
+  }, [content, scriptId, onChange]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === "Escape") {
@@ -59,8 +70,6 @@ export function ScriptEditor({
       save();
     }
   }
-
-  const SHARED = "rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 font-serif text-[15px] leading-relaxed min-h-[500px]";
 
   return (
     <div>
@@ -96,11 +105,12 @@ export function ScriptEditor({
           role="button"
           tabIndex={0}
           onClick={() => setEditing(true)}
-          onKeyDown={(e) => e.key === "Enter" && setEditing(true)}
+          onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setEditing(true)}
           className={cn(
             SHARED,
             "cursor-text transition-colors hover:border-primary/30 hover:bg-primary/[0.02]"
           )}
+          aria-label="Edit script content"
           title="Click to edit"
         >
           <ScriptOutput text={content} />
