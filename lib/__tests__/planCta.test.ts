@@ -49,4 +49,11 @@ describe("getPlanCtaAction", () => {
       label: "Downgrade to Free",
     });
   });
+
+  it("returns portal when user has paid plan, no subscription, and clicks FREE", () => {
+    expect(getPlanCtaAction({ cardPlan: "FREE", userPlan: "BASIC", hasSubscription: false })).toEqual({
+      type: "portal",
+      label: "Downgrade to Free",
+    });
+  });
 });

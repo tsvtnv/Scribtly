@@ -10,22 +10,24 @@ export default async function PricingPage() {
   let hasSubscription = false;
 
   if (session) {
-    const membership = await prisma.workspaceMember.findFirst({
-      where: { userId: session.userId },
-      select: {
-        workspace: {
-          select: { plan: true, stripeSubscriptionId: true },
-        },
-      },
-      orderBy: { workspace: { createdAt: "asc" } },
+    const user = await prisma.user.findUnique({
+      where: { id: session.userId },
+      select: { defaultWorkspaceId: true },
     });
 
-    if (membership) {
-      const plan = membership.workspace.plan;
-      if (plan === "FREE" || plan === "BASIC" || plan === "PRO" || plan === "AGENCY") {
-        userPlan = plan;
+    if (user?.defaultWorkspaceId) {
+      const workspace = await prisma.workspace.findUnique({
+        where: { id: user.defaultWorkspaceId },
+        select: { plan: true, stripeSubscriptionId: true },
+      });
+
+      if (workspace) {
+        const plan = workspace.plan;
+        if (plan === "FREE" || plan === "BASIC" || plan === "PRO" || plan === "AGENCY") {
+          userPlan = plan;
+        }
+        hasSubscription = !!workspace.stripeSubscriptionId;
       }
-      hasSubscription = !!membership.workspace.stripeSubscriptionId;
     }
   }
 

@@ -38,7 +38,7 @@ export function getPlanCtaAction({
 
   if (cardPlan === userPlan) return { type: "current" };
 
-  if (!hasSubscription) {
+  if (!hasSubscription && cardPlan !== "FREE") {
     return { type: "checkout", label: `Upgrade to ${PLAN_LABELS[cardPlan]}` };
   }
 
