@@ -43,6 +43,23 @@ function SortIndicator({ active, dir }: { active: boolean; dir: SortDir }) {
   return <span className="ml-1">{dir === "asc" ? "↑" : "↓"}</span>;
 }
 
+const PROVIDER_STYLES: Record<string, string> = {
+  "Google Workspace": "bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400",
+  "Microsoft 365":    "bg-cyan-50 text-cyan-700 dark:bg-cyan-900/20 dark:text-cyan-400",
+  "Zoho Mail":        "bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400",
+  "Proton Mail":      "bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400",
+  "Invalid MX":       "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400",
+};
+
+function ProviderBadge({ provider, valid }: { provider: string; valid?: boolean | null }) {
+  const style = PROVIDER_STYLES[provider] ?? "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400";
+  return (
+    <span className={`px-1.5 py-0.5 rounded text-xs font-medium whitespace-nowrap ${style}`}>
+      {valid === false ? "✗ " : ""}{provider}
+    </span>
+  );
+}
+
 const PAGE_SIZE = 100;
 
 export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
@@ -187,6 +204,8 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
                   <SortIndicator active={sortKey === key} dir={sortDir} />
                 </th>
               ))}
+              <th className="px-3 py-3 text-left font-medium whitespace-nowrap">Email</th>
+              <th className="px-3 py-3 text-left font-medium whitespace-nowrap">Provider</th>
               <th className="px-3 py-3 text-left font-medium whitespace-nowrap">Via</th>
               <th className="px-3 py-3 text-left font-medium whitespace-nowrap">Delivered</th>
               <th className="px-3 py-3 text-left font-medium whitespace-nowrap">Opened</th>
@@ -228,6 +247,14 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
                 >
                   <td className="px-3 py-3 font-medium whitespace-nowrap">{lead.agencyName}</td>
                   <td className="px-3 py-3">{lead.fitScore ?? "—"}</td>
+                  <td className="px-3 py-3 text-xs text-gray-500 max-w-[160px] truncate">
+                    {(lead as any).contactEmail ?? "—"}
+                  </td>
+                  <td className="px-3 py-3 whitespace-nowrap">
+                    {(lead as any).emailProvider ? (
+                      <ProviderBadge provider={(lead as any).emailProvider} valid={(lead as any).emailValidMx} />
+                    ) : "—"}
+                  </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     {lead.contactMethod === "RESEND_EMAIL" ? "📧 Email"
                       : lead.contactMethod === "WEBSITE_FORM" ? "🌐 Form"
@@ -258,7 +285,7 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
                 </tr>
                 {expanded === lead.id && (
                   <tr>
-                    <td colSpan={12} className="px-3 pb-3">
+                    <td colSpan={14} className="px-3 pb-3">
                       <LeadDetailPanel lead={lead} />
                     </td>
                   </tr>
@@ -267,7 +294,7 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
             ))}
             {paginated.length === 0 && (
               <tr>
-                <td colSpan={12} className="px-3 py-8 text-center text-gray-400">
+                <td colSpan={14} className="px-3 py-8 text-center text-gray-400">
                   No leads found.
                 </td>
               </tr>

@@ -348,6 +348,10 @@ model ReferralLead {
   notes          String?
   isBetaOffer    Boolean        @default(false)
 
+  contactEmail   String?
+  emailProvider  String?
+  emailValidMx   Boolean?
+
   events ReferralEvent[]
 
   @@index([outreachStatus])

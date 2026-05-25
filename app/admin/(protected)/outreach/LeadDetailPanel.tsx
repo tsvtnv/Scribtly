@@ -87,6 +87,8 @@ export function LeadDetailPanel({ lead }: { lead: SerializedLead }) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Detail label="Agency" value={lead.agencyName} />
         <Detail label="Website" value={lead.agencyWebsite} link />
+        <Detail label="Email" value={(lead as any).contactEmail} />
+        <Detail label="Provider" value={(lead as any).emailProvider} />
         <Detail label="Location" value={lead.agencyLocation} />
         <Detail label="Fit Score" value={lead.fitScore ? `${lead.fitScore}/5` : null} />
         <Detail label="Services" value={lead.agencyServices} />
