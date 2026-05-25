@@ -54,6 +54,8 @@ export function PlanCTA({
         return;
       }
       window.location.href = body.url;
+    } catch {
+      toast.push("Network error — please try again", "error");
     } finally {
       setBusy(false);
     }
@@ -69,12 +71,14 @@ export function PlanCTA({
         return;
       }
       window.location.href = body.url;
+    } catch {
+      toast.push("Network error — please try again", "error");
     } finally {
       setBusy(false);
     }
   }
 
-  const label = action.label;
+  const { label } = action;
   const handler = action.type === "checkout" ? handleCheckout : handlePortal;
 
   return (
