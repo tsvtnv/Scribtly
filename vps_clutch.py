@@ -1,17 +1,39 @@
 # vps_clutch.py
 import asyncio
 import aiohttp
+import csv
 import hashlib
-import json
+import os
 import random
 import re
 import time
+from pathlib import Path
 from urllib.parse import urlparse
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
-API_URL = "https://scribtly.com/api/v1/outreach/leads/bulk"
-API_KEY = "ab36e7b012db83e769f32ee5e41722283fcb0c29ab9662f9e39a4d71d7080055"
+
+def load_env_file(path: str = ".env.local") -> dict:
+    """Read key=value pairs from a .env file. Returns empty dict if file missing."""
+    result = {}
+    try:
+        for line in Path(path).read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            result[k.strip()] = v.strip().strip('"').strip("'")
+    except FileNotFoundError:
+        pass
+    return result
+
+
+_env = load_env_file()
+
+API_KEY = _env.get("OUTREACH_API_KEY") or os.environ.get("OUTREACH_API_KEY", "")
+BASE_URL = (_env.get("SCRIPTER_BASE_URL") or os.environ.get("SCRIPTER_BASE_URL", "https://scribtly.com")).rstrip("/")
+API_URL = f"{BASE_URL}/api/v1/outreach/leads/bulk"
+
 CONCURRENCY = 100
 BATCH_SIZE = 50
 CONTACT_PATHS = ["/contact", "/contact-us", "/contactus", "/about", "/about-us"]
@@ -26,10 +48,11 @@ SKIP_DOMAINS = {
 }
 
 SOURCES = [
-    ("https://clutch.co/agencies/social-media", 40),
-    ("https://clutch.co/agencies/social-media-marketing", 20),
-    ("https://www.designrush.com/agency/social-media-marketing", 10),
-    ("https://upcity.com/profiles/social-media-agencies", 5),
+    # DesignRush: 11,852 agencies, 55/page, ?page=N pagination
+    ("https://www.designrush.com/agency/social-media-marketing", 215),
+    ("https://www.designrush.com/agency/content-marketing", 100),
+    ("https://www.designrush.com/agency/video-production", 80),
+    ("https://www.designrush.com/agency/digital-marketing", 150),
 ]
 
 
@@ -38,8 +61,12 @@ def log(msg):
 
 
 def domain_from_url(url):
+    if not url:
+        return None
     try:
         d = urlparse(url).netloc.lower()
+        if not d:
+            return None
         return d[4:] if d.startswith("www.") else d
     except Exception:
         return None
@@ -47,6 +74,13 @@ def domain_from_url(url):
 
 def lead_id(domain):
     return hashlib.md5(domain.encode()).hexdigest()
+
+
+def first_name_from_agency(agency_name: str) -> str:
+    """Extract first word of agency name for email personalisation."""
+    if not agency_name:
+        return "there"
+    return agency_name.split()[0]
 
 
 def pick_email(emails, domain):
@@ -65,16 +99,16 @@ def scrape_directory_page(page, url):
     """Use Playwright to render a directory page and extract agency website links."""
     domains = {}
     try:
-        page.goto(url, wait_until="domcontentloaded", timeout=30000)
-        page.wait_for_timeout(3000)  # let JS render
+        page.goto(url, wait_until="networkidle", timeout=45000)
+        page.wait_for_timeout(2000)
         html = page.content()
         soup = BeautifulSoup(html, "html.parser")
 
-        # Try multiple selectors for agency rows
+        # DesignRush uses article.js-agency-item; fall back to other known structures
         rows = (
+            soup.select("article.js-agency-item") or
             soup.select("li.provider-row") or
             soup.select("li[data-company_name]") or
-            soup.select(".company-list li") or
             soup.select(".agency-card") or
             soup.select("article.agency")
         )
@@ -84,23 +118,22 @@ def scrape_directory_page(page, url):
             website = None
             employees = ""
 
-            # Name
-            for sel in ["h3 a", "h2 a", ".company-name a", ".agency-name"]:
+            # Name — DesignRush uses a.gtm-name; fall back to common selectors
+            for sel in ["a.gtm-name", "h3 a", "h2 a", ".company-name a", ".agency-name"]:
                 el = row.select_one(sel)
                 if el:
                     name = el.get_text(strip=True)
                     break
 
-            # Website — external link on the listing
-            for sel in ["a[data-link_type='website']", "a.website-link", "a[href*='//'][href*='.'][class*='web']"]:
-                el = row.select_one(sel)
-                if el and el.get("href", "").startswith("http"):
-                    website = el["href"]
-                    break
-
-            # Employees
-            for el in row.find_all(string=re.compile(r"\d+.*employee", re.I)):
-                employees = el.strip()
+            # Website — prefer direct external links, then DesignRush referral links
+            for a in row.find_all("a", href=True):
+                href = a["href"]
+                if not href.startswith("http"):
+                    continue
+                # Skip internal directory links
+                if any(d in href for d in ["designrush.com", "clutch.co", "upcity.com"]):
+                    continue
+                website = href
                 break
 
             if website:
@@ -180,8 +213,9 @@ async def push_batch(session, batch):
             async with session.post(API_URL, json={"leads": batch}, headers=headers,
                                     timeout=aiohttp.ClientTimeout(total=30)) as r:
                 if r.status in (200, 201):
-                    data = await r.json()
-                    log(f"[API] Pushed {len(batch)} -> created:{data.get('created',0)} updated:{data.get('updated',0)}")
+                    body = await r.json()
+                    inner = body.get("data", {})
+                    log(f"[API] Pushed {len(batch)} -> created:{inner.get('created',0)} updated:{inner.get('updated',0)}")
                     return True
                 elif r.status == 409:
                     return True
@@ -193,8 +227,11 @@ async def push_batch(session, batch):
     return False
 
 
-async def extract_and_push(agencies):
+async def extract_and_push(agencies: dict) -> list[dict]:
+    """Extract emails, push leads to API. Returns list of instantly rows."""
     connector = aiohttp.TCPConnector(limit=CONCURRENCY)
+    instantly_rows: list[dict] = []
+
     async with aiohttp.ClientSession(connector=connector) as session:
         domains = list(agencies.keys())
         batch = []
@@ -210,14 +247,21 @@ async def extract_and_push(agencies):
                 if not email:
                     continue
                 info = agencies[domain]
+                lid = lead_id(domain)
                 batch.append({
-                    "leadId": lead_id(domain),
+                    "leadId": lid,
                     "agencyName": info["name"],
                     "agencyWebsite": f"https://{domain}",
                     "outreachStatus": "NOT_CONTACTED",
                     "agencyServices": "social media marketing",
-                    "sourceSearchQuery": "clutch.co/agencies/social-media",
-                    "notes": f"email: {email} | employees: {info.get('employees', '')}",
+                    "sourceSearchQuery": "clutch.co",
+                    "notes": f"employees: {info.get('employees', '')}",
+                })
+                instantly_rows.append({
+                    "email": email,
+                    "first_name": first_name_from_agency(info["name"]),
+                    "website": f"https://{domain}",
+                    "ref_url": f"{BASE_URL}/ref/{lid}",
                 })
                 if len(batch) >= BATCH_SIZE:
                     ok = await push_batch(session, batch)
@@ -240,9 +284,16 @@ async def extract_and_push(agencies):
 
         log(f"Done. {pushed} leads pushed, {len(failed)} failures.")
 
+    return instantly_rows
+
 
 async def main():
+    if not API_KEY:
+        log("ERROR: OUTREACH_API_KEY not set in .env.local or environment")
+        return
+
     log("=== Clutch Agency Scraper ===")
+    log(f"Target: {API_URL}")
     agencies = scrape_all_sources()
 
     log(f"Found {len(agencies)} unique agencies")
@@ -250,10 +301,20 @@ async def main():
         for domain, info in sorted(agencies.items()):
             f.write(f"{domain}|{info['name']}|{info.get('employees','')}\n")
 
-    if agencies:
-        await extract_and_push(agencies)
-    else:
+    if not agencies:
         log("No agencies found — check if Playwright/Chromium is installed")
+        return
+
+    instantly_rows = await extract_and_push(agencies)
+
+    instantly_path = "instantly_import.csv"
+    with open(instantly_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["email", "first_name", "website", "ref_url"])
+        writer.writeheader()
+        writer.writerows(instantly_rows)
+
+    log(f"[+] Instantly.ai import saved to {instantly_path} ({len(instantly_rows)} rows)")
+    log("[+] Pipeline complete. Import instantly_import.csv into your Instantly campaign.")
 
 
 if __name__ == "__main__":
