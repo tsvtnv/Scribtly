@@ -54,13 +54,13 @@ export function ScriptCard({
 
       {/* Title — clickable */}
       <Link href={`/scripts/${script.id}`} className="block mb-1">
-        <p className="text-[14px] font-medium leading-snug line-clamp-2 text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors">
+        <p className="text-[14px] font-medium leading-snug line-clamp-2 text-text-primary hover:text-[var(--color-primary)] transition-colors">
           {script.title}
         </p>
       </Link>
 
       {/* Meta row: word count + duration */}
-      <p className="text-[11px] text-[var(--color-text-tertiary)] mb-1.5">
+      <p className="text-[11px] text-text-secondary mb-1.5">
         {script.wordCount ?? 0} words{script.duration ? ` · ${script.duration}` : ''}
       </p>
 
@@ -74,14 +74,14 @@ export function ScriptCard({
             >
               {initials(script.client.name)}
             </span>
-            <span className="text-[11px] text-[var(--color-text-secondary)] truncate flex-1">
+            <span className="text-[11px] text-text-secondary truncate flex-1">
               {script.client.name}
             </span>
           </>
         ) : (
-          <span className="text-[11px] text-[var(--color-text-tertiary)] flex-1">Unassigned</span>
+          <span className="text-[11px] text-text-secondary flex-1">Unassigned</span>
         )}
-        <span className="text-[11px] text-[var(--color-text-tertiary)] ml-auto flex-shrink-0">
+        <span className="text-[11px] text-text-secondary ml-auto flex-shrink-0">
           {relativeDate(script.createdAt)}
         </span>
       </div>
@@ -101,7 +101,7 @@ export function ScriptCard({
             e.preventDefault()
             onAddToPipeline?.(script)
           }}
-          className="text-[11px] border border-[var(--color-border)] bg-transparent rounded-md px-[10px] py-1 text-[var(--color-text-secondary)] hover:bg-[var(--color-bg)] transition-colors self-start"
+          className="text-[11px] border border-[var(--color-border)] bg-transparent rounded-md px-[10px] py-1 text-text-secondary hover:bg-[var(--color-bg)] transition-colors self-start"
         >
           + Add to pipeline
         </button>
