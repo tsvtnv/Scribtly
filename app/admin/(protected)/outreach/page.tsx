@@ -30,7 +30,6 @@ async function fetchLeads() {
   return prisma.referralLead.findMany({
     orderBy: { createdAt: "desc" },
     include: { events: { orderBy: { createdAt: "asc" } } },
-    take: 5000,
   });
 }
 

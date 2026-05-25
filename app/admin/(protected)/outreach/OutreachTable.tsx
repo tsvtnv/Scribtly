@@ -43,6 +43,8 @@ function SortIndicator({ active, dir }: { active: boolean; dir: SortDir }) {
   return <span className="ml-1">{dir === "asc" ? "↑" : "↓"}</span>;
 }
 
+const PAGE_SIZE = 100;
+
 export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [nameFilter, setNameFilter] = useState("");
@@ -53,6 +55,7 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
   const [fitScoreFilter, setFitScoreFilter] = useState("");
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortDir, setSortDir] = useState<SortDir>("asc");
+  const [page, setPage] = useState(0);
 
   const uniqueCountries = useMemo(
     () =>
@@ -101,6 +104,11 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
     [leads, nameFilter, statusFilter, contactMethodFilter, signedUpFilter, countryFilter, fitScoreFilter, sortKey, sortDir]
   );
 
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const paginated = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+
+  function resetPage() { setPage(0); setExpanded(null); }
+
   const selectClass =
     "px-2 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary";
 
@@ -112,42 +120,53 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
           type="text"
           placeholder="Search agency…"
           value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
+          onChange={(e) => { setNameFilter(e.target.value); resetPage(); }}
           className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary min-w-[160px]"
         />
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className={selectClass}>
+        <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); resetPage(); }} className={selectClass}>
           <option value="">All Statuses</option>
           {ALL_STATUSES.map((s) => (
             <option key={s} value={s}>{s.replace(/_/g, " ")}</option>
           ))}
         </select>
-        <select value={contactMethodFilter} onChange={(e) => setContactMethodFilter(e.target.value)} className={selectClass}>
+        <select value={contactMethodFilter} onChange={(e) => { setContactMethodFilter(e.target.value); resetPage(); }} className={selectClass}>
           <option value="">All Contact Methods</option>
           {ALL_CONTACT_METHODS.map((m) => (
             <option key={m} value={m}>{m.replace(/_/g, " ")}</option>
           ))}
         </select>
-        <select value={signedUpFilter} onChange={(e) => setSignedUpFilter(e.target.value)} className={selectClass}>
+        <select value={signedUpFilter} onChange={(e) => { setSignedUpFilter(e.target.value); resetPage(); }} className={selectClass}>
           <option value="">Signed Up: All</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
-        <select value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)} className={selectClass}>
+        <select value={countryFilter} onChange={(e) => { setCountryFilter(e.target.value); resetPage(); }} className={selectClass}>
           <option value="">All Countries</option>
           {uniqueCountries.map((c) => (
             <option key={c} value={c}>{c}</option>
           ))}
         </select>
-        <select value={fitScoreFilter} onChange={(e) => setFitScoreFilter(e.target.value)} className={selectClass}>
+        <select value={fitScoreFilter} onChange={(e) => { setFitScoreFilter(e.target.value); resetPage(); }} className={selectClass}>
           <option value="">All Fit Scores</option>
           {[1, 2, 3, 4, 5].map((n) => (
             <option key={n} value={String(n)}>{n}</option>
           ))}
         </select>
       </div>
-      <p className="text-xs text-gray-400 mb-3">
-        Showing {filtered.length} of {leads.length} leads
-      </p>
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-xs text-gray-400">
+          Showing {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, filtered.length)} of {filtered.length} leads ({leads.length} total)
+        </p>
+        {totalPages > 1 && (
+          <div className="flex items-center gap-1">
+            <button onClick={() => setPage(0)} disabled={page === 0} className="px-2 py-1 text-xs rounded border border-gray-200 dark:border-gray-700 disabled:opacity-30 hover:bg-gray-100 dark:hover:bg-gray-800">«</button>
+            <button onClick={() => setPage(p => p - 1)} disabled={page === 0} className="px-2 py-1 text-xs rounded border border-gray-200 dark:border-gray-700 disabled:opacity-30 hover:bg-gray-100 dark:hover:bg-gray-800">‹</button>
+            <span className="px-3 py-1 text-xs text-gray-500">Page {page + 1} of {totalPages}</span>
+            <button onClick={() => setPage(p => p + 1)} disabled={page >= totalPages - 1} className="px-2 py-1 text-xs rounded border border-gray-200 dark:border-gray-700 disabled:opacity-30 hover:bg-gray-100 dark:hover:bg-gray-800">›</button>
+            <button onClick={() => setPage(totalPages - 1)} disabled={page >= totalPages - 1} className="px-2 py-1 text-xs rounded border border-gray-200 dark:border-gray-700 disabled:opacity-30 hover:bg-gray-100 dark:hover:bg-gray-800">»</button>
+          </div>
+        )}
+      </div>
 
       <div className="w-full rounded-xl border border-gray-200 dark:border-gray-700 overflow-x-auto">
         <table className="w-full text-xs min-w-[900px]">
@@ -201,7 +220,7 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {filtered.map((lead) => (
+            {paginated.map((lead) => (
               <React.Fragment key={lead.id}>
                 <tr
                   onClick={() => setExpanded(expanded === lead.id ? null : lead.id)}
@@ -246,7 +265,7 @@ export function OutreachTable({ leads }: { leads: SerializedLead[] }) {
                 )}
               </React.Fragment>
             ))}
-            {filtered.length === 0 && (
+            {paginated.length === 0 && (
               <tr>
                 <td colSpan={12} className="px-3 py-8 text-center text-gray-400">
                   No leads found.
