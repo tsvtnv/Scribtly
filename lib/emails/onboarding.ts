@@ -3,11 +3,11 @@ import { resend } from "@/lib/resend";
 import type { Plan } from "@prisma/client";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
-const FROM = "Deyan from Scribtly <deyan@scribtly.com>";
-const REPLY_TO = "deyan@scribtly.com";
+const FROM = "Kristiyan from Scribtly <kristiyan@scribtly.com>";
+const REPLY_TO = "kristiyan@scribtly.com";
 
 function footer(workspaceId: string): string {
-  return `\n\n---\nTo stop receiving these emails: ${APP_URL}/api/user/unsubscribe?token=${workspaceId}\nScribtly · hello@scribtly.com`;
+  return `\n\n---\nTo stop receiving these emails: ${APP_URL}/api/user/unsubscribe?token=${workspaceId}\nScribtly · kristiyan@scribtly.com`;
 }
 
 async function sendPlain({
@@ -141,4 +141,29 @@ export async function sendUpgradeConfirmationEmail(
     subject: `You're on ${planName} — here's what's new`,
     text,
   });
+}
+
+export async function sendBetaExpiredEmail(
+  workspaceId: string,
+  email: string,
+  firstName: string
+) {
+  const text =
+    `Hi ${firstName},\n\nYour 90-day beta access has ended. Your workspace is back on the Free plan (5 scripts/month).\n\nEverything you've built — scripts, clients, pipeline — is still here.\n\nIf Scribtly was useful, Basic is £5/month for 25 scripts: ${APP_URL}/settings/billing\n\nThanks for being an early tester. Your feedback genuinely shaped what we built.\n\nKristiyan` +
+    footer(workspaceId);
+
+  return sendPlain({ to: email, subject: "Your beta access has ended", text });
+}
+
+export async function sendCancellationEmail(
+  workspaceId: string,
+  email: string,
+  firstName: string,
+  planName: string
+) {
+  const text =
+    `Hi ${firstName},\n\nYour ${planName} subscription has been cancelled. Your workspace is now on the Free plan (5 scripts/month).\n\nAll your scripts, clients, and content are still here.\n\nIf you cancelled by mistake, or want to come back later, just reply and I'll sort it out.\n\nKristiyan` +
+    footer(workspaceId);
+
+  return sendPlain({ to: email, subject: "Your Scribtly subscription has been cancelled", text });
 }

@@ -9,6 +9,7 @@ import { UsageMeter } from "@/components/billing/UsageMeter";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
+import { HelpTooltip } from "@/components/ui/HelpTooltip";
 
 const FEATURES: Record<Plan, string[]> = {
   FREE: ["5 scripts per month", "1 client", "Standard quality model", "Script library"],
@@ -149,7 +150,10 @@ export function BillingPageClient({
       <Card>
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div className="flex-1 min-w-0">
-            <div className="text-xs uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-1">Current plan</div>
+            <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-1">
+              Current plan
+              <HelpTooltip text="Your active subscription. Scripts reset on the renewal date shown below. Upgrade anytime — you'll be charged the prorated difference." position="right" />
+            </div>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl font-bold">{displayPlan}</span>
               <span className="text-sm text-text-secondary dark:text-dark-muted">{PRICE[plan]}</span>

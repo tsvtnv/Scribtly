@@ -5,6 +5,7 @@ import { PipelineUpgradePrompt } from '@/components/pipeline/PipelineUpgradeProm
 import { canAccessPipeline } from '@/lib/planLimits'
 import { ContentItem } from '@/types/pipeline'
 import type { Script, Client } from '@prisma/client'
+import { HelpTooltip } from '@/components/ui/HelpTooltip'
 
 export interface ScriptForPipeline extends Script {
   client: { id: string; name: string; avatarColor: string } | null
@@ -68,7 +69,10 @@ export default async function PipelinePage() {
     <div className="flex flex-col h-full">
       <div className="px-4 py-4 border-b border-[var(--color-border)]">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-lg font-semibold text-text-primary dark:text-dark-text">Content pipeline</h1>
+          <div className="flex items-center justify-center gap-2">
+            <h1 className="text-lg font-semibold text-text-primary dark:text-dark-text">Content pipeline</h1>
+            <HelpTooltip text="A Kanban board to track your content from idea to published. Drag cards between columns as they progress. Each card can be linked to a generated script." position="bottom" />
+          </div>
           <p className="text-xs text-text-secondary dark:text-dark-muted mt-0.5">
             {items.length} item{items.length !== 1 ? 's' : ''} across all stages
           </p>

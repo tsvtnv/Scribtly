@@ -101,8 +101,10 @@ export async function POST(req: NextRequest) {
         const subscription = event.data.object as Stripe.Subscription;
         const ws = await prisma.workspace.findFirst({
           where: { stripeSubscriptionId: subscription.id },
+          include: { owner: true },
         });
         if (ws) {
+          const prevPlan = ws.plan;
           await prisma.$transaction([
             prisma.workspace.update({
               where: { id: ws.id },
@@ -112,6 +114,16 @@ export async function POST(req: NextRequest) {
               where: { workspaceId: ws.id, role: "MEMBER" },
             }),
           ]);
+          void (async () => {
+            try {
+              const { sendCancellationEmail } = await import("@/lib/emails/onboarding");
+              const firstName = ws.owner.name?.split(" ")[0] || ws.owner.email.split("@")[0];
+              const planLabel = prevPlan === "BASIC" ? "Basic" : prevPlan === "PRO" ? "Pro" : prevPlan === "AGENCY" ? "Agency" : prevPlan;
+              await sendCancellationEmail(ws.id, ws.owner.email, firstName, planLabel);
+            } catch (err) {
+              console.error("Cancellation email failed", err);
+            }
+          })();
         }
         break;
       }

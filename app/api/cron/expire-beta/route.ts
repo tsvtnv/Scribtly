@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendBetaExpiring } from "@/lib/sendEmail";
+import { sendBetaExpiredEmail } from "@/lib/emails/onboarding";
 
 export const runtime = "nodejs";
 
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
       isBetaTester: true,
       betaExpiresAt: { lte: now },
     },
-    select: { defaultWorkspaceId: true },
+    select: { id: true, email: true, name: true, defaultWorkspaceId: true },
   });
 
   const workspaceIds = expiredUsers
@@ -58,6 +59,12 @@ export async function POST(req: NextRequest) {
     where: { id: { in: workspaceIds }, plan: "BASIC" },
     data: { plan: "FREE" },
   });
+
+  for (const u of expiredUsers) {
+    if (!u.defaultWorkspaceId) continue;
+    const fName = u.name?.split(" ")[0] || u.email.split("@")[0];
+    sendBetaExpiredEmail(u.defaultWorkspaceId, u.email, fName).catch(console.error);
+  }
 
   return NextResponse.json({ ok: true, warned, downgraded });
 }

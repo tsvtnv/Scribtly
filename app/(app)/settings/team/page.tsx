@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { MemberList } from "@/components/team/MemberList";
 import { InviteForm } from "@/components/team/InviteForm";
 import { PendingInvitesList } from "@/components/team/PendingInvitesList";
+import { HelpTooltip } from "@/components/ui/HelpTooltip";
 
 export default async function TeamPage() {
   const { user, workspace, role } = await ensureUser();
@@ -34,7 +35,10 @@ export default async function TeamPage() {
         <ArrowLeft size={14} /> Back to settings
       </Link>
       <div className="mt-3 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight">Team</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-semibold tracking-tight">Team</h1>
+          <HelpTooltip text="Team members share access to your workspace — same clients, scripts, and pipeline. Owners can manage billing and settings; members can generate and manage scripts." position="right" />
+        </div>
         <span className="text-xs text-text-secondary dark:text-dark-muted">
           {usedSeats} of {maxMembers} seats used
         </span>
@@ -67,8 +71,9 @@ export default async function TeamPage() {
 
         {invites.length > 0 ? (
           <Card>
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-muted mb-3 flex items-center gap-1.5">
               Pending invites
+              <HelpTooltip text="Invites that have been sent but not yet accepted. They expire after 7 days. The invited person will receive an email with a link to join your workspace." position="top" />
             </h2>
             <PendingInvitesList invites={invites.map((i) => ({
               id: i.id,

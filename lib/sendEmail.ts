@@ -1,8 +1,6 @@
 import { resend, EMAIL_FROM } from "@/lib/resend";
-import type { Plan } from "@prisma/client";
 import { WelcomeEmail } from "@/lib/emails/Welcome";
 import { FreeLimitReachedEmail } from "@/lib/emails/FreeLimitReached";
-import { UpgradeConfirmationEmail } from "@/lib/emails/UpgradeConfirmation";
 import { InviteEmailTemplate } from "@/lib/emails/InviteEmail";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://scribtly.com";
@@ -34,17 +32,8 @@ export async function sendFreeLimitReached({ to }: { to: string }) {
   return send({
     from: EMAIL_FROM,
     to,
-    subject: "You've used all 3 free scripts",
+    subject: "You've used all 5 free scripts",
     react: FreeLimitReachedEmail({ appUrl: APP_URL }),
-  });
-}
-
-export async function sendUpgradeConfirmation({ to, plan }: { to: string; plan: Plan }) {
-  return send({
-    from: EMAIL_FROM,
-    to,
-    subject: `You're now on Scribtly ${plan === "AGENCY" ? "Agency" : "Pro"}`,
-    react: UpgradeConfirmationEmail({ plan, appUrl: APP_URL }),
   });
 }
 
@@ -121,6 +110,16 @@ export async function sendBetaWelcome({
     to,
     subject: "You're in — your beta access is live",
     react: BetaWelcomeEmail({ name, betaExpiresAt: formatted, appUrl: APP_URL }),
+  });
+}
+
+export async function sendContactConfirmation({ to, name }: { to: string; name: string }) {
+  return send({
+    from: EMAIL_FROM,
+    to,
+    replyTo: "kristiyan@scribtly.com",
+    subject: "Got your message — we'll be in touch soon",
+    text: `Hi ${name},\n\nThanks for reaching out about Scribtly Enterprise. I'll personally get back to you within 24 hours.\n\nKristiyan\nScribtly`,
   });
 }
 

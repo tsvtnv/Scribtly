@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { canAccessPipeline } from "@/lib/planLimits";
 import { Card } from "@/components/ui/Card";
 import { CronScheduleList } from "./CronScheduleList";
+import { HelpTooltip } from "@/components/ui/HelpTooltip";
 
 export default async function CronSettingsPage() {
   const { workspace } = await ensureUser();
@@ -39,7 +40,10 @@ export default async function CronSettingsPage() {
     <div className="p-6 md:p-10 max-w-3xl mx-auto space-y-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Auto-generate</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-semibold tracking-tight">Auto-generate</h1>
+            <HelpTooltip text="Set up recurring schedules that automatically generate scripts for your clients — daily, weekly, or monthly. Each auto-generated script counts against your monthly quota." position="right" />
+          </div>
           <p className="text-sm text-text-secondary dark:text-dark-muted mt-1">
             Cron schedules automatically generate scripts for your clients. Each auto-generated script uses 1 of your monthly scripts.
           </p>
