@@ -380,6 +380,18 @@ model AdminAuditLog {
   @@index([targetId])
 }
 
+model ContactSubmission {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  company       String?
+  scriptsNeeded Int
+  message       String?
+  createdAt     DateTime @default(now())
+
+  @@index([createdAt])
+}
+
 model BlogPost {
   id              String   @id @default(cuid())
   slug            String   @unique

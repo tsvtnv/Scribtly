@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { resend, EMAIL_FROM } from "@/lib/resend";
+import { sendContactConfirmation } from "@/lib/sendEmail";
+import { prisma } from "@/lib/prisma";
 import { ValidationError, errorResponse } from "@/lib/errors";
 
 export const runtime = "nodejs";
@@ -58,6 +60,16 @@ export async function POST(req: NextRequest) {
     }
     const data = parsed.data;
 
+    await prisma.contactSubmission.create({
+      data: {
+        name: data.name,
+        email: data.email,
+        company: data.company,
+        scriptsNeeded: data.scripts_needed,
+        message: data.message,
+      },
+    });
+
     const to = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@scribtly.com";
     const subject = `New Enterprise enquiry from ${data.name} — ${data.scripts_needed} scripts/month`;
 
@@ -87,6 +99,8 @@ export async function POST(req: NextRequest) {
     } else {
       console.log("[contact:email skipped — no RESEND_API_KEY]", { to, subject, text });
     }
+
+    void sendContactConfirmation({ to: data.email, name: data.name }).catch(console.error);
 
     return NextResponse.json({ ok: true });
   } catch (err) {
