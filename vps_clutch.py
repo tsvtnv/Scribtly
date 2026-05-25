@@ -117,6 +117,9 @@ def scrape_directory_page(page, url):
             name = ""
             website = None
             employees = ""
+            slogan = ""
+            description = ""
+            services = ""
 
             # Name — DesignRush uses a.gtm-name; fall back to common selectors
             for sel in ["a.gtm-name", "h3 a", "h2 a", ".company-name a", ".agency-name"]:
@@ -130,16 +133,41 @@ def scrape_directory_page(page, url):
                 href = a["href"]
                 if not href.startswith("http"):
                     continue
-                # Skip internal directory links
                 if any(d in href for d in ["designrush.com", "clutch.co", "upcity.com"]):
                     continue
                 website = href
                 break
 
+            # Slogan
+            el = row.select_one("h4.item-slogan")
+            if el:
+                slogan = el.get_text(strip=True)
+
+            # Description
+            el = row.select_one(".item-description")
+            if el:
+                description = el.get_text(" ", strip=True)[:300]
+
+            # Services tags
+            service_els = row.select(".item-services li span")
+            if service_els:
+                services = ", ".join(s.get_text(strip=True) for s in service_els[:5])
+
+            # Employee count
+            el = row.select_one(".i-employees span, [class*='employee'] span")
+            if el:
+                employees = el.get_text(strip=True)
+
             if website:
                 domain = domain_from_url(website)
                 if domain and domain not in SKIP_DOMAINS and "." in domain:
-                    domains[domain] = {"name": name or domain, "employees": employees}
+                    domains[domain] = {
+                        "name": name or domain,
+                        "employees": employees,
+                        "slogan": slogan,
+                        "description": description,
+                        "services": services,
+                    }
 
     except Exception as e:
         log(f"  Page error {url}: {e}")
@@ -248,14 +276,22 @@ async def extract_and_push(agencies: dict) -> list[dict]:
                     continue
                 info = agencies[domain]
                 lid = lead_id(domain)
+                notes_parts = []
+                if info.get("employees"):
+                    notes_parts.append(f"employees: {info['employees']}")
+                if info.get("slogan"):
+                    notes_parts.append(f"slogan: {info['slogan']}")
+                if info.get("description"):
+                    notes_parts.append(f"description: {info['description']}")
+
                 batch.append({
                     "leadId": lid,
                     "agencyName": info["name"],
                     "agencyWebsite": f"https://{domain}",
                     "outreachStatus": "NOT_CONTACTED",
-                    "agencyServices": "social media marketing",
-                    "sourceSearchQuery": "clutch.co",
-                    "notes": f"employees: {info.get('employees', '')}",
+                    "agencyServices": info.get("services") or "social media marketing",
+                    "sourceSearchQuery": "designrush.com",
+                    "notes": "\n".join(notes_parts),
                 })
                 instantly_rows.append({
                     "email": email,
@@ -300,9 +336,9 @@ if __name__ == "__main__":
     # Phase 1: sync scraping (must run outside asyncio loop)
     agencies = scrape_all_sources()
     log(f"Found {len(agencies)} unique agencies")
-    with open("clutch_agencies.txt", "w") as f:
+    with open("clutch_agencies.txt", "w", encoding="utf-8") as f:
         for domain, info in sorted(agencies.items()):
-            f.write(f"{domain}|{info['name']}|{info.get('employees','')}\n")
+            f.write(f"{domain}|{info['name']}|{info.get('employees','')}|{info.get('services','')}|{info.get('slogan','')}\n")
 
     if not agencies:
         log("No agencies found — check if Playwright/Chromium is installed")
