@@ -14,6 +14,10 @@ interface ScriptActionsProps {
   plan: Plan
 }
 
+function Divider() {
+  return <span className="w-px h-4 bg-[var(--color-border)] flex-shrink-0" aria-hidden />;
+}
+
 export function ScriptActions({ script, plan }: ScriptActionsProps) {
   const router = useRouter();
   const toast = useToast();
@@ -24,11 +28,7 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
   const [shareOpen, setShareOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const [shareUrl, setShareUrl] = useState('')
-  useEffect(() => {
-    if (shareToken) setShareUrl(`${window.location.origin}/review/${shareToken}`)
-  }, [shareToken])
-
+  const shareUrl = shareToken ? `${typeof window !== 'undefined' ? window.location.origin : ''}/review/${shareToken}` : '';
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -52,61 +52,73 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
 
   async function setStatus(status: ScriptStatus) {
     setBusy(status);
-    const res = await fetch(`/api/scripts/${script.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-    setBusy(null);
-    if (res.ok) {
-      toast.push(`Marked as ${status.toLowerCase()}`, "success");
-      router.refresh();
-    } else {
-      toast.push("Update failed", "error");
+    try {
+      const res = await fetch(`/api/scripts/${script.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      if (res.ok) {
+        toast.push(`Marked as ${status.toLowerCase()}`, "success");
+        router.refresh();
+      } else {
+        toast.push("Update failed", "error");
+      }
+    } finally {
+      setBusy(null);
     }
   }
 
   async function remove() {
     setBusy("delete");
-    const res = await fetch(`/api/scripts/${script.id}`, { method: "DELETE" });
-    setBusy(null);
-    if (res.ok) {
-      toast.push("Deleted", "success");
-      router.push("/scripts");
-    } else {
-      toast.push("Delete failed", "error");
+    try {
+      const res = await fetch(`/api/scripts/${script.id}`, { method: "DELETE" });
+      if (res.ok) {
+        toast.push("Deleted", "success");
+        router.push("/scripts");
+      } else {
+        toast.push("Delete failed", "error");
+      }
+    } finally {
+      setBusy(null);
     }
   }
 
   async function enableShare() {
     setBusy("share");
-    const res = await fetch(`/api/scripts/${script.id}/share`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ enabled: true }),
-    });
-    setBusy(null);
-    if (!res.ok) { toast.push("Failed to create share link", "error"); return; }
-    const data = await res.json() as { shareToken: string; shareEnabled: boolean };
-    setShareEnabled(true);
-    setShareToken(data.shareToken);
-    const url = `${window.location.origin}/review/${data.shareToken}`;
-    const copied = await navigator.clipboard.writeText(url).then(() => true).catch(() => false);
-    toast.push(copied ? "Link copied!" : "Share enabled — copy the link below", "success");
+    try {
+      const res = await fetch(`/api/scripts/${script.id}/share`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled: true }),
+      });
+      if (!res.ok) { toast.push("Failed to create share link", "error"); return; }
+      const data = await res.json() as { shareToken: string; shareEnabled: boolean };
+      setShareEnabled(true);
+      setShareToken(data.shareToken);
+      const url = `${window.location.origin}/review/${data.shareToken}`;
+      const copied = await navigator.clipboard.writeText(url).then(() => true).catch(() => false);
+      toast.push(copied ? "Link copied!" : "Share enabled — copy the link below", "success");
+    } finally {
+      setBusy(null);
+    }
   }
 
   async function disableShare() {
     setBusy("share-disable");
-    const res = await fetch(`/api/scripts/${script.id}/share`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ enabled: false }),
-    });
-    setBusy(null);
-    if (!res.ok) { toast.push("Failed to disable sharing", "error"); return; }
-    setShareEnabled(false);
-    setShareOpen(false);
-    toast.push("Sharing disabled", "success");
+    try {
+      const res = await fetch(`/api/scripts/${script.id}/share`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled: false }),
+      });
+      if (!res.ok) { toast.push("Failed to disable sharing", "error"); return; }
+      setShareEnabled(false);
+      setShareOpen(false);
+      toast.push("Sharing disabled", "success");
+    } finally {
+      setBusy(null);
+    }
   }
 
   async function copyLink() {
@@ -116,13 +128,9 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
     toast.push(copied ? "Link copied!" : "Could not copy — link shown above", "success");
   }
 
-  const Divider = () => (
-    <span className="w-px h-4 bg-[var(--color-border)] flex-shrink-0" aria-hidden />
-  );
-
   return (
     <div className="fixed bottom-6 left-0 right-0 flex justify-center z-40 pointer-events-none">
-      <div className="pointer-events-auto inline-flex items-center gap-1.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl shadow-lg px-3 py-2 max-w-[calc(100vw-2rem)] flex-wrap">
+      <div className="pointer-events-auto inline-flex items-center gap-1.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl shadow-lg px-3 py-2 max-w-[calc(100vw-2rem)] flex-wrap" role="toolbar" aria-label="Script actions">
         {/* Utility */}
         <Button variant="secondary" size="sm" onClick={copy}>
           <Copy size={14} /> Copy
@@ -158,7 +166,7 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
         <Divider />
 
         {/* Share */}
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative" ref={dropdownRef} onKeyDown={(e) => { if (e.key === "Escape") setShareOpen(false); }}>
           {!shareEnabled ? (
             <Button variant="secondary" size="sm" loading={busy === "share"} onClick={enableShare}>
               <Share2 size={14} /> Share
