@@ -1,15 +1,21 @@
+import { timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const SECRET = process.env.ADMIN_SECRET ?? "dev-secret";
 const COOKIE = "admin_session";
 const COOKIE_MAX_AGE = 60 * 60 * 8; // 8 hours
+
+function getSecret(): string {
+  const s = process.env.ADMIN_SECRET;
+  if (!s) throw new Error("ADMIN_SECRET environment variable is not set");
+  return s;
+}
 
 async function hmac(data: string): Promise<string> {
   const enc = new TextEncoder();
   const key = await crypto.subtle.importKey(
     "raw",
-    enc.encode(SECRET),
+    enc.encode(getSecret()),
     { name: "HMAC", hash: "SHA-256" },
     false,
     ["sign"]
@@ -29,7 +35,10 @@ export async function verifyAdminToken(token: string): Promise<boolean> {
   if (!ts || !sig) return false;
   if (Date.now() - parseInt(ts, 10) > COOKIE_MAX_AGE * 1000) return false;
   const expected = await hmac(ts);
-  return expected === sig;
+  const expectedBuf = Buffer.from(expected, "hex");
+  const sigBuf = Buffer.from(sig, "hex");
+  if (expectedBuf.length !== sigBuf.length) return false;
+  return timingSafeEqual(expectedBuf, sigBuf);
 }
 
 export async function requireAdmin() {

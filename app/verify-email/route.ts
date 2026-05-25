@@ -30,6 +30,14 @@ export async function GET(req: NextRequest) {
 
   void sendWelcome({ to: user.email, name: user.name || undefined }).catch(console.error);
 
+  // Mark welcome sent so the onboarding cron doesn't send a duplicate
+  if (user.defaultWorkspaceId) {
+    void prisma.workspace.update({
+      where: { id: user.defaultWorkspaceId },
+      data: { welcomeEmailSentAt: new Date() },
+    }).catch(console.error);
+  }
+
   // Auto-activate beta if user arrived via a beta referral link
   const refLeadId = req.cookies.get("ref_lead_id")?.value;
   if (refLeadId) {

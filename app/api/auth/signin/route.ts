@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verify } from "argon2";
 import { prisma } from "@/lib/prisma";
 import { lucia, setSessionCookie } from "@/lib/auth";
+import { checkRateLimit, signinLimiter } from "@/lib/rateLimit";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -12,6 +13,9 @@ const schema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const limited = await checkRateLimit(signinLimiter, req);
+  if (limited) return limited;
+
   const body = await req.json().catch(() => ({}));
   const parsed = schema.safeParse(body);
   if (!parsed.success) {

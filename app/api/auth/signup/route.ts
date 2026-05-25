@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { lucia, setSessionCookie } from "@/lib/auth";
 import { sendVerificationEmail, sendWelcome } from "@/lib/sendEmail";
 import { addDays } from "@/lib/utils";
+import { checkRateLimit, signupLimiter } from "@/lib/rateLimit";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -16,6 +17,9 @@ const schema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const limited = await checkRateLimit(signupLimiter, req);
+  if (limited) return limited;
+
   const body = await req.json().catch(() => ({}));
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
@@ -26,7 +30,8 @@ export async function POST(req: NextRequest) {
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
-    return NextResponse.json({ error: "An account with this email already exists." }, { status: 409 });
+    // Return the same response as success to avoid revealing whether an email is registered
+    return NextResponse.json({ ok: true, pendingVerification: true });
   }
 
   const passwordHash = await hash(password);

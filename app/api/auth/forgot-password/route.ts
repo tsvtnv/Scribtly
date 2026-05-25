@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateId } from "lucia";
 import { prisma } from "@/lib/prisma";
 import { sendPasswordResetEmail } from "@/lib/sendEmail";
+import { checkRateLimit, forgotPasswordLimiter } from "@/lib/rateLimit";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -13,6 +14,9 @@ function addHours(date: Date, hours: number) {
 }
 
 export async function POST(req: NextRequest) {
+  const limited = await checkRateLimit(forgotPasswordLimiter, req);
+  if (limited) return limited;
+
   const body = await req.json().catch(() => ({}));
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
