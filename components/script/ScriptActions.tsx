@@ -116,82 +116,79 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
     toast.push(copied ? "Link copied!" : "Could not copy — link shown above", "success");
   }
 
+  const Divider = () => (
+    <span className="w-px h-4 bg-[var(--color-border)] flex-shrink-0" aria-hidden />
+  );
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-[var(--color-surface)] border-t border-[var(--color-border)] md:left-60">
-      <div className="max-w-4xl mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-2">
-      <Button variant="secondary" size="sm" onClick={copy}>
-        <Copy size={14} /> Copy
-      </Button>
-      {canExportPDF({ plan }) ? (
-        <a href={`/api/export/pdf/${script.id}`} target="_blank" rel="noreferrer">
-          <Button variant="secondary" size="sm">
-            <FileDown size={14} /> PDF
-          </Button>
-        </a>
-      ) : (
-        <div className="text-xs text-text-secondary dark:text-dark-muted p-2 rounded border border-[var(--color-border)] bg-[var(--color-surface)]">
-          PDF export is available on Pro.{" "}
-          <NextLink href="/pricing" className="text-primary hover:underline">
-            Upgrade to Pro
-          </NextLink>{" "}
-          to send polished reports to clients.
-        </div>
-      )}
-      {script.status !== "FINAL" ? (
-        <Button variant="secondary" size="sm" loading={busy === "FINAL"} onClick={() => setStatus("FINAL")}>
-          <CheckCircle size={14} /> Mark final
+    <div className="fixed bottom-6 left-0 right-0 flex justify-center z-40 pointer-events-none">
+      <div className="pointer-events-auto inline-flex items-center gap-1.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl shadow-lg px-3 py-2 max-w-[calc(100vw-2rem)] flex-wrap">
+        {/* Utility */}
+        <Button variant="secondary" size="sm" onClick={copy}>
+          <Copy size={14} /> Copy
         </Button>
-      ) : null}
-      {script.status !== "SENT" ? (
-        <Button variant="secondary" size="sm" loading={busy === "SENT"} onClick={() => setStatus("SENT")}>
-          <Send size={14} /> Mark sent
-        </Button>
-      ) : null}
-
-      {/* Share button */}
-      <div className="relative" ref={dropdownRef}>
-        {!shareEnabled ? (
-          <Button
-            variant="secondary"
-            size="sm"
-            loading={busy === "share"}
-            onClick={enableShare}
-          >
-            <Share2 size={14} /> Share with client
-          </Button>
-        ) : (
-          <>
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => setShareOpen(v => !v)}
-            >
-              <Share2 size={14} /> Shared
+        {canExportPDF({ plan }) ? (
+          <a href={`/api/export/pdf/${script.id}`} target="_blank" rel="noreferrer">
+            <Button variant="secondary" size="sm">
+              <FileDown size={14} /> PDF
             </Button>
-            {shareOpen && (
-              <div className="absolute bottom-full mb-2 right-0 w-72 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-lg p-3 flex flex-col gap-2 z-50">
-                <div className="flex items-center gap-2">
-                  <LinkIcon size={12} className="text-text-secondary dark:text-dark-muted flex-shrink-0" />
-                  <span className="text-xs text-text-secondary dark:text-dark-muted truncate flex-1">{shareUrl}</span>
-                </div>
-                <Button variant="secondary" size="sm" onClick={copyLink}>
-                  <Copy size={12} /> Copy link
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  loading={busy === "share-disable"}
-                  onClick={disableShare}
-                >
-                  <X size={12} /> Disable sharing
-                </Button>
-              </div>
-            )}
-          </>
+          </a>
+        ) : (
+          <NextLink href="/pricing">
+            <Button variant="secondary" size="sm" title="PDF export — Pro only">
+              <FileDown size={14} /> PDF
+            </Button>
+          </NextLink>
         )}
-      </div>
 
-      <div className="ml-auto flex items-center gap-2">
+        <Divider />
+
+        {/* Status */}
+        {script.status !== "FINAL" && (
+          <Button variant="secondary" size="sm" loading={busy === "FINAL"} onClick={() => setStatus("FINAL")}>
+            <CheckCircle size={14} /> Mark final
+          </Button>
+        )}
+        {script.status !== "SENT" && (
+          <Button variant="secondary" size="sm" loading={busy === "SENT"} onClick={() => setStatus("SENT")}>
+            <Send size={14} /> Mark sent
+          </Button>
+        )}
+
+        <Divider />
+
+        {/* Share */}
+        <div className="relative" ref={dropdownRef}>
+          {!shareEnabled ? (
+            <Button variant="secondary" size="sm" loading={busy === "share"} onClick={enableShare}>
+              <Share2 size={14} /> Share
+            </Button>
+          ) : (
+            <>
+              <Button variant="primary" size="sm" onClick={() => setShareOpen(v => !v)}>
+                <Share2 size={14} /> Shared
+              </Button>
+              {shareOpen && (
+                <div className="absolute bottom-full mb-2 right-0 w-72 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-lg p-3 flex flex-col gap-2 z-50">
+                  <div className="flex items-center gap-2">
+                    <LinkIcon size={12} className="text-text-secondary dark:text-dark-muted flex-shrink-0" />
+                    <span className="text-xs text-text-secondary dark:text-dark-muted truncate flex-1">{shareUrl}</span>
+                  </div>
+                  <Button variant="secondary" size="sm" onClick={copyLink}>
+                    <Copy size={12} /> Copy link
+                  </Button>
+                  <Button variant="ghost" size="sm" loading={busy === "share-disable"} onClick={disableShare}>
+                    <X size={12} /> Disable sharing
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        <Divider />
+
+        {/* Delete */}
         {confirmDelete ? (
           <>
             <span className="text-xs text-text-secondary">Sure?</span>
@@ -207,7 +204,6 @@ export function ScriptActions({ script, plan }: ScriptActionsProps) {
             <Trash2 size={14} /> Delete
           </Button>
         )}
-      </div>
       </div>
     </div>
   );
