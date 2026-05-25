@@ -12,7 +12,11 @@ export default async function PricingPage() {
   if (session) {
     const membership = await prisma.workspaceMember.findFirst({
       where: { userId: session.userId },
-      include: { workspace: true },
+      select: {
+        workspace: {
+          select: { plan: true, stripeSubscriptionId: true },
+        },
+      },
       orderBy: { workspace: { createdAt: "asc" } },
     });
 
