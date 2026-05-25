@@ -1,8 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { getPlanCtaAction, type PlanCtaAction } from "@/lib/planCtaLogic";
 
-const PLAN_ORDER = { FREE: 0, BASIC: 1, PRO: 2, AGENCY: 3 } as const;
-
 describe("getPlanCtaAction", () => {
   it("returns signup action when not logged in", () => {
     expect(getPlanCtaAction({ cardPlan: "PRO", userPlan: null, hasSubscription: false })).toEqual({
