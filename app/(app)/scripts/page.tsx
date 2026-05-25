@@ -60,12 +60,12 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
       <ScriptsPageTracker />
-      <div className="flex items-center justify-between mb-6">
-        <div>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-baseline gap-3">
           <h1 className="text-2xl font-semibold tracking-tight">Script library</h1>
-          <p className="text-sm text-text-secondary dark:text-dark-muted mt-1">
-            {total} {total === 1 ? "script" : "scripts"}
-          </p>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-primary/10 text-primary">
+            {total}
+          </span>
         </div>
         <Link href="/generate">
           <Button>
@@ -81,13 +81,14 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
         {searchParams.status ? <input type="hidden" name="status" value={searchParams.status} /> : null}
       </form>
 
-      <div className="flex flex-wrap gap-2 mb-5 text-xs items-center">
-        <HelpTooltip text="Filter scripts by platform. Each platform has a different script style — YouTube for long-form, TikTok/Reels for short punchy content, LinkedIn for professional audiences, Podcast for conversational audio." position="right" />
+      {/* Platform filter row */}
+      <div className="flex flex-wrap gap-2 mb-3 text-xs items-center">
+        <span className="text-text-secondary dark:text-dark-muted font-medium mr-1">Platform:</span>
         <Link
           href={buildHref(searchParams, { platform: undefined })}
           className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.platform ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
         >
-          All platforms
+          All
         </Link>
         {PLATFORMS.map((p) => (
           <Link
@@ -98,13 +99,17 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
             {p[0] + p.slice(1).toLowerCase()}
           </Link>
         ))}
-        <span className="text-text-secondary mx-1">·</span>
-        <HelpTooltip text="Filter by script status. Draft = work in progress. Final = approved and ready. Sent = delivered to your client." position="right" />
+        <HelpTooltip text="Filter scripts by platform. Each platform has a different script style — YouTube for long-form, TikTok/Reels for short punchy content, LinkedIn for professional audiences, Podcast for conversational audio." position="right" />
+      </div>
+
+      {/* Status filter row */}
+      <div className="flex flex-wrap gap-2 mb-5 text-xs items-center">
+        <span className="text-text-secondary dark:text-dark-muted font-medium mr-1">Status:</span>
         <Link
           href={buildHref(searchParams, { status: undefined })}
           className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.status ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
         >
-          Any status
+          Any
         </Link>
         {STATUSES.map((s) => (
           <Link
@@ -115,15 +120,17 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
             {s}
           </Link>
         ))}
+        <HelpTooltip text="Filter by script status. Draft = work in progress. Final = approved and ready. Sent = delivered to your client." position="right" />
       </div>
 
       {clients.length > 0 ? (
-        <div className="flex flex-wrap gap-2 mb-5 text-xs">
+        <div className="flex flex-wrap gap-2 mb-5 text-xs items-center">
+          <span className="text-text-secondary dark:text-dark-muted font-medium mr-1">Client:</span>
           <Link
             href={buildHref(searchParams, { clientId: undefined })}
             className={cn("px-2.5 py-1 rounded-full border-hair", !searchParams.clientId ? "bg-primary text-white border-primary" : "border-[var(--color-border)]")}
           >
-            All clients
+            All
           </Link>
           {clients.map((c) => (
             <Link
@@ -139,6 +146,12 @@ export default async function ScriptsPage({ searchParams }: { searchParams: Sear
 
       {scripts.length === 0 ? (
         <div className="text-center py-20 flex flex-col items-center gap-4">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="12" y="8" width="40" height="48" rx="6" stroke="currentColor" strokeWidth="2" className="text-[var(--color-border)]" />
+            <rect x="20" y="20" width="24" height="2" rx="1" fill="currentColor" className="text-[var(--color-border)]" />
+            <rect x="20" y="27" width="24" height="2" rx="1" fill="currentColor" className="text-[var(--color-border)]" />
+            <rect x="20" y="34" width="16" height="2" rx="1" fill="currentColor" className="text-[var(--color-border)]" />
+          </svg>
           <div className="space-y-2">
             <h2 className="text-lg font-semibold">Your script library is empty</h2>
             <p className="text-sm text-text-secondary dark:text-dark-muted max-w-sm mx-auto">
