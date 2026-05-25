@@ -287,15 +287,18 @@ async def extract_and_push(agencies: dict) -> list[dict]:
     return instantly_rows
 
 
-async def main():
+if __name__ == "__main__":
+    import sys
+
     if not API_KEY:
         log("ERROR: OUTREACH_API_KEY not set in .env.local or environment")
-        return
+        sys.exit(1)
 
-    log("=== Clutch Agency Scraper ===")
+    log("=== Agency Lead Pipeline ===")
     log(f"Target: {API_URL}")
-    agencies = scrape_all_sources()
 
+    # Phase 1: sync scraping (must run outside asyncio loop)
+    agencies = scrape_all_sources()
     log(f"Found {len(agencies)} unique agencies")
     with open("clutch_agencies.txt", "w") as f:
         for domain, info in sorted(agencies.items()):
@@ -303,9 +306,10 @@ async def main():
 
     if not agencies:
         log("No agencies found — check if Playwright/Chromium is installed")
-        return
+        sys.exit(1)
 
-    instantly_rows = await extract_and_push(agencies)
+    # Phase 2: async email extraction + API push
+    instantly_rows = asyncio.run(extract_and_push(agencies))
 
     instantly_path = "instantly_import.csv"
     with open(instantly_path, "w", newline="", encoding="utf-8") as f:
@@ -315,7 +319,3 @@ async def main():
 
     log(f"[+] Instantly.ai import saved to {instantly_path} ({len(instantly_rows)} rows)")
     log("[+] Pipeline complete. Import instantly_import.csv into your Instantly campaign.")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
