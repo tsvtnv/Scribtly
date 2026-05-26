@@ -1,0 +1,433 @@
+email,status,confidence,catch_all,role_based,methods,detail,provider,agency,website,first_name,ref_url
+info@viralproglobal.com,invalid,0,no,yes,,port587 503 sender not yet given,Custom / Other,Viral Pro Global Private Limited,https://viralproglobal.com,Viral,https://scribtly.com/ref/8083adf4d3eb462aff0a7677d08e8edc
+info@qtechnetworks.com,invalid,0,no,yes,,port587 503 sender not yet given,Custom / Other,QTech Networks,https://qtechnetworks.com,QTech,https://scribtly.com/ref/8a21426cb6b642ad3fdccc3b5f7995f2
+info@insightcraftsmarketing.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Insight Crafts Marketing,https://insightcraftsmarketing.com,Insight,https://scribtly.com/ref/dc085045a9506767d3d44b40ed2e871d
+info@nexomos.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Nexomos,https://nexomos.com,Nexomos,https://scribtly.com/ref/b9b967bb0df80be4473d559ce6fd8c68
+bgv@iotainfotech.com,valid,50,no,no,,ports_blocked,Custom / Other,iOTA,https://iotainfotech.com,iOTA,https://scribtly.com/ref/bf032202dd0b2f85f861c9295562b1e1
+hello@wikid.ie,invalid,0,no,yes,,port587 503 sender not yet given,Custom / Other,The Wikid Agency,https://wikid.ie,The,https://scribtly.com/ref/79052e60cf59a8d60efe449a119ea1d3
+info@caidenmedia.com,invalid,0,no,yes,,"port587 550 relay not permitted, authentication required",Custom / Other,Caiden Media,https://caidenmedia.com,Caiden,https://scribtly.com/ref/2074b75c7abe7d5da0e8ab32a78fcd11
+info@addzet.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,ADDZET ADVERTISING & MEDIA,https://addzet.com,ADDZET,https://scribtly.com/ref/14390f7066586cdc0791df47a1e5dafe
+careers@triviumpr.com,valid,50,no,no,,ports_blocked,Custom / Other,Trivium PR,https://triviumpr.com,Trivium,https://scribtly.com/ref/4f3c7e38f1548c1b6931d7ff25fb92e8
+info@zelencommunications.com,catch_all,42,yes,yes,smtp_587_catchall,port587 250,Custom / Other,Zelen Communications,https://zelencommunications.com,Zelen,https://scribtly.com/ref/5b4aa0f48550e778d4a48dd90ab9382f
+info@pxp.dev,catch_all,38,yes,yes,smtp_587_catchall,port587 250,Custom / Other,PXP,https://pxp.dev,PXP,https://scribtly.com/ref/8e82d41422caff5891667b0682b296a3
+info@peartreeusa.com,unknown,42,no,yes,,ports_blocked,Custom / Other,PearTree Design,https://peartreeusa.com,PearTree,https://scribtly.com/ref/e988eca83fea5dff15721e1216cb0188
+info@searchbloom.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Searchbloom,https://searchbloom.com,Searchbloom,https://scribtly.com/ref/0bdd2eb04b24454974a77176a57c6c84
+hello@rightgirlmedia.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Right Girl Media,https://rightgirlmedia.com,Right,https://scribtly.com/ref/e123762c96a57da09f9d96b0005563f8
+ben@marzipan.com.au,unknown,30,no,no,,ports_blocked,Google Workspace,Marzipan,https://marzipan.com.au,Marzipan,https://scribtly.com/ref/329bb470c8a2e2ebcd6310c66d95474c
+amna@earthryse.com,unknown,40,no,no,,ports_blocked,Google Workspace,Earthryse,https://earthryse.com,Earthryse,https://scribtly.com/ref/3783cf836983307de871f02eda1aa804
+info@beamcreative.com.au,unknown,34,no,yes,,ports_blocked,Google Workspace,Beam Creative Brands,https://beamcreative.com.au,Beam,https://scribtly.com/ref/b3120aed63416aef02d091a6e0ed160f
+contato@saulodecastro.tv,unknown,40,no,no,,ports_blocked,Custom / Other,Saulo de Castro,https://saulodecastro.tv,Saulo,https://scribtly.com/ref/15831b6dd29d191f0e51f4dd0d90f8e7
+contact@cloud1marketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Cloud1Marketing,https://cloud1marketing.com,Cloud1Marketing,https://scribtly.com/ref/263cf7e0b4bafa3bac213ef576f977c3
+info@rdlcmarketing.com,unknown,25,no,yes,,ports_blocked,Google Workspace,RDLC Marketing,https://rdlcmarketing.com,RDLC,https://scribtly.com/ref/955ac2b19878e719d9d3c615436c7295
+info@echofetch.com,unknown,42,no,yes,,ports_blocked,Google Workspace,EchoFetch LLC,https://echofetch.com,EchoFetch,https://scribtly.com/ref/be17edef6cbcb040e8eda66822ea17a8
+hello@mauimarketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Maui Marketing,https://mauimarketing.com,Maui,https://scribtly.com/ref/ef299f8d906f621f30d4728b746c7e4c
+help@newsreach.in,unknown,42,no,yes,,ports_blocked,Google Workspace,NewsReach - PR Agency,https://newsreach.in,NewsReach,https://scribtly.com/ref/2de7c8a75a18421add23b6c529de31d4
+contact@growithamazon.com,unknown,34,no,yes,,ports_blocked,Zoho Mail,Grow With Amazon,https://growithamazon.com,Grow,https://scribtly.com/ref/a43dc625e1d8c8f8a32d80fd08b78b76
+info@twitchtime.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Twitchtime,https://twitchtime.com,Twitchtime,https://scribtly.com/ref/a6b07926470f8c985614fa2c2822739c
+info@elatre.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Elatre Creative Marketing Agency,https://elatre.com,Elatre,https://scribtly.com/ref/f9eb23ea026eb1f41c0eee73ab25549e
+info@disruptiveadvertising.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Disruptive Advertising,https://disruptiveadvertising.com,Disruptive,https://scribtly.com/ref/9c41c4624a9bad80c3c8f488ca6db3b7
+info@ocopix.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Ocopix,https://ocopix.com,Ocopix,https://scribtly.com/ref/677087ff5af6b69528316cdd2f4259c1
+hola@holymarketing.agency,unknown,40,no,no,,ports_blocked,Google Workspace,Holy Marketing,https://holymarketing.agency,Holy,https://scribtly.com/ref/dc4fb902abc4d46552881b666600a8e6
+info@maderightmedia.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Made Right Media,https://maderightmedia.com,Made,https://scribtly.com/ref/c41a80c400745caa7812c5a0b5da7da7
+info@vovi.studio,unknown,25,no,yes,,ports_blocked,Google Workspace,Vovi Studio,https://vovi.studio,Vovi,https://scribtly.com/ref/ef4320c191a74d9f0d9f127433c7b237
+info@kingwillystudios.com,unknown,34,no,yes,,ports_blocked,Google Workspace,King Willy,https://kingwillystudios.com,King,https://scribtly.com/ref/df62ef5dfbc15a62499e131ca042d182
+ryan@notforyoufilms.com,unknown,40,no,no,,ports_blocked,Google Workspace,Not For You Films,https://notforyoufilms.com,Not,https://scribtly.com/ref/684b13a50cc9bc8565c61370d313746c
+info@digitalselectives.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Digital Selectives,https://digitalselectives.com,Digital,https://scribtly.com/ref/4a2171f848fd76cd82d0ded447264bf0
+chidansh@prinjaipur.com,unknown,40,no,no,,ports_blocked,Google Workspace,SR Public Relations,https://prinjaipur.com,SR,https://scribtly.com/ref/79edbe1870a3954ce9c840ff8aa8ad94
+info@digitaltriumphs.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Digital Triumphs,https://digitaltriumphs.com,Digital,https://scribtly.com/ref/bf1e17e02039f844c27a0b276b6feb0c
+hello@inaridigital.com,unknown,34,no,yes,,ports_blocked,Google Workspace,INARI Digital,https://inaridigital.com,INARI,https://scribtly.com/ref/25c4d64f8f281bce502e5b0a1b1fbd93
+info@designfirebrand.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Firebrand,https://designfirebrand.com,Firebrand,https://scribtly.com/ref/7c389084897ed3a79cacac095e3f4ffe
+info@digibitz.com.au,unknown,42,no,yes,,ports_blocked,Custom / Other,Digibitz,https://digibitz.com.au,Digibitz,https://scribtly.com/ref/4f50ff311acc53a6ce81428e9f20281e
+info@leoceros.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Google Workspace,Leoceros,https://leoceros.com,Leoceros,https://scribtly.com/ref/24b7d7871826770f0bf6bb666f9aa1d9
+arpitakarmakar@newscoverage.agency,invalid,0,no,no,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,News Coverage Agency,https://newscoverage.agency,News,https://scribtly.com/ref/9ddd73fa15a256ff0dcad2a4d50e6ed9
+info@qubedigitalmedia.co.uk,invalid,0,no,yes,,port587 554 5.7.1 <info@qubedigitalmedia.co.uk>: Relay access denied,Custom / Other,Qube Digital Media,https://qubedigitalmedia.co.uk,Qube,https://scribtly.com/ref/437fcb1d56a9c2e4fb759e620af185e4
+info@wnt.agency,unknown,34,no,yes,,ports_blocked,Google Workspace,Walnut Agency,https://wnt.agency,Walnut,https://scribtly.com/ref/2155128b5baa170a1f0e6919ba35f3e6
+info@thegreatgrowth.com,unknown,42,no,yes,,ports_blocked,Google Workspace,The Great Growth,https://thegreatgrowth.com,The,https://scribtly.com/ref/a9510f011ed6eeebbbcba11b4f6cdee6
+sales@funnelboostmedia.net,unknown,42,no,yes,,ports_blocked,Google Workspace,Funnel Boost Media,https://funnelboostmedia.net,Funnel,https://scribtly.com/ref/e6b9c909962b4accc783f81ab54ea3c5
+info@heydigi.marketing,unknown,42,no,yes,,ports_blocked,Google Workspace,Hey! Digi,https://heydigi.marketing,Hey!,https://scribtly.com/ref/8864dd2d57116b67d999f66e5b1b2648
+info@rawrglobal.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Rawr Global Pte Ltd,https://rawrglobal.com,Rawr,https://scribtly.com/ref/35fba2aaeb49900e7baef26145f936a5
+info@mouche.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Mouche,https://mouche.com,Mouche,https://scribtly.com/ref/7f568cf9ff51985354c1f06377da11c2
+info@marshallmedia.io,unknown,42,no,yes,,ports_blocked,Google Workspace,Marshall Media LLC,https://marshallmedia.io,Marshall,https://scribtly.com/ref/1db64518967ba1f8f6f42576151060a9
+info@blacknoizefilms.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Black Noize Films PTY LTD,https://blacknoizefilms.com,Black,https://scribtly.com/ref/6b967d6beaba22da28ca7d12d101afaa
+info@tvscube.com,unknown,42,no,yes,,ports_blocked,Custom / Other,TvsCube,https://tvscube.com,TvsCube,https://scribtly.com/ref/a356bbacaadba2153d8ac7548308ad96
+contact@smartsites.com,unknown,42,no,yes,,ports_blocked,Google Workspace,SmartSites,https://smartsites.com,SmartSites,https://scribtly.com/ref/84bd6c3e8b7a064a9648b5e2eed66033
+info@digineutrons.com,unknown,25,no,yes,,ports_blocked,Custom / Other,Digineutrons LLC,https://digineutrons.com,Digineutrons,https://scribtly.com/ref/c9a6d32345af7266a14b8e5fde085cba
+contact@acupuncturemarketingpros.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Acupuncture Marketing Pros,https://acupuncturemarketingpros.com,Acupuncture,https://scribtly.com/ref/cea599eb89f6959a45b84dffa93ce37f
+info@upliftmedia.us,unknown,42,no,yes,,ports_blocked,Google Workspace,Uplift Media,https://upliftmedia.us,Uplift,https://scribtly.com/ref/8f37a1d492017532836f653300194261
+info@wedothisbest.com,unknown,42,no,yes,,ports_blocked,Custom / Other,We Do This Best,https://wedothisbest.com,We,https://scribtly.com/ref/0a74e1279e7294a0a3d08c1122f7c463
+info@lezsolutions.com,unknown,42,no,yes,,ports_blocked,Custom / Other,LEZ Solutions,https://lezsolutions.com,LEZ,https://scribtly.com/ref/e3cac2e99db87599a549d26e7680c5c4
+info@interodigital.com,catch_all,42,yes,yes,smtp_587_catchall,port587 250,Custom / Other,Intero Digital,https://interodigital.com,Intero,https://scribtly.com/ref/db3eec8bbe8fba3b52262efe3497d62c
+info@epilogue.co.in,unknown,25,no,yes,,ports_blocked,Google Workspace,Epilogue,https://epilogue.co.in,Epilogue,https://scribtly.com/ref/75565758be6bb7d519599b14ab666969
+info@bigwebmedia.co.za,invalid,0,no,yes,,port587 503 sender not yet given,Custom / Other,Big Web Media,https://bigwebmedia.co.za,Big,https://scribtly.com/ref/af02a75c2bf4e2d2434f58d6122c70be
+info@kineticanimations.com,invalid,0,no,yes,,port465 550 5.1.1 <info@kineticanimations.com>: Recipient address reject,Custom / Other,Kinetic Animations,https://kineticanimations.com,Kinetic,https://scribtly.com/ref/194f094ad78ea68b7f969732e7f4debd
+hello@sosmarketing.uk,unknown,42,no,yes,,ports_blocked,Google Workspace,SOS Marketing,https://sosmarketing.uk,SOS,https://scribtly.com/ref/78c0985be14f099d70a124324a635b1e
+info@esferasoft.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Esferasoft Solutions Pvt. Ltd.,https://esferasoft.com,Esferasoft,https://scribtly.com/ref/73be317076340386c48a413ca4342632
+ideas@moochcreative.co.uk,invalid,0,no,no,,microsoft_api_rejected,Microsoft 365,Mooch Creative Studio,https://moochcreative.co.uk,Mooch,https://scribtly.com/ref/8e145de9af240f5d0b70e48e34a18c37
+info@ersocialmarketing.com,unknown,34,no,yes,,ports_blocked,Google Workspace,"ER Social Marketing, LLC",https://ersocialmarketing.com,ER,https://scribtly.com/ref/ac430bddc781748c8ce93adb9b4e20ee
+contact@boat.media,unknown,34,no,yes,,ports_blocked,Google Workspace,BOAT.media,https://boat.media,BOAT.media,https://scribtly.com/ref/2723f9cc67e883b8d960de973cd68b09
+info@bonnie-clyde.ro,unknown,34,no,yes,,ports_blocked,Google Workspace,Bonnie & Clyde Advertising Studio,https://bonnie-clyde.ro,Bonnie,https://scribtly.com/ref/1b89fd964f5347e75f334384a94bbf3c
+info@studiogusto.com,invalid,0,no,yes,,port587 554 5.7.1 <unknown[77.70.124.114]>: Client host rejected: Access,Custom / Other,Gusto Italian Design Studio,https://studiogusto.com,Gusto,https://scribtly.com/ref/8485da2088c5f45f28afa253de330371
+info@parkandbattery.com,invalid,0,no,yes,,microsoft_api_rejected,Microsoft 365,Park & Battery,https://parkandbattery.com,Park,https://scribtly.com/ref/59b23998a89ed9f24f7b701b30129064
+info@midas-pr.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Midas PR Group,https://midas-pr.com,Midas,https://scribtly.com/ref/cf172576ec7978c0305bd352d99b7cdb
+info@oscorm.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Oscorm Digital PVT LTD,https://oscorm.com,Oscorm,https://scribtly.com/ref/a4b961451bfcfad375d34c864b4b9b50
+contact@magebit.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Magebit,https://magebit.com,Magebit,https://scribtly.com/ref/2ed0559512465e08566eac10e74d9abe
+hello@carsondoyle.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Carson+Doyle,https://carsondoyle.com,Carson+Doyle,https://scribtly.com/ref/3a3638254ddfedaa10224a4a255f3eb4
+contact@alamedaim.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Alameda Internet Marketing,https://alamedaim.com,Alameda,https://scribtly.com/ref/35151a9580833e096494b96f2760d103
+info@rayadvertising.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Ray Advertising,https://rayadvertising.com,Ray,https://scribtly.com/ref/be1e17a8a92f857fbb44c2aefd629e2a
+contact@shawfiremedia.com,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,Shawfire Media,https://shawfiremedia.com,Shawfire,https://scribtly.com/ref/93e9305e03fd28c197b21c1f242a538b
+info@caranaweb.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,CaraNaWeb Digital,https://caranaweb.com,CaraNaWeb,https://scribtly.com/ref/43020c42ed159a7120f8e55c7e990eb8
+info@voronyx.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Voronyx,https://voronyx.com,Voronyx,https://scribtly.com/ref/f4140794faf8f371fadd19f252fe52cc
+info@lynxweb.eu,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,lynx Web Designer,https://lynxweb.eu,lynx,https://scribtly.com/ref/968340b864450f538593cceba4c67d68
+contact@ironing.club,unknown,42,no,yes,,ports_blocked,Google Workspace,Ironing Club,https://ironing.club,Ironing,https://scribtly.com/ref/df7d75e1280a2050c6fd85f7320c73a7
+contact@scribbleroomanimation.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Scribble Room Animation,https://scribbleroomanimation.com,Scribble,https://scribtly.com/ref/74c9a791426220fe665b2054601b1306
+hello@tellart.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Tellart,https://tellart.com,Tellart,https://scribtly.com/ref/2f140e2c5e13e67242240f6402c61ec0
+info@silverbackstrategies.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Silverback Strategies,https://silverbackstrategies.com,Silverback,https://scribtly.com/ref/582704137f7a274836dacbca3ba10bfd
+info@growecombrand.com,unknown,25,no,yes,,ports_blocked,Google Workspace,Ecom Health,https://growecombrand.com,Ecom,https://scribtly.com/ref/b2c14637254aa344c9b76e76bcc5094a
+info@optirank.co,unknown,34,no,yes,,ports_blocked,Custom / Other,Optirank,https://optirank.co,Optirank,https://scribtly.com/ref/25510825da49b7553d6afb1ccfb80f73
+hello@burst.agency,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,Burst Agency,https://burst.agency,Burst,https://scribtly.com/ref/b300cd2823eff8b33905b107c15fd358
+info@joleighmarketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,jo + leigh marketing,https://joleighmarketing.com,jo,https://scribtly.com/ref/915928d43767e82e45debf330d18e738
+contact@thelanygroup.com,unknown,42,no,yes,,ports_blocked,Google Workspace,The LANY Group,https://thelanygroup.com,The,https://scribtly.com/ref/3e243d2089743c079a5e98c1c52ab4a3
+letstalk@arcsncurves.com,valid,50,no,no,,ports_blocked,Google Workspace,Arcs & Curves,https://arcsncurves.com,Arcs,https://scribtly.com/ref/20717730e63519a88fb1d49d8f56db05
+contact@6degreesit.com,unknown,42,no,yes,,ports_blocked,Google Workspace,6DegreesIT,https://6degreesit.com,6DegreesIT,https://scribtly.com/ref/882c269308ce6c344eb24c04d88816f4
+contact@spintouch.com,unknown,42,no,yes,,ports_blocked,Google Workspace,SpinTouch,https://spintouch.com,SpinTouch,https://scribtly.com/ref/33b5f8c7fa13e0e0a7c527b2fd5a702a
+alessandro@brandgnu.it,unknown,40,no,no,,ports_blocked,Custom / Other,Brand Gnu Srl,https://brandgnu.it,Brand,https://scribtly.com/ref/5e867bfbacfa6206587859742d12cf31
+info@donbue.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Don,https://donbue.com,Don,https://scribtly.com/ref/92ec797295ae67946adfeed2d6e6a17d
+contact@blackstagindustries.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Black Stag Industries,https://blackstagindustries.com,Black,https://scribtly.com/ref/7be00e61ea74c0e400a0b78c4dd5b093
+info@beholde.agency,unknown,34,no,yes,,ports_blocked,Custom / Other,beholde,https://beholde.agency,beholde,https://scribtly.com/ref/024ca867399cba7c2e682bfbdac6b3e6
+contact@cmavideo.co.uk,unknown,34,no,yes,,ports_blocked,Google Workspace,CMA Video,https://cmavideo.co.uk,CMA,https://scribtly.com/ref/956bf057a9d5ed104091a21df1f9b72c
+info@highervisibility.com,unknown,42,no,yes,,ports_blocked,Google Workspace,HigherVisibility,https://highervisibility.com,HigherVisibility,https://scribtly.com/ref/51e0069efbfbd1aeba6e66ec3dd11cd5
+contact@thebettercreative.com,unknown,42,no,yes,,ports_blocked,Google Workspace,The Better Creative,https://thebettercreative.com,The,https://scribtly.com/ref/e7fe675db5baa4fb593d24e2a75826fd
+info@cherrytreeagency.com,unknown,34,no,yes,,ports_blocked,Google Workspace,CherryTree Ltd.,https://cherrytreeagency.com,CherryTree,https://scribtly.com/ref/26aca43768408d38e43be0124f0de91b
+info@scaledon.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Scaledon,https://scaledon.com,Scaledon,https://scribtly.com/ref/510d7d8808dd478219162599097fd6b8
+contact@42connect.com,unknown,42,no,yes,,ports_blocked,Google Workspace,42connect,https://42connect.com,42connect,https://scribtly.com/ref/b86ceb886b12da0caa28a7617e68f229
+hello@mindcob.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Mindcob,https://mindcob.com,Mindcob,https://scribtly.com/ref/638fdaa378c4bfa7c84f337e35c9576b
+info@milestonevisuals.tv,unknown,34,no,yes,,ports_blocked,Google Workspace,Milestone Visuals,https://milestonevisuals.tv,Milestone,https://scribtly.com/ref/61f7221e6489d2e25c1386e23234fe78
+hello@appkods.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Appkod,https://appkods.com,Appkod,https://scribtly.com/ref/dba5894c6732f394a12d54ce095ade67
+hello@skalum.agency,unknown,42,no,yes,,ports_blocked,Google Workspace,Skalum,https://skalum.agency,Skalum,https://scribtly.com/ref/7675b99fee3dece626d7f3d41d7c4a0a
+info@marsdenmarketing.com,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,Marsden Marketing,https://marsdenmarketing.com,Marsden,https://scribtly.com/ref/25b613989f0e95edf2b04e82ee963526
+info@hayesmedia.co.za,unknown,34,no,yes,,ports_blocked,Google Workspace,Hayes Media,https://hayesmedia.co.za,Hayes,https://scribtly.com/ref/47454562db93ac2077f5ec28e36102a4
+info@creativebroadcast.ae,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Creative Broadcast Agency,https://creativebroadcast.ae,Creative,https://scribtly.com/ref/f7cc1f838c6884d1dc99a39fb396721f
+office@exito.bg,invalid,0,no,no,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Exito BG,https://exito.bg,Exito,https://scribtly.com/ref/850589746377d929c539062d6a14acdb
+info@freelan.com.mx,unknown,42,no,yes,,ports_blocked,Google Workspace,Freelan Marketing,https://freelan.com.mx,Freelan,https://scribtly.com/ref/62f2116984f4fab9626dc993b8d5dd35
+info@creasenso.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Creasenso,https://creasenso.com,Creasenso,https://scribtly.com/ref/74c1952c7f340f3600bc1bb114db1384
+info@trellis.co,unknown,42,no,yes,,ports_blocked,Google Workspace,Trellis,https://trellis.co,Trellis,https://scribtly.com/ref/38bd75bcc392595ecc8b9eebd0934b08
+info@boopin.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Boopin,https://boopin.com,Boopin,https://scribtly.com/ref/a209e16a92828e381b2e0aba30dd02be
+info@thisismirage.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Mirage,https://thisismirage.com,Mirage,https://scribtly.com/ref/a6f38c9a9387904391eeca940285efb6
+info@codete.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Codete,https://codete.com,Codete,https://scribtly.com/ref/4221485bb5624dbf957b2f47db8ebf22
+info@a101.com,unknown,42,no,yes,,ports_blocked,Google Workspace,A101,https://a101.com,A101,https://scribtly.com/ref/6fe7055ce291c206d7405b064052d140
+contact@flinksol.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Flink Sol,https://flinksol.com,Flink,https://scribtly.com/ref/430ced3049a4190b1272fe2abf6e6759
+info@inconllc.com,unknown,34,no,yes,,ports_blocked,Custom / Other,"InCon, LLC",https://inconllc.com,"InCon,",https://scribtly.com/ref/9333d92f7bfff3397b86e0b32139ab79
+info@strategically.co,unknown,42,no,yes,,ports_blocked,Google Workspace,Strategically,https://strategically.co,Strategically,https://scribtly.com/ref/ad4d2061a4b997de3306f949bd844975
+camo@japijipicrea.com,unknown,40,no,no,,ports_blocked,Google Workspace,Japi Jipi,https://japijipicrea.com,Japi,https://scribtly.com/ref/4ee2dfc2c9bf0ad171547b654e9a84a5
+info@rarecide.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Rarecide,https://rarecide.com,Rarecide,https://scribtly.com/ref/50009f201511e437ada6adbe0ddae040
+studio@asakofilm.ch,unknown,42,no,yes,,ports_blocked,Custom / Other,Asako Film,https://asakofilm.ch,Asako,https://scribtly.com/ref/7582e7e8c1c36d05dfd676258426f48d
+info@accelerateddigitalmedia.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Accelerated Digital Media,https://accelerateddigitalmedia.com,Accelerated,https://scribtly.com/ref/1afd16e70f1a37c8e26db7b74fe5fdd8
+info@diegohelp.com,invalid,0,no,yes,,port465 502 5.5.1 MAIL first,Custom / Other,DIEGO HELP,https://diegohelp.com,DIEGO,https://scribtly.com/ref/9cc6d9f0f5506d0a0a40ce134d0695ea
+info@taleeftech.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Taleef Technologies,https://taleeftech.com,Taleef,https://scribtly.com/ref/c11f3f2c5a73ca2415858ce687e9af1d
+info@ideation-digital.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Ideation Digital Marketing,https://ideation-digital.com,Ideation,https://scribtly.com/ref/9e2e06894829eaf6a1879b92b11cb482
+partner@ranktix.co.uk,valid,50,no,no,,ports_blocked,Custom / Other,Ranktix,https://ranktix.co.uk,Ranktix,https://scribtly.com/ref/9dc05069a4295c4b0fcf339760409c12
+info@moolaymedia.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Moolay Media,https://moolaymedia.com,Moolay,https://scribtly.com/ref/99085d1722dd357b444adb5bd9d4ffdd
+info@itplus.ae,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,IT Plus,https://itplus.ae,IT,https://scribtly.com/ref/3323ddff3e3d01700c3e3683af1ffe66
+jobs@digitalsilk.com,valid,92,no,no,microsoft_api,ports_blocked,Microsoft 365,Digital Silk,https://digitalsilk.com,Digital,https://scribtly.com/ref/27961f1e5bafda455da272a0723dce62
+info@oystermedia.mu,unknown,42,no,yes,,ports_blocked,Custom / Other,Oyster Media Mauritius,https://oystermedia.mu,Oyster,https://scribtly.com/ref/845741a910510267fa6067afe12a5787
+hello@yourhustler.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Your Hustler,https://yourhustler.com,Your,https://scribtly.com/ref/afc6ef0277a41cefb57bb50dbddba08e
+info@teqlawn.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Teqlawn,https://teqlawn.com,Teqlawn,https://scribtly.com/ref/b1be6ef0dd03d62eb9e53e46f83afd13
+info@toyrobotmedia.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Toy Robot Media,https://toyrobotmedia.com,Toy,https://scribtly.com/ref/1e8bb9521dfaa78c96e4f6caa95d2dae
+info@weekthink.com,unknown,42,no,yes,,ports_blocked,Custom / Other,WeekThink,https://weekthink.com,WeekThink,https://scribtly.com/ref/7a9428c1744cdc4b5ba29d7704545364
+info@pymesign.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Pymesign,https://pymesign.com,Pymesign,https://scribtly.com/ref/f336d914e937460133b16bb955a20ffa
+sales@thekalifehmediagroup.com,unknown,34,no,yes,,ports_blocked,Custom / Other,The Kalifeh Media Group,https://thekalifehmediagroup.com,The,https://scribtly.com/ref/cd0d9c33129859930b3ab840c2ecfa4c
+hello@eiportfolio.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,EiPortfolio,https://eiportfolio.com,EiPortfolio,https://scribtly.com/ref/273436e9943d140c35facf6bf4881fea
+contact@ryven.co,invalid,0,no,yes,,port465 502 5.5.1 MAIL first,Custom / Other,Ryven LTD,https://ryven.co,Ryven,https://scribtly.com/ref/915d31073257c9533299284a6ec35647
+contact@justwebagency.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Just Web Agency,https://justwebagency.com,Just,https://scribtly.com/ref/190300688d0caae3f4a780f3999becb4
+sales@ztsindia.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Zebra Techies Solution (ZTS),https://ztsindia.com,Zebra,https://scribtly.com/ref/b8917bfc211cf4d7f91a6699ef56cbb8
+thomas@agence-cumulus.com,unknown,40,no,no,,ports_blocked,Custom / Other,Agence Cumulus,https://agence-cumulus.com,Agence,https://scribtly.com/ref/45c1b661e2894f07988dcade948f1ba8
+info@dwvisuals.com,unknown,42,no,yes,,ports_blocked,Google Workspace,David Whitaker Visuals,https://dwvisuals.com,David,https://scribtly.com/ref/26cdc9fac4c85e29a33ec4fc9ae021a1
+info@powerdigitalmarketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Power Digital,https://powerdigitalmarketing.com,Power,https://scribtly.com/ref/c804beb2579a0dd1dad29d4c6e5f7678
+info@marketsmart.eu,invalid,0,no,yes,,port587 550 Authentication required - see http://www.serveriai.lt/smtp/,Custom / Other,Market Smart,https://marketsmart.eu,Market,https://scribtly.com/ref/7240a3a98b02664363d4841f8a6df7d3
+info@rocksaltmarketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Rock Salt Marketing Cooperative,https://rocksaltmarketing.com,Rock,https://scribtly.com/ref/3e82e5b20f51cab44d000a29cfa04cae
+gemma@manningandcogroup.com,valid,92,no,no,microsoft_api,ports_blocked,Microsoft 365,Manning & Co,https://manningandcogroup.com,Manning,https://scribtly.com/ref/9837a5ea5931d075f632399835ac4e9c
+info@elisol.co,unknown,42,no,yes,,ports_blocked,Google Workspace,Elisol,https://elisol.co,Elisol,https://scribtly.com/ref/15ee2dd5ca208df8ae1b69cb68293828
+info@stereotactic.ru,unknown,42,no,yes,,ports_blocked,Custom / Other,Stereotactic,https://stereotactic.ru,Stereotactic,https://scribtly.com/ref/d57563b55b6abd1a2c85c0284753ca2a
+info@gapdesign.co.za,unknown,34,no,yes,,ports_blocked,Google Workspace,GAPdesign,https://gapdesign.co.za,GAPdesign,https://scribtly.com/ref/27c0086eaa7683150f2b9785766b54a4
+newbusiness@avexdesigns.com,valid,50,no,no,,ports_blocked,Google Workspace,Avex Designs,https://avexdesigns.com,Avex,https://scribtly.com/ref/16773faaf82bac8983f64cd57f58ce25
+contact@v9marketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,V9 Marketing,https://v9marketing.com,V9,https://scribtly.com/ref/8abd282d4610ae0b4688c076f7b3885f
+hello@1dotmedia.com,unknown,42,no,yes,,ports_blocked,Google Workspace,1DOT,https://1dotmedia.com,1DOT,https://scribtly.com/ref/5aa7d3aea39c907e29368d8c06685457
+info@fusedemand.com,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,FuseDemand,https://fusedemand.com,FuseDemand,https://scribtly.com/ref/b061c5a147139cc2092239bf34533b45
+info@20twentydesign.com,valid,74,no,yes,smtp_587,port587 250,Custom / Other,20Twenty Design,https://20twentydesign.com,20Twenty,https://scribtly.com/ref/c9dc9041b39e5d98d91ef1a6cf0ceae4
+info@bitndbyte.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Bit n Byte,https://bitndbyte.com,Bit,https://scribtly.com/ref/d1707993ad2bcca8aae9de8f91c819f8
+info@acs-web.com,unknown,42,no,yes,,ports_blocked,Google Workspace,ACS Web Design & SEO,https://acs-web.com,ACS,https://scribtly.com/ref/caff548424157bb2cf82660f03622081
+info@imagency.com,unknown,34,no,yes,,ports_blocked,Google Workspace,IMA | Influencer Marketing Agency,https://imagency.com,IMA,https://scribtly.com/ref/c5d9cb48942156bcf8f1cabfdcbfc521
+info@emrktg.com,unknown,34,no,yes,,ports_blocked,Google Workspace,*emrktg.,https://emrktg.com,*emrktg.,https://scribtly.com/ref/6971d67b089356bca2b5d4ccf7000d39
+info@23hublab.com,unknown,42,no,yes,,ports_blocked,Custom / Other,23HubLab,https://23hublab.com,23HubLab,https://scribtly.com/ref/11e755ed030a4c54325a64887bb0fffe
+hello@brightsprout.co.uk,unknown,34,no,yes,,ports_blocked,Custom / Other,Bright Sprout,https://brightsprout.co.uk,Bright,https://scribtly.com/ref/03f1377b136ddeb44004c311344f7f57
+sales@digit-sense.com,unknown,42,no,yes,,ports_blocked,Google Workspace,DigitSense,https://digit-sense.com,DigitSense,https://scribtly.com/ref/df945f1640822b70f45a5a418e4a1659
+info@embarkwork.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Embark,https://embarkwork.com,Embark,https://scribtly.com/ref/9c438bde0839ecdf48dee8007f04d17b
+info@effeect.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Effeect,https://effeect.com,Effeect,https://scribtly.com/ref/2a644a0eaae7b973ae4a3d7399299300
+info@sumdesign.co.uk,unknown,42,no,yes,,ports_blocked,Google Workspace,Sum.,https://sumdesign.co.uk,Sum.,https://scribtly.com/ref/c82832bdba01409bd9a5455a87d31d58
+hello@inesfernandes.com,unknown,25,no,yes,,ports_blocked,Custom / Other,Inês Fernandes,https://inesfernandes.com,Inês,https://scribtly.com/ref/6d7bd399433c3d233ccc0c024b291f1b
+sales@harborsourcing.ca,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Harbor Sourcing,https://harborsourcing.ca,Harbor,https://scribtly.com/ref/7e392c5427fc5f11ff0aa1d090b39cd7
+careers@walladesign.co,valid,50,no,no,,ports_blocked,Custom / Other,"The Walla Design Company, LLC",https://walladesign.co,The,https://scribtly.com/ref/def0ef2223301bd7cd56c97f35359186
+info@teezagency.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Teez Agency,https://teezagency.com,Teez,https://scribtly.com/ref/e26fa81840bf13a3152c6687eb70b2df
+info@lafamiliamedia.com,unknown,25,no,yes,,ports_blocked,Google Workspace,La Familia Media,https://lafamiliamedia.com,La,https://scribtly.com/ref/1213e63a7b556602e16864adcbff30db
+contact@nextlevelsem.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Next Level SEM,https://nextlevelsem.com,Next,https://scribtly.com/ref/520d8494ad85ff7e4d363367e7f8c07e
+hello@365digital.agency,unknown,42,no,yes,,ports_blocked,Custom / Other,365Digital Marketing Agency,https://365digital.agency,365Digital,https://scribtly.com/ref/5d32cd7b80aba2d0a40b84abe724d97b
+info@renaissancemarketingva.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Renaissance Marketing,https://renaissancemarketingva.com,Renaissance,https://scribtly.com/ref/b73ea32b84a50a3f4a4a7ac981b705a7
+nathan@centdigital.com.au,unknown,40,no,no,,ports_blocked,Google Workspace,Cent Digital Australia,https://centdigital.com.au,Cent,https://scribtly.com/ref/f744851b95d4b8a6482de9b3d5507266
+info@l3adsolutions.com,unknown,34,no,yes,,ports_blocked,Google Workspace,L3ad Solutions,https://l3adsolutions.com,L3ad,https://scribtly.com/ref/0a147adc754201f91b5d300c26179d91
+contact@glyph.marketing,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,GLYPH,https://glyph.marketing,GLYPH,https://scribtly.com/ref/a561a17fa23b51515bef8c1d029eb139
+jess@designatedmarketing.co.nz,unknown,30,no,no,,ports_blocked,Google Workspace,Designated Marketing,https://designatedmarketing.co.nz,Designated,https://scribtly.com/ref/9e00a524acc672609a804240d6c219ec
+info@seotechexperts.com,unknown,34,no,yes,,ports_blocked,Google Workspace,SEO Tech Experts Pvt Ltd,https://seotechexperts.com,SEO,https://scribtly.com/ref/7461138c3005b2f5c70216c08d393c56
+contact@evolve-systems.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Evolve Systems,https://evolve-systems.com,Evolve,https://scribtly.com/ref/596d9978ed99078c5bb2a325ed92759c
+contact@ldsagency.co.kr,unknown,34,no,yes,,ports_blocked,Google Workspace,Leaders Agency,https://ldsagency.co.kr,Leaders,https://scribtly.com/ref/af36e754c2229774e2ea3ca588a56b1c
+info@traveltractions.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Travel Tractions Marketing Agency,https://traveltractions.com,Travel,https://scribtly.com/ref/dfc3bd9d668f7193e942d8d0c4b3ae06
+contact@championdreams.com,unknown,40,no,yes,gravatar,ports_blocked,Google Workspace,Champion Dreams,https://championdreams.com,Champion,https://scribtly.com/ref/00e271871b42bf6bf4ff416d66bf0c83
+contact@chili.pa,unknown,42,no,yes,,ports_blocked,Google Workspace,Chili,https://chili.pa,Chili,https://scribtly.com/ref/913df045589dc5f3761d4b01d815af74
+contact@digicomfy.com,unknown,49,no,yes,gravatar,ports_blocked,Google Workspace,DigiComfy,https://digicomfy.com,DigiComfy,https://scribtly.com/ref/e06fbda3c35686a9438387a64f1df6c9
+iletisim@ervaden.com,unknown,40,no,no,,ports_blocked,Custom / Other,Ervaden Creative,https://ervaden.com,Ervaden,https://scribtly.com/ref/efdd4fde4da8e7a78e32bd5cd0e9e4d1
+help@roofingseo.services,unknown,42,no,yes,,ports_blocked,Google Workspace,Roofing SEO Services,https://roofingseo.services,Roofing,https://scribtly.com/ref/6a17a7c2676e1e9683b8cb1bc07bef90
+info@bigflutedigital.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Big Flute Digital,https://bigflutedigital.com,Big,https://scribtly.com/ref/b37cc19dd6de1a3a84812389d8a209a3
+info@promaxis.ch,unknown,42,no,yes,,ports_blocked,Custom / Other,Promaxis,https://promaxis.ch,Promaxis,https://scribtly.com/ref/b71223b8d25cad4da5c0d133ffc7fc90
+hi@addlium.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Addlium,https://addlium.com,Addlium,https://scribtly.com/ref/4d2324299e3b43d4d2b5347311425267
+hello@bigiltoks.com,unknown,42,no,yes,,ports_blocked,Custom / Other,BigilToks,https://bigiltoks.com,BigilToks,https://scribtly.com/ref/df176df776155bbf54fc6b9639e3edea
+contact@formation-media.com,unknown,42,no,yes,,ports_blocked,Google Workspace,FORMATION. Media,https://formation-media.com,FORMATION.,https://scribtly.com/ref/406ea7960997603182c15db54f906c9b
+info@juicecg.com,unknown,42,no,yes,,ports_blocked,Google Workspace,JUICE Creative Group,https://juicecg.com,JUICE,https://scribtly.com/ref/103baf610cb750bccdc0b355ad424055
+info@siwtech.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Siwtech Solutions,https://siwtech.com,Siwtech,https://scribtly.com/ref/80b449484c2d8dfed81d223ae2679193
+hello@nbh.co,unknown,42,no,yes,,ports_blocked,Google Workspace,Neighbourhood - Digital Agency in Australia,https://nbh.co,Neighbourhood,https://scribtly.com/ref/d996746bb74ac19008b41ed11c163823
+contact@planeteria.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Planeteria Media,https://planeteria.com,Planeteria,https://scribtly.com/ref/2034cb9176d5cfa5f4a687d3eae1f3d6
+info@sarahhalliday.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Sarah Halliday,https://sarahhalliday.com,Sarah,https://scribtly.com/ref/8c1315aaffa35c361106d5e2ccc583a0
+contact@mydigitalagents.com,unknown,42,no,yes,,ports_blocked,Google Workspace,My Digital Agents,https://mydigitalagents.com,My,https://scribtly.com/ref/08c29a5f90802b874278190f4bf62739
+sales-b2b@devnova.eu,valid,50,no,no,,ports_blocked,Google Workspace,DevNova,https://devnova.eu,DevNova,https://scribtly.com/ref/a10e4cfb8797f53adf7d87d685ca338d
+hello@whycgi.media,unknown,34,no,yes,,ports_blocked,Google Workspace,WHY CGI,https://whycgi.media,WHY,https://scribtly.com/ref/ee77dfe320c54d258d0143e0806d7a49
+contact@jacksonwynne.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Jackson Wynne Brand Consultants,https://jacksonwynne.com,Jackson,https://scribtly.com/ref/03e154f12bff24bbdd1ef68261f497c1
+contact@properwebtechnologies.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Properweb Technologies Pvt. Ltd.,https://properwebtechnologies.com,Properweb,https://scribtly.com/ref/0c3e7aa1c7a7bec952822263bbec0d99
+info@incrementors.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Incrementors,https://incrementors.com,Incrementors,https://scribtly.com/ref/a65f650b61833e6cb7440e14b7dbbad9
+contact@creativechinuch.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Creative Chinuch,https://creativechinuch.com,Creative,https://scribtly.com/ref/ea64b13c47cae341076ae3a80a438d75
+hello@childersandco.com,unknown,32,no,yes,gravatar,ports_blocked,Google Workspace,Childers & Co.,https://childersandco.com,Childers,https://scribtly.com/ref/887a1277722b6fda5d8240b942176f38
+contact@10.digital,unknown,42,no,yes,,ports_blocked,Google Workspace,10.digital,https://10.digital,10.digital,https://scribtly.com/ref/a370faaedc11785489cc856f37cd6607
+inquiry@asapmktg.com,unknown,30,no,no,,ports_blocked,Google Workspace,ASAP Marketing Solutions,https://asapmktg.com,ASAP,https://scribtly.com/ref/20cc8d9bbed4f23a0306dd38ae3aec31
+info@kodeak.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Kodeak Digital Marketing Experts,https://kodeak.com,Kodeak,https://scribtly.com/ref/d385d5ad694d2cf384e638178c4fe1f6
+info@firstpage.com.sg,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,First Page Pte Ltd,https://firstpage.com.sg,First,https://scribtly.com/ref/7a3e63a138d38d1d45c18c55a53ac107
+info@drwstudio.com,unknown,25,no,yes,,ports_blocked,Google Workspace,DRW Studio,https://drwstudio.com,DRW,https://scribtly.com/ref/276a071b24c740c2e1d40dd08af1301e
+contact@velsio.ee,unknown,42,no,yes,,ports_blocked,Google Workspace,Velsio Digital,https://velsio.ee,Velsio,https://scribtly.com/ref/6940cff38e3536e2a2d203edd6cff005
+patrick@73creativ.com,unknown,30,no,no,,ports_blocked,Custom / Other,73Creativ,https://73creativ.com,73Creativ,https://scribtly.com/ref/26008a1685a848b00c4683c93c78173f
+info@independent-events.com,invalid,0,no,yes,,port587 503 sender not yet given,Custom / Other,Independent Events,https://independent-events.com,Independent,https://scribtly.com/ref/9fe8536204e0d4d684c5133cfe42181c
+hi@zbrex.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Zbrex,https://zbrex.com,Zbrex,https://scribtly.com/ref/5b52919abb76b72bee3d11475cf54174
+info@wearegenuine.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Genuine Interactive,https://wearegenuine.com,Genuine,https://scribtly.com/ref/6a819838fc709ee0198a6b22cdf0182f
+hello@appaspect.com,unknown,42,no,yes,,ports_blocked,Google Workspace,AppAspect Technologies Pvt. Ltd.,https://appaspect.com,AppAspect,https://scribtly.com/ref/d164777a181a5ec03c14ba79210158e8
+hello@bigredjelly.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Big Red Jelly,https://bigredjelly.com,Big,https://scribtly.com/ref/a523a4f7b83cf48f9c7e0999efd75c70
+info@seoroma.com,unknown,42,no,yes,,ports_blocked,Custom / Other,SEO Roma,https://seoroma.com,SEO,https://scribtly.com/ref/009f00bde5a976ea56f790e57f3e1f9f
+info@coredigitalconsulting.com,unknown,25,no,yes,,ports_blocked,Google Workspace,Core Digital Consulting,https://coredigitalconsulting.com,Core,https://scribtly.com/ref/1905576a94628cecc6549e95db4474d4
+info@mdx.so,unknown,42,no,yes,,ports_blocked,Google Workspace,MDX,https://mdx.so,MDX,https://scribtly.com/ref/46ebe4adf3a8300247e7d2f4bd0d0e5f
+info@pulsarxm.com,unknown,49,no,yes,gravatar,ports_blocked,Google Workspace,PulsarX Marketing,https://pulsarxm.com,PulsarX,https://scribtly.com/ref/1a5a004ebd1945ea7e7fa778dacb9912
+contact@cloudforcemarketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Cloud Force Marketing Ltd,https://cloudforcemarketing.com,Cloud,https://scribtly.com/ref/4fb9e7da5ed8f880e4db44a05648c565
+melissa@simssolutions.com,valid,92,no,no,microsoft_api,ports_blocked,Microsoft 365,Sims Solutions,https://simssolutions.com,Sims,https://scribtly.com/ref/92d58e3154b8329b1aa9f64fcd564386
+contact@accordtechsolutions.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Accord Tech Solutions,https://accordtechsolutions.com,Accord,https://scribtly.com/ref/813a5f342bca3a889b70224e79648d99
+info@30thfeb.com,unknown,42,no,yes,,ports_blocked,Google Workspace,30TH FEB,https://30thfeb.com,30TH,https://scribtly.com/ref/c846383f678a9268ad2bae1e7092ef1d
+info@spookykind.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Spooky Kind Productions,https://spookykind.com,Spooky,https://scribtly.com/ref/2176232cdb4dfd28f3c556b0ea944e2a
+contact@sachsmarketinggroup.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Sachs Marketing Group,https://sachsmarketinggroup.com,Sachs,https://scribtly.com/ref/7eb99b57f0b607fd059a4eaba7ffeadb
+sayhi@fab-brands.com,valid,92,no,no,microsoft_api,ports_blocked,Microsoft 365,Fab Brands,https://fab-brands.com,Fab,https://scribtly.com/ref/b161b10bdc8e8992059558727e3515dd
+info@superheroes.marketing,unknown,34,no,yes,,ports_blocked,Custom / Other,Superheroes.marketing,https://superheroes.marketing,Superheroes.marketing,https://scribtly.com/ref/a50e01960ab87d3d4d2aa5a2566e79e3
+hello@seotechexperts.ae,unknown,25,no,yes,,ports_blocked,Google Workspace,SEO Tech Experts LLC,https://seotechexperts.ae,SEO,https://scribtly.com/ref/21f066eb81f644107b669cbd655d711b
+info@bitelite.gr,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Bit Elite,https://bitelite.gr,Bit,https://scribtly.com/ref/0bfe6831bd83d217c11cb2a2b2e5ec57
+info@magnasites.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,MagnaSites,https://magnasites.com,MagnaSites,https://scribtly.com/ref/06cb0b6572c5bf9c323fd95d3503c5ff
+info@fastfirms.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Fast Firms,https://fastfirms.com,Fast,https://scribtly.com/ref/1ad1ae3f52437f50744e4cbcdebd5d56
+dylan@pharazyn.com,invalid,0,no,no,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Dylan Pharazyn,https://pharazyn.com,Dylan,https://scribtly.com/ref/499af19615459eadb67f6eeed2ce69a5
+info@wowlab.eu,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,WOWLAB,https://wowlab.eu,WOWLAB,https://scribtly.com/ref/1fda4d8b5b6c612638f50c690093af1b
+hrteam@lps-me.com,invalid,0,no,no,,microsoft_api_rejected,Microsoft 365,LPS Brands,https://lps-me.com,LPS,https://scribtly.com/ref/222149f0510f0494ffdff0e5164ee714
+info@rcdigitalworks.com,unknown,34,no,yes,,ports_blocked,Google Workspace,RC Digital Works,https://rcdigitalworks.com,RC,https://scribtly.com/ref/14015cc6ba2c9605a73c84fcaaea9b0e
+hello@badaproductions.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Bada Bing Productions,https://badaproductions.com,Bada,https://scribtly.com/ref/9887ccfc74ec410cc5f7468211184378
+info@orangegraphics.us,unknown,34,no,yes,,ports_blocked,Custom / Other,Orange Graphics,https://orangegraphics.us,Orange,https://scribtly.com/ref/e46dd0751a73ecc6b565dc60da30dee7
+hi@flowbird.co.uk,unknown,42,no,yes,,ports_blocked,Google Workspace,Flowbird Ltd,https://flowbird.co.uk,Flowbird,https://scribtly.com/ref/30652c08fc13c6b7064be618d703136f
+hello@yotomations.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Yotomations LLC,https://yotomations.com,Yotomations,https://scribtly.com/ref/94f33f6d9ce6cb547dc5a45185e03813
+emma@paganomedia.com,valid,50,no,no,,ports_blocked,Google Workspace,Pagano Media,https://paganomedia.com,Pagano,https://scribtly.com/ref/6f9d46471b332abcb8535cea9947612a
+marketing@elit-web.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Elit-Web,https://elit-web.com,Elit-Web,https://scribtly.com/ref/04a273569d05d212028d24720899f2bf
+contact@magecloud.agency,unknown,42,no,yes,,ports_blocked,Google Workspace,MageCloud,https://magecloud.agency,MageCloud,https://scribtly.com/ref/41cd4ab41fc3d11f3104b44c540a643c
+info@extremevisionnow.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Extreme Vision Now,https://extremevisionnow.com,Extreme,https://scribtly.com/ref/46aa228fe4f98af25ec65932e4dba1ea
+info@binebd.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Bine Bach,https://binebd.com,Bine,https://scribtly.com/ref/c9eb20fcdce4f51ff97f0b0e65d37349
+info@marketinghouse.nyc,unknown,42,no,yes,,ports_blocked,Google Workspace,Marketing House,https://marketinghouse.nyc,Marketing,https://scribtly.com/ref/4ad4399af942ceebebdf2e67c95e9830
+info@scinorx.com,unknown,42,no,yes,,ports_blocked,Google Workspace,ScinoRx Technologies,https://scinorx.com,ScinoRx,https://scribtly.com/ref/34db7d04871fb8a9bcc44e4ca147d033
+hello@arinadigital.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Arina Digital,https://arinadigital.com,Arina,https://scribtly.com/ref/fc115c7ff8b0e5338bbab72d282cae33
+info@fastemailleads.com,unknown,42,no,yes,,ports_blocked,Google Workspace,FastEmailLeads,https://fastemailleads.com,FastEmailLeads,https://scribtly.com/ref/f14e35c54ec418c2030a317e04ff8f47
+careers@ditinteractive.com,valid,50,no,no,,ports_blocked,Google Workspace,Dit Interactive Pvt Ltd,https://ditinteractive.com,Dit,https://scribtly.com/ref/0b391570bf8c1f1317da77ec0fcaa5db
+info@righthello.com,unknown,42,no,yes,,ports_blocked,Custom / Other,RightHello,https://righthello.com,RightHello,https://scribtly.com/ref/5051c1e4e50467017013a4eddd482c27
+team@8clicks.com.sg,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,8CLICKS,https://8clicks.com.sg,8CLICKS,https://scribtly.com/ref/85e893f652a6e4ba67937523ff1cf03b
+info@matchadesign.com,unknown,49,no,yes,gravatar,ports_blocked,Custom / Other,Matcha Design,https://matchadesign.com,Matcha,https://scribtly.com/ref/79747c04fbe5c444e58e98dc927860e4
+info@digitalwebfinder.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Digital Web Finder,https://digitalwebfinder.com,Digital,https://scribtly.com/ref/84e67a72cf67be6f3cd484a75fa8fa1e
+hello@thrivefuel.com,unknown,34,no,yes,,ports_blocked,Google Workspace,ThriveFuel,https://thrivefuel.com,ThriveFuel,https://scribtly.com/ref/b87d37cfbd07d82666acfb91f8020245
+info@aras-tr.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Aras Media,https://aras-tr.com,Aras,https://scribtly.com/ref/496fec82b0bd753aa106d964c363d680
+contact@trustworthydigital.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Trustworthy Digital,https://trustworthydigital.com,Trustworthy,https://scribtly.com/ref/cddc965944de06aabad0dbd12becb8c1
+info@gbppilot.com,unknown,34,no,yes,,ports_blocked,Google Workspace,GBP Pilot,https://gbppilot.com,GBP,https://scribtly.com/ref/14c319ad86530cfe7d55df6c347aa532
+hello@ambire.com.au,unknown,42,no,yes,,ports_blocked,Google Workspace,Ambire,https://ambire.com.au,Ambire,https://scribtly.com/ref/07f0fc6a58c4d0383b9ae5f79d8d5b9a
+ron@aoxapps.com,unknown,40,no,no,,ports_blocked,Google Workspace,AOX Apps,https://aoxapps.com,AOX,https://scribtly.com/ref/6cda1eaecfc635bb7247477a337720bd
+info@soharon.com,unknown,34,no,yes,,ports_blocked,Zoho Mail,Soharon Infotech,https://soharon.com,Soharon,https://scribtly.com/ref/714556edad1a8c44cfa522dac69c3036
+info@flyingmachine.tv,unknown,34,no,yes,,ports_blocked,Custom / Other,Flying Machine,https://flyingmachine.tv,Flying,https://scribtly.com/ref/990dbc79f965ef3f87894906c4d0630e
+info@themarketingfamily.com,unknown,42,no,yes,,ports_blocked,Google Workspace,The Marketing Family,https://themarketingfamily.com,The,https://scribtly.com/ref/db3ac03a82c148725d2ea67d5fb8875c
+info@getrocketship.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Rocketship,https://getrocketship.com,Rocketship,https://scribtly.com/ref/3a75b4d61cd6f5874001405c8a94274f
+projects@wgnr.co,valid,50,no,no,,ports_blocked,Custom / Other,WGNR,https://wgnr.co,WGNR,https://scribtly.com/ref/eb5f953f4f38e57d363ad83011dfeb57
+info@20percentagency.com,unknown,34,no,yes,,ports_blocked,Google Workspace,20 PERCENT AGENCY,https://20percentagency.com,20,https://scribtly.com/ref/c6c415f848c49e0b518021ed11220c43
+hello@sfp.net,unknown,42,no,yes,,ports_blocked,Google Workspace,SFP,https://sfp.net,SFP,https://scribtly.com/ref/84088b6fead93e5d3b7d9d03ba8cdc0f
+info@wartinlabs.com,unknown,34,no,yes,,ports_blocked,Google Workspace,WartinLabs,https://wartinlabs.com,WartinLabs,https://scribtly.com/ref/abc7748890c25d471210d478ffa9aa8b
+contact@magnetudeconsulting.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Magnetude Consulting,https://magnetudeconsulting.com,Magnetude,https://scribtly.com/ref/8d6f83c31ec61392c8856770eba8a9d4
+info@cp-digital.mx,unknown,42,no,yes,,ports_blocked,Google Workspace,CP Digital,https://cp-digital.mx,CP,https://scribtly.com/ref/e443a14107cf4e4b8b509110a3e3a7e7
+contact@digitaldarts.com.au,unknown,42,no,yes,,ports_blocked,Google Workspace,Digital Darts,https://digitaldarts.com.au,Digital,https://scribtly.com/ref/b9a7e79b9c877fae90570cf8496a2318
+info@ciitrusdigital.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Ciitrus Digital,https://ciitrusdigital.com,Ciitrus,https://scribtly.com/ref/1afcff4a23f7a752fcae622fb50c0686
+contact@matiasmathias.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Matias & Mathias,https://matiasmathias.com,Matias,https://scribtly.com/ref/c9c6a626c66cd4ffa1ae2a7d992df609
+office@achtzehngrad.at,invalid,0,no,no,,microsoft_api_rejected,Microsoft 365,Achtzehn Grad,https://achtzehngrad.at,Achtzehn,https://scribtly.com/ref/4f8e630dea07da03fac4731fe0c3b6d4
+info@inspiredcopy.co.uk,unknown,25,no,yes,,ports_blocked,Google Workspace,Inspired Copy,https://inspiredcopy.co.uk,Inspired,https://scribtly.com/ref/4ecbaf830bc819dcac1eaf2ee2d36449
+contact@idaho-style.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Idaho Style,https://idaho-style.com,Idaho,https://scribtly.com/ref/d2603d91dde3ef03228ffcac67c9fef5
+contact@hexcodemarketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Hexcode Marketing,https://hexcodemarketing.com,Hexcode,https://scribtly.com/ref/7bd9a9c55d952ca21f008ddab8b2886f
+contact@joe2joe.com,unknown,42,no,yes,,ports_blocked,Google Workspace,JOE 2 JOE,https://joe2joe.com,JOE,https://scribtly.com/ref/ecea62752df45549923c3fdd46bcf87f
+kenneth@01-digital.com,valid,50,no,no,,ports_blocked,Google Workspace,01 digital,https://01-digital.com,01,https://scribtly.com/ref/dff2faef443778d8c3051fcd4d66d2a6
+andi@hummingbirdmarketingservices.com,valid,100,no,no,"microsoft_api,gravatar",ports_blocked,Microsoft 365,Hummingbird Marketing Services,https://hummingbirdmarketingservices.com,Hummingbird,https://scribtly.com/ref/90fd72666a1d6e13e60a6b26b796c691
+sales@seoresellerusa.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,SEO Reseller,https://seoresellerusa.com,SEO,https://scribtly.com/ref/01d75c09bcf34438d46a4022cf10b17e
+info@delante.co,unknown,42,no,yes,,ports_blocked,Google Workspace,Delante,https://delante.co,Delante,https://scribtly.com/ref/abb228f8be3d9af45bf23c90fea5fb7c
+contact@zrafted.com,unknown,42,no,yes,,ports_blocked,Zoho Mail,Zrafted,https://zrafted.com,Zrafted,https://scribtly.com/ref/acfea325ce54ba420ad50648a86b74e5
+hello@kynectivemedia.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Kynective Media,https://kynectivemedia.com,Kynective,https://scribtly.com/ref/99b3596c56ec46679275dae83432b2f2
+contact@digitalcurrent.com,unknown,25,no,yes,,ports_blocked,Google Workspace,Digital Current,https://digitalcurrent.com,Digital,https://scribtly.com/ref/2289a852a79d678d3a8d5a5d4948fe61
+contact@sixtygram.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Sixtygram,https://sixtygram.com,Sixtygram,https://scribtly.com/ref/53fd88f9dd9f8b349f593abf72ff6eda
+contato@programatorio.com,valid,50,no,no,,ports_blocked,Google Workspace,Programatorio,https://programatorio.com,Programatorio,https://scribtly.com/ref/af846697ad34f6630337ab7ace5bc48c
+info@vdsshine.com,unknown,42,no,yes,,ports_blocked,Custom / Other,VDS Shine,https://vdsshine.com,VDS,https://scribtly.com/ref/3f1da61c5215275fabcf5eda0421bcbf
+info@swellmktg.com,unknown,42,no,yes,,ports_blocked,Google Workspace,SWELL MKTG,https://swellmktg.com,SWELL,https://scribtly.com/ref/ec4c5f230ed72840a6e06d5111aba51c
+contact@pencilmp.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Pencil Media Production,https://pencilmp.com,Pencil,https://scribtly.com/ref/0ad2ff5b3ea8f9d4d357fcf2fd63e018
+contact@construction.marketing,unknown,42,no,yes,,ports_blocked,Google Workspace,Construction Marketing,https://construction.marketing,Construction,https://scribtly.com/ref/d1b3e980e79a965d34e3365d5b561385
+contact@sparkdigitalgroup.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Spark Digital Group,https://sparkdigitalgroup.com,Spark,https://scribtly.com/ref/10e689bd963059e508a805f81f6e3134
+info@odesseo.com.ua,unknown,42,no,yes,,ports_blocked,Custom / Other,OdesSeo,https://odesseo.com.ua,OdesSeo,https://scribtly.com/ref/085a4de2cdf56463aa9e65caac937bbe
+contact@ethiko.org,unknown,42,no,yes,,ports_blocked,Custom / Other,Ethiko,https://ethiko.org,Ethiko,https://scribtly.com/ref/19d051e0dc77741940d96963471cabfe
+info@tandemmedia.tv,unknown,34,no,yes,,ports_blocked,Google Workspace,Tandem Media,https://tandemmedia.tv,Tandem,https://scribtly.com/ref/140ee2467a3a072f2a892e764168afcc
+info@cservetech.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Cserve Technologies,https://cservetech.com,Cserve,https://scribtly.com/ref/98c282eb03d7498405fedb993b6613b8
+info@shanahanstrategy.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Shanahan Strategy Inc.,https://shanahanstrategy.com,Shanahan,https://scribtly.com/ref/7e5d9a13619095f3007607434f8ae0be
+info@networkog.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Network OG,https://networkog.com,Network,https://scribtly.com/ref/df661852cc7e9d29a99acf51b37f8346
+info@mediatwo.net,unknown,42,no,yes,,ports_blocked,Google Workspace,Media Two Interactive,https://mediatwo.net,Media,https://scribtly.com/ref/8fc46cbaf2b7b3483147cdb7e34b2c84
+info@elmntl.co,unknown,42,no,yes,,ports_blocked,Google Workspace,ELMNTL,https://elmntl.co,ELMNTL,https://scribtly.com/ref/5b44df5c3a54f5cd7c6226456ca4f572
+hello@keystone.company,unknown,34,no,yes,,ports_blocked,Custom / Other,Keystone Seo Solution,https://keystone.company,Keystone,https://scribtly.com/ref/aeb9f02f98810e7fb32691c43db24fa3
+info@lazerbladesgo.com,unknown,42,no,yes,,ports_blocked,Google Workspace,"LazerBlades, GO!",https://lazerbladesgo.com,"LazerBlades,",https://scribtly.com/ref/99f38c20d60be861e40918672728a0b8
+info@piyawasa.com,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,Piyawasa,https://piyawasa.com,Piyawasa,https://scribtly.com/ref/43d32783cd44bae81f9659a5209b687d
+info@thepercentage.asia,unknown,34,no,yes,,ports_blocked,Google Workspace,The Percentage Company,https://thepercentage.asia,The,https://scribtly.com/ref/778ae29a09ff0cdfef71f94de901711b
+contact@boldcreators.club,unknown,25,no,yes,,ports_blocked,Google Workspace,Bold Creators Club,https://boldcreators.club,Bold,https://scribtly.com/ref/bf33a60a26301bf74a326462bc90c2ea
+hello@techavidus.com,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,TechAvidus,https://techavidus.com,TechAvidus,https://scribtly.com/ref/5e1f69b5fde41395f9517fcf24855ab5
+contact@amplifymm.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Amplify media + marketing,https://amplifymm.com,Amplify,https://scribtly.com/ref/40fa6928fb38b69b83cdf695802d980e
+hello@jackturits.com,unknown,25,no,yes,,ports_blocked,Google Workspace,Jack Turits,https://jackturits.com,Jack,https://scribtly.com/ref/a13d0c744286e09a40d76afef14a3687
+lisa@bluedogsmedia.com,valid,58,no,no,gravatar,ports_blocked,Google Workspace,Blue Dogs Media,https://bluedogsmedia.com,Blue,https://scribtly.com/ref/ed9bc20c360ec3d40525d1875cc783e3
+contact@jackandbean.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Jack & Bean,https://jackandbean.com,Jack,https://scribtly.com/ref/548f570f1f9e4610a533816d4c2a1b19
+info@aspektagency.com,unknown,42,no,yes,,ports_blocked,Google Workspace,ASPEKT,https://aspektagency.com,ASPEKT,https://scribtly.com/ref/42bbee32afe2f276932d044dda2fa6f7
+hello@crcmedia.com,unknown,25,no,yes,,ports_blocked,Google Workspace,CRC Media,https://crcmedia.com,CRC,https://scribtly.com/ref/e31a052f3e201d8de88955f109fd6928
+contact@pacific54.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Pacific54,https://pacific54.com,Pacific54,https://scribtly.com/ref/2c8929f67210fb268b0107f4f1a27713
+info@aqaba.digital,unknown,42,no,yes,,ports_blocked,Google Workspace,Aqaba Digital,https://aqaba.digital,Aqaba,https://scribtly.com/ref/2c8905c901d5d9ce843c7a4f185840e4
+info@thewardgroup.media,unknown,42,no,yes,,ports_blocked,Custom / Other,The Ward Group,https://thewardgroup.media,The,https://scribtly.com/ref/3116ff663f9aa21b26417725643ff527
+info@bdiadv.com,unknown,42,no,yes,,ports_blocked,Custom / Other,BDi,https://bdiadv.com,BDi,https://scribtly.com/ref/a91baad1dfbd971cb9b2797a2b5754ef
+info@visigility.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Visigility,https://visigility.com,Visigility,https://scribtly.com/ref/f3bb52b06d6f93aa1f2c550bde496144
+info@discovermybusiness.co,unknown,42,no,yes,,ports_blocked,Google Workspace,DiscoverMyBusiness,https://discovermybusiness.co,DiscoverMyBusiness,https://scribtly.com/ref/a7d7e288b1b9dc4964be18d14398f960
+james@crash-sues.com,valid,50,no,no,,ports_blocked,Google Workspace,CRASH+SUES,https://crash-sues.com,CRASH+SUES,https://scribtly.com/ref/734078423214357bb11df86691e429cd
+contact@growthsaloon.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Growth Saloon,https://growthsaloon.com,Growth,https://scribtly.com/ref/3cd926426e537ee512736dc0dd09f456
+info@morethanwordsuk.co.uk,unknown,42,no,yes,,ports_blocked,Google Workspace,More Than Words,https://morethanwordsuk.co.uk,More,https://scribtly.com/ref/cbb0bd08a7666c1443a4e649661fe850
+info@webnflix.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Webnflix,https://webnflix.com,Webnflix,https://scribtly.com/ref/e9151ac894b5aa0a0194768aa9b364b6
+hello@sellvisoryhomeservicesmarketing.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Sellvisory,https://sellvisoryhomeservicesmarketing.com,Sellvisory,https://scribtly.com/ref/9842454c33758027e81b670787d8941e
+sales@envisionecommerce.com,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,Envision Ecommerce,https://envisionecommerce.com,Envision,https://scribtly.com/ref/a5b6693303f02272549510bd04f56b6f
+nam@namdubai.com,invalid,0,no,no,,microsoft_api_rejected,Microsoft 365,Nam Marketing,https://namdubai.com,Nam,https://scribtly.com/ref/463813e369b670edee6d0a3d8802004c
+contato@agenciadio.com.br,valid,50,no,no,,ports_blocked,Custom / Other,DIO,https://agenciadio.com.br,DIO,https://scribtly.com/ref/218d1093bb3185567649c0f66fc4fb99
+info@dotdotdot.london,unknown,42,no,yes,,ports_blocked,Google Workspace,Dot Dot Dot,https://dotdotdot.london,Dot,https://scribtly.com/ref/b3647244f0fb585c924c0ddd72c4d4de
+info@divinitytechconsults.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Divinity Tech Consults,https://divinitytechconsults.com,Divinity,https://scribtly.com/ref/bf115390f2f392742d6784735aa75f84
+info@viserx.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,VISER X,https://viserx.com,VISER,https://scribtly.com/ref/f09b5f71d3c96cdc58fd9bfe9ef08f87
+info@elitexmedia.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Elite X Media,https://elitexmedia.com,Elite,https://scribtly.com/ref/edca2f071282430aeefbb8bea22aa62f
+info@watsonmedia.net,unknown,42,no,yes,,ports_blocked,Custom / Other,Watson Media,https://watsonmedia.net,Watson,https://scribtly.com/ref/acf16910036840141d4fb722354f2c89
+contact@eboostconsulting.com,unknown,34,no,yes,,ports_blocked,Google Workspace,eBoost Consulting,https://eboostconsulting.com,eBoost,https://scribtly.com/ref/52e269a298ffc8885899623f93fe6bd4
+info@inkmedia.eu,unknown,25,no,yes,,ports_blocked,Google Workspace,INK Media,https://inkmedia.eu,INK,https://scribtly.com/ref/307bbc977bca8b77bb6ca8c1bbf91cd8
+info@ignitedigital.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Ignite Digital,https://ignitedigital.com,Ignite,https://scribtly.com/ref/4c4da077fc67732ec76a7247ab6bf0ec
+info@brisbanedigital.rs,unknown,34,no,yes,,ports_blocked,Google Workspace,Brisbane Digital doo,https://brisbanedigital.rs,Brisbane,https://scribtly.com/ref/313ff6aa61675ae486e91c3132f2ad50
+uros@levupdigital.com,unknown,40,no,no,,ports_blocked,Google Workspace,LevUp Digital,https://levupdigital.com,LevUp,https://scribtly.com/ref/20851eed786372c4966c5c10b6a438d6
+contact@nexiworks.com,unknown,34,no,yes,,ports_blocked,Google Workspace,nexiWorks,https://nexiworks.com,nexiWorks,https://scribtly.com/ref/013589e3b488d50a9e8a2c63e17048e2
+contact@futurocomunicacion.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Futuro Comunicación,https://futurocomunicacion.com,Futuro,https://scribtly.com/ref/d000342a7aa51718d737fe6ebee58a48
+info@cruxcreative.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Crux Creative,https://cruxcreative.com,Crux,https://scribtly.com/ref/36c4e50c6051c8832f8ceba491c7a0f6
+info@meshagency.com,unknown,42,no,yes,,ports_blocked,Google Workspace,MESH Interactive,https://meshagency.com,MESH,https://scribtly.com/ref/21b7cbe90e8e3d9c9be2f3ee67aa1d1b
+hello@louisbhose.com,unknown,25,no,yes,,ports_blocked,Zoho Mail,Louis Bhose,https://louisbhose.com,Louis,https://scribtly.com/ref/4467ed77a0772aa9d88b83c89afc7965
+hello@servicehawk.io,unknown,42,no,yes,,ports_blocked,Google Workspace,ServiceHawk Digital Marketing,https://servicehawk.io,ServiceHawk,https://scribtly.com/ref/2af6af71a707289681a3744b91abb7fb
+ds@digital-systems.ca,invalid,0,no,no,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Digital Systems,https://digital-systems.ca,Digital,https://scribtly.com/ref/a86033f810cfa5b762e5d2dc95daf7fb
+info@websouthsolutions.com,unknown,49,no,yes,gravatar,ports_blocked,Custom / Other,Web South Solutions,https://websouthsolutions.com,Web,https://scribtly.com/ref/bf5d966380979a142ae56034cbb1adeb
+info@builditdigitalmarketing.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Buildit Digital Marketing,https://builditdigitalmarketing.com,Buildit,https://scribtly.com/ref/60e982cd10f7aa4f3dfcad6bccb6b0fd
+hello@rmgmedia.com,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,RMG,https://rmgmedia.com,RMG,https://scribtly.com/ref/c7c9d7775179d9ec6a4183057541df95
+info@dmtheno.com,unknown,49,no,yes,gravatar,ports_blocked,Custom / Other,DM the NO,https://dmtheno.com,DM,https://scribtly.com/ref/ab9053d327b5fc7aaa6316f6d334ca6c
+info@orange-circle.com,unknown,42,no,yes,,ports_blocked,Custom / Other,ORANGE-CIRCLE,https://orange-circle.com,ORANGE-CIRCLE,https://scribtly.com/ref/10f0492be9faab22713690b35ecf3711
+contact@561media.com,unknown,42,no,yes,,ports_blocked,Google Workspace,561 Media,https://561media.com,561,https://scribtly.com/ref/5a3df9a372791264f3aef717cec4f43c
+info@visionweb.ro,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Vision Web,https://visionweb.ro,Vision,https://scribtly.com/ref/5b45bf6aea2c4f60da79e60db00d1952
+contact@vimar.ie,unknown,42,no,yes,,ports_blocked,Google Workspace,VIMAR,https://vimar.ie,VIMAR,https://scribtly.com/ref/a7b9ac3987613ea9e233abc8da964f3d
+info@netpeak.us,unknown,42,no,yes,,ports_blocked,Google Workspace,Netpeak USA,https://netpeak.us,Netpeak,https://scribtly.com/ref/13ff66ce46ad9b507e9eea538f74f9fb
+info@seizemarketingagency.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Seize Marketing Agency,https://seizemarketingagency.com,Seize,https://scribtly.com/ref/a9bd893d9d5161f5df7e1efbf1b08e2f
+thomas@cervenca.com,unknown,40,no,no,,ports_blocked,Custom / Other,Thomas Cervenca,https://cervenca.com,Thomas,https://scribtly.com/ref/7a56571044ec6459a23524cc32169e98
+hej@raqs.nu,valid,50,no,no,,ports_blocked,Google Workspace,Raqs,https://raqs.nu,Raqs,https://scribtly.com/ref/ca74568f46b4317a7ae27edf0ff17dff
+x@outboundsystem.com,valid,50,no,no,,ports_blocked,Google Workspace,Outbound System,https://outboundsystem.com,Outbound,https://scribtly.com/ref/87dc4aa83bba0faa350334cf48b6116e
+info@friendsconsulting.gr,unknown,42,no,yes,,ports_blocked,Custom / Other,Friends Consulting,https://friendsconsulting.gr,Friends,https://scribtly.com/ref/61bf01b94f7dca7f41b7fe6f113726f0
+info@eleonoralaas-studio.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Eleonora Laas design studio,https://eleonoralaas-studio.com,Eleonora,https://scribtly.com/ref/d6a2c409838c98f2280d95f44a9dff33
+projects@e2developers.com,valid,50,no,no,,ports_blocked,Custom / Other,E2developers,https://e2developers.com,E2developers,https://scribtly.com/ref/85e08b82900d78e623bd4f620c9bf2ac
+contact@g7marketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,G7 Entertainment Marketing,https://g7marketing.com,G7,https://scribtly.com/ref/890154ed0015c5429e09b533ec911256
+info@chadterpstra.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Chad Terpstra,https://chadterpstra.com,Chad,https://scribtly.com/ref/6601b084473acb958cf6c38fb776d483
+info@innovativeigloo.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Innovative Igloo Ltd,https://innovativeigloo.com,Innovative,https://scribtly.com/ref/49e88e684c8d905e48174f096b8d4610
+info@seoaustralia.net,unknown,34,no,yes,,ports_blocked,Google Workspace,SEO Australia,https://seoaustralia.net,SEO,https://scribtly.com/ref/fae41626531f19e6b1e0a963f912e6b9
+contact@pulleymedia.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Pulley Media,https://pulleymedia.com,Pulley,https://scribtly.com/ref/9fa35b3a083df076f45a7c9d88f99872
+info@gizoom.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Gizoom,https://gizoom.com,Gizoom,https://scribtly.com/ref/5555c4207b71fa05eceaae70ff0a4fc0
+info@onlinemarketinghelp.co.uk,unknown,42,no,yes,,ports_blocked,Google Workspace,Online Marketing Help,https://onlinemarketinghelp.co.uk,Online,https://scribtly.com/ref/eb76b9cd7337e504a3dffbe4029b7dce
+hello@smallprojectsbureau.com,unknown,42,no,yes,,ports_blocked,Google Workspace,The Bureau Of Small Projects,https://smallprojectsbureau.com,The,https://scribtly.com/ref/ba05fb2ca698d58af6b4db07f5281e4a
+info@katevillevoye.com,unknown,25,no,yes,,ports_blocked,Custom / Other,Kate Villevoye,https://katevillevoye.com,Kate,https://scribtly.com/ref/9e7210b7d17878366c453a6821f50028
+contact@tamseelproduction.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Tamseel Production,https://tamseelproduction.com,Tamseel,https://scribtly.com/ref/4a1c355f7201af1de2b30993e46c0ee9
+contact@buzzlead.io,unknown,42,no,yes,,ports_blocked,Google Workspace,Buzzlead,https://buzzlead.io,Buzzlead,https://scribtly.com/ref/38d799c24e556bb11ab67e0a2f195a21
+contact@theportlandcompany.com,unknown,42,no,yes,,ports_blocked,Google Workspace,The Portland Company,https://theportlandcompany.com,The,https://scribtly.com/ref/dc48c120a4c704b4599d395f51776441
+hello@eaglespiritllc.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Eagle Spirit,https://eaglespiritllc.com,Eagle,https://scribtly.com/ref/0783d809a25ce3d37b4a58a279c94fb0
+hello@thecoolsocial.com,unknown,34,no,yes,,ports_blocked,Custom / Other,The Cool Social,https://thecoolsocial.com,The,https://scribtly.com/ref/a9e2ebb07eecb26e31fe6da740f36529
+info@micromedia.ba,invalid,0,no,yes,,port587 503 sender not yet given,Custom / Other,MicroMedia,https://micromedia.ba,MicroMedia,https://scribtly.com/ref/3c43d61bb3723383fca131da7fbce1df
+paul@paulsutton.co,invalid,0,no,no,,port587 503 sender not yet given,Custom / Other,Paul Sutton,https://paulsutton.co,Paul,https://scribtly.com/ref/e26e8a2ff8f5e1a3ba558b668cf905ac
+info@dynamicadvance.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Dynamic Advance,https://dynamicadvance.com,Dynamic,https://scribtly.com/ref/9a1e17d119cc6eb4dc3153e5432494a9
+hello@commaspr.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Commas PR Sdn Bhd,https://commaspr.com,Commas,https://scribtly.com/ref/4d1a6ed44e850444b9cfa069b00bd324
+info@heraphy.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Heraphy,https://heraphy.com,Heraphy,https://scribtly.com/ref/5f554740eefb8b9cbca256810115b267
+contact@touchlinemarketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Touchline Marketing,https://touchlinemarketing.com,Touchline,https://scribtly.com/ref/77171d8974b063ab19c523beaf83babe
+contact@85sixty.com,unknown,42,no,yes,,ports_blocked,Google Workspace,85SIXTY,https://85sixty.com,85SIXTY,https://scribtly.com/ref/9f68df3033996ce8bce556e29148c590
+info@digitalmountaineers.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Digital Mountaineers,https://digitalmountaineers.com,Digital,https://scribtly.com/ref/cd5bf3aea4ff27d94399481c0de8c9bd
+hello@nature-press.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Nature Press,https://nature-press.com,Nature,https://scribtly.com/ref/7676da83bfbc77832b7422ac4ae44cf9
+info@alcinder.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Alcinder Tech,https://alcinder.com,Alcinder,https://scribtly.com/ref/0dfe6c03765ff5e0fec7b0277dd37ad7
+hello@focusmode.co,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,Focus Mode,https://focusmode.co,Focus,https://scribtly.com/ref/866673c98a07494dd7830e30cf92901c
+info@outorigin.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Out Origin,https://outorigin.com,Out,https://scribtly.com/ref/b6bce0ae2f6a53272ce8e4ebb9564e64
+curtis@curtishillfilm.com,unknown,40,no,no,,ports_blocked,Google Workspace,Curtis Hill,https://curtishillfilm.com,Curtis,https://scribtly.com/ref/524e297338e80cc4895631abf8ac16e9
+info@demandloft.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Demandloft,https://demandloft.com,Demandloft,https://scribtly.com/ref/28c0542f85bbff3066efffc6028cf1b2
+hello@market-minds.co,unknown,42,no,yes,,ports_blocked,Google Workspace,MarketMinds,https://market-minds.co,MarketMinds,https://scribtly.com/ref/ae9155bc55796dbe2f2347992dfebb1e
+hello@boltwood.com,invalid,0,no,yes,,port587 503 sender not yet given,Custom / Other,Boltwood Digital,https://boltwood.com,Boltwood,https://scribtly.com/ref/c3559547c291e887564542d27f70ee8c
+info@pointtakenpr.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Point Taken Communications,https://pointtakenpr.com,Point,https://scribtly.com/ref/050922e3168a80a8f16041e5d9867fc1
+info@akus.co.ke,unknown,42,no,yes,,ports_blocked,Custom / Other,Akus Digital Solution,https://akus.co.ke,Akus,https://scribtly.com/ref/fc94316da3e81841b182b916df539c44
+info@designalligators.com,invalid,0,no,yes,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Design Alligators,https://designalligators.com,Design,https://scribtly.com/ref/4a08c78f1c5cb0ea6950e91050ceb993
+info@pazmarketing.com,unknown,42,no,yes,,ports_blocked,Google Workspace,PAZ Marketing,https://pazmarketing.com,PAZ,https://scribtly.com/ref/c54a4c2e20d270a2c39924eaa00920d9
+contact@cleverclick360.com,unknown,42,no,yes,,ports_blocked,Google Workspace,CleverClick 360,https://cleverclick360.com,CleverClick,https://scribtly.com/ref/f2cdde57ffa8789356d46bda13c7d692
+smb@awork.dk,invalid,0,no,no,,port587 554 5.7.1 <unknown[77.70.124.114]>: Client host rejected: Access,Custom / Other,AWORK Webbureau,https://awork.dk,AWORK,https://scribtly.com/ref/7a5dfd2f44a4f9854b5575f9c87626c8
+info@gossipgenie.com,unknown,34,no,yes,,ports_blocked,Google Workspace,Gossip Genie,https://gossipgenie.com,Gossip,https://scribtly.com/ref/7ddfc8f0aa711b3f553e95b96809d6fb
+paola@pymdigital.co,valid,50,no,no,,ports_blocked,Google Workspace,PyM Digital,https://pymdigital.co,PyM,https://scribtly.com/ref/c87f4aad4a01bf548af5560189c98ad2
+info@anideos.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Anideos,https://anideos.com,Anideos,https://scribtly.com/ref/3dc694de03715efd657410ccb8228009
+hello@joshmurphy.co,unknown,34,no,yes,,ports_blocked,Google Workspace,Josh Murphy Co,https://joshmurphy.co,Josh,https://scribtly.com/ref/e610f34c8fcb394ecddfbf1b3e162c27
+info@seodigiinc.com,unknown,42,no,yes,,ports_blocked,Custom / Other,SEO Digi,https://seodigiinc.com,SEO,https://scribtly.com/ref/e7b6511b74670f9c946b9bca861b9786
+info@south.ventures,unknown,34,no,yes,,ports_blocked,Google Workspace,South Ventures,https://south.ventures,South,https://scribtly.com/ref/ee9b3c8fe01e72503b6d6ad295d992e2
+hello@mediatropy.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Mediatropy,https://mediatropy.com,Mediatropy,https://scribtly.com/ref/5e5930fa39a0a102e7d047609a32cd45
+team@austin-web-services.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Austin Web Services,https://austin-web-services.com,Austin,https://scribtly.com/ref/970c2c4879141c1b344e895bf79ba693
+info@parlay.digital,unknown,42,no,yes,,ports_blocked,Google Workspace,Parlay,https://parlay.digital,Parlay,https://scribtly.com/ref/6c8e0c3483e5d2cf46bcab2cd800450a
+contact@mothersh1p.de,unknown,25,no,yes,,ports_blocked,Google Workspace,MOTHERSHIP Marketing,https://mothersh1p.de,MOTHERSHIP,https://scribtly.com/ref/3e4ff443b72bb0794aa406a687c0df4a
+hello@pmadigital.com,invalid,0,no,yes,,microsoft_api_rejected,Microsoft 365,PMA Digital,https://pmadigital.com,PMA,https://scribtly.com/ref/337fc04b730db0c2a1dce3b81d6e5670
+info@cyberhospitalities.com,valid,78,no,yes,microsoft_api,ports_blocked,Microsoft 365,Cyber Hospitality,https://cyberhospitalities.com,Cyber,https://scribtly.com/ref/294627b5f28678a215cfe38fb5c7d933
+team@redmallard.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Red Mallard,https://redmallard.com,Red,https://scribtly.com/ref/5dbba7a6bbdf4cf3f508873890a617ae
+info@diseno.com,unknown,42,no,yes,,ports_blocked,Custom / Other,Diseño,https://diseno.com,Diseño,https://scribtly.com/ref/db7af43ce83125308dcc6ea909c216f0
+info@five-fifty.com,invalid,0,no,yes,,port587 554 5.7.1 <info@five-fifty.com>: Relay access denied,Custom / Other,Five Fifty,https://five-fifty.com,Five,https://scribtly.com/ref/c2d3826c8ab22aee3d57a5c5878beb94
+info@lanternsol.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Lantern Sol,https://lanternsol.com,Lantern,https://scribtly.com/ref/5759cd13f58ab54d792c64c6483de9b3
+info@davixdigital.com,unknown,34,no,yes,,ports_blocked,Custom / Other,Davix Digital,https://davixdigital.com,Davix,https://scribtly.com/ref/0d5a4c14dae8371bbf3bd540ab1dfa3b
+info@neustadt.swiss,unknown,42,no,yes,,ports_blocked,Google Workspace,Neustadt,https://neustadt.swiss,Neustadt,https://scribtly.com/ref/bdcd833423f503bcf381163d04dda10b
+frank@beveled.design,valid,50,no,no,,ports_blocked,Google Workspace,Beveled Design Co.,https://beveled.design,Beveled,https://scribtly.com/ref/35056f3f330d15fe35fae440b0114171
+info@internetworld.ca,unknown,34,no,yes,,ports_blocked,Google Workspace,internetWorld.ca Corp,https://internetworld.ca,internetWorld.ca,https://scribtly.com/ref/8c43af69083beff84ccd9d0c4dd50fc7
+contact@ibay.co.za,unknown,42,no,yes,,ports_blocked,Google Workspace,ibay Digital,https://ibay.co.za,ibay,https://scribtly.com/ref/18894881cf436a19355e2451a2431357
+%20hola@centralcreativa.mx,valid,50,no,no,,ports_blocked,Google Workspace,Central Creativa,https://centralcreativa.mx,Central,https://scribtly.com/ref/cf0b0e8f0786ef121185138b5cba3a88
+hello@damolade.com,unknown,42,no,yes,,ports_blocked,Google Workspace,damolade,https://damolade.com,damolade,https://scribtly.com/ref/15dbe84c137e533f5c81ccbfd0f0dc12
+contact@tower25.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Tower 25,https://tower25.com,Tower,https://scribtly.com/ref/70d3cbb8a6b47cf94bf1e0e1cbfb2c14
+donna@kickmpls.com,valid,92,no,no,microsoft_api,ports_blocked,Microsoft 365,Kick Branding & Design,https://kickmpls.com,Kick,https://scribtly.com/ref/bca75798da14dd117d54acc6c29abe0c
+shawn@cmgsocialmedia.com,unknown,48,no,no,gravatar,ports_blocked,Google Workspace,Campbell Marketing Group LLC,https://cmgsocialmedia.com,Campbell,https://scribtly.com/ref/bd7ea17039cbfb8a2fdf959e63c122f4
+commercial@coinband.io,valid,50,no,no,,ports_blocked,Google Workspace,Coinband,https://coinband.io,Coinband,https://scribtly.com/ref/f47945c09f15d70b49a561a866bcc7cc
+contact@colossal.film,unknown,34,no,yes,,ports_blocked,Google Workspace,Colossal,https://colossal.film,Colossal,https://scribtly.com/ref/16ff57ada5626155ee0cefe76d47c5cd
+contact@mastheadmedia.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Masthead Media Company,https://mastheadmedia.com,Masthead,https://scribtly.com/ref/9e0de212775692eeb201c630e507b3a2
+info@eastsideco.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Eastside Co,https://eastsideco.com,Eastside,https://scribtly.com/ref/aa3a25f864d89b253b9f2412bc8de242
+contact@creative-engine.pk,unknown,34,no,yes,,ports_blocked,Zoho Mail,Creative Engine,https://creative-engine.pk,Creative,https://scribtly.com/ref/b7fbe56e33fb58dc03986b38888725ea
+mail@humbleit.dk,invalid,0,no,no,,port587 550 SMTP AUTH is required for message submission on port 587,Custom / Other,Humble IT,https://humbleit.dk,Humble,https://scribtly.com/ref/1eeffab56d21ba2d67ebd0b9a1c07457
+info@garraje.com,unknown,49,no,yes,gravatar,ports_blocked,Custom / Other,Garraje,https://garraje.com,Garraje,https://scribtly.com/ref/458af4ca7c51d01c9f1e1d2f0d56e432
+hi@leadtoconversion.com,unknown,42,no,yes,,ports_blocked,Google Workspace,Lead to Conversion,https://leadtoconversion.com,Lead,https://scribtly.com/ref/124601f70eb61b0fe6a6c590bec3edb9
+info@socialmediacrew.de,invalid,0,no,yes,,port587 554 5.7.1 <unknown[77.70.124.114]>: Client host rejected: Access,Custom / Other,Social Media Crew,https://socialmediacrew.de,Social,https://scribtly.com/ref/16e8219fbe19c96c1b84559f00f55afc
+info@hifispinweb.com,catch_all,42,yes,yes,smtp_587_catchall,port587 250,Custom / Other,HiFiSPIN,https://hifispinweb.com,HiFiSPIN,https://scribtly.com/ref/f45d28c0f8f45626f49a52c87461dc64
+info@growleads.io,unknown,42,no,yes,,ports_blocked,Google Workspace,Growleads.io,https://growleads.io,Growleads.io,https://scribtly.com/ref/968c635e70449db56836b4d9a2ed468c

@@ -14,3 +14,10 @@ next-env.d.ts
 
 # Playwright MCP cache
 .playwright-mcp/
+
+# Build artifacts
+tsconfig.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
