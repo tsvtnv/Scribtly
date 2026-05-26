@@ -96,6 +96,16 @@ export async function GET(req: NextRequest) {
   });
 }
 
+// ── DELETE /api/v1/outreach/leads ─────────────────────────────────────────
+
+export async function DELETE(req: NextRequest) {
+  const auth = verifyOutreachApiKey(req);
+  if (!auth.ok) return auth.response;
+
+  const { count } = await prisma.referralLead.deleteMany({});
+  return NextResponse.json({ data: { deleted: count } });
+}
+
 // ── POST /api/v1/outreach/leads ────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
