@@ -72,6 +72,7 @@ export function MarketingFooter() {
               <li><Link href="/cookies" className="text-text-secondary dark:text-dark-muted hover:text-primary transition-colors">Cookies</Link></li>
               <li><OpenCookieSettingsButton variant="footer" /></li>
               <li><Link href="/login" className="text-text-secondary dark:text-dark-muted hover:text-primary transition-colors">Log in</Link></li>
+              <li><Link href="/founder" className="text-text-secondary dark:text-dark-muted hover:text-primary transition-colors">Founder</Link></li>
             </ul>
           </div>
         </div>
