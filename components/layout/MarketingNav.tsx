@@ -21,6 +21,7 @@ export function MarketingNav() {
           <div className="flex items-center gap-5 text-sm">
             <Link href="/blog" className="hidden sm:inline hover:text-primary">Blog</Link>
             <Link href="/pricing" className="hover:text-primary">Pricing</Link>
+            <Link href="/founder" className="hidden sm:inline hover:text-primary">Founder</Link>
             <Link href="/login" className="hidden sm:inline hover:text-primary">Log in</Link>
             <Link href="/signup">
               <Button size="sm">Start free</Button>
