@@ -284,6 +284,89 @@ For clients with limited footage, focus your B-roll notes on screen recordings a
 
 Scribtly includes B-roll cue suggestions in scripts when relevant — especially for tutorial and how-to content where visual reinforcement makes a material difference to viewer retention.`,
   },
+  {
+    slug: "how-to-turn-one-idea-into-five-scripts",
+    title: "How to turn one video idea into five platform-ready scripts",
+    metaDescription:
+      "One brief, five scripts. Here's how to adapt a single video idea for YouTube, TikTok, Reels, Shorts, and LinkedIn without starting from scratch each time.",
+    excerpt:
+      "Writing five scripts from a single brief is one of the highest-leverage skills a freelance script writer can develop. Here's the exact workflow — and why it's faster than treating each platform as a separate job.",
+    tags: ["content repurposing", "video scripts", "platform strategy", "freelance workflow", "short-form video"],
+    readingMins: 5,
+    content: `## One brief, five opportunities
+
+Most freelancers treat each platform as a separate job. A client asks for a YouTube video and a TikTok, two separate briefs come in, two scripts get written from scratch, and the job takes twice as long as it should.
+
+The smarter approach is to start with one idea and systematically adapt it for every platform the client is active on. The idea is the hard part. The adaptation is a skill you can build into a repeatable system.
+
+## Why platform adaptation isn't just copy-paste
+
+The obvious move is to write a YouTube script and trim 90% of it for TikTok. That rarely works cleanly.
+
+YouTube viewers chose to watch. They expect context, setup, and depth. TikTok viewers arrived mid-scroll and haven't committed to anything. They need to be stopped within the first two seconds, then kept moving at a pace that leaves no room to disengage.
+
+Adapting a script across platforms isn't about shortening it — it's about restructuring it for a different viewing context, attention state, and platform logic.
+
+## The five formats to cover
+
+**1. YouTube long-form (8–15 minutes)**
+Write this one first. It's the anchor: full hook, a context section, three to five main points with supporting detail, and a clear CTA. Everything else is built from it.
+
+**2. YouTube Shorts (under 60 seconds)**
+Pull the single strongest point from the long-form and write it as a standalone piece. Hook, one insight, payoff. Don't frame it as a trailer for the longer video — Shorts that stand alone consistently outperform those that just tease a longer watch.
+
+**3. TikTok (30–60 seconds)**
+TikTok requires a hook written specifically for a mid-scroll audience who hasn't chosen to be there. Take the same core insight as the Shorts version but rewrite the opening from scratch. The body can follow a similar arc. The CTA should match the client's TikTok preferences — follow, comment, save — not a generic subscribe push.
+
+**4. Instagram Reels (15–45 seconds)**
+Reels skews slightly more polished than TikTok. The hook can be similar, but the pacing is a little slower and the visual style more considered. Captions also carry more weight on Reels — write a brief alongside the script rather than leaving the client to improvise one.
+
+**5. LinkedIn video (30–90 seconds)**
+LinkedIn audiences expect professional framing. Take the core idea and reposition it around a business result, a professional lesson, or a workplace insight. Casual, creator-style hooks rarely land here — lead with the outcome or the practical takeaway instead.
+
+## A practical workflow for one brief
+
+Before writing a single word, do this:
+
+**Step 1: Define the core insight**
+Write the central idea in one sentence. All five scripts are built around this. If you can't state it clearly in a sentence, the brief isn't specific enough yet — go back to the client.
+
+**Step 2: Write the long-form anchor script**
+Do the full YouTube script first. Developing the idea fully at this stage makes every shorter version faster and better.
+
+**Step 3: Extract the short-form version**
+Find the strongest 30-second moment in the long-form. Extract it, rewrite the opening hook for TikTok, and cut everything that doesn't serve that one point.
+
+**Step 4: Adapt for Reels and LinkedIn**
+These are adjustments, not rewrites. Change the framing and tone; keep the core argument intact.
+
+**Step 5: Write platform-specific captions**
+A single caption reused across platforms is a missed opportunity. Write a short caption for each platform as part of the delivery — it takes 10 minutes and significantly improves how clients perceive the quality of your work.
+
+## What to include in the deliverable
+
+A structured one-idea, five-script package should contain:
+
+- Full YouTube long-form script with B-roll cues
+- YouTube Shorts script (standalone)
+- TikTok script with platform-native hook and CTA
+- Instagram Reels script with caption brief
+- LinkedIn video script with professional framing
+
+Deliver it as a single document, labelled clearly by platform. Clients who receive this kind of structured package are far more likely to retain you on a monthly basis than clients who get one script at a time.
+
+## Common mistakes to avoid
+
+**Starting the adaptation after approval** — plan for five outputs from day one, not as an afterthought once the main script is approved. The brief shapes all five versions.
+
+**Using the same hook everywhere** — a hook that earns attention on YouTube will not stop a scroll on TikTok. Each platform hook needs to be written for that platform specifically.
+
+**Skipping the LinkedIn version** — most freelancers default to YouTube, TikTok, and Reels and ignore LinkedIn. For B2B clients, LinkedIn video is often the highest-value format in the package.
+
+**Delivering five separate files** — one clean, clearly labelled document is easier for clients to act on and easier for you to manage when revisions come in.
+
+Scribtly generates platform-specific scripts from a single brief — YouTube, TikTok, Reels, Shorts, and LinkedIn — using your client's saved voice profile. Instead of writing five first drafts from scratch, you start with five calibrated outputs and spend your time on the refinements that only a human writer can make.`,
+  },
 ];
 
 async function main() {
