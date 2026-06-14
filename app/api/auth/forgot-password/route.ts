@@ -14,7 +14,7 @@ function addHours(date: Date, hours: number) {
 }
 
 export async function POST(req: NextRequest) {
-  const limited = await checkRateLimit(forgotPasswordLimiter, req);
+  const limited = await checkRateLimit(forgotPasswordLimiter(), req);
   if (limited) return limited;
 
   const body = await req.json().catch(() => ({}));

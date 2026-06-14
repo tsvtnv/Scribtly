@@ -2,28 +2,38 @@ import { RateLimiterRedis, RateLimiterRes } from "rate-limiter-flexible";
 import { NextRequest, NextResponse } from "next/server";
 import redis from "@/lib/redis";
 
-const signinLimiter = new RateLimiterRedis({
-  storeClient: redis,
-  keyPrefix: "rl:signin",
-  points: 10,
-  duration: 60 * 15, // 15 minutes
-});
+// Limiters are created lazily so importing this module doesn't trigger a Redis
+// connection at build time (REDIS_URL is only available at runtime).
+let _signinLimiter: RateLimiterRedis | undefined;
+let _signupLimiter: RateLimiterRedis | undefined;
+let _forgotPasswordLimiter: RateLimiterRedis | undefined;
 
-const signupLimiter = new RateLimiterRedis({
-  storeClient: redis,
-  keyPrefix: "rl:signup",
-  points: 5,
-  duration: 60 * 60, // 1 hour
-});
+export function signinLimiter(): RateLimiterRedis {
+  return (_signinLimiter ??= new RateLimiterRedis({
+    storeClient: redis,
+    keyPrefix: "rl:signin",
+    points: 10,
+    duration: 60 * 15,
+  }));
+}
 
-const forgotPasswordLimiter = new RateLimiterRedis({
-  storeClient: redis,
-  keyPrefix: "rl:forgot",
-  points: 5,
-  duration: 60 * 15, // 15 minutes
-});
+export function signupLimiter(): RateLimiterRedis {
+  return (_signupLimiter ??= new RateLimiterRedis({
+    storeClient: redis,
+    keyPrefix: "rl:signup",
+    points: 5,
+    duration: 60 * 60,
+  }));
+}
 
-export { signinLimiter, signupLimiter, forgotPasswordLimiter };
+export function forgotPasswordLimiter(): RateLimiterRedis {
+  return (_forgotPasswordLimiter ??= new RateLimiterRedis({
+    storeClient: redis,
+    keyPrefix: "rl:forgot",
+    points: 5,
+    duration: 60 * 15,
+  }));
+}
 
 function getIp(req: NextRequest): string {
   return (
