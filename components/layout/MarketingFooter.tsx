@@ -83,14 +83,14 @@ export function MarketingFooter() {
             © {new Date().getFullYear()} Scribtly · Made for freelancers
           </span>
           <span>
-            Developed &amp; hosted by{" "}
+            Built by{" "}
             <a
-              href="https://tsvweb.com"
+              href="https://octelis.com"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors"
             >
-              tsvweb.com
+              Octelis
             </a>
           </span>
         </div>
