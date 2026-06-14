@@ -285,6 +285,124 @@ For clients with limited footage, focus your B-roll notes on screen recordings a
 Scribtly includes B-roll cue suggestions in scripts when relevant — especially for tutorial and how-to content where visual reinforcement makes a material difference to viewer retention.`,
   },
   {
+    slug: "how-to-handle-client-script-revisions",
+    title: "How to handle client script revisions without losing your margin",
+    metaDescription:
+      "Revision rounds can quietly eat your freelance margin. Here's how to set a clear revision policy, manage script feedback efficiently, and protect your time.",
+    excerpt:
+      "Every freelance script writer knows the feeling: the job was quoted, the brief was clear, and then the revision cycle started. One round becomes four, and the margin disappears. Here's how to set up the process so that stops happening.",
+    tags: ["client management", "freelance workflow", "script revisions", "revision policy", "freelance business"],
+    readingMins: 6,
+    content: `## Why revisions are the biggest hidden cost in script writing
+
+You quoted the job, the client accepted, you delivered the script, and then the feedback started. One round became two. Two became four. By the time you submitted the final version you'd spent twice the hours you priced for — and you can't invoice for any of it.
+
+Revision creep is one of the most common reasons freelance script writers undercharge and burn out. Not because clients are unreasonable — but because the process wasn't structured clearly from the start.
+
+Here's how to fix it before your next project.
+
+## Set a revision policy before work begins
+
+The single most important thing you can do is define how many revision rounds are included — in writing, before you start.
+
+Most freelancers don't do this. They assume clients will be reasonable. Some are. But "reasonable" means different things to different people, and without a written agreement, you have no reference point when round five arrives.
+
+A practical policy looks like this:
+
+- **One round of revisions included.** A revision round means consolidated written feedback, submitted once, within five business days of delivery.
+- **Additional rounds billed at £X per hour** (or a flat rate per round, whichever you prefer).
+- **Scope changes** — asking for a completely different angle, a new target audience, or a different platform format — are a new brief, not a revision.
+
+Put this in your contract and reference it in your delivery email. You don't need to make it aggressive. A simple "one round of revisions included as per our agreement" in the email is enough.
+
+## Distinguish between a revision and a rewrite
+
+This is the distinction most clients don't understand — and most freelancers don't explain clearly enough.
+
+**A revision** is a change to what was already written: adjusting a line, swapping a phrase, tightening a section, or fixing a factual error. It assumes the brief was followed correctly and the structure is sound.
+
+**A rewrite** is a new creative direction: a different tone, a different hook approach, a completely restructured argument, a different audience framing. This is new work — and it should be priced accordingly.
+
+When feedback arrives that's actually a rewrite request disguised as revision notes, you can flag it professionally: "This would involve revisiting the brief and taking a different creative direction, which falls outside the one included revision round — happy to quote a separate rate for this if useful."
+
+Most clients accept this when it's explained calmly and clearly.
+
+## Structure your delivery to reduce revision requests
+
+The best way to reduce revisions is to give fewer reasons for them. A structured delivery reduces the back-and-forth before it starts.
+
+**Include a brief delivery note.** Two or three sentences explaining your creative choices — why you opened with that hook, why you structured the body this way, what the CTA is designed to do — removes the ambiguity that often triggers unnecessary feedback. Clients who understand your decisions revise less.
+
+**Flag assumptions explicitly.** If the brief was vague and you made a judgement call, say so. "I assumed the tone here should be direct and educational rather than conversational — let me know if you'd prefer the latter." This invites a simple answer rather than a long revision note.
+
+**Set a feedback window.** Ask clients to send feedback as a single consolidated document rather than drip-feeding notes over several days. A single revision round is manageable. Eight individual emails with one comment each is not — and it often results in contradictory feedback from different people on the client's team.
+
+## Handle vague feedback before it becomes a problem
+
+"This doesn't feel right" is the revision note that kills freelance margin.
+
+When feedback is vague, the temptation is to make a series of small changes and hope one of them lands. This is the wrong approach. It produces more rounds, not fewer.
+
+Instead, respond with a clarifying question: "Happy to work on this — could you point me to a specific line or section, or describe what 'right' looks and sounds like for this one? That'll help me nail it faster."
+
+This does three things: it puts the client in the position of being specific, it frames you as a professional who wants to get it right, and it reduces the chance of writing three wrong versions before the right one.
+
+## When a client pushes back on your revision policy
+
+Some clients will push back. They expected unlimited revisions based on past experience with other writers, or they didn't read the contract carefully. Here's a way to handle it without damaging the relationship:
+
+> "I completely understand — I want to make sure the script is right. I've included one round of consolidated revisions in this project, which covers [X]. If we need to go further than that, I can quote an additional round at [rate] — should take [timeframe]. Alternatively, if you can send me all the remaining feedback in one document, I can work through it in the included round."
+
+This offers a solution without backing down. Most clients who push back aren't being difficult — they just haven't thought about the scope. Give them a path forward and the conversation usually resolves cleanly.
+
+## Build a feedback template clients can fill in
+
+One underrated way to improve the quality of revision feedback is to make it easier for clients to give structured notes rather than stream-of-consciousness emails.
+
+A simple feedback template might ask:
+
+- Which sections or lines do you want changed?
+- What's the specific issue — tone, accuracy, phrasing, or structure?
+- What would "better" look like for each note?
+- Are there any sections you're happy with and want kept?
+
+Send this alongside your script delivery. Not every client will use it, but the ones who do will give you revision notes that are faster to action and far less likely to spiral.
+
+## Where AI fits into the revision cycle
+
+One of the practical advantages of using an AI-assisted tool for first drafts is that you can iterate quickly when feedback does arrive. Rather than rewriting a section from scratch, you start with a well-structured draft, apply the feedback, and regenerate the affected parts in your client's saved voice.
+
+Scribtly stores each client's voice profile — their tone, phrases, and audience framing — so when revision notes arrive, you're not starting again. You're refining something that already sounds like them, not something generic you'll have to rewrite anyway.
+
+Fewer revision rounds start with a better first draft. [Try Scribtly free](/signup) and see how much the starting point changes.
+
+## Common revision mistakes to avoid
+
+**Accepting unlimited revisions on a fixed-price contract.** If you agreed a price per script, unlimited rounds mean your hourly rate gets lower with every round. Price in revision limits from day one.
+
+**Making revisions without checking scope first.** If feedback arrives that seems like a rewrite, flag it before you do the work. Not after.
+
+**Revising without written confirmation.** For significant changes, confirm in writing: "Based on your notes, here's what I'll change in the next version: [X, Y, Z]. Does that cover it?" This prevents the feedback goalposts from moving.
+
+**Revising in isolation.** If a client has a team involved in approvals, make sure you're getting consolidated feedback from one point of contact — not separate notes from three different people at three different times.
+
+**Absorbing revision costs without tracking them.** Even if you don't invoice for extra rounds, track the time. It'll show you which clients are profitable and which ones need their rates reviewed.
+
+## A revision process that works in practice
+
+Here's a simple workflow that holds up across most client relationships:
+
+1. **Before you start**: Confirm the brief, document any assumptions, agree the revision policy in writing.
+2. **At delivery**: Include a brief delivery note explaining key creative decisions. Set a feedback window (5 business days is standard).
+3. **When feedback arrives**: Distinguish revision from rewrite. If it's a revision, action it. If it's a rewrite, scope it first.
+4. **On round two**: If you're heading into an extra round, reference the policy, offer a clear path forward, and set expectations on timeline.
+5. **After completion**: Note which clients had clean revision cycles and which didn't. Over time, this shapes who you take on and how you price.
+
+Getting revisions right isn't about being rigid with clients. It's about setting up a structure that makes both sides' expectations clear — so the work stays enjoyable and the margin stays where it should be.
+
+If you're spending more time revising than writing, try [Scribtly's free plan](/signup) — better first drafts in your client's voice mean fewer revision rounds, and more time for the work that actually moves the needle.`,
+  },
+  {
     slug: "how-to-turn-one-idea-into-five-scripts",
     title: "How to turn one video idea into five platform-ready scripts",
     metaDescription:
