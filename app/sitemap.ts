@@ -27,7 +27,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/for-coaches`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE_URL}/for-social-media-managers`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE_URL}/for-video-editors`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+<<<<<<< claude/admiring-gauss-w9HkW
+=======
     { url: `${BASE_URL}/for-personal-brands`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+>>>>>>> main
     { url: `${BASE_URL}/alternatives/chatgpt-for-scripts`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/alternatives/jasper`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/alternatives/copy-ai`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },

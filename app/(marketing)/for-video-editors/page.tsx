@@ -6,12 +6,31 @@ import {
   Check,
   ArrowRight,
   Sparkles,
+  Film,
+  Clock,
+  Layers,
   Clock,
   DollarSign,
   Repeat,
   Users,
   Zap,
   FileText,
+  AlignLeft,
+} from "lucide-react";
+
+export const metadata = {
+  title: "Script writing tool for video editors — Scribtly",
+  description:
+    "Scribtly helps video editors write client scripts faster. Save each client's voice, generate structured scripts with B-roll notes in under 60 seconds.",
+  keywords: [
+    "script writing tool for video editors",
+    "AI script writer for video editors",
+    "video editor script generator",
+    "script writing software video editors",
+    "client script tool for editors",
+    "b-roll script generator",
+    "video script tool freelance editor",
+    "AI tools for video editors",
   Film,
 } from "lucide-react";
 
@@ -34,6 +53,9 @@ export const metadata = {
     type: "website",
     url: "/for-video-editors",
     siteName: "Scribtly",
+    title: "Script writing tool for video editors · Scribtly",
+    description:
+      "Write client scripts with B-roll notes built in. Save each client's voice once, generate platform-native scripts in under 60 seconds.",
     title: "AI script writer for video editors · Scribtly",
     description:
       "Turn scripting into a service. Save your client's voice once, generate scripts with B-roll notes in under 60 seconds, and deliver more without working more hours.",
@@ -41,6 +63,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    title: "Script writing tool for video editors · Scribtly",
+    description:
+      "Write client scripts with B-roll notes built in. Save each client's voice once, generate platform-native scripts in under 60 seconds.",
     title: "AI script writer for video editors · Scribtly",
     description:
       "Turn scripting into a service. Save your client's voice once, generate scripts with B-roll notes in under 60 seconds, and deliver more without working more hours.",
@@ -70,6 +95,10 @@ const faqJsonLd = {
   mainEntity: [
     {
       "@type": "Question",
+      name: "Do the scripts include B-roll notes?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Scribtly generates B-roll suggestions alongside the script so you know exactly what footage to cut to — useful for editing and for sharing a clear brief with your client.",
       name: "Do I need copywriting experience to use Scribtly?",
       acceptedAnswer: {
         "@type": "Answer",
@@ -78,6 +107,10 @@ const faqJsonLd = {
     },
     {
       "@type": "Question",
+      name: "Can I save a different voice profile for each client?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Save each client's niche, tone, target audience, and recurring phrases once. Every script generated for that client pulls from their saved profile — no re-briefing required.",
       name: "Does Scribtly include B-roll notes in scripts?",
       acceptedAnswer: {
         "@type": "Answer",
@@ -86,6 +119,10 @@ const faqJsonLd = {
     },
     {
       "@type": "Question",
+      name: "What platforms does Scribtly support?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "YouTube (long-form and Shorts), TikTok, Instagram Reels, LinkedIn video, podcast scripts, and video ads. Each format gets its own structure and pacing — not a one-size template.",
       name: "Can I manage scripts for multiple clients?",
       acceptedAnswer: {
         "@type": "Answer",
@@ -94,6 +131,10 @@ const faqJsonLd = {
     },
     {
       "@type": "Question",
+      name: "How is Scribtly different from using ChatGPT?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "ChatGPT needs you to re-explain the client's voice every single session. Scribtly saves it permanently. You also get structured script output — hook, body, CTA, B-roll notes — without building prompts yourself.",
       name: "How is Scribtly different from ChatGPT for scripting?",
       acceptedAnswer: {
         "@type": "Answer",
@@ -105,6 +146,15 @@ const faqJsonLd = {
       name: "Is there a free plan?",
       acceptedAnswer: {
         "@type": "Answer",
+        text: "Yes. You get 5 scripts free with no credit card required — enough to test across a couple of client accounts and see the output quality before deciding.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I use Scribtly if I only write scripts occasionally?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Absolutely. Even if you write one or two scripts a month as part of your editing package, Scribtly gets you to a solid first draft in under 60 seconds — which means scripting stops being the part you dread.",
         text: "Yes. You get 5 scripts free with no credit card required — enough to test with a real client project before committing.",
       },
     },
@@ -114,12 +164,25 @@ const faqJsonLd = {
 const stats = [
   { value: "< 60s", label: "first draft per script" },
   { value: "B-roll notes", label: "built into every script" },
+  { value: "Per-client", label: "saved voice profiles" },
   { value: "Add-on service", label: "scripts + edits = higher rates" },
 ];
 
 const steps = [
   {
     n: "1",
+    title: "Save the client's voice profile",
+    desc: "Add their niche, tone, audience, and recurring phrases. Takes 5 minutes per client. Scribtly remembers it — you never repeat the brief again.",
+  },
+  {
+    n: "2",
+    title: "Generate the script",
+    desc: "Pick the platform and describe the topic. A full structured script with hook, body, CTA, and B-roll notes comes back in under 60 seconds — in the client's voice.",
+  },
+  {
+    n: "3",
+    title: "Refine, share, and edit",
+    desc: "Apply your judgement to the draft, share it for client review, then move straight into the edit. No more script back-and-forth holding up your timeline.",
     title: "Save your client's voice profile",
     desc: "Add their niche, tone, audience, and recurring phrases. Takes 5 minutes per client. You never re-explain their brand again.",
   },
@@ -137,6 +200,19 @@ const steps = [
 
 const pains = [
   {
+    icon: Film,
+    title: "Scripting is holding up your edits",
+    desc: "When a client can't deliver a script on time, your edit stalls. Scribtly lets you generate the script yourself — in their voice — so the project keeps moving.",
+  },
+  {
+    icon: Clock,
+    title: "Writing scripts takes time you don't charge for",
+    desc: "You're a video editor, not a copywriter. But clients expect you to help. Scribtly gets you to a first draft in under 60 seconds so scripting stops eating into your editing time.",
+  },
+  {
+    icon: Repeat,
+    title: "Re-explaining the same client to ChatGPT every time",
+    desc: "Pasting tone guides into every new session is a time tax. Scribtly saves each client's voice permanently — one setup, unlimited scripts.",
     icon: Clock,
     title: "Clients ask you to write the script too",
     desc: "You came to edit. They want a full package — script, edit, captions. Scribtly gets you a solid first draft in under 60 seconds so saying yes to scripting doesn't eat your editing time.",
@@ -157,6 +233,12 @@ const features = [
   {
     icon: Users,
     title: "Client voice profiles",
+    desc: "Save each client's tone, niche, audience, and phrases once. Every script generated for that client stays consistent — automatically.",
+  },
+  {
+    icon: AlignLeft,
+    title: "B-roll notes built in",
+    desc: "Scripts come with suggested B-roll so you know what footage to plan for — and clients get a clearer picture of the finished video.",
     desc: "Save each client's tone, niche, audience, and phrases once. Every script generated for that client stays on-brand automatically.",
   },
   {
@@ -167,6 +249,12 @@ const features = [
   {
     icon: Zap,
     title: "Platform-native structure",
+    desc: "YouTube, TikTok, Reels, LinkedIn — each gets its own format, pacing, and structure. No reformatting by hand.",
+  },
+  {
+    icon: FileText,
+    title: "Organised by client",
+    desc: "Every script is saved and searchable by client. Reuse, reference, or adapt past scripts without hunting through email threads.",
     desc: "YouTube, TikTok, Reels, LinkedIn — each platform gets its own script format and pacing. No reformatting by hand.",
   },
   {
@@ -177,6 +265,19 @@ const features = [
 ];
 
 const befores = [
+  "Waiting on clients to deliver scripts before you can start editing",
+  "Pasting tone guides into ChatGPT before every scripting session",
+  "Generic output that sounds nothing like the client",
+  "No B-roll direction in the script — you have to guess",
+  "Manually reformatting scripts for TikTok, YouTube, and Reels",
+];
+
+const afters = [
+  "Generate the script yourself in under 60 seconds — in their voice",
+  "Client voice saved permanently — open Scribtly and generate",
+  "Output sounds like the client because it's built from their saved profile",
+  "B-roll suggestions included in every script automatically",
+  "Platform-native structure chosen automatically for each format",
   "Clients sending bullet points and asking you to 'just turn this into a script'",
   "Spending 2 hours writing before you even open your editing software",
   "Re-watching old videos to remember how a client likes to sound",
@@ -194,6 +295,28 @@ const afters = [
 
 const faqs = [
   {
+    q: "Do the scripts include B-roll notes?",
+    a: "Yes. Scribtly generates B-roll suggestions alongside the script so you know exactly what footage to cut to — useful for editing and for sharing a clear brief with your client.",
+  },
+  {
+    q: "Can I save a different voice profile for each client?",
+    a: "Yes. Save each client's niche, tone, target audience, and recurring phrases once. Every script generated for that client pulls from their saved profile — no re-briefing required.",
+  },
+  {
+    q: "What platforms does Scribtly support?",
+    a: "YouTube (long-form and Shorts), TikTok, Instagram Reels, LinkedIn video, podcast scripts, and video ads. Each format gets its own structure and pacing — not a one-size template.",
+  },
+  {
+    q: "How is Scribtly different from using ChatGPT?",
+    a: "ChatGPT needs you to re-explain the client's voice every single session. Scribtly saves it permanently. You also get structured script output — hook, body, CTA, B-roll notes — without building prompts yourself.",
+  },
+  {
+    q: "Is there a free plan?",
+    a: "Yes. You get 5 scripts free with no credit card required — enough to test across a couple of client accounts and see the output quality before deciding.",
+  },
+  {
+    q: "Can I use Scribtly if I only write scripts occasionally?",
+    a: "Absolutely. Even if you write one or two scripts a month as part of your editing package, Scribtly gets you to a solid first draft in under 60 seconds — which means scripting stops being the part you dread.",
     q: "Do I need copywriting experience to use Scribtly?",
     a: "No. Scribtly generates platform-native scripts from a saved client voice profile. You describe the topic and Scribtly builds the hook, body, CTA, and B-roll notes. You apply your judgement and edit — no blank page, no copywriting background required.",
   },
@@ -240,6 +363,10 @@ export default function ForVideoEditorsPage() {
             For Video Editors
           </div>
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05]">
+            Stop waiting on scripts.<br className="hidden md:block" /> Write them yourself in 60 seconds.
+          </h1>
+          <p className="text-base text-text-secondary dark:text-dark-muted mt-5 max-w-xl mx-auto leading-relaxed">
+            Scribtly is the script writing tool built for video editors who write client scripts as part of their service. Save each client&apos;s voice once, generate structured scripts with B-roll notes in under 60 seconds, and keep your edit timeline moving.
             Scripts and edits.<br className="hidden md:block" /> Deliver both. Charge more.
           </h1>
           <p className="text-base text-text-secondary dark:text-dark-muted mt-5 max-w-xl mx-auto leading-relaxed">
@@ -268,6 +395,7 @@ export default function ForVideoEditorsPage() {
           </div>
           <div className="mt-10 mx-auto max-w-3xl px-2">
             <Image
+              src="/hero-agencies.png"
               src="/hero-freelancers.png"
               alt="Scribtly script writing tool for video editors"
               width={1200}
@@ -283,6 +411,10 @@ export default function ForVideoEditorsPage() {
       {/* ── HOW IT WORKS ── */}
       <section className="max-w-5xl mx-auto px-5 py-16 md:py-20">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-3">
+          From client brief to script in 3 steps
+        </h2>
+        <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-12 max-w-xl mx-auto">
+          No blank page. No voice guide hunting. No reformatting for every platform.
           From client brief to script and edit in 3 steps
         </h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-12 max-w-xl mx-auto">
@@ -313,6 +445,10 @@ export default function ForVideoEditorsPage() {
       <section className="bg-[var(--color-surface)] border-y-hair border-[var(--color-border)]">
         <div className="max-w-5xl mx-auto px-5 py-16 md:py-20">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-3">
+            Three problems video editors hit with scripts. One fix.
+          </h2>
+          <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-10 max-w-xl mx-auto">
+            These are what make script work a drag. Scribtly fixes all three without adding more to your plate.
             Three things video editors deal with. One fix.
           </h2>
           <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-10 max-w-xl mx-auto">
@@ -353,6 +489,7 @@ export default function ForVideoEditorsPage() {
           Before and after Scribtly
         </h2>
         <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-10 max-w-xl mx-auto">
+          Same clients, same deliverables — completely different workflow.
           Same clients, same workload — completely different workflow.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -391,6 +528,10 @@ export default function ForVideoEditorsPage() {
       <section className="bg-[var(--color-surface)] border-y-hair border-[var(--color-border)]">
         <div className="max-w-4xl mx-auto px-5 py-12 md:py-16">
           <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-center mb-3">
+            Scripts built for every platform you edit for
+          </h2>
+          <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-8 max-w-lg mx-auto">
+            Each platform gets its own structure, pacing, and B-roll approach — not a one-size template.
             Scripts for every platform you edit for
           </h2>
           <p className="text-sm text-text-secondary dark:text-dark-muted text-center mb-8 max-w-lg mx-auto">
@@ -399,6 +540,9 @@ export default function ForVideoEditorsPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {[
               { href: "/youtube-scripts", label: "YouTube scripts" },
+              { href: "/youtube-shorts-scripts", label: "YouTube Shorts scripts" },
+              { href: "/tiktok-scripts", label: "TikTok scripts" },
+              { href: "/instagram-reels-scripts", label: "Instagram Reels scripts" },
               { href: "/tiktok-scripts", label: "TikTok scripts" },
               { href: "/instagram-reels-scripts", label: "Instagram Reels scripts" },
               { href: "/youtube-shorts-scripts", label: "YouTube Shorts scripts" },
@@ -415,6 +559,15 @@ export default function ForVideoEditorsPage() {
               </Link>
             ))}
           </div>
+          <div className="mt-6 flex flex-wrap gap-4 justify-center text-sm">
+            <Link href="/video-script-template" className="text-primary hover:underline">
+              Free video script template →
+            </Link>
+            <Link href="/ai-script-writer" className="text-primary hover:underline">
+              About the Scribtly AI script writer →
+            </Link>
+            <Link href="/for-freelancers" className="text-primary hover:underline">
+              Scribtly for freelancers →
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm">
             <Link href="/ai-script-writer" className="text-primary hover:underline">
               Learn more about the Scribtly AI script writer →
@@ -441,6 +594,13 @@ export default function ForVideoEditorsPage() {
         </div>
         <div className="mt-8 pt-6 border-t border-[var(--color-border)]">
           <p className="text-sm text-text-secondary dark:text-dark-muted">
+            See how Scribtly compares to other tools:{" "}
+            <Link href="/alternatives/chatgpt-for-scripts" className="text-primary hover:underline">
+              Scribtly vs ChatGPT
+            </Link>
+            {" · "}
+            <Link href="/alternatives/jasper" className="text-primary hover:underline">
+              Scribtly vs Jasper
             Also used by:{" "}
             <Link href="/for-freelancers" className="text-primary hover:underline">
               Freelance script writers
@@ -477,6 +637,7 @@ export default function ForVideoEditorsPage() {
             Start with 5 free scripts.
           </h2>
           <p className="text-white/75 mb-8">
+            No credit card. No commitment. Generate your first client script in under 60 seconds.
             No credit card. No commitment. Test it with a real client project today.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
