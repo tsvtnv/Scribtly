@@ -26,6 +26,37 @@ function getLimiter(config: LimiterConfig): RateLimiterRedis {
     }));
   }
   return limiterCache.get(config.keyPrefix)!;
+// Limiters are created lazily so importing this module doesn't trigger a Redis
+// connection at build time (REDIS_URL is only available at runtime).
+let _signinLimiter: RateLimiterRedis | undefined;
+let _signupLimiter: RateLimiterRedis | undefined;
+let _forgotPasswordLimiter: RateLimiterRedis | undefined;
+
+export function signinLimiter(): RateLimiterRedis {
+  return (_signinLimiter ??= new RateLimiterRedis({
+    storeClient: redis,
+    keyPrefix: "rl:signin",
+    points: 10,
+    duration: 60 * 15,
+  }));
+}
+
+export function signupLimiter(): RateLimiterRedis {
+  return (_signupLimiter ??= new RateLimiterRedis({
+    storeClient: redis,
+    keyPrefix: "rl:signup",
+    points: 5,
+    duration: 60 * 60,
+  }));
+}
+
+export function forgotPasswordLimiter(): RateLimiterRedis {
+  return (_forgotPasswordLimiter ??= new RateLimiterRedis({
+    storeClient: redis,
+    keyPrefix: "rl:forgot",
+    points: 5,
+    duration: 60 * 15,
+  }));
 }
 
 function getIp(req: NextRequest): string {
