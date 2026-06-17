@@ -34,6 +34,7 @@ export interface UnipilePerson {
   headline?: string;
   location?: string;
   profile_picture_url?: string;
+  company_name?: string;
   profile_url: string;
   network_distance?: string;
   followers_count?: number;
