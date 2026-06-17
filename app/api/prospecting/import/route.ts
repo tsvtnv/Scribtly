@@ -5,8 +5,7 @@ import { z } from "zod";
 
 const profileSchema = z.object({
   id: z.string(),
-  first_name: z.string(),
-  last_name: z.string(),
+  name: z.string(),
   headline: z.string().optional(),
   location: z.string().optional(),
   profile_picture_url: z.string().optional(),
@@ -52,7 +51,7 @@ export async function POST(req: NextRequest) {
           workspaceId: user.workspaceId,
           campaignId,
           linkedInProfileId: p.id,
-          name: `${p.first_name} ${p.last_name}`.trim(),
+          name: p.name,
           headline: p.headline,
           company: p.company_name,
           location: p.location,
