@@ -30,13 +30,13 @@ export interface UnipileAccount {
 export interface UnipilePerson {
   id: string;
   public_identifier: string;
-  first_name: string;
-  last_name: string;
+  name: string;
   headline?: string;
   location?: string;
   profile_picture_url?: string;
-  company_name?: string;
   profile_url: string;
+  network_distance?: string;
+  followers_count?: number;
 }
 
 export const unipile = {
@@ -65,9 +65,10 @@ export const unipile = {
   },
 
   async searchPeople(accountId: string, query: string, limit = 15): Promise<{ items: UnipilePerson[] }> {
-    return req("POST", "/api/v1/linkedin/search/people", {
-      account_id: accountId,
-      query,
+    return req("POST", `/api/v1/linkedin/search?account_id=${accountId}`, {
+      api: "classic",
+      category: "people",
+      keywords: query,
       limit,
     });
   },
