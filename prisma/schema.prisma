@@ -1,0 +1,265 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String?
+  avatarUrl    String?
+  workspaceId  String
+  workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  sessions     Session[]
+
+  @@index([workspaceId])
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+}
+
+model Workspace {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  name                String
+  logoUrl             String?
+  allowDuplicateLeads Boolean  @default(true)
+  skipLowIcpLeads     Boolean  @default(false)
+  createdAt           DateTime @default(now())
+
+  users            User[]
+  linkedInAccounts LinkedInAccount[]
+  campaigns        Campaign[]
+  leads            Lead[]
+  conversations    Conversation[]
+  automationLogs   AutomationLog[]
+  events           Event[]
+}
+
+enum LinkedInAccountStatus {
+  ACTIVE
+  DISCONNECTED
+  RECONNECTING
+}
+
+model LinkedInAccount {
+  id               String                @id @default(cuid())
+  workspaceId      String
+  workspace        Workspace             @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  unipileAccountId String                @unique
+  name             String
+  avatarUrl        String?
+  headline         String?
+  status           LinkedInAccountStatus @default(ACTIVE)
+  dailyConnLimit   Int                   @default(25)
+  dailyMsgLimit    Int                   @default(50)
+  connSentToday    Int                   @default(0)
+  msgSentToday     Int                   @default(0)
+  limitsResetAt    DateTime
+  lastSyncAt       DateTime?
+  createdAt        DateTime              @default(now())
+
+  campaigns Campaign[]
+
+  @@index([workspaceId])
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+}
+
+enum CampaignType {
+  CONNECT_NOTE
+  CONNECT
+  FIRST_DEGREE
+}
+
+model Campaign {
+  id                     String          @id @default(cuid())
+  workspaceId            String
+  workspace              Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  linkedInAccountId      String
+  linkedInAccount        LinkedInAccount @relation(fields: [linkedInAccountId], references: [id])
+  name                   String
+  status                 CampaignStatus  @default(DRAFT)
+  type                   CampaignType    @default(CONNECT_NOTE)
+  positioningText        String?
+  connectionNoteTemplate String?
+  requireApproval        Boolean         @default(true)
+  followUpsEnabled       Boolean         @default(false)
+  followUpCount          Int             @default(1)
+  followUpDelayDays      Int             @default(3)
+  followUpTemplate       String?
+  autoBookEnabled        Boolean         @default(false)
+  autoBookCtaLink        String?
+  autoBookReplyTemplate  String?
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+
+  leads    Lead[]
+  messages Message[]
+  events   Event[]
+
+  @@index([workspaceId, status])
+}
+
+enum LeadStatus {
+  NEW
+  ENRICHED
+  QUEUED
+  PENDING_APPROVAL
+  CONTACTED
+  ACCEPTED
+  REPLIED
+  SKIPPED
+  BOUNCED
+}
+
+model Lead {
+  id                String     @id @default(cuid())
+  workspaceId       String
+  workspace         Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  campaignId        String
+  campaign          Campaign   @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  linkedInProfileId String
+  name              String
+  headline          String?
+  company           String?
+  location          String?
+  avatarUrl         String?
+  profileUrl        String
+  icpScore          Int?
+  status            LeadStatus @default(NEW)
+  contactedAt       DateTime?
+  acceptedAt        DateTime?
+  repliedAt         DateTime?
+  enrichedAt        DateTime?
+  createdAt         DateTime   @default(now())
+
+  messages     Message[]
+  conversation Conversation?
+  events       Event[]
+
+  @@unique([campaignId, linkedInProfileId])
+  @@index([campaignId, status])
+  @@index([workspaceId])
+}
+
+enum MessageType {
+  CONNECTION_NOTE
+  FOLLOWUP
+  AUTOBOOK
+}
+
+enum MessageStatus {
+  PENDING_APPROVAL
+  APPROVED
+  SENT
+  FAILED
+}
+
+model Message {
+  id               String        @id @default(cuid())
+  leadId           String
+  lead             Lead          @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  campaignId       String
+  campaign         Campaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  type             MessageType
+  content          String
+  status           MessageStatus @default(PENDING_APPROVAL)
+  unipileMessageId String?
+  sentAt           DateTime?
+  createdAt        DateTime      @default(now())
+
+  @@index([campaignId, status])
+  @@index([leadId])
+}
+
+model Conversation {
+  id                 String    @id @default(cuid())
+  workspaceId        String
+  workspace          Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId             String    @unique
+  lead               Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  unipileThreadId    String    @unique
+  lastMessageAt      DateTime?
+  lastMessagePreview String?
+  hasUnread          Boolean   @default(false)
+  createdAt          DateTime  @default(now())
+
+  messages ConversationMessage[]
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+model ConversationMessage {
+  id               String           @id @default(cuid())
+  conversationId   String
+  conversation     Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  content          String
+  direction        MessageDirection
+  sentAt           DateTime
+  unipileMessageId String           @unique
+  createdAt        DateTime         @default(now())
+
+  @@index([conversationId, sentAt])
+}
+
+enum AutomationTaskType {
+  ENRICH_LEAD
+  SCORE_LEAD
+  SEND_MESSAGE
+  SYNC_INBOX
+  RESET_DAILY_LIMITS
+}
+
+enum AutomationTaskStatus {
+  EXECUTING
+  COMPLETED
+  FAILED
+}
+
+model AutomationLog {
+  id          String               @id @default(cuid())
+  workspaceId String
+  workspace   Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  taskType    AutomationTaskType
+  status      AutomationTaskStatus
+  result      String?
+  metadata    Json?
+  startedAt   DateTime             @default(now())
+  completedAt DateTime?
+
+  @@index([workspaceId, startedAt])
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  campaignId  String?
+  campaign    Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  leadId      String?
+  lead        Lead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  type        String
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@index([campaignId, createdAt])
+}
