@@ -91,10 +91,8 @@ export function MobileSidebarTrigger() {
   const pathname = usePathname();
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <button className="md:hidden p-2" style={{ color: "var(--text-primary)" }}>
-          <Menu size={20} />
-        </button>
+      <SheetTrigger className="md:hidden p-2 bg-transparent border-0 cursor-pointer" style={{ color: "var(--text-primary)" }}>
+        <Menu size={20} />
       </SheetTrigger>
       <SheetContent side="left" className="p-0 w-56"
         style={{ background: "var(--bg-subtle)", borderColor: "var(--border)" }}>
