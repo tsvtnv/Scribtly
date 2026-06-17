@@ -11,6 +11,8 @@ export default function ConnectLinkedInPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [checkpoint, setCheckpoint] = useState<{ account_id: string; message: string } | null>(null);
+  const [otp, setOtp] = useState("");
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
@@ -24,15 +26,42 @@ export default function ConnectLinkedInPage() {
       body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
+    setLoading(false);
     if (!res.ok) {
       setError(data.error ?? "Failed to connect account");
-      setLoading(false);
+      return;
+    }
+    if (data.checkpoint) {
+      setCheckpoint({ account_id: data.account_id, message: data.message });
       return;
     }
     setSuccess(true);
-    setTimeout(() => {
-      window.location.href = `${appUrl}/accounts`;
-    }, 1500);
+    setTimeout(() => { window.location.href = `${appUrl}/accounts`; }, 1500);
+  }
+
+  async function handleOtp(e: React.FormEvent) {
+    e.preventDefault();
+    if (!checkpoint) return;
+    setLoading(true);
+    setError("");
+    const res = await fetch("/api/accounts/otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ account_id: checkpoint.account_id, code: otp }),
+    });
+    const data = await res.json();
+    setLoading(false);
+    if (!res.ok) {
+      setError(data.error ?? "Invalid code");
+      return;
+    }
+    if (data.checkpoint) {
+      setCheckpoint({ account_id: data.account_id, message: data.message });
+      setOtp("");
+      return;
+    }
+    setSuccess(true);
+    setTimeout(() => { window.location.href = `${appUrl}/accounts`; }, 1500);
   }
 
   return (
@@ -52,6 +81,35 @@ export default function ConnectLinkedInPage() {
               <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>Redirecting back to accounts…</p>
             </CardContent>
           </Card>
+        ) : checkpoint ? (
+          <Card style={{ background: "var(--bg-base)", border: "1px solid var(--border)" }}>
+            <CardHeader>
+              <CardTitle style={{ color: "var(--text-primary)" }}>Verification required</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>{checkpoint.message}</p>
+              <form onSubmit={handleOtp} className="space-y-4">
+                <div className="space-y-1">
+                  <Label style={{ color: "var(--text-muted)" }}>Verification code</Label>
+                  <Input
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    value={otp}
+                    onChange={e => setOtp(e.target.value)}
+                    placeholder="123456"
+                    required
+                    style={{ borderColor: "var(--border)", background: "var(--bg-subtle)" }}
+                  />
+                </div>
+                {error && <p className="text-sm text-red-600">{error}</p>}
+                <Button type="submit" disabled={loading} className="w-full"
+                  style={{ background: "var(--accent)", color: "#fff" }}>
+                  {loading ? "Verifying…" : "Verify"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         ) : (
           <Card style={{ background: "var(--bg-base)", border: "1px solid var(--border)" }}>
             <CardHeader>
@@ -61,12 +119,12 @@ export default function ConnectLinkedInPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1">
                   <Label style={{ color: "var(--text-muted)" }}>LinkedIn email</Label>
-                  <Input type="email" value={email} onChange={e => setEmail(e.target.value)} required
+                  <Input type="email" autoComplete="username" value={email} onChange={e => setEmail(e.target.value)} required
                     style={{ borderColor: "var(--border)", background: "var(--bg-subtle)" }} />
                 </div>
                 <div className="space-y-1">
                   <Label style={{ color: "var(--text-muted)" }}>LinkedIn password</Label>
-                  <Input type="password" value={password} onChange={e => setPassword(e.target.value)} required
+                  <Input type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} required
                     style={{ borderColor: "var(--border)", background: "var(--bg-subtle)" }} />
                 </div>
                 {error && <p className="text-sm text-red-600">{error}</p>}

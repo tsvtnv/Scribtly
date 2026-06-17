@@ -40,12 +40,16 @@ export interface UnipilePerson {
 }
 
 export const unipile = {
-  async createAccount(email: string, password: string): Promise<{ account_id: string }> {
+  async createAccount(email: string, password: string): Promise<{ account_id: string; checkpoint?: { type: string; message?: string } }> {
     return req("POST", "/api/v1/accounts", {
       provider: "LINKEDIN",
       username: email,
       password,
     });
+  },
+
+  async submitCheckpoint(accountId: string, code: string): Promise<{ account_id: string; checkpoint?: { type: string; message?: string } }> {
+    return req("POST", `/api/v1/accounts/${accountId}/checkpoint`, { code });
   },
 
   async getAccount(accountId: string): Promise<UnipileAccount> {

@@ -5,8 +5,8 @@ import { unipile } from "@/lib/unipile";
 import { z } from "zod";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
+  account_id: z.string().min(1),
+  code: z.string().min(1),
 });
 
 export async function POST(req: NextRequest) {
@@ -17,25 +17,25 @@ export async function POST(req: NextRequest) {
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Invalid input" }, { status: 400 });
 
-  const { email, password } = parsed.data;
+  const { account_id, code } = parsed.data;
 
-  const created = await unipile.createAccount(email, password);
+  const result = await unipile.submitCheckpoint(account_id, code);
 
-  // LinkedIn may require OTP verification (checkpoint)
-  if (created.checkpoint) {
+  // Another checkpoint (e.g. 2FA after OTP)
+  if (result.checkpoint) {
     return NextResponse.json({
       checkpoint: true,
-      account_id: created.account_id,
-      message: created.checkpoint.message ?? "Enter the verification code sent by LinkedIn",
+      account_id: result.account_id,
+      message: result.checkpoint.message ?? "Enter the next verification code",
     });
   }
 
-  const profile = await unipile.getAccount(created.account_id);
+  const profile = await unipile.getAccount(account_id);
 
   const account = await prisma.linkedInAccount.create({
     data: {
       workspaceId: user.workspaceId,
-      unipileAccountId: created.account_id,
+      unipileAccountId: account_id,
       name: profile.name,
       avatarUrl: profile.avatar_url,
       headline: profile.headline,
