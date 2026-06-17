@@ -6,7 +6,7 @@ export default function proxy(request: NextRequest) {
 
   // connect.scribtly.com → /connect routes
   if (host.startsWith("connect.")) {
-    if (!pathname.startsWith("/connect")) {
+    if (!pathname.startsWith("/connect") && !pathname.startsWith("/api/")) {
       return NextResponse.rewrite(new URL(`/connect${pathname}`, request.url));
     }
     return NextResponse.next();
