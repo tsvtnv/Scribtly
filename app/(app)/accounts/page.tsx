@@ -66,7 +66,7 @@ export default function AccountsPage() {
               <Avatar className="w-12 h-12">
                 <AvatarImage src={acc.avatarUrl ?? undefined} />
                 <AvatarFallback style={{ background: "var(--bg-subtle)" }}>
-                  {acc.name.charAt(0)}
+                  {acc.name?.charAt(0) ?? "?"}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">

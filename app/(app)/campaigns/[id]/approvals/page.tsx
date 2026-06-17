@@ -47,7 +47,7 @@ export default function ApprovalsPage({ params }: { params: Promise<{ id: string
           <div className="flex items-center gap-3 mb-3">
             <Avatar className="w-8 h-8">
               <AvatarImage src={a.lead.avatarUrl ?? undefined} />
-              <AvatarFallback style={{ background: "var(--bg-subtle)", fontSize: 12 }}>{a.lead.name.charAt(0)}</AvatarFallback>
+              <AvatarFallback style={{ background: "var(--bg-subtle)", fontSize: 12 }}>{a.lead.name?.charAt(0) ?? "?"}</AvatarFallback>
             </Avatar>
             <div>
               <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>{a.lead.name}</p>

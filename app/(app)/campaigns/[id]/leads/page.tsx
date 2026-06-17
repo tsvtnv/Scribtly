@@ -106,7 +106,7 @@ export default function LeadsPage({ params }: { params: Promise<{ id: string }> 
                     <div className="flex items-center gap-2">
                       <Avatar className="w-7 h-7 shrink-0">
                         <AvatarImage src={lead.avatarUrl ?? undefined} />
-                        <AvatarFallback style={{ background: "var(--bg-subtle)", fontSize: 11 }}>{lead.name.charAt(0)}</AvatarFallback>
+                        <AvatarFallback style={{ background: "var(--bg-subtle)", fontSize: 11 }}>{lead.name?.charAt(0) ?? "?"}</AvatarFallback>
                       </Avatar>
                       <span className="font-medium truncate max-w-[140px]" style={{ color: "var(--text-primary)" }}>{lead.name}</span>
                     </div>

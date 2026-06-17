@@ -70,7 +70,7 @@ export default function InboxPage() {
                 <Avatar className="w-9 h-9">
                   <AvatarImage src={conv.lead.avatarUrl ?? undefined} />
                   <AvatarFallback style={{ background: "var(--bg-subtle)", fontSize: 13 }}>
-                    {conv.lead.name.charAt(0)}
+                    {conv.lead.name?.charAt(0) ?? "?"}
                   </AvatarFallback>
                 </Avatar>
                 {conv.hasUnread && (
@@ -112,7 +112,7 @@ export default function InboxPage() {
               <Avatar className="w-8 h-8">
                 <AvatarImage src={selected.lead.avatarUrl ?? undefined} />
                 <AvatarFallback style={{ background: "var(--bg-subtle)", fontSize: 12 }}>
-                  {selected.lead.name.charAt(0)}
+                  {selected.lead.name?.charAt(0) ?? "?"}
                 </AvatarFallback>
               </Avatar>
               <div>
@@ -145,7 +145,7 @@ export default function InboxPage() {
             <Avatar className="w-14 h-14 mx-auto">
               <AvatarImage src={selected.lead.avatarUrl ?? undefined} />
               <AvatarFallback style={{ background: "var(--bg-base)", fontSize: 18 }}>
-                {selected.lead.name.charAt(0)}
+                {selected.lead.name?.charAt(0) ?? "?"}
               </AvatarFallback>
             </Avatar>
             <div className="text-center">
