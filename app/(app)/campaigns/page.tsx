@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Pause, Play, Pencil, Trash2 } from "lucide-react";
 
@@ -43,9 +42,11 @@ export default function CampaignsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>Campaigns</h1>
-        <Button asChild style={{ background: "var(--accent)", color: "#fff" }}>
-          <Link href="/campaigns/new"><Plus size={16} className="mr-2" />New campaign</Link>
-        </Button>
+        <Link href="/campaigns/new"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
+          style={{ background: "var(--accent)", color: "#fff" }}>
+          <Plus size={16} />New campaign
+        </Link>
       </div>
       <div className="flex gap-3 mb-6">
         <Input placeholder="Search campaigns…" value={search} onChange={e => setSearch(e.target.value)}
@@ -56,9 +57,11 @@ export default function CampaignsPage() {
           style={{ borderColor: "var(--border)", background: "var(--bg-subtle)" }}>
           <p className="font-medium" style={{ color: "var(--text-primary)" }}>No campaigns yet</p>
           <p className="text-sm mt-1 mb-4" style={{ color: "var(--text-muted)" }}>Create your first campaign to start reaching out.</p>
-          <Button asChild style={{ background: "var(--accent)", color: "#fff" }}>
-            <Link href="/campaigns/new">New campaign</Link>
-          </Button>
+          <Link href="/campaigns/new"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
+            style={{ background: "var(--accent)", color: "#fff" }}>
+            New campaign
+          </Link>
         </div>
       )}
       <div className="space-y-3">

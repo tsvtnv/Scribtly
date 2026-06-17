@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Trash2, Plus, Wifi, WifiOff } from "lucide-react";
@@ -38,12 +37,11 @@ export default function AccountsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>LinkedIn Accounts</h1>
-        <Button asChild style={{ background: "var(--accent)", color: "#fff" }}>
-          <a href={`${connectUrl}/connect/linkedin`}>
-            <Plus size={16} className="mr-2" />
-            Connect account
-          </a>
-        </Button>
+        <a href={`${connectUrl}/connect/linkedin`}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
+          style={{ background: "var(--accent)", color: "#fff" }}>
+          <Plus size={16} />Connect account
+        </a>
       </div>
       {accounts.length === 0 ? (
         <div className="rounded-xl border p-12 text-center"
@@ -52,9 +50,11 @@ export default function AccountsPage() {
           <p className="text-sm mt-1 mb-4" style={{ color: "var(--text-muted)" }}>
             Connect your LinkedIn account to start sending outreach.
           </p>
-          <Button asChild style={{ background: "var(--accent)", color: "#fff" }}>
-            <a href={`${connectUrl}/connect/linkedin`}>Connect LinkedIn</a>
-          </Button>
+          <a href={`${connectUrl}/connect/linkedin`}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
+            style={{ background: "var(--accent)", color: "#fff" }}>
+            Connect LinkedIn
+          </a>
         </div>
       ) : (
         <div className="space-y-3">
