@@ -52,6 +52,10 @@ export const unipile = {
     return req("POST", `/api/v1/accounts/${accountId}/checkpoint`, { code });
   },
 
+  async listAccounts(): Promise<{ items: UnipileAccount[] }> {
+    return req("GET", "/api/v1/accounts?limit=100");
+  },
+
   async getAccount(accountId: string): Promise<UnipileAccount> {
     return req("GET", `/api/v1/accounts/${accountId}`);
   },

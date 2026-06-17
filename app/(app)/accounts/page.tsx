@@ -25,7 +25,9 @@ export default function AccountsPage() {
     if (res.ok) setAccounts(await res.json());
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    fetch("/api/accounts/sync", { method: "POST" }).finally(() => load());
+  }, []);
 
   async function handleDelete(id: string) {
     if (!confirm("Remove this LinkedIn account?")) return;
