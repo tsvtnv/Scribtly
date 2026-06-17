@@ -97,7 +97,7 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
                     <Avatar className="w-8 h-8 shrink-0">
                       <AvatarImage src={p.profile_picture_url} />
                       <AvatarFallback style={{ background: "var(--bg-subtle)", fontSize: 12 }}>
-                        {p.first_name.charAt(0)}
+                        {p.first_name?.charAt(0) ?? "?"}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">

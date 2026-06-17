@@ -104,7 +104,7 @@ export function CampaignWizard({ accounts }: WizardProps) {
                       }}>
                       <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
                         style={{ background: "var(--accent)", color: "#fff" }}>
-                        {acc.name.charAt(0)}
+                        {acc.name?.charAt(0) ?? "?"}
                       </div>
                       <span className="font-medium text-sm" style={{ color: "var(--text-primary)" }}>{acc.name}</span>
                     </button>
