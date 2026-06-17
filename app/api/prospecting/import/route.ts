@@ -1,21 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { unipile, type UnipilePerson } from "@/lib/unipile";
 import { z } from "zod";
 
-const profileSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  headline: z.string().optional(),
-  location: z.string().optional(),
-  profile_picture_url: z.string().optional(),
-  company_name: z.string().optional(),
-  profile_url: z.string(),
-});
+export const maxDuration = 60;
+
+const PER_PAGE = 25;
 
 const schema = z.object({
   campaignId: z.string(),
-  profiles: z.array(profileSchema).min(1).max(500),
+  query: z.string().min(1),
+  count: z.number().min(1).max(500),
 });
 
 export async function POST(req: NextRequest) {
@@ -26,20 +22,54 @@ export async function POST(req: NextRequest) {
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Invalid input" }, { status: 400 });
 
-  const { campaignId, profiles } = parsed.data;
+  const { campaignId, query, count } = parsed.data;
 
   const campaign = await prisma.campaign.findFirst({
     where: { id: campaignId, workspaceId: user.workspaceId },
+    include: { linkedInAccount: true },
   });
   if (!campaign) return NextResponse.json({ error: "Campaign not found" }, { status: 404 });
 
   const workspace = await prisma.workspace.findUnique({ where: { id: user.workspaceId } });
 
+  // Paginate through Unipile search until we have `count` profiles
+  const collected: UnipilePerson[] = [];
+  let cursor: string | undefined;
+
+  while (collected.length < count) {
+    const needed = count - collected.length;
+    const pageSize = Math.min(PER_PAGE, needed);
+
+    const result = await unipile.searchPeople(
+      campaign.linkedInAccount.unipileAccountId,
+      query,
+      pageSize,
+      cursor
+    );
+
+    if (!result.items?.length) break;
+
+    collected.push(...result.items);
+    cursor = result.cursor;
+
+    if (!cursor) break;
+
+    // Brief pause between pages to avoid hammering the API
+    if (collected.length < count) {
+      await new Promise(r => setTimeout(r, 350));
+    }
+  }
+
+  // Save to DB
   let imported = 0;
-  for (const p of profiles) {
+  for (const p of collected.slice(0, count)) {
     if (!workspace?.allowDuplicateLeads) {
       const exists = await prisma.lead.findFirst({
-        where: { workspaceId: user.workspaceId, linkedInProfileId: p.id, campaign: { status: { not: "COMPLETED" } } },
+        where: {
+          workspaceId: user.workspaceId,
+          linkedInProfileId: p.id,
+          campaign: { status: { not: "COMPLETED" } },
+        },
       });
       if (exists) continue;
     }
@@ -52,10 +82,10 @@ export async function POST(req: NextRequest) {
           campaignId,
           linkedInProfileId: p.id,
           name: p.name,
-          headline: p.headline,
-          company: p.company_name,
-          location: p.location,
-          avatarUrl: p.profile_picture_url,
+          headline: p.headline ?? null,
+          company: p.company_name ?? null,
+          location: p.location ?? null,
+          avatarUrl: p.profile_picture_url ?? null,
           profileUrl: p.profile_url,
         },
         update: {},
@@ -66,5 +96,5 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  return NextResponse.json({ imported });
+  return NextResponse.json({ imported, fetched: collected.length });
 }

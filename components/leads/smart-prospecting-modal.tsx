@@ -63,11 +63,10 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
   async function handleImport() {
     setImporting(true);
     setError("");
-    const toImport = profiles.slice(0, importCount);
     const res = await fetch("/api/prospecting/import", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ campaignId, profiles: toImport }),
+      body: JSON.stringify({ campaignId, query, count: importCount }),
     });
     const data = await res.json();
     if (!res.ok) { setError(data.error ?? "Import failed"); setImporting(false); return; }
@@ -280,7 +279,7 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
                     }}
                   >
                     {importing
-                      ? <><Loader2 size={15} style={{ animation: "spin 1s linear infinite" }} />Importing…</>
+                      ? <><Loader2 size={15} style={{ animation: "spin 1s linear infinite" }} />Fetching &amp; importing {importCount} leads…</>
                       : <><Users size={15} />Import {importCount} leads into campaign</>}
                   </button>
                 </div>

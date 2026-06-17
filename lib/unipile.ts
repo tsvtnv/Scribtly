@@ -65,12 +65,18 @@ export const unipile = {
     await req("DELETE", `/api/v1/accounts/${accountId}`);
   },
 
-  async searchPeople(accountId: string, query: string, limit = 15): Promise<{ items: UnipilePerson[] }> {
+  async searchPeople(
+    accountId: string,
+    query: string,
+    limit = 15,
+    cursor?: string
+  ): Promise<{ items: UnipilePerson[]; cursor?: string }> {
     return req("POST", `/api/v1/linkedin/search?account_id=${accountId}`, {
       api: "classic",
       category: "people",
       keywords: query,
       limit,
+      ...(cursor ? { cursor } : {}),
     });
   },
 
