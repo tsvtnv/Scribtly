@@ -40,7 +40,7 @@ export interface UnipilePerson {
 }
 
 export const unipile = {
-  async createAccount(email: string, password: string): Promise<{ id: string }> {
+  async createAccount(email: string, password: string): Promise<{ account_id: string }> {
     return req("POST", "/api/v1/accounts", {
       provider: "LINKEDIN",
       username: email,

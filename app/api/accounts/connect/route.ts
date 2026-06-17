@@ -20,12 +20,12 @@ export async function POST(req: NextRequest) {
   const { email, password } = parsed.data;
 
   const created = await unipile.createAccount(email, password);
-  const profile = await unipile.getAccount(created.id);
+  const profile = await unipile.getAccount(created.account_id);
 
   const account = await prisma.linkedInAccount.create({
     data: {
       workspaceId: user.workspaceId,
-      unipileAccountId: created.id,
+      unipileAccountId: created.account_id,
       name: profile.name,
       avatarUrl: profile.avatar_url,
       headline: profile.headline,
