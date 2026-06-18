@@ -18,7 +18,7 @@ export default function proxy(request: NextRequest) {
   }
 
   // app.scribtly.com → protect all non-auth routes
-  const publicPaths = ["/login", "/signup", "/api/auth"];
+  const publicPaths = ["/login", "/signup", "/api/auth", "/api/worker"];
   const isPublic = publicPaths.some((p) => pathname.startsWith(p));
   if (isPublic) return NextResponse.next();
 
