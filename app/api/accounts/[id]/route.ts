@@ -3,6 +3,12 @@ import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { unipile } from "@/lib/unipile";
 
+function dailyLimitCaps(premium: boolean) {
+  return premium
+    ? { connMax: 80, msgMax: 200 }
+    : { connMax: 25, msgMax: 75 };
+}
+
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -18,14 +24,34 @@ export async function PATCH(
   });
   if (!account) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const updates: Record<string, number> = {};
+  const caps = dailyLimitCaps(account.premium);
+  const updates: Record<string, number | string> = {};
+
   if (typeof body.dailyConnLimit === "number") {
-    const v = Math.min(30, Math.max(1, Math.round(body.dailyConnLimit)));
-    updates.dailyConnLimit = v;
+    updates.dailyConnLimit = Math.min(caps.connMax, Math.max(1, Math.round(body.dailyConnLimit)));
   }
   if (typeof body.dailyMsgLimit === "number") {
-    const v = Math.min(100, Math.max(1, Math.round(body.dailyMsgLimit)));
-    updates.dailyMsgLimit = v;
+    updates.dailyMsgLimit = Math.min(caps.msgMax, Math.max(1, Math.round(body.dailyMsgLimit)));
+  }
+  if (typeof body.timezone === "string") {
+    try {
+      Intl.DateTimeFormat(undefined, { timeZone: body.timezone });
+      updates.timezone = body.timezone;
+    } catch {
+      return NextResponse.json({ error: "Invalid timezone" }, { status: 400 });
+    }
+  }
+  if (typeof body.sendWindowStart === "number") {
+    updates.sendWindowStart = Math.min(22, Math.max(0, Math.round(body.sendWindowStart)));
+  }
+  if (typeof body.sendWindowEnd === "number") {
+    updates.sendWindowEnd = Math.min(23, Math.max(1, Math.round(body.sendWindowEnd)));
+  }
+  if (typeof body.sendIntervalMinutes === "number") {
+    updates.sendIntervalMinutes = Math.min(120, Math.max(5, Math.round(body.sendIntervalMinutes)));
+  }
+  if (typeof body.sendJitterMinutes === "number") {
+    updates.sendJitterMinutes = Math.min(30, Math.max(0, Math.round(body.sendJitterMinutes)));
   }
 
   if (Object.keys(updates).length === 0) {
