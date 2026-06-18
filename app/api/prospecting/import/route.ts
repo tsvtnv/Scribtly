@@ -16,7 +16,7 @@ async function toLinkedInKeywords(description: string): Promise<string> {
       max_tokens: 20,
       messages: [{
         role: "user",
-        content: `Pick the 3 best LinkedIn search keywords from this description. Reply with ONLY those 3 words, nothing else.\nDescription: ${description}\n3 words:`,
+        content: `You are finding LinkedIn profiles of BUYERS of services — business owners and managers, NOT freelancers or specialists.\nPick 3 job-role keywords (title/industry only) from this description. Never use words like "automation", "AI", "agent", "developer".\nDescription: ${description}\n3 words:`,
       }],
     });
     const text = res.content[0].type === "text" ? res.content[0].text.trim() : "";
@@ -33,6 +33,7 @@ const schema = z.object({
   campaignId: z.string(),
   query: z.string().min(1),
   count: z.number().min(1).max(500),
+  location: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest) {
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Invalid input" }, { status: 400 });
 
-  const { campaignId, query, count } = parsed.data;
+  const { campaignId, query, count, location } = parsed.data;
 
   const campaign = await prisma.campaign.findFirst({
     where: { id: campaignId, workspaceId: user.workspaceId },
@@ -67,6 +68,10 @@ export async function POST(req: NextRequest) {
     const result = await unipile.searchPeople(
       campaign.linkedInAccount.unipileAccountId,
       searchQuery,
+      pageSize,
+      cursor,
+      location || undefined
+    );
       pageSize,
       cursor
     );

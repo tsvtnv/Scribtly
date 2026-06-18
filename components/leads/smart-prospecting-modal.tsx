@@ -27,6 +27,7 @@ const IMPORT_COUNTS = [50, 100, 200, 500];
 
 export function SmartProspectingModal({ open, onClose, campaignId, onImported }: Props) {
   const [query, setQuery] = useState("");
+  const [location, setLocation] = useState("United Kingdom");
   const [previewing, setPreviewing] = useState(false);
   const [importing, setImporting] = useState(false);
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -54,7 +55,7 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
     const res = await fetch("/api/prospecting/preview", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ campaignId, query }),
+      body: JSON.stringify({ campaignId, query, location: location.trim() || undefined }),
     });
     const data = await res.json();
     if (!res.ok) { setError(data.error ?? "Search failed"); setPreviewing(false); return; }
@@ -69,7 +70,7 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
     const res = await fetch("/api/prospecting/import", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ campaignId, query, count: importCount }),
+      body: JSON.stringify({ campaignId, query, count: importCount, location: location.trim() || undefined }),
     });
     const data = await res.json();
     if (!res.ok) { setError(data.error ?? "Import failed"); setImporting(false); return; }
@@ -84,6 +85,7 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
     setError("");
     setImportedMsg("");
     setSearchQuery("");
+    setLocation("United Kingdom");
     onClose();
   }
 
@@ -128,24 +130,33 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
         {/* Body */}
         <div style={{ padding: "20px 24px", overflowY: "auto", flex: 1, display: "flex", flexDirection: "column", gap: 16 }}>
           {/* Search row */}
-          <div style={{ display: "flex", gap: 10 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             <Textarea
               value={query}
               onChange={e => setQuery(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && query.trim()) handlePreview(); }}
               rows={2}
-              placeholder='e.g. "Directors at UK plumbing companies with 5-30 employees"'
-              style={{ flex: 1, borderColor: "var(--border)", background: "var(--bg-subtle)", color: "var(--text-primary)", fontSize: 14, resize: "none", borderRadius: 10 }}
+              placeholder='e.g. "Founders of small UK agencies who want to scale without hiring"'
+              style={{ borderColor: "var(--border)", background: "var(--bg-subtle)", color: "var(--text-primary)", fontSize: 14, resize: "none", borderRadius: 10 }}
             />
-            <Button
-              onClick={handlePreview}
-              disabled={!query.trim() || previewing}
-              style={{ background: previewing || !query.trim() ? "rgba(224,120,48,0.5)" : "var(--accent)", color: "#fff", minWidth: 110, alignSelf: "stretch", borderRadius: 10 }}
-            >
-              {previewing
-                ? <><Loader2 size={14} style={{ marginRight: 6, animation: "spin 1s linear infinite" }} />Searching…</>
-                : <><Sparkles size={14} style={{ marginRight: 6 }} />Preview</>}
-            </Button>
+            <div style={{ display: "flex", gap: 8 }}>
+              <input
+                type="text"
+                value={location}
+                onChange={e => setLocation(e.target.value)}
+                placeholder="Location (e.g. United Kingdom)"
+                style={{ flex: 1, padding: "8px 12px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg-subtle)", color: "var(--text-primary)", fontSize: 13 }}
+              />
+              <Button
+                onClick={handlePreview}
+                disabled={!query.trim() || previewing}
+                style={{ background: previewing || !query.trim() ? "rgba(224,120,48,0.5)" : "var(--accent)", color: "#fff", minWidth: 110, borderRadius: 10 }}
+              >
+                {previewing
+                  ? <><Loader2 size={14} style={{ marginRight: 6, animation: "spin 1s linear infinite" }} />Searching…</>
+                  : <><Sparkles size={14} style={{ marginRight: 6 }} />Preview</>}
+              </Button>
+            </div>
           </div>
 
           {error && (

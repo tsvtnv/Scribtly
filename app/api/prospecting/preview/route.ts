@@ -10,6 +10,7 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const schema = z.object({
   campaignId: z.string(),
   query: z.string().min(1),
+  location: z.string().optional(),
 });
 
 async function toLinkedInKeywords(description: string): Promise<string> {
@@ -19,15 +20,13 @@ async function toLinkedInKeywords(description: string): Promise<string> {
       max_tokens: 20,
       messages: [{
         role: "user",
-        content: `Pick the 3 best LinkedIn search keywords from this description. Reply with ONLY those 3 words, nothing else.\nDescription: ${description}\n3 words:`,
+        content: `You are finding LinkedIn profiles of BUYERS of services — business owners and managers, NOT freelancers or specialists.\nPick 3 job-role keywords (title/industry only) from this description. Never use words like "automation", "AI", "agent", "developer".\nDescription: ${description}\n3 words:`,
       }],
     });
     const text = res.content[0].type === "text" ? res.content[0].text.trim() : "";
-    // Take first 4 words max as a hard safety net
     const words = text.replace(/["',.\-]/g, "").trim().split(/\s+/).slice(0, 4);
     return words.join(" ");
   } catch {
-    // Fall back to first 3 words of the description
     return description.trim().split(/\s+/).slice(0, 3).join(" ");
   }
 }
@@ -51,7 +50,9 @@ export async function POST(req: NextRequest) {
   const results = await unipile.searchPeople(
     campaign.linkedInAccount.unipileAccountId,
     searchQuery,
-    15
+    15,
+    undefined,
+    parsed.data.location || undefined
   );
 
   return NextResponse.json({ items: results.items, searchQuery });

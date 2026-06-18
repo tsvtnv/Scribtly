@@ -77,13 +77,15 @@ export const unipile = {
     accountId: string,
     query: string,
     limit = 15,
-    cursor?: string
+    cursor?: string,
+    location?: string
   ): Promise<{ items: UnipilePerson[]; cursor?: string }> {
     return req("POST", `/api/v1/linkedin/search?account_id=${accountId}`, {
       api: "classic",
       category: "people",
       keywords: query,
       limit,
+      ...(location ? { location } : {}),
       ...(cursor ? { cursor } : {}),
     });
   },
