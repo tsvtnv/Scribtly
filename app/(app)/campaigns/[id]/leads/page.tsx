@@ -20,12 +20,23 @@ const SCORE_COLOR = (s: number | null) => {
   return "#ef4444";
 };
 
+const STATUS_LABELS: Record<string, { label: string; color: string }> = {
+  NEW:              { label: "New",        color: "#6b7280" },
+  ENRICHED:         { label: "Enriched",   color: "#8b5cf6" },
+  QUEUED:           { label: "Queued",     color: "#f59e0b" },
+  PENDING_APPROVAL: { label: "Pending",    color: "#3b82f6" },
+  CONTACTED:        { label: "Contacted",  color: "#0ea5e9" },
+  ACCEPTED:         { label: "Accepted",   color: "#22c55e" },
+  SKIPPED:          { label: "Skipped",    color: "#ef4444" },
+};
+
 export default function LeadsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [modalOpen, setModalOpen] = useState(false);
   const [total, setTotal] = useState(0);
+  const [byStatus, setByStatus] = useState<Record<string, number>>({});
 
   async function load() {
     const res = await fetch(`/api/campaigns/${id}/leads`);
@@ -33,6 +44,7 @@ export default function LeadsPage({ params }: { params: Promise<{ id: string }> 
       const data = await res.json();
       setLeads(data.leads);
       setTotal(data.total);
+      setByStatus(data.byStatus ?? {});
     }
   }
 
@@ -51,7 +63,7 @@ export default function LeadsPage({ params }: { params: Promise<{ id: string }> 
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-3">
         <Link href={`/campaigns/${id}/overview`}
           className="flex items-center gap-1 text-sm" style={{ color: "var(--text-muted)" }}>
           <ChevronLeft size={14} />Back
@@ -72,6 +84,21 @@ export default function LeadsPage({ params }: { params: Promise<{ id: string }> 
           </Button>
         </div>
       </div>
+
+      {total > 0 && (
+        <div className="flex flex-wrap gap-2 mb-5">
+          {Object.entries(STATUS_LABELS).map(([key, { label, color }]) => {
+            const count = byStatus[key] ?? 0;
+            if (count === 0) return null;
+            return (
+              <span key={key} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
+                style={{ background: `${color}18`, color, border: `1px solid ${color}40` }}>
+                <span className="font-bold">{count}</span> {label}
+              </span>
+            );
+          })}
+        </div>
+      )}
       {leads.length === 0 ? (
         <div className="rounded-xl border p-12 text-center"
           style={{ borderColor: "var(--border)", background: "var(--bg-subtle)" }}>

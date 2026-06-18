@@ -13,14 +13,19 @@ export async function GET(
   const campaign = await prisma.campaign.findFirst({ where: { id, workspaceId: user.workspaceId } });
   if (!campaign) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const [leads, total] = await Promise.all([
+  const STATUSES = ["NEW", "ENRICHED", "QUEUED", "CONTACTED", "ACCEPTED", "SKIPPED", "PENDING_APPROVAL"] as const;
+
+  const [leads, total, ...statusCounts] = await Promise.all([
     prisma.lead.findMany({
       where: { campaignId: id },
       orderBy: [{ icpScore: "desc" }, { createdAt: "desc" }],
       take: 500,
     }),
     prisma.lead.count({ where: { campaignId: id } }),
+    ...STATUSES.map(s => prisma.lead.count({ where: { campaignId: id, status: s } })),
   ]);
 
-  return NextResponse.json({ leads, total });
+  const byStatus = Object.fromEntries(STATUSES.map((s, i) => [s, statusCounts[i]]));
+
+  return NextResponse.json({ leads, total, byStatus });
 }
