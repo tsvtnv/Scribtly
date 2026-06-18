@@ -28,7 +28,7 @@ export async function GET() {
   const responseRate = totalSent > 0 ? ((totalReplied / totalSent) * 100).toFixed(1) : "0";
 
   const campaignStats = await Promise.all(
-    campaigns.map(async c => {
+    campaigns.map(async (c: (typeof campaigns)[number]) => {
       const [contacted, accepted, replied] = await Promise.all([
         prisma.lead.count({ where: { campaignId: c.id, status: { in: ["CONTACTED", "ACCEPTED", "REPLIED"] } } }),
         prisma.lead.count({ where: { campaignId: c.id, status: { in: ["ACCEPTED", "REPLIED"] } } }),

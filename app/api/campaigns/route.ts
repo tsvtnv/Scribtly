@@ -33,7 +33,7 @@ export async function GET() {
   });
 
   const enriched = await Promise.all(
-    campaigns.map(async (c) => {
+    campaigns.map(async (c: (typeof campaigns)[number]) => {
       const [contacted, accepted, replied] = await Promise.all([
         prisma.lead.count({ where: { campaignId: c.id, status: { in: ["CONTACTED", "ACCEPTED", "REPLIED"] } } }),
         prisma.lead.count({ where: { campaignId: c.id, status: { in: ["ACCEPTED", "REPLIED"] } } }),

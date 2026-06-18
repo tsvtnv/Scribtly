@@ -12,7 +12,7 @@ export async function POST() {
     where: { workspaceId: user.workspaceId },
     select: { unipileAccountId: true },
   });
-  const existingIds = new Set(existing.map((a) => a.unipileAccountId));
+  const existingIds = new Set(existing.map((a: { unipileAccountId: string }) => a.unipileAccountId));
 
   const added: string[] = [];
   for (const ua of unipileAccounts.items) {
