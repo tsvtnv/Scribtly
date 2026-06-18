@@ -48,35 +48,68 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 2. Enrich leads (NEW → ENRICHED)
-  const newLeads = await prisma.lead.findMany({
-    where: { status: "NEW" },
+  // 2. Enrich leads (NEW → ENRICHED) — one per tick with 1-10 min random delay between calls
+  const now = new Date();
+  const leadToEnrich = await prisma.lead.findFirst({
+    where: {
+      status: "NEW",
+      OR: [{ enrichAfter: null }, { enrichAfter: { lte: now } }],
+    },
     include: { campaign: { include: { linkedInAccount: true } } },
-    take: 10,
+    orderBy: { createdAt: "asc" },
   });
 
-  for (const lead of newLeads) {
-    const log = await logStart(lead.workspaceId, "ENRICH_LEAD");
+  if (leadToEnrich) {
+    const log = await logStart(leadToEnrich.workspaceId, "ENRICH_LEAD");
     try {
       const profile = await unipile.getProfile(
-        lead.campaign.linkedInAccount.unipileAccountId,
-        lead.linkedInProfileId
+        leadToEnrich.campaign.linkedInAccount.unipileAccountId,
+        leadToEnrich.linkedInProfileId
       );
       await prisma.lead.update({
-        where: { id: lead.id },
+        where: { id: leadToEnrich.id },
         data: {
-          headline: profile.headline ?? lead.headline,
-          company: profile.company_name ?? lead.company,
-          location: profile.location ?? lead.location,
-          avatarUrl: profile.profile_picture_url ?? lead.avatarUrl,
+          headline: profile.headline ?? leadToEnrich.headline,
+          company: profile.company_name ?? leadToEnrich.company,
+          location: profile.location ?? leadToEnrich.location,
+          avatarUrl: profile.profile_picture_url ?? leadToEnrich.avatarUrl,
           status: "ENRICHED",
           enrichedAt: new Date(),
         },
       });
-      await logDone(log.id, "COMPLETED", `Enriched ${lead.name}`);
-      results.push(`enriched:${lead.id}`);
+      await logDone(log.id, "COMPLETED", `Enriched ${leadToEnrich.name}`);
+      results.push(`enriched:${leadToEnrich.id}`);
     } catch (err) {
-      await logDone(log.id, "FAILED", String(err));
+      const msg = String(err);
+      if (msg.includes("404")) {
+        await prisma.lead.update({ where: { id: leadToEnrich.id }, data: { status: "SKIPPED" } });
+        await logDone(log.id, "FAILED", `Profile not found (404) — skipped: ${leadToEnrich.name}`);
+      } else {
+        const retries = leadToEnrich.enrichRetries + 1;
+        if (retries >= 3) {
+          await prisma.lead.update({ where: { id: leadToEnrich.id }, data: { status: "SKIPPED", enrichRetries: retries } });
+          await logDone(log.id, "FAILED", `Skipped after ${retries} retries: ${msg}`);
+        } else {
+          await prisma.lead.update({
+            where: { id: leadToEnrich.id },
+            data: { enrichRetries: retries, enrichAfter: new Date(now.getTime() + 5 * 60 * 1000) },
+          });
+          await logDone(log.id, "FAILED", `Retry ${retries}/3: ${msg}`);
+        }
+      }
+    }
+
+    // Schedule the next NEW lead with a random 1-10 min delay
+    const delayMs = (Math.floor(Math.random() * 10) + 1) * 60 * 1000;
+    const nextLead = await prisma.lead.findFirst({
+      where: { status: "NEW", id: { not: leadToEnrich.id }, enrichAfter: null },
+      orderBy: { createdAt: "asc" },
+    });
+    if (nextLead) {
+      await prisma.lead.update({
+        where: { id: nextLead.id },
+        data: { enrichAfter: new Date(now.getTime() + delayMs) },
+      });
     }
   }
 
@@ -130,7 +163,10 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
 
   for (const campaign of activeCampaigns) {
     const acc = campaign.linkedInAccount;
-    const remaining = acc.dailyConnLimit - acc.connSentToday;
+    const pendingCount = await prisma.lead.count({
+      where: { campaign: { linkedInAccountId: acc.id }, status: "PENDING_APPROVAL" },
+    });
+    const remaining = acc.dailyConnLimit - acc.connSentToday - pendingCount;
     if (remaining <= 0) continue;
 
     const queuedLeads = await prisma.lead.findMany({
@@ -228,10 +264,11 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
       const inbox = await unipile.getInbox(acc.unipileAccountId);
       let synced = 0;
       for (const thread of inbox.items) {
+        const lastMessageAt = thread.last_message_at ? new Date(thread.last_message_at) : null;
         await prisma.conversation.updateMany({
           where: { unipileThreadId: thread.id },
           data: {
-            lastMessageAt: new Date(thread.last_message_at),
+            ...(lastMessageAt && !isNaN(lastMessageAt.getTime()) ? { lastMessageAt } : {}),
             lastMessagePreview: thread.last_message_text?.slice(0, 100),
             hasUnread: thread.unread,
           },

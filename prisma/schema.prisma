@@ -146,6 +146,8 @@ model Lead {
   acceptedAt        DateTime?
   repliedAt         DateTime?
   enrichedAt        DateTime?
+  enrichAfter       DateTime?
+  enrichRetries     Int        @default(0)
   createdAt         DateTime   @default(now())
 
   messages     Message[]

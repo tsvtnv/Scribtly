@@ -32,7 +32,12 @@ export default function InboxPage() {
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {
-    fetch("/api/inbox").then(r => r.json()).then(setConversations);
+    function loadConversations() {
+      fetch("/api/inbox").then(r => r.json()).then(setConversations);
+    }
+    loadConversations();
+    const interval = setInterval(loadConversations, 30_000);
+    return () => clearInterval(interval);
   }, []);
 
   async function selectConversation(id: string) {
