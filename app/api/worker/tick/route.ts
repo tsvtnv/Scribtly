@@ -172,7 +172,7 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
     const queuedLeads = await prisma.lead.findMany({
       where: { campaignId: campaign.id, status: "QUEUED" },
       orderBy: { icpScore: "desc" },
-      take: Math.min(remaining, 5),
+      take: Math.min(remaining, 2),
     });
 
     for (const lead of queuedLeads) {
@@ -265,14 +265,63 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
       let synced = 0;
       for (const thread of inbox.items) {
         const lastMessageAt = thread.last_message_at ? new Date(thread.last_message_at) : null;
-        await prisma.conversation.updateMany({
-          where: { unipileThreadId: thread.id },
-          data: {
-            ...(lastMessageAt && !isNaN(lastMessageAt.getTime()) ? { lastMessageAt } : {}),
-            lastMessagePreview: thread.last_message_text?.slice(0, 100),
-            hasUnread: Boolean(thread.unread),
-          },
-        });
+        const validLastMessageAt = lastMessageAt && !isNaN(lastMessageAt.getTime()) ? lastMessageAt : null;
+        const preview = thread.last_message_text?.slice(0, 100) ?? null;
+        const hasUnread = Boolean(thread.unread);
+
+        // Try to find a matching lead for this thread via attendee IDs
+        const attendeeIds = (thread.attendees ?? []).map((a: { id: string }) => a.id).filter(Boolean);
+        const matchingLead = attendeeIds.length > 0
+          ? await prisma.lead.findFirst({
+              where: { linkedInProfileId: { in: attendeeIds }, campaign: { linkedInAccountId: acc.id } },
+            })
+          : null;
+
+        if (matchingLead) {
+          // Upsert: check by threadId OR leadId to avoid unique constraint conflicts
+          const existing = await prisma.conversation.findFirst({
+            where: { OR: [{ unipileThreadId: thread.id }, { leadId: matchingLead.id }] },
+          });
+          if (existing) {
+            await prisma.conversation.update({
+              where: { id: existing.id },
+              data: {
+                unipileThreadId: thread.id,
+                ...(validLastMessageAt ? { lastMessageAt: validLastMessageAt } : {}),
+                lastMessagePreview: preview,
+                hasUnread,
+              },
+            });
+          } else {
+            await prisma.conversation.create({
+              data: {
+                workspaceId: acc.workspaceId,
+                leadId: matchingLead.id,
+                unipileThreadId: thread.id,
+                ...(validLastMessageAt ? { lastMessageAt: validLastMessageAt } : {}),
+                lastMessagePreview: preview,
+                hasUnread,
+              },
+            });
+          }
+          // Promote lead to ACCEPTED if still CONTACTED (connection was accepted)
+          if (matchingLead.status === "CONTACTED") {
+            await prisma.lead.update({
+              where: { id: matchingLead.id },
+              data: { status: "ACCEPTED", acceptedAt: new Date() },
+            });
+          }
+        } else {
+          // Thread not from our campaigns — just update if row already exists
+          await prisma.conversation.updateMany({
+            where: { unipileThreadId: thread.id },
+            data: {
+              ...(validLastMessageAt ? { lastMessageAt: validLastMessageAt } : {}),
+              lastMessagePreview: preview,
+              hasUnread,
+            },
+          });
+        }
         synced++;
       }
       await logDone(log.id, "COMPLETED", `Synced ${synced} threads`);
