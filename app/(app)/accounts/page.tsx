@@ -178,6 +178,27 @@ export default function AccountsPage() {
     syncAccounts();
   }
 
+  async function handleConnectAppApproved() {
+    if (!connect) return;
+    setConnect(c => c && { ...c, loading: true, error: null });
+    const res = await fetch("/api/accounts/otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ account_id: connect.unipileAccountId }),
+    });
+    const data = await res.json();
+    if (res.status === 202) {
+      setConnect(c => c && { ...c, loading: false, error: data.message });
+      return;
+    }
+    if (!res.ok) {
+      setConnect(c => c && { ...c, loading: false, error: data.error ?? "Verification failed" });
+      return;
+    }
+    setConnect(c => c && { ...c, loading: false, step: "done" });
+    syncAccounts();
+  }
+
   async function handleConnectResend() {
     if (!connect) return;
     await fetch("/api/accounts/resend", {
@@ -229,6 +250,27 @@ export default function AccountsPage() {
     }
     if (data.checkpoint) {
       setReconnect(r => r && { ...r, loading: false, otp: "", message: data.message });
+      return;
+    }
+    setReconnect(r => r && { ...r, loading: false, step: "done" });
+    syncAccounts();
+  }
+
+  async function handleReconnectAppApproved() {
+    if (!reconnect) return;
+    setReconnect(r => r && { ...r, loading: true, error: null });
+    const res = await fetch(`/api/accounts/${reconnect.accountId}/reconnect-otp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ account_id: reconnect.unipileAccountId }),
+    });
+    const data = await res.json();
+    if (res.status === 202) {
+      setReconnect(r => r && { ...r, loading: false, error: data.message });
+      return;
+    }
+    if (!res.ok) {
+      setReconnect(r => r && { ...r, loading: false, error: data.error ?? "Verification failed" });
       return;
     }
     setReconnect(r => r && { ...r, loading: false, step: "done" });
@@ -403,6 +445,18 @@ export default function AccountsPage() {
                   className="px-3 py-2 rounded-lg text-sm"
                   style={{ border: "1px solid var(--border)", color: "var(--text-muted)", background: "var(--bg-base)" }}>
                   Resend code
+                </button>
+              </div>
+              <div className="pt-1 border-t" style={{ borderColor: "var(--border)" }}>
+                <p className="text-xs mb-2" style={{ color: "var(--text-muted)" }}>
+                  Got a LinkedIn app notification instead of a code?
+                </p>
+                <button
+                  onClick={handleConnectAppApproved}
+                  disabled={connect.loading}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-50"
+                  style={{ border: "1px solid var(--border)", color: "var(--text-primary)", background: "var(--bg-base)" }}>
+                  {connect.loading ? "Checking…" : "I approved in the LinkedIn app"}
                 </button>
               </div>
               {connect.error && <p className="text-xs text-red-600">{connect.error}</p>}
