@@ -103,15 +103,18 @@ export async function POST(req: NextRequest) {
   for (const lead of enrichedLeads) {
     const log = await logStart(lead.workspaceId, "SCORE_LEAD");
     try {
-      const positioning = lead.campaign.positioningText ?? "A UK web design agency";
-      const prompt = `Score this LinkedIn lead for ICP fit (0-100).
-Business: ${positioning}
-Lead: ${lead.name}, ${lead.headline ?? "unknown role"}, ${lead.company ?? "unknown company"}, ${lead.location ?? "unknown location"}
-Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
+      const positioning = lead.campaign.positioningText ?? "An AI automation agency that builds AI agents and workflow automations for small business owners (5-50 employees) to replace manual repetitive work.";
+      const prompt = `Score this LinkedIn lead 0-100 for fit as a buyer of AI automation services.
+Seller: ${positioning}
+Lead: ${lead.name} | ${lead.headline ?? "unknown role"} | ${lead.company ?? "unknown company"} | ${lead.location ?? "unknown location"}
+
+Score HIGH (70-100) if: founder/CEO/COO/owner of 5-50 person biz, agency owner, ops role at SMB, e-commerce operator, consultant scaling a team, non-technical but uses SaaS tools.
+Score LOW (0-30) if: enterprise (500+ employees), CTO/engineer (will DIY), student/job seeker, no clear business, highly regulated industry.
+Reply ONLY: {"score":<0-100>,"reason":"<10 words max>"}`;
 
       const response = await anthropic.messages.create({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 100,
+        max_tokens: 60,
         messages: [{ role: "user", content: prompt }],
       });
 
