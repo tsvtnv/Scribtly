@@ -19,29 +19,35 @@ export async function POST(req: NextRequest) {
 
   const { email, password } = parsed.data;
 
-  const created = await unipile.createAccount(email, password);
+  try {
+    const created = await unipile.createAccount(email, password);
 
-  // LinkedIn may require OTP verification (checkpoint)
-  if (created.checkpoint) {
-    return NextResponse.json({
-      checkpoint: true,
-      account_id: created.account_id,
-      message: created.checkpoint.message ?? "Enter the verification code sent by LinkedIn",
+    // LinkedIn may require OTP verification (checkpoint)
+    if (created.checkpoint) {
+      return NextResponse.json({
+        checkpoint: true,
+        account_id: created.account_id,
+        message: created.checkpoint.message ?? "Enter the verification code sent by LinkedIn",
+      });
+    }
+
+    const profile = await unipile.getAccount(created.account_id);
+
+    const account = await prisma.linkedInAccount.create({
+      data: {
+        workspaceId: user.workspaceId,
+        unipileAccountId: created.account_id,
+        name: profile.name,
+        avatarUrl: profile.avatar_url,
+        headline: profile.headline,
+        limitsResetAt: new Date(),
+      },
     });
+
+    return NextResponse.json(account);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to connect account";
+    console.error("[accounts/connect]", message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const profile = await unipile.getAccount(created.account_id);
-
-  const account = await prisma.linkedInAccount.create({
-    data: {
-      workspaceId: user.workspaceId,
-      unipileAccountId: created.account_id,
-      name: profile.name,
-      avatarUrl: profile.avatar_url,
-      headline: profile.headline,
-      limitsResetAt: new Date(),
-    },
-  });
-
-  return NextResponse.json(account);
 }

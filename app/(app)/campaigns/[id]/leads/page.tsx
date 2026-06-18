@@ -37,6 +37,7 @@ export default function LeadsPage({ params }: { params: Promise<{ id: string }> 
   const [modalOpen, setModalOpen] = useState(false);
   const [total, setTotal] = useState(0);
   const [byStatus, setByStatus] = useState<Record<string, number>>({});
+  const [requeueing, setRequeueing] = useState(false);
 
   async function load() {
     const res = await fetch(`/api/campaigns/${id}/leads`);
@@ -61,6 +62,16 @@ export default function LeadsPage({ params }: { params: Promise<{ id: string }> 
     setSelected(s => { const n = new Set(s); n.has(lid) ? n.delete(lid) : n.add(lid); return n; });
   }
 
+  async function requeueSkipped() {
+    setRequeueing(true);
+    try {
+      await fetch(`/api/campaigns/${id}/requeue-skipped`, { method: "POST" });
+      load();
+    } finally {
+      setRequeueing(false);
+    }
+  }
+
   return (
     <div>
       <div className="flex items-center gap-3 mb-3">
@@ -76,6 +87,12 @@ export default function LeadsPage({ params }: { params: Promise<{ id: string }> 
             <Button variant="outline" size="sm" onClick={deleteSelected}
               style={{ borderColor: "var(--border)", color: "#ef4444" }}>
               <Trash2 size={14} className="mr-1" />Delete {selected.size}
+            </Button>
+          )}
+          {(byStatus["SKIPPED"] ?? 0) > 0 && (
+            <Button variant="outline" size="sm" onClick={requeueSkipped} disabled={requeueing}
+              style={{ borderColor: "var(--border)", color: "var(--text-primary)" }}>
+              {requeueing ? "Re-queuing…" : `Re-queue ${byStatus["SKIPPED"]} skipped`}
             </Button>
           )}
           <Button size="sm" onClick={() => setModalOpen(true)}

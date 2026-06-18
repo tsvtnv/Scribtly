@@ -19,6 +19,7 @@ const TABS = [
   { label: "Leads", path: "leads" },
   { label: "Approvals", path: "approvals" },
   { label: "Activity", path: "activity" },
+  { label: "Settings", path: "settings" },
 ];
 
 export function CampaignTabs({ campaign }: { campaign: Campaign }) {
