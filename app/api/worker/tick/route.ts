@@ -261,7 +261,6 @@ Reply ONLY: {"score":<0-100>,"reason":"<10 words max>"}`;
               type: "CONNECTION_NOTE", content, status: "APPROVED", scheduledFor,
             },
           });
-          await prisma.lead.update({ where: { id: lead.id }, data: { status: "PENDING_APPROVAL" } });
           await logDone(log.id, "COMPLETED", `Scheduled for ${scheduledFor.toISOString()}: ${lead.name}`);
           results.push(`scheduled:${lead.id}`);
         }

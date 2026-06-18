@@ -54,6 +54,12 @@ export async function PATCH(
     updates.sendJitterMinutes = Math.min(30, Math.max(0, Math.round(body.sendJitterMinutes)));
   }
 
+  const finalStart = typeof updates.sendWindowStart === "number" ? updates.sendWindowStart : account.sendWindowStart;
+  const finalEnd = typeof updates.sendWindowEnd === "number" ? updates.sendWindowEnd : account.sendWindowEnd;
+  if (finalStart >= finalEnd) {
+    return NextResponse.json({ error: "sendWindowStart must be less than sendWindowEnd" }, { status: 400 });
+  }
+
   if (Object.keys(updates).length === 0) {
     return NextResponse.json({ error: "No valid fields" }, { status: 400 });
   }

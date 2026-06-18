@@ -30,17 +30,17 @@ export function computeNextSlot(
 
   if (localHour < sendWindowStart) {
     // Before window: schedule at window open today
-    candidate = setMilliseconds(
-      setSeconds(setMinutes(setHours(local, sendWindowStart), 0), 0),
-      0
-    ) as TZDate;
+    candidate = new TZDate(
+      setMilliseconds(setSeconds(setMinutes(setHours(local, sendWindowStart), 0), 0), 0),
+      timezone
+    );
   } else if (localHour >= sendWindowEnd) {
     // Past window: schedule at window open tomorrow
     const tomorrow = addDays(local, 1);
-    candidate = setMilliseconds(
-      setSeconds(setMinutes(setHours(tomorrow, sendWindowStart), 0), 0),
-      0
-    ) as TZDate;
+    candidate = new TZDate(
+      setMilliseconds(setSeconds(setMinutes(setHours(tomorrow, sendWindowStart), 0), 0), 0),
+      timezone
+    );
   } else {
     // Within window: reference + interval + random jitter
     const jitter = Math.floor(Math.random() * (sendJitterMinutes + 1));
@@ -51,12 +51,12 @@ export function computeNextSlot(
     if (advancedHour >= sendWindowEnd) {
       // Overshot end of window — push to tomorrow's opening
       const tomorrow = addDays(local, 1);
-      candidate = setMilliseconds(
-        setSeconds(setMinutes(setHours(tomorrow, sendWindowStart), 0), 0),
-        0
-      ) as TZDate;
+      candidate = new TZDate(
+        setMilliseconds(setSeconds(setMinutes(setHours(tomorrow, sendWindowStart), 0), 0), 0),
+        timezone
+      );
     } else {
-      candidate = advanced as TZDate;
+      candidate = new TZDate(advanced, timezone);
     }
   }
 
