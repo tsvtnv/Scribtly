@@ -6,6 +6,11 @@ import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
+// Per-account timestamp of last connection request sent — enforces minimum gap
+// between sends without a DB migration. Resets on server restart (that's fine).
+const lastConnSentAt = new Map<string, number>();
+const MIN_CONN_GAP_MS = 20 * 60 * 1000; // 20 min between sends per account
+
 function verifySecret(req: NextRequest) {
   const auth = req.headers.get("authorization");
   return auth === `Bearer ${process.env.WORKER_SECRET}`;
@@ -144,10 +149,14 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
     const remaining = acc.dailyConnLimit - acc.connSentToday - pendingCount;
     if (remaining <= 0) continue;
 
+    // Rate-limit: at most 1 connection per account per 20 min to avoid LinkedIn flags
+    const lastSent = lastConnSentAt.get(acc.id) ?? 0;
+    if (now.getTime() - lastSent < MIN_CONN_GAP_MS) continue;
+
     const queuedLeads = await prisma.lead.findMany({
       where: { campaignId: campaign.id, status: "QUEUED" },
       orderBy: { icpScore: "desc" },
-      take: Math.min(remaining, 2),
+      take: 1,
     });
 
     for (const lead of queuedLeads) {
@@ -186,6 +195,7 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
           });
           await prisma.lead.update({ where: { id: lead.id }, data: { status: "CONTACTED", contactedAt: new Date() } });
           await prisma.linkedInAccount.update({ where: { id: acc.id }, data: { connSentToday: { increment: 1 } } });
+          lastConnSentAt.set(acc.id, now.getTime());
           await prisma.event.create({
             data: { workspaceId: lead.workspaceId, campaignId: campaign.id, leadId: lead.id, type: "message_sent" },
           });
@@ -210,7 +220,7 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
         acceptedAt: { lte: cutoff },
         messages: { none: { type: "FOLLOWUP" } },
       },
-      take: 5,
+      take: 2,
     });
 
     for (const lead of acceptedLeads) {
