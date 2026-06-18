@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { unipile } from "@/lib/unipile";
+import { computeNextSlot } from "@/lib/scheduler";
 
 export async function POST(
   _req: NextRequest,
@@ -19,29 +19,36 @@ export async function POST(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  try {
-    if (message.type === "CONNECTION_NOTE") {
-      await unipile.sendConnectionRequest(
-        message.campaign.linkedInAccount.unipileAccountId,
-        message.lead.linkedInProfileId,
-        message.content
-      );
-    } else {
-      const conv = await prisma.conversation.findUnique({ where: { leadId: message.leadId } });
-      if (conv) {
-        await unipile.sendMessage(
-          message.campaign.linkedInAccount.unipileAccountId,
-          conv.unipileThreadId,
-          message.content
-        );
-      }
-    }
-    await prisma.message.update({ where: { id }, data: { status: "SENT", sentAt: new Date() } });
-    await prisma.lead.update({ where: { id: message.leadId }, data: { status: "CONTACTED", contactedAt: new Date() } });
-    await prisma.linkedInAccount.update({ where: { id: message.campaign.linkedInAccountId }, data: { connSentToday: { increment: 1 } } });
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    await prisma.message.update({ where: { id }, data: { status: "FAILED" } });
-    return NextResponse.json({ error: String(err) }, { status: 500 });
-  }
+  const acc = message.campaign.linkedInAccount;
+
+  // Find the last scheduled slot for this account so sequential approvals space correctly
+  const lastScheduled = await prisma.message.findFirst({
+    where: {
+      campaign: { linkedInAccountId: acc.id },
+      status: "APPROVED",
+      scheduledFor: { not: null },
+    },
+    orderBy: { scheduledFor: "desc" },
+  });
+
+  const scheduledFor = computeNextSlot(
+    {
+      timezone: acc.timezone,
+      sendWindowStart: acc.sendWindowStart,
+      sendWindowEnd: acc.sendWindowEnd,
+      sendIntervalMinutes: acc.sendIntervalMinutes,
+      sendJitterMinutes: acc.sendJitterMinutes,
+    },
+    lastScheduled?.scheduledFor ?? new Date()
+  );
+
+  await prisma.message.update({
+    where: { id },
+    data: { status: "APPROVED", scheduledFor },
+  });
+
+  // Lead stays PENDING_APPROVAL until the cron actually sends — the UI will still show it.
+  // No lead status change here; that happens in the worker when message is dispatched.
+
+  return NextResponse.json({ scheduledFor: scheduledFor.toISOString() });
 }
