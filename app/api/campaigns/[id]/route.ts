@@ -6,16 +6,16 @@ import { z } from "zod";
 const updateSchema = z.object({
   name: z.string().min(1).optional(),
   status: z.enum(["DRAFT", "ACTIVE", "PAUSED", "COMPLETED"]).optional(),
-  connectionNoteTemplate: z.string().optional(),
+  connectionNoteTemplate: z.string().nullish(),
   requireApproval: z.boolean().optional(),
   followUpsEnabled: z.boolean().optional(),
   followUpCount: z.number().int().optional(),
   followUpDelayDays: z.number().int().optional(),
-  followUpTemplate: z.string().optional(),
+  followUpTemplate: z.string().nullish(),
   autoBookEnabled: z.boolean().optional(),
-  autoBookCtaLink: z.string().optional(),
-  autoBookReplyTemplate: z.string().optional(),
-  positioningText: z.string().optional(),
+  autoBookCtaLink: z.string().nullish(),
+  autoBookReplyTemplate: z.string().nullish(),
+  positioningText: z.string().nullish(),
 });
 
 async function getCampaign(id: string, workspaceId: string) {

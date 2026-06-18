@@ -22,29 +22,48 @@ export async function POST(req: NextRequest) {
   try {
     const created = await unipile.createAccount(email, password);
 
-    // LinkedIn may require OTP verification (checkpoint)
     if (created.checkpoint) {
       return NextResponse.json({
         checkpoint: true,
         account_id: created.account_id,
+        checkpoint_type: created.checkpoint.type,
         message: created.checkpoint.message ?? "Enter the verification code sent by LinkedIn",
       });
     }
 
-    const profile = await unipile.getAccount(created.account_id);
+    // Fetch rich profile data
+    const [account, profile] = await Promise.allSettled([
+      unipile.getAccount(created.account_id),
+      unipile.getAccountProfile(created.account_id),
+    ]);
 
-    const account = await prisma.linkedInAccount.create({
+    const accountData = account.status === "fulfilled" ? account.value : null;
+    const profileData = profile.status === "fulfilled" ? profile.value : null;
+
+    const name = profileData
+      ? `${profileData.first_name} ${profileData.last_name}`.trim()
+      : (accountData?.name ?? email);
+
+    const avatarUrl = profileData?.profile_picture_url ?? null;
+
+    const dbAccount = await prisma.linkedInAccount.create({
       data: {
         workspaceId: user.workspaceId,
         unipileAccountId: created.account_id,
-        name: profile.name,
-        avatarUrl: profile.avatar_url,
-        headline: profile.headline,
+        name,
+        avatarUrl: avatarUrl ?? null,
+        headline: profileData?.occupation && profileData.occupation !== "--" ? profileData.occupation : null,
+        email: profileData?.email ?? null,
+        location: profileData?.location ?? null,
+        linkedinPublicId: profileData?.public_identifier ?? accountData?.connection_params?.im?.publicIdentifier ?? null,
+        premium: profileData?.premium ?? false,
+        proxyCountry: accountData?.connection_params?.im?.proxy?.country ?? null,
         limitsResetAt: new Date(),
+        lastSyncAt: new Date(),
       },
     });
 
-    return NextResponse.json(account);
+    return NextResponse.json(dbAccount);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to connect account";
     console.error("[accounts/connect]", message);

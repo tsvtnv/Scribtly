@@ -1,14 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #FFFFFF;
-  --bg-subtle: #F5F5F5;
-  --text-primary: #0F0F12;
-  --text-muted: #6B7280;
+  --bg-base: #FDFAF6;
+  --bg-subtle: #F5EDE0;
+  --text-primary: #1A1208;
+  --text-muted: #7C6B58;
   --accent: #E07830;
   --accent-hover: #C4652A;
-  --border: #E5E7EB;
-  --dark: #1A1A1A;
+  --border: #E8DDD0;
+  --dark: #1A1208;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {

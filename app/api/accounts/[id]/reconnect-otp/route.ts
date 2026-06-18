@@ -5,8 +5,8 @@ import { unipile } from "@/lib/unipile";
 import { z } from "zod";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
+  account_id: z.string().min(1),
+  code: z.string().optional(), // omit for app-approval flow
 });
 
 export async function POST(
@@ -26,49 +26,55 @@ export async function POST(
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Invalid input" }, { status: 400 });
 
-  const { email, password } = parsed.data;
+  const { account_id, code } = parsed.data;
 
   try {
-    let result: { account_id: string; checkpoint?: { type: string; message?: string } };
+    if (code) {
+      // Standard OTP code flow
+      const result = await unipile.submitCheckpoint(account_id, code);
 
-    try {
-      // Try to reconnect the existing Unipile session
-      result = await unipile.reconnectAccount(account.unipileAccountId, email, password);
-    } catch (reconnectErr) {
-      // If Unipile says 404 the session was fully deleted — create a fresh one
-      const msg = reconnectErr instanceof Error ? reconnectErr.message : "";
-      if (!msg.includes("404")) throw reconnectErr;
-      result = await unipile.createAccount(email, password);
-    }
+      if (result.checkpoint) {
+        return NextResponse.json({
+          checkpoint: true,
+          account_id: result.account_id,
+          checkpoint_type: result.checkpoint.type,
+          message: result.checkpoint.message ?? "Enter the next verification code",
+        });
+      }
 
-    if (result.checkpoint) {
       await prisma.linkedInAccount.update({
         where: { id },
         data: {
-          status: "RECONNECTING",
+          status: "ACTIVE",
           unipileAccountId: result.account_id,
+          lastSyncAt: new Date(),
         },
       });
-      return NextResponse.json({
-        checkpoint: true,
-        account_id: result.account_id,
-        checkpoint_type: result.checkpoint.type,
-        message: result.checkpoint.message ?? "Enter the verification code sent by LinkedIn",
-      });
+      return NextResponse.json({ success: true });
+    }
+
+    // App-approval flow — check if LinkedIn already marked the account active
+    const accountData = await unipile.getAccount(account_id);
+    const isActive = accountData.sources[0]?.status === "OK";
+
+    if (!isActive) {
+      return NextResponse.json(
+        { pending: true, message: "Approval not detected yet — please approve in your LinkedIn app then try again." },
+        { status: 202 }
+      );
     }
 
     await prisma.linkedInAccount.update({
       where: { id },
       data: {
         status: "ACTIVE",
-        unipileAccountId: result.account_id,
+        unipileAccountId: account_id,
         lastSyncAt: new Date(),
       },
     });
-
     return NextResponse.json({ success: true });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Reconnect failed";
+    const message = err instanceof Error ? err.message : "OTP verification failed";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

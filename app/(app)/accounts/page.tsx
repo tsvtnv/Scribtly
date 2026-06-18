@@ -41,6 +41,7 @@ interface ConnectState {
   password: string;
   otp: string;
   unipileAccountId: string;
+  checkpointType: string;
   message: string;
   loading: boolean;
   error: string | null;
@@ -53,6 +54,7 @@ interface ReconnectState {
   password: string;
   otp: string;
   unipileAccountId: string;
+  checkpointType: string;
   message: string;
   loading: boolean;
   error: string | null;
@@ -133,7 +135,7 @@ export default function AccountsPage() {
   // ── Connect flow ──────────────────────────────────────────────────────────
 
   function openConnect() {
-    setConnect({ step: "credentials", email: "", password: "", otp: "", unipileAccountId: "", message: "", loading: false, error: null });
+    setConnect({ step: "credentials", email: "", password: "", otp: "", unipileAccountId: "", checkpointType: "", message: "", loading: false, error: null });
   }
 
   async function handleConnect() {
@@ -211,7 +213,7 @@ export default function AccountsPage() {
   // ── Reconnect flow ────────────────────────────────────────────────────────
 
   function openReconnect(acc: Account) {
-    setReconnect({ accountId: acc.id, step: "credentials", email: "", password: "", otp: "", unipileAccountId: acc.unipileAccountId, message: "", loading: false, error: null });
+    setReconnect({ accountId: acc.id, step: "credentials", email: "", password: "", otp: "", unipileAccountId: acc.unipileAccountId, checkpointType: "", message: "", loading: false, error: null });
   }
 
   async function handleReconnect() {
@@ -852,6 +854,18 @@ export default function AccountsPage() {
                             className="px-3 py-1.5 rounded-lg text-sm"
                             style={{ border: "1px solid #ef444440", color: "#ef4444", background: "transparent" }}>
                             Resend
+                          </button>
+                        </div>
+                        <div className="pt-1 border-t" style={{ borderColor: "#ef444430" }}>
+                          <p className="text-xs mb-1.5" style={{ color: "var(--text-muted)" }}>
+                            Got a LinkedIn app notification instead of a code?
+                          </p>
+                          <button
+                            onClick={handleReconnectAppApproved}
+                            disabled={reconnect.loading}
+                            className="px-3 py-1 rounded-lg text-xs font-medium disabled:opacity-50"
+                            style={{ border: "1px solid #ef444440", color: "#ef4444", background: "transparent" }}>
+                            {reconnect.loading ? "Checking…" : "I approved in the LinkedIn app"}
                           </button>
                         </div>
                       </div>

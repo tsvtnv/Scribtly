@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 
 interface Settings {
   user: { id: string; name: string | null; email: string };
@@ -80,8 +79,14 @@ export default function SettingsPage() {
               When off, a lead can only exist in one active campaign at a time.
             </p>
           </div>
-          <Switch checked={settings.workspace.allowDuplicateLeads}
-            onCheckedChange={v => updateWs("allowDuplicateLeads", v)} />
+          <button
+            type="button"
+            onClick={() => updateWs("allowDuplicateLeads", !settings.workspace.allowDuplicateLeads)}
+            className="relative w-10 h-5 rounded-full transition-colors shrink-0"
+            style={{ background: settings.workspace.allowDuplicateLeads ? "var(--accent)" : "var(--border)" }}>
+            <span className="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all"
+              style={{ left: settings.workspace.allowDuplicateLeads ? "calc(100% - 18px)" : "2px" }} />
+          </button>
         </div>
         <div className="flex items-center justify-between p-4 rounded-xl border"
           style={{ borderColor: "var(--border)", background: "var(--bg-subtle)" }}>
@@ -91,8 +96,14 @@ export default function SettingsPage() {
               Leads scored below 40 are never contacted.
             </p>
           </div>
-          <Switch checked={settings.workspace.skipLowIcpLeads}
-            onCheckedChange={v => updateWs("skipLowIcpLeads", v)} />
+          <button
+            type="button"
+            onClick={() => updateWs("skipLowIcpLeads", !settings.workspace.skipLowIcpLeads)}
+            className="relative w-10 h-5 rounded-full transition-colors shrink-0"
+            style={{ background: settings.workspace.skipLowIcpLeads ? "var(--accent)" : "var(--border)" }}>
+            <span className="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all"
+              style={{ left: settings.workspace.skipLowIcpLeads ? "calc(100% - 18px)" : "2px" }} />
+          </button>
         </div>
       </section>
       <Button onClick={save} disabled={saving} style={{ background: "var(--accent)", color: "#fff" }}>

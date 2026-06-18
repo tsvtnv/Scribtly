@@ -6,8 +6,42 @@ import { z } from "zod";
 
 const schema = z.object({
   account_id: z.string().min(1),
-  code: z.string().min(1),
+  code: z.string().optional(), // omit for app-approval flow
 });
+
+async function createAccountRecord(
+  workspaceId: string,
+  unipileAccountId: string
+) {
+  const [accountResult, profileResult] = await Promise.allSettled([
+    unipile.getAccount(unipileAccountId),
+    unipile.getAccountProfile(unipileAccountId),
+  ]);
+
+  const accountData = accountResult.status === "fulfilled" ? accountResult.value : null;
+  const profileData = profileResult.status === "fulfilled" ? profileResult.value : null;
+
+  const name = profileData
+    ? `${profileData.first_name} ${profileData.last_name}`.trim()
+    : (accountData?.name ?? "LinkedIn User");
+
+  return prisma.linkedInAccount.create({
+    data: {
+      workspaceId,
+      unipileAccountId,
+      name,
+      avatarUrl: profileData?.profile_picture_url ?? null,
+      headline: profileData?.occupation && profileData.occupation !== "--" ? profileData.occupation : null,
+      email: profileData?.email ?? null,
+      location: profileData?.location ?? null,
+      linkedinPublicId: profileData?.public_identifier ?? accountData?.connection_params?.im?.publicIdentifier ?? null,
+      premium: profileData?.premium ?? false,
+      proxyCountry: accountData?.connection_params?.im?.proxy?.country ?? null,
+      limitsResetAt: new Date(),
+      lastSyncAt: new Date(),
+    },
+  });
+}
 
 export async function POST(req: NextRequest) {
   const { user } = await validateRequest();
@@ -20,33 +54,38 @@ export async function POST(req: NextRequest) {
   const { account_id, code } = parsed.data;
 
   try {
-    const result = await unipile.submitCheckpoint(account_id, code);
+    if (code) {
+      // Standard OTP code flow
+      const result = await unipile.submitCheckpoint(account_id, code);
 
-    // Another checkpoint (e.g. 2FA after OTP)
-    if (result.checkpoint) {
-      return NextResponse.json({
-        checkpoint: true,
-        account_id: result.account_id,
-        message: result.checkpoint.message ?? "Enter the next verification code",
-      });
+      if (result.checkpoint) {
+        return NextResponse.json({
+          checkpoint: true,
+          account_id: result.account_id,
+          checkpoint_type: result.checkpoint.type,
+          message: result.checkpoint.message ?? "Enter the next verification code",
+        });
+      }
+
+      const dbAccount = await createAccountRecord(user.workspaceId, result.account_id);
+      return NextResponse.json(dbAccount);
     }
 
-    const profile = await unipile.getAccount(account_id);
+    // App-approval flow — check if LinkedIn already marked the account active
+    const accountData = await unipile.getAccount(account_id);
+    const isActive = accountData.sources[0]?.status === "OK";
 
-    const account = await prisma.linkedInAccount.create({
-      data: {
-        workspaceId: user.workspaceId,
-        unipileAccountId: account_id,
-        name: profile.name,
-        avatarUrl: profile.avatar_url,
-        headline: profile.headline,
-        limitsResetAt: new Date(),
-      },
-    });
+    if (!isActive) {
+      return NextResponse.json(
+        { pending: true, message: "Approval not detected yet — please approve in your LinkedIn app then try again." },
+        { status: 202 }
+      );
+    }
 
-    return NextResponse.json(account);
+    const dbAccount = await createAccountRecord(user.workspaceId, account_id);
+    return NextResponse.json(dbAccount);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Failed to verify OTP";
+    const message = err instanceof Error ? err.message : "Failed to verify";
     console.error("[accounts/otp]", message);
     return NextResponse.json({ error: message }, { status: 500 });
   }

@@ -19,12 +19,39 @@ async function req<T>(method: string, path: string, body?: unknown): Promise<T> 
   return res.json() as Promise<T>;
 }
 
+export interface UnipileAccountSource {
+  id: string;
+  status: string; // "OK", "CONNECTING", "ERROR", etc.
+}
+
 export interface UnipileAccount {
   id: string;
   name: string;
-  avatar_url?: string;
-  headline?: string;
   type: string;
+  created_at: string;
+  sources: UnipileAccountSource[];
+  connection_params?: {
+    im?: {
+      id?: string;
+      publicIdentifier?: string;
+      username?: string;
+      connection_method?: string;
+      proxy?: { country?: string };
+    };
+  };
+}
+
+export interface UnipileAccountOwnerProfile {
+  provider_id: string;
+  first_name: string;
+  last_name: string;
+  profile_picture_url: string | null;
+  public_identifier: string;
+  occupation: string | null;
+  premium: boolean;
+  open_profile: boolean;
+  location: string | null;
+  email: string | null;
 }
 
 export interface UnipilePerson {
@@ -50,7 +77,11 @@ export const unipile = {
   },
 
   async submitCheckpoint(accountId: string, code: string): Promise<{ account_id: string; checkpoint?: { type: string; message?: string } }> {
-    return req("POST", `/api/v1/accounts/${accountId}/checkpoint`, { code });
+    return req("POST", `/api/v1/accounts/checkpoint`, { provider: "LINKEDIN", account_id: accountId, code });
+  },
+
+  async resendCheckpoint(accountId: string): Promise<void> {
+    await req("POST", `/api/v1/accounts/checkpoint/resend`, { provider: "LINKEDIN", account_id: accountId });
   },
 
   async listAccounts(): Promise<{ items: UnipileAccount[] }> {
@@ -61,12 +92,16 @@ export const unipile = {
     return req("GET", `/api/v1/accounts/${accountId}`);
   },
 
+  async getAccountProfile(accountId: string): Promise<UnipileAccountOwnerProfile> {
+    return req("GET", `/api/v1/users/me?account_id=${accountId}`);
+  },
+
   async deleteAccount(accountId: string): Promise<void> {
     await req("DELETE", `/api/v1/accounts/${accountId}`);
   },
 
   async reconnectAccount(accountId: string, email: string, password: string): Promise<{ account_id: string; checkpoint?: { type: string; message?: string } }> {
-    return req("PUT", `/api/v1/accounts/${accountId}`, {
+    return req("POST", `/api/v1/accounts/${accountId}`, {
       provider: "LINKEDIN",
       username: email,
       password,

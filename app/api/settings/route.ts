@@ -14,7 +14,10 @@ export async function GET() {
   const { user } = await validateRequest();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const [userRecord, workspace] = await Promise.all([
-    prisma.user.findUnique({ where: { id: user.id } }),
+    prisma.user.findUnique({
+      where: { id: user.id },
+      select: { id: true, email: true, name: true, avatarUrl: true, workspaceId: true, createdAt: true },
+    }),
     prisma.workspace.findUnique({ where: { id: user.workspaceId } }),
   ]);
   return NextResponse.json({ user: userRecord, workspace });
