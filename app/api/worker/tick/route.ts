@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { unipile } from "@/lib/unipile";
 import { fillTemplate, parseLocation } from "@/lib/templates";
+import { computeNextSlot } from "@/lib/scheduler";
 import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // Per-account timestamp of last connection request sent — enforces minimum gap
 // between sends without a DB migration. Resets on server restart (that's fine).
+// Only used for requireApproval=true path (PENDING_APPROVAL creation).
 const lastConnSentAt = new Map<string, number>();
 const MIN_CONN_GAP_MS = 20 * 60 * 1000; // 20 min between sends per account
 
@@ -40,11 +42,56 @@ export async function POST(req: NextRequest) {
 
   const results: string[] = [];
 
+  const now = new Date();
+
+  // 0. Dispatch scheduled messages (APPROVED where scheduledFor <= now)
+  const scheduledMessages = await prisma.message.findMany({
+    where: { status: "APPROVED", scheduledFor: { lte: now } },
+    include: { lead: true, campaign: { include: { linkedInAccount: true } } },
+    orderBy: { scheduledFor: "asc" },
+  });
+
+  // Track in-tick account state so we respect limits across multiple messages in same tick
+  const inTickConnSent = new Map<string, number>();
+
+  for (const msg of scheduledMessages) {
+    const acc = msg.campaign.linkedInAccount;
+    const alreadySent = inTickConnSent.get(acc.id) ?? 0;
+    if (acc.connSentToday + alreadySent >= acc.dailyConnLimit) continue;
+
+    const log = await logStart(msg.lead.workspaceId, "SEND_MESSAGE");
+    try {
+      if (msg.type === "CONNECTION_NOTE") {
+        await unipile.sendConnectionRequest(
+          acc.unipileAccountId,
+          msg.lead.linkedInProfileId,
+          msg.content
+        );
+      } else {
+        const conv = await prisma.conversation.findUnique({ where: { leadId: msg.leadId } });
+        if (conv) {
+          await unipile.sendMessage(acc.unipileAccountId, conv.unipileThreadId, msg.content);
+        }
+      }
+      await prisma.message.update({ where: { id: msg.id }, data: { status: "SENT", sentAt: now } });
+      await prisma.lead.update({ where: { id: msg.leadId }, data: { status: "CONTACTED", contactedAt: now } });
+      await prisma.linkedInAccount.update({ where: { id: acc.id }, data: { connSentToday: { increment: 1 } } });
+      await prisma.event.create({
+        data: { workspaceId: msg.lead.workspaceId, campaignId: msg.campaignId, leadId: msg.leadId, type: "message_sent" },
+      });
+      inTickConnSent.set(acc.id, alreadySent + 1);
+      await logDone(log.id, "COMPLETED", `Dispatched to ${msg.lead.name}`);
+      results.push(`dispatched:${msg.id}`);
+    } catch (err) {
+      // Leave as APPROVED — will retry on next tick
+      await logDone(log.id, "FAILED", String(err));
+    }
+  }
+
   // 1. Reset daily limits
   const allAccounts = await prisma.linkedInAccount.findMany();
   for (const acc of allAccounts) {
     const resetDate = new Date(acc.limitsResetAt);
-    const now = new Date();
     if (now.toDateString() !== resetDate.toDateString()) {
       await prisma.linkedInAccount.update({
         where: { id: acc.id },
@@ -54,7 +101,6 @@ export async function POST(req: NextRequest) {
   }
 
   // 2. Enrich leads (NEW → ENRICHED) — one per tick with 1-10 min random delay between calls
-  const now = new Date();
   const leadToEnrich = await prisma.lead.findFirst({
     where: {
       status: "NEW",
@@ -146,13 +192,18 @@ Reply ONLY: {"score":<0-100>,"reason":"<10 words max>"}`;
 
   for (const campaign of activeCampaigns) {
     const acc = campaign.linkedInAccount;
-    const pendingCount = await prisma.lead.count({
-      where: { campaign: { linkedInAccountId: acc.id }, status: "PENDING_APPROVAL" },
+    const pendingCount = await prisma.message.count({
+      where: {
+        campaign: { linkedInAccountId: acc.id },
+        status: { in: ["PENDING_APPROVAL", "APPROVED"] },
+        type: "CONNECTION_NOTE",
+      },
     });
     const remaining = acc.dailyConnLimit - acc.connSentToday - pendingCount;
     if (remaining <= 0) continue;
 
     // Rate-limit: at most 1 connection per account per 20 min to avoid LinkedIn flags
+    // (only enforced for requireApproval=true path; scheduler handles spacing for the other path)
     const lastSent = lastConnSentAt.get(acc.id) ?? 0;
     if (now.getTime() - lastSent < MIN_CONN_GAP_MS) continue;
 
@@ -185,25 +236,34 @@ Reply ONLY: {"score":<0-100>,"reason":"<10 words max>"}`;
           await prisma.lead.update({ where: { id: lead.id }, data: { status: "PENDING_APPROVAL" } });
           await logDone(log.id, "COMPLETED", `Queued for approval: ${lead.name}`);
         } else {
-          await unipile.sendConnectionRequest(
-            acc.unipileAccountId,
-            lead.linkedInProfileId,
-            campaign.type === "CONNECT_NOTE" ? content : undefined
+          // No approval — schedule directly
+          const lastScheduled = await prisma.message.findFirst({
+            where: {
+              campaign: { linkedInAccountId: acc.id },
+              status: "APPROVED",
+              scheduledFor: { not: null },
+            },
+            orderBy: { scheduledFor: "desc" },
+          });
+          const scheduledFor = computeNextSlot(
+            {
+              timezone: acc.timezone,
+              sendWindowStart: acc.sendWindowStart,
+              sendWindowEnd: acc.sendWindowEnd,
+              sendIntervalMinutes: acc.sendIntervalMinutes,
+              sendJitterMinutes: acc.sendJitterMinutes,
+            },
+            lastScheduled?.scheduledFor ?? now
           );
           await prisma.message.create({
             data: {
               leadId: lead.id, campaignId: campaign.id,
-              type: "CONNECTION_NOTE", content, status: "SENT", sentAt: new Date(),
+              type: "CONNECTION_NOTE", content, status: "APPROVED", scheduledFor,
             },
           });
-          await prisma.lead.update({ where: { id: lead.id }, data: { status: "CONTACTED", contactedAt: new Date() } });
-          await prisma.linkedInAccount.update({ where: { id: acc.id }, data: { connSentToday: { increment: 1 } } });
-          lastConnSentAt.set(acc.id, now.getTime());
-          await prisma.event.create({
-            data: { workspaceId: lead.workspaceId, campaignId: campaign.id, leadId: lead.id, type: "message_sent" },
-          });
-          await logDone(log.id, "COMPLETED", `Sent to ${lead.name}`);
-          results.push(`sent:${lead.id}`);
+          await prisma.lead.update({ where: { id: lead.id }, data: { status: "PENDING_APPROVAL" } });
+          await logDone(log.id, "COMPLETED", `Scheduled for ${scheduledFor.toISOString()}: ${lead.name}`);
+          results.push(`scheduled:${lead.id}`);
         }
       } catch (err) {
         await logDone(log.id, "FAILED", String(err));
@@ -235,12 +295,40 @@ Reply ONLY: {"score":<0-100>,"reason":"<10 words max>"}`;
         city: loc.city,
         country: loc.country,
       });
-      await prisma.message.create({
-        data: {
-          leadId: lead.id, campaignId: campaign.id,
-          type: "FOLLOWUP", content, status: "PENDING_APPROVAL",
-        },
-      });
+
+      if (campaign.requireApproval) {
+        await prisma.message.create({
+          data: {
+            leadId: lead.id, campaignId: campaign.id,
+            type: "FOLLOWUP", content, status: "PENDING_APPROVAL",
+          },
+        });
+      } else {
+        const lastScheduled = await prisma.message.findFirst({
+          where: {
+            campaign: { linkedInAccountId: campaign.linkedInAccountId },
+            status: "APPROVED",
+            scheduledFor: { not: null },
+          },
+          orderBy: { scheduledFor: "desc" },
+        });
+        const scheduledFor = computeNextSlot(
+          {
+            timezone: campaign.linkedInAccount.timezone,
+            sendWindowStart: campaign.linkedInAccount.sendWindowStart,
+            sendWindowEnd: campaign.linkedInAccount.sendWindowEnd,
+            sendIntervalMinutes: campaign.linkedInAccount.sendIntervalMinutes,
+            sendJitterMinutes: campaign.linkedInAccount.sendJitterMinutes,
+          },
+          lastScheduled?.scheduledFor ?? now
+        );
+        await prisma.message.create({
+          data: {
+            leadId: lead.id, campaignId: campaign.id,
+            type: "FOLLOWUP", content, status: "APPROVED", scheduledFor,
+          },
+        });
+      }
     }
   }
 
