@@ -270,7 +270,7 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
           data: {
             ...(lastMessageAt && !isNaN(lastMessageAt.getTime()) ? { lastMessageAt } : {}),
             lastMessagePreview: thread.last_message_text?.slice(0, 100),
-            hasUnread: thread.unread,
+            hasUnread: Boolean(thread.unread),
           },
         });
         synced++;
