@@ -50,7 +50,7 @@ export const unipile = {
   },
 
   async submitCheckpoint(accountId: string, code: string): Promise<{ account_id: string; checkpoint?: { type: string; message?: string } }> {
-    return req("POST", `/api/v1/accounts/${accountId}/checkpoint/solve`, { code });
+    return req("POST", `/api/v1/accounts/${accountId}/checkpoint`, { code });
   },
 
   async listAccounts(): Promise<{ items: UnipileAccount[] }> {
