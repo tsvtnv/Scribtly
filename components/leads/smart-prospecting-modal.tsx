@@ -34,6 +34,7 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
   const [error, setError] = useState("");
   const [importedMsg, setImportedMsg] = useState("");
   const [mounted, setMounted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -49,6 +50,7 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
     setError("");
     setProfiles([]);
     setImportedMsg("");
+    setSearchQuery("");
     const res = await fetch("/api/prospecting/preview", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -56,7 +58,8 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
     });
     const data = await res.json();
     if (!res.ok) { setError(data.error ?? "Search failed"); setPreviewing(false); return; }
-    setProfiles(data);
+    setProfiles(data.items ?? []);
+    setSearchQuery(data.searchQuery ?? "");
     setPreviewing(false);
   }
 
@@ -80,6 +83,7 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
     setProfiles([]);
     setError("");
     setImportedMsg("");
+    setSearchQuery("");
     onClose();
   }
 
@@ -168,9 +172,16 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
           {/* Results */}
           {profiles.length > 0 && !previewing && (
             <>
-              <p style={{ fontSize: 12, color: "var(--text-muted)", margin: 0 }}>
-                <strong style={{ color: "var(--text-primary)" }}>{profiles.length} profiles</strong> found · click any to view on LinkedIn
-              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                <p style={{ fontSize: 12, color: "var(--text-muted)", margin: 0 }}>
+                  <strong style={{ color: "var(--text-primary)" }}>{profiles.length} profiles</strong> found
+                </p>
+                {searchQuery && (
+                  <span style={{ fontSize: 11, padding: "2px 8px", borderRadius: 6, background: "rgba(224,120,48,0.1)", color: "var(--accent)", fontFamily: "monospace" }}>
+                    searched: {searchQuery}
+                  </span>
+                )}
+              </div>
 
               <div style={{ borderRadius: 12, border: "1px solid var(--border)", overflow: "hidden" }}>
                 <div style={{ overflowY: "auto", maxHeight: 320 }}>

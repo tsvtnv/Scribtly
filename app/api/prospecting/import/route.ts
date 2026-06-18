@@ -2,9 +2,29 @@ import { NextRequest, NextResponse } from "next/server";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { unipile, type UnipilePerson } from "@/lib/unipile";
+import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 
 export const maxDuration = 60;
+
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+async function toLinkedInKeywords(description: string): Promise<string> {
+  try {
+    const res = await anthropic.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 40,
+      messages: [{
+        role: "user",
+        content: `Convert this description into 3-6 LinkedIn search keywords (no quotes, no operators, space-separated only).\nDescription: ${description}\nKeywords:`,
+      }],
+    });
+    const text = res.content[0].type === "text" ? res.content[0].text.trim() : description;
+    return text.replace(/["',]/g, "").trim();
+  } catch {
+    return description;
+  }
+}
 
 const PER_PAGE = 25;
 
@@ -32,6 +52,9 @@ export async function POST(req: NextRequest) {
 
   const workspace = await prisma.workspace.findUnique({ where: { id: user.workspaceId } });
 
+  // Convert natural language description to LinkedIn search keywords
+  const searchQuery = await toLinkedInKeywords(query);
+
   // Paginate through Unipile search until we have `count` profiles
   const collected: UnipilePerson[] = [];
   let cursor: string | undefined;
@@ -42,7 +65,7 @@ export async function POST(req: NextRequest) {
 
     const result = await unipile.searchPeople(
       campaign.linkedInAccount.unipileAccountId,
-      query,
+      searchQuery,
       pageSize,
       cursor
     );
