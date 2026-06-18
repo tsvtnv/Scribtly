@@ -2,12 +2,12 @@
 
 :root {
   --bg-base: #FFFFFF;
-  --bg-subtle: #F7F3EE;
+  --bg-subtle: #F5F5F5;
   --text-primary: #0F0F12;
-  --text-muted: #6B6560;
+  --text-muted: #6B7280;
   --accent: #E07830;
   --accent-hover: #C4652A;
-  --border: #E8E2D9;
+  --border: #E5E7EB;
   --dark: #1A1A1A;
 }
 

@@ -8,22 +8,43 @@ export async function GET() {
 
   const wid = user.workspaceId;
 
-  const [totalLeads, totalSent, totalReplied, campaigns, recentEvents] = await Promise.all([
-    prisma.lead.count({ where: { workspaceId: wid } }),
-    prisma.message.count({ where: { campaign: { workspaceId: wid }, status: "SENT" } }),
-    prisma.lead.count({ where: { workspaceId: wid, status: "REPLIED" } }),
-    prisma.campaign.findMany({
-      where: { workspaceId: wid },
-      include: { _count: { select: { leads: true } } },
-      orderBy: { createdAt: "desc" },
-      take: 10,
-    }),
-    prisma.event.findMany({
-      where: { workspaceId: wid },
-      orderBy: { createdAt: "desc" },
-      take: 10,
-    }),
-  ]);
+  const fourteenDaysAgo = new Date();
+  fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 13);
+  fourteenDaysAgo.setHours(0, 0, 0, 0);
+
+  const [totalLeads, totalSent, totalReplied, campaigns, recentEvents, sentMessages, replyEvents] =
+    await Promise.all([
+      prisma.lead.count({ where: { workspaceId: wid } }),
+      prisma.message.count({ where: { campaign: { workspaceId: wid }, status: "SENT" } }),
+      prisma.lead.count({ where: { workspaceId: wid, status: "REPLIED" } }),
+      prisma.campaign.findMany({
+        where: { workspaceId: wid },
+        include: { _count: { select: { leads: true } } },
+        orderBy: { createdAt: "desc" },
+        take: 10,
+      }),
+      prisma.event.findMany({
+        where: { workspaceId: wid },
+        orderBy: { createdAt: "desc" },
+        take: 10,
+      }),
+      prisma.message.findMany({
+        where: {
+          campaign: { workspaceId: wid },
+          status: "SENT",
+          sentAt: { gte: fourteenDaysAgo },
+        },
+        select: { sentAt: true },
+      }),
+      prisma.event.findMany({
+        where: {
+          workspaceId: wid,
+          type: "REPLY_RECEIVED",
+          createdAt: { gte: fourteenDaysAgo },
+        },
+        select: { createdAt: true },
+      }),
+    ]);
 
   const responseRate = totalSent > 0 ? ((totalReplied / totalSent) * 100).toFixed(1) : "0";
 
@@ -38,8 +59,27 @@ export async function GET() {
     })
   );
 
+  const dailyActivity: Array<{ date: string; sent: number; replied: number }> = [];
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().split("T")[0];
+    const sent = sentMessages.filter(
+      m => m.sentAt != null && m.sentAt.toISOString().split("T")[0] === dateStr
+    ).length;
+    const replied = replyEvents.filter(
+      e => e.createdAt.toISOString().split("T")[0] === dateStr
+    ).length;
+    dailyActivity.push({ date: dateStr, sent, replied });
+  }
+
   return NextResponse.json({
-    totalLeads, totalSent, totalReplied, responseRate,
-    campaigns: campaignStats, recentEvents,
+    totalLeads,
+    totalSent,
+    totalReplied,
+    responseRate,
+    campaigns: campaignStats,
+    recentEvents,
+    dailyActivity,
   });
 }
