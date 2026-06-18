@@ -2,30 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { unipile, type UnipilePerson } from "@/lib/unipile";
-import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 
 export const maxDuration = 60;
-
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
-async function toLinkedInKeywords(description: string): Promise<string> {
-  try {
-    const res = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 20,
-      messages: [{
-        role: "user",
-        content: `You are finding LinkedIn profiles of BUYERS of services — business owners and managers, NOT freelancers or specialists.\nPick 3 job-role keywords (title/industry only) from this description. Never use words like "automation", "AI", "agent", "developer".\nDescription: ${description}\n3 words:`,
-      }],
-    });
-    const text = res.content[0].type === "text" ? res.content[0].text.trim() : "";
-    const words = text.replace(/["',.\-]/g, "").trim().split(/\s+/).slice(0, 4);
-    return words.join(" ");
-  } catch {
-    return description.trim().split(/\s+/).slice(0, 3).join(" ");
-  }
-}
 
 const PER_PAGE = 25;
 
@@ -35,6 +14,27 @@ const schema = z.object({
   count: z.number().min(1).max(500),
   location: z.string().optional(),
 });
+
+const STOP_WORDS = new Set([
+  "a","an","the","and","or","but","in","on","at","to","for","of","with",
+  "who","that","are","is","be","have","has","do","does","will","would",
+  "i","we","they","you","my","our","their","your","me","us","them",
+  "want","need","like","just","any","all","some","get","can","may",
+  "also","very","really","quite","based","looking","anyone","might",
+  "someone","people","person","their","those","these","there","from",
+]);
+
+function buildSearchQuery(description: string, location?: string): string {
+  const words = description
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter(w => w.length > 2 && !STOP_WORDS.has(w));
+
+  const keywords = [...new Set(words)].slice(0, 5);
+  if (location?.trim()) keywords.push(location.trim());
+  return keywords.join(" ");
+}
 
 export async function POST(req: NextRequest) {
   const { user } = await validateRequest();
@@ -54,10 +54,8 @@ export async function POST(req: NextRequest) {
 
   const workspace = await prisma.workspace.findUnique({ where: { id: user.workspaceId } });
 
-  // Convert natural language description to LinkedIn search keywords
-  const searchQuery = await toLinkedInKeywords(query);
+  const searchQuery = buildSearchQuery(query, location);
 
-  // Paginate through Unipile search until we have `count` profiles
   const collected: UnipilePerson[] = [];
   let cursor: string | undefined;
 
@@ -69,8 +67,7 @@ export async function POST(req: NextRequest) {
       campaign.linkedInAccount.unipileAccountId,
       searchQuery,
       pageSize,
-      cursor,
-      location || undefined
+      cursor
     );
 
     if (!result.items?.length) break;
@@ -80,13 +77,11 @@ export async function POST(req: NextRequest) {
 
     if (!cursor) break;
 
-    // Brief pause between pages to avoid hammering the API
     if (collected.length < count) {
       await new Promise(r => setTimeout(r, 350));
     }
   }
 
-  // Save to DB
   let imported = 0;
   for (const p of collected.slice(0, count)) {
     if (!workspace?.allowDuplicateLeads) {

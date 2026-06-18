@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { unipile } from "@/lib/unipile";
-import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
-
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const schema = z.object({
   campaignId: z.string(),
@@ -13,22 +10,25 @@ const schema = z.object({
   location: z.string().optional(),
 });
 
-async function toLinkedInKeywords(description: string): Promise<string> {
-  try {
-    const res = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 20,
-      messages: [{
-        role: "user",
-        content: `You are finding LinkedIn profiles of BUYERS of services — business owners and managers, NOT freelancers or specialists.\nPick 3 job-role keywords (title/industry only) from this description. Never use words like "automation", "AI", "agent", "developer".\nDescription: ${description}\n3 words:`,
-      }],
-    });
-    const text = res.content[0].type === "text" ? res.content[0].text.trim() : "";
-    const words = text.replace(/["',.\-]/g, "").trim().split(/\s+/).slice(0, 4);
-    return words.join(" ");
-  } catch {
-    return description.trim().split(/\s+/).slice(0, 3).join(" ");
-  }
+const STOP_WORDS = new Set([
+  "a","an","the","and","or","but","in","on","at","to","for","of","with",
+  "who","that","are","is","be","have","has","do","does","will","would",
+  "i","we","they","you","my","our","their","your","me","us","them",
+  "want","need","like","just","any","all","some","get","can","may",
+  "also","very","really","quite","based","looking","anyone","might",
+  "someone","people","person","their","those","these","there","from",
+]);
+
+function buildSearchQuery(description: string, location?: string): string {
+  const words = description
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter(w => w.length > 2 && !STOP_WORDS.has(w));
+
+  const keywords = [...new Set(words)].slice(0, 5);
+  if (location?.trim()) keywords.push(location.trim());
+  return keywords.join(" ");
 }
 
 export async function POST(req: NextRequest) {
@@ -45,15 +45,13 @@ export async function POST(req: NextRequest) {
   });
   if (!campaign) return NextResponse.json({ error: "Campaign not found" }, { status: 404 });
 
-  const searchQuery = await toLinkedInKeywords(parsed.data.query);
+  const searchQuery = buildSearchQuery(parsed.data.query, parsed.data.location);
 
   const results = await unipile.searchPeople(
     campaign.linkedInAccount.unipileAccountId,
     searchQuery,
-    15,
-    undefined,
-    parsed.data.location || undefined
+    15
   );
 
-  return NextResponse.json({ items: results.items, searchQuery });
+  return NextResponse.json({ items: results.items ?? [], searchQuery });
 }
