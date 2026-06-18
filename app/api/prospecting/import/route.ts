@@ -72,9 +72,6 @@ export async function POST(req: NextRequest) {
       cursor,
       location || undefined
     );
-      pageSize,
-      cursor
-    );
 
     if (!result.items?.length) break;
 
