@@ -59,6 +59,11 @@ model LinkedInAccount {
   name             String
   avatarUrl        String?
   headline         String?
+  email            String?
+  location         String?
+  linkedinPublicId String?
+  premium          Boolean               @default(false)
+  proxyCountry     String?
   status           LinkedInAccountStatus @default(ACTIVE)
   dailyConnLimit   Int                   @default(25)
   dailyMsgLimit    Int                   @default(50)
@@ -66,6 +71,11 @@ model LinkedInAccount {
   msgSentToday     Int                   @default(0)
   limitsResetAt    DateTime
   lastSyncAt       DateTime?
+  timezone             String  @default("Europe/London")
+  sendWindowStart      Int     @default(9)
+  sendWindowEnd        Int     @default(17)
+  sendIntervalMinutes  Int     @default(10)
+  sendJitterMinutes    Int     @default(5)
   createdAt        DateTime              @default(now())
 
   campaigns Campaign[]
@@ -181,6 +191,7 @@ model Message {
   type             MessageType
   content          String
   status           MessageStatus @default(PENDING_APPROVAL)
+  scheduledFor     DateTime?
   unipileMessageId String?
   sentAt           DateTime?
   createdAt        DateTime      @default(now())
