@@ -1,5 +1,6 @@
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 const WORKER_SECRET = process.env.WORKER_SECRET ?? "";
+const INTERVAL_MS = 60 * 1000; // 1 minute
 
 async function tick() {
   console.log(`[worker] tick at ${new Date().toISOString()}`);
@@ -12,8 +13,8 @@ async function tick() {
     console.log(`[worker] done:`, JSON.stringify(data));
   } catch (err) {
     console.error(`[worker] error:`, err);
-    process.exit(1);
   }
 }
 
-tick().then(() => process.exit(0));
+tick();
+setInterval(tick, INTERVAL_MS);
