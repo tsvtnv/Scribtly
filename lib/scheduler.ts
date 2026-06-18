@@ -45,9 +45,8 @@ export function computeNextSlot(
     // Within window: reference + interval + random jitter
     const jitter = Math.floor(Math.random() * (sendJitterMinutes + 1));
     const advanced = addMinutes(local, sendIntervalMinutes + jitter);
-    const advancedHour = (advanced as TZDate).getHours
-      ? (advanced as TZDate).getHours()
-      : new TZDate(advanced, timezone).getHours();
+    const advancedLocal = new TZDate(advanced, timezone);
+    const advancedHour = advancedLocal.getHours();
 
     if (advancedHour >= sendWindowEnd) {
       // Overshot end of window — push to tomorrow's opening
