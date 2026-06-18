@@ -16,17 +16,19 @@ async function toLinkedInKeywords(description: string): Promise<string> {
   try {
     const res = await anthropic.messages.create({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 40,
+      max_tokens: 20,
       messages: [{
         role: "user",
-        content: `Convert this description into 3-6 LinkedIn search keywords (no quotes, no operators, space-separated only).\nDescription: ${description}\nKeywords:`,
+        content: `Pick the 3 best LinkedIn search keywords from this description. Reply with ONLY those 3 words, nothing else.\nDescription: ${description}\n3 words:`,
       }],
     });
-    const text = res.content[0].type === "text" ? res.content[0].text.trim() : description;
-    // Strip any accidental quotes or punctuation
-    return text.replace(/["',]/g, "").trim();
+    const text = res.content[0].type === "text" ? res.content[0].text.trim() : "";
+    // Take first 4 words max as a hard safety net
+    const words = text.replace(/["',.\-]/g, "").trim().split(/\s+/).slice(0, 4);
+    return words.join(" ");
   } catch {
-    return description;
+    // Fall back to first 3 words of the description
+    return description.trim().split(/\s+/).slice(0, 3).join(" ");
   }
 }
 

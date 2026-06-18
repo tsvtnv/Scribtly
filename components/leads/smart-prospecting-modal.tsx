@@ -183,11 +183,10 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
                 )}
               </div>
 
-              <div style={{ borderRadius: 12, border: "1px solid var(--border)", overflow: "hidden" }}>
-                <div style={{ overflowY: "auto", maxHeight: 320 }}>
+              <div style={{ borderRadius: 12, border: "1px solid var(--border)", overflowY: "auto", maxHeight: 320 }}>
                   {profiles.map((p, i) => (
                     <a
-                      key={p.id}
+                      key={p.id ?? i}
                       href={p.profile_url}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -239,7 +238,6 @@ export function SmartProspectingModal({ open, onClose, campaignId, onImported }:
                       <ExternalLink size={13} style={{ color: "var(--text-muted)", flexShrink: 0, opacity: 0.5 }} />
                     </a>
                   ))}
-                </div>
               </div>
 
               {/* Import section */}
