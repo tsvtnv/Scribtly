@@ -62,41 +62,16 @@ export async function POST(req: NextRequest) {
   if (leadToEnrich) {
     const log = await logStart(leadToEnrich.workspaceId, "ENRICH_LEAD");
     try {
-      const profile = await unipile.getProfile(
-        leadToEnrich.campaign.linkedInAccount.unipileAccountId,
-        leadToEnrich.linkedInProfileId
-      );
+      // Search import already provides headline/location/avatar — skip the profile API call
+      // (Unipile profile lookup 404s on these IDs; data from search is sufficient for scoring)
       await prisma.lead.update({
         where: { id: leadToEnrich.id },
-        data: {
-          headline: profile.headline ?? leadToEnrich.headline,
-          company: profile.company_name ?? leadToEnrich.company,
-          location: profile.location ?? leadToEnrich.location,
-          avatarUrl: profile.profile_picture_url ?? leadToEnrich.avatarUrl,
-          status: "ENRICHED",
-          enrichedAt: new Date(),
-        },
+        data: { status: "ENRICHED", enrichedAt: new Date() },
       });
       await logDone(log.id, "COMPLETED", `Enriched ${leadToEnrich.name}`);
       results.push(`enriched:${leadToEnrich.id}`);
     } catch (err) {
-      const msg = String(err);
-      if (msg.includes("404")) {
-        await prisma.lead.update({ where: { id: leadToEnrich.id }, data: { status: "SKIPPED" } });
-        await logDone(log.id, "FAILED", `Profile not found (404) — skipped: ${leadToEnrich.name}`);
-      } else {
-        const retries = leadToEnrich.enrichRetries + 1;
-        if (retries >= 3) {
-          await prisma.lead.update({ where: { id: leadToEnrich.id }, data: { status: "SKIPPED", enrichRetries: retries } });
-          await logDone(log.id, "FAILED", `Skipped after ${retries} retries: ${msg}`);
-        } else {
-          await prisma.lead.update({
-            where: { id: leadToEnrich.id },
-            data: { enrichRetries: retries, enrichAfter: new Date(now.getTime() + 5 * 60 * 1000) },
-          });
-          await logDone(log.id, "FAILED", `Retry ${retries}/3: ${msg}`);
-        }
-      }
+      await logDone(log.id, "FAILED", String(err));
     }
 
     // Schedule the next NEW lead with a random 1-10 min delay
@@ -269,11 +244,11 @@ Reply with ONLY: {"score": <0-100>, "reason": "<one sentence>"}`;
         const preview = thread.last_message_text?.slice(0, 100) ?? null;
         const hasUnread = Boolean(thread.unread);
 
-        // Try to find a matching lead for this thread via attendee IDs
-        const attendeeIds = (thread.attendees ?? []).map((a: { id: string }) => a.id).filter(Boolean);
-        const matchingLead = attendeeIds.length > 0
+        // Match thread to a lead using attendee_provider_id (LinkedIn profile ID)
+        const attendeeId = thread.attendee_provider_id;
+        const matchingLead = attendeeId
           ? await prisma.lead.findFirst({
-              where: { linkedInProfileId: { in: attendeeIds }, campaign: { linkedInAccountId: acc.id } },
+              where: { linkedInProfileId: attendeeId, campaign: { linkedInAccountId: acc.id } },
             })
           : null;
 

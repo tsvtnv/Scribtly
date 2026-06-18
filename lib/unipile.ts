@@ -65,6 +65,14 @@ export const unipile = {
     await req("DELETE", `/api/v1/accounts/${accountId}`);
   },
 
+  async reconnectAccount(accountId: string, email: string, password: string): Promise<{ account_id: string; checkpoint?: { type: string; message?: string } }> {
+    return req("PUT", `/api/v1/accounts/${accountId}`, {
+      provider: "LINKEDIN",
+      username: email,
+      password,
+    });
+  },
+
   async searchPeople(
     accountId: string,
     query: string,
@@ -112,6 +120,7 @@ export const unipile = {
       id: string;
       last_message_at: string;
       last_message_text: string;
+      attendee_provider_id?: string;
       attendees: Array<{ id: string; name: string; avatar_url?: string }>;
       unread: boolean;
     }>;

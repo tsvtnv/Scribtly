@@ -1,0 +1,16 @@
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+export async function POST(req: NextRequest) {
+  const auth = req.headers.get("authorization");
+  if (auth !== `Bearer ${process.env.WORKER_SECRET}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { count } = await prisma.lead.updateMany({
+    where: { status: "SKIPPED" },
+    data: { status: "NEW" },
+  });
+
+  return NextResponse.json({ reset: count });
+}
