@@ -79,7 +79,7 @@ export default async function CampaignOverviewPage({ params }: { params: Promise
           <p className="text-sm" style={{ color: "var(--text-muted)" }}>No activity yet. Import leads to get started.</p>
         ) : (
           <ul className="space-y-3">
-            {recentEvents.map(ev => (
+            {recentEvents.map((ev: { id: string; type: string; createdAt: Date | string }) => (
               <li key={ev.id} className="flex items-start gap-2 text-sm">
                 <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: "var(--accent)" }} />
                 <div>
