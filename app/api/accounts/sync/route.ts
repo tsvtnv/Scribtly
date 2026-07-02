@@ -23,7 +23,14 @@ export async function POST() {
   const existing = await prisma.linkedInAccount.findMany({
     where: { workspaceId: user.workspaceId },
   });
-  const existingByUnipileId = new Map(existing.map((a) => [a.unipileAccountId, a]));
+  type ExistingAccount = {
+    id: string; unipileAccountId: string; premium: boolean; avatarUrl: string | null;
+    headline: string | null; email: string | null; location: string | null;
+    linkedinPublicId: string | null; proxyCountry: string | null;
+  };
+  const existingByUnipileId = new Map<string, ExistingAccount>(
+    (existing as ExistingAccount[]).map(a => [a.unipileAccountId, a])
+  );
 
   const added: string[] = [];
   const updated: string[] = [];
