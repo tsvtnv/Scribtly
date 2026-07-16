@@ -23,7 +23,7 @@ export async function POST() {
   const existing = await prisma.linkedInAccount.findMany({
     where: { workspaceId: user.workspaceId },
   });
-  const existingByUnipileId = new Map(existing.map((a) => [a.unipileAccountId, a]));
+  const existingByUnipileId = new Map(existing.map(a => [a.unipileAccountId, a] as const));
 
   const added: string[] = [];
   const updated: string[] = [];
