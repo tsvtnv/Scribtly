@@ -22,5 +22,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/compare/scribtly-vs-dripify`,
+      lastModified: new Date("2026-07-24"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 }
