@@ -48,8 +48,9 @@ export async function GET() {
 
   const responseRate = totalSent > 0 ? ((totalReplied / totalSent) * 100).toFixed(1) : "0";
 
+  type DashCampaign = (typeof campaigns)[number];
   const campaignStats = await Promise.all(
-    campaigns.map(async c => {
+    campaigns.map(async (c: DashCampaign) => {
       const [contacted, accepted, replied] = await Promise.all([
         prisma.lead.count({ where: { campaignId: c.id, status: { in: ["CONTACTED", "ACCEPTED", "REPLIED"] } } }),
         prisma.lead.count({ where: { campaignId: c.id, status: { in: ["ACCEPTED", "REPLIED"] } } }),
@@ -64,11 +65,13 @@ export async function GET() {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const dateStr = d.toISOString().split("T")[0];
+    type SentMsg = (typeof sentMessages)[number];
+    type ReplyEvt = (typeof replyEvents)[number];
     const sent = sentMessages.filter(
-      m => m.sentAt != null && m.sentAt.toISOString().split("T")[0] === dateStr
+      (m: SentMsg) => m.sentAt != null && m.sentAt.toISOString().split("T")[0] === dateStr
     ).length;
     const replied = replyEvents.filter(
-      e => e.createdAt.toISOString().split("T")[0] === dateStr
+      (e: ReplyEvt) => e.createdAt.toISOString().split("T")[0] === dateStr
     ).length;
     dailyActivity.push({ date: dateStr, sent, replied });
   }
