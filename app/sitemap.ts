@@ -22,5 +22,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/blog/how-to-automate-linkedin-outreach`,
+      lastModified: new Date("2026-07-28"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 }
