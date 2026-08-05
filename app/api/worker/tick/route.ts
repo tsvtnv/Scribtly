@@ -271,7 +271,7 @@ Reply ONLY: {"score":<0-100>,"reason":"<10 words max>"}`;
   }
 
   // 5. Follow-up check
-  for (const campaign of activeCampaigns.filter(c => c.followUpsEnabled && c.followUpTemplate)) {
+  for (const campaign of activeCampaigns.filter((c: typeof activeCampaigns[number]) => c.followUpsEnabled && c.followUpTemplate)) {
     const cutoff = new Date();
     cutoff.setDate(cutoff.getDate() - campaign.followUpDelayDays);
 
